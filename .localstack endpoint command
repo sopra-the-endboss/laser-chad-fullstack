@@ -1,0 +1,22 @@
+# localstack endpoint:
+
+aws --endpoint-url=http://localhost:4566
+
+# Create lambda function
+
+aws --endpoint-url=http://localhost:4566 lambda create-function --function-name localstack-test-function --runtime nodejs18.x --zip-file fileb://testFunction.zip --handler index.handler --role arn:aws:iam::000000000000:role/lambda-role
+
+# invoke function
+
+aws --endpoint-url=http://localhost:4566 lambda invoke --function-name localstack-test-function --payload '{"body": "{\"num1\": \"10\", \"num2\": \"10\"}" }' output.txt
+aws --endpoint-url=http://localhost:4566 lambda invoke --function-name localstack-test-function --payload fileb://payload.json output.txt
+aws --endpoint-url=http://localhost:4566 lambda invoke --function-name hello-world-v0 output.txt
+aws --endpoint-url=http://localhost:4566 lambda invoke --cli-binary-format raw-in-base64-out --function-name hello-world-v0 --invocation-type RequestResponse --payload "'{ "hello": "world" }'" output.json
+
+# delete function
+
+aws --endpoint-url=http://localhost:4566 lambda delete-function --function-name localstack-test-function
+
+# update function
+
+aws --endpoint-url=http://localhost:4566 lambda update-function-code --function-name localstack-test-function --zip-file fileb://index.zip

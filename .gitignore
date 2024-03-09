@@ -24,3 +24,4 @@ yarn-error.log*
 .volume
 .vscode
 LICENSE
+DOCKER-COMPOSE-LOCALSTACK
