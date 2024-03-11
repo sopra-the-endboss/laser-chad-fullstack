@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import img from "../../assets/logo.png";
 import { Button } from "@mui/material";
 function Header() {
   const root = {
@@ -14,13 +13,6 @@ function Header() {
     <div>
       <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
         <div className="container flex flex-wrap justify-between items-center mx-auto">
-          <a href="/" className="flex items-center">
-            <img
-              src={img}
-              className="mr-3 h-8 sm:h-11"
-              alt="HPLaserChads Logo"
-            />
-          </a>
           <button
             data-collapse-toggle="navbar-default"
             type="button"
