@@ -5,7 +5,8 @@
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 34.20,
     "formatted_text": "",
-    "category": "Smartphone"
+    "category": "Smartphone",
+    "brand": "Apple"
   },
   {
     "product": "iPad Pro",
@@ -15,7 +16,8 @@
     "price": 88.20,
     "formatted_text": "SALE",
     "description": "mein hut der hat 23 ecken, asdlkfj;ad jfaskdfj ;alsjdf;lasjdfl ;kasdj flkasjdf kasdlfkasj  dfkljas dfkljaslkdfj ;lqjeiojqo;fiashvd akjlv klqvSDv kjzxv kjzsd klgaskldfhasjkldf hlashf lqwakehf lkwh la hdslka shdmein hut der hat 23 ecken, asdlkfj;ad jfaskdfj ;alsjdf;lasjdfl ;kasdj flkasjdf kasdlfkasj  dfkljas dfkljaslkdfj ;lqjeiojqo;fiashvd akjlv klqvSDv kjzxv kjzsd klgaskldfhasjkldf hlashf lqwakehf lkwh la hdslka shdmein hut der hat 23 ecken, asdlkfj;ad jfaskdfj ;alsjdf;lasjdfl ;kasdj flkasjdf kasdlfkasj  dfkljas dfkljaslkdfj ;lqjeiojqo;fiashvd akjlv klqvSDv kjzxv kjzsd klgaskldfhasjkldf hlashf lqwakehf lkwh la hdslka shdmein hut der hat 23 ecken, asdlkfj;ad jfaskdfj ;alsjdf;lasjdfl ;kasdj flkasjdf kasdlfkasj  dfkljas dfkljaslkdfj ;lqjeiojqo;fiashvd akjlv klqvSDv kjzxv kjzsd klgaskldfhasjkldf hlashf lqwakehf lkwh la hdslka shdmein hut der hat 23 ecken, asdlkfj;ad jfaskdfj ;alsjdf;lasjdfl ;kasdj flkasjdf kasdlfkasj  dfkljas dfkljaslkdfj ;lqjeiojqo;fiashvd akjlv klqvSDv kjzxv kjzsd klgaskldfhasjkldf hlashf lqwakehf lkwh la hdslka shdmein hut der hat 23 ecken, asdlkfj;ad jfaskdfj ;alsjdf;lasjdfl ;kasdj flkasjdf kasdlfkasj  dfkljas dfkljaslkdfj ;lqjeiojqo;fiashvd akjlv klqvSDv kjzxv kjzsd klgaskldfhasjkldf hlashf lqwakehf lkwh la hdslka shd",
-    "category": "Smartphone"
+    "category": "Smartphone",
+    "brand": "Hawaii"
   },
   {
     "product": "MacBook Air",
@@ -24,7 +26,8 @@
     "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250",
     "price": 346.20,
     "formatted_text": "",
-    "category": "Smartphone"
+    "category": "Smartphone",
+    "brand": "Samsung White"
   },
   {
     "product": "Apple Air Tag",
@@ -33,7 +36,8 @@
     "https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 347.20,
     "formatted_text": "sale",
-    "category": "Smartphone"
+    "category": "Smartphone",
+    "brand": "Blackberry"
   },
   {
     "product": "Apple Air Tag",
@@ -43,7 +47,8 @@
     "price": 347.20,
     "formatted_text": "20%",
     "description": "This product is used to wipe someones ass",
-    "category": "Smartphone"
+    "category": "Smartphone",
+    "brand": "Apple"
   },
   {
     "product": "Apple Air Tag",
@@ -52,7 +57,8 @@
     "https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 347.20,
     "description": "This product is used to wipe someones ass, twice, or several times, maybe even more, I have no idea, but stuff happens and hell othere buckeroo. There will be more. More. MOOORE, I need more text. UIIA CAT",
-    "category": "Accessories"
+    "category": "Accessories",
+    "brand": "Apple"
   },
   {
     "product": "Apple Air Tag",
@@ -61,7 +67,8 @@
     "https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 347.20,
     "formatted_text": "",
-    "category": "Kitchen"
+    "category": "Kitchen",
+    "brand": "Apple"
   },
   {
     "product": "Apple Air Tag",
@@ -70,6 +77,7 @@
     "https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 347.20,
     "formatted_text": "",
-    "category": "Laptop"
+    "category": "Laptop",
+    "brand": "Apple"
   }
 ]

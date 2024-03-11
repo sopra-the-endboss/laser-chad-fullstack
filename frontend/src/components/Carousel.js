@@ -70,6 +70,7 @@ function Carousel({carouselData}) {
                                 price={carouselData[activeStep]?.price}
                                 description={carouselData[activeStep]?.description}
                                 height={120}
+                                brand={carouselData[activeStep]?.brand}
                             />
 
                             <MobileStepper

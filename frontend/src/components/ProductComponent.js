@@ -2,9 +2,9 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import {CardActionArea} from "@mui/material";
-import {CardContentComponent} from "../components/CardContentComponent";
+import {CardContentComponent} from "./CardContentComponent";
 
-export default function ProductCategories({ title, img, description, formatted_text, price, category}) {
+export default function ProductComponent({ brand, title, img, description, formatted_text, price, category}) {
 
   const onCardInteract = () => {
     console.log("redirect to product");
@@ -25,6 +25,7 @@ export default function ProductCategories({ title, img, description, formatted_t
           description={description}
           price={price}
           category={category}
+          brand={brand}
           />
       </CardActionArea>
     </Card>

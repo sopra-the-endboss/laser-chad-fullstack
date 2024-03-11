@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import CardContent from "@mui/material/CardContent";
 
-export function CardContentComponent({formatted_text, title, category, price, description, height}){
+export function CardContentComponent({formatted_text, title, category, price, description, height, brand}){
 
     const onChipInteract = () => {
         console.log("redirect to category");
@@ -17,8 +17,8 @@ export function CardContentComponent({formatted_text, title, category, price, de
                 color={"error"}
                 size={"small"}
             /></span>}
-            <Typography gutterBottom variant="h5" component="span">
-                {title}
+            <Typography gutterBottom variant="h6" component="span">
+                <span style={{fontWeight: "bold"}}>{brand}</span> {title}
             </Typography>
             <Typography variant="body2" color="text.secondary">
                 {category &&

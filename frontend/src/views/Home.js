@@ -1,7 +1,7 @@
 import {Box, Container, Grid, Typography} from "@mui/material";
 import sport from "../assets/sports.jpg";
 import React, {useEffect, useState} from "react";
-import ProductCategories from "./ProductCategories";
+import ProductComponent from "../components/ProductComponent";
 import Carousel from "../components/Carousel";
 import HomeMockData from "../data/HomeMock.json"
 function Home() {
@@ -43,17 +43,17 @@ function Home() {
                 <Grid item xs={4}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <ProductCategories img={sport} title={"Comment Section"} description={"Show top comment of the day or something or different product highlight"}/>
+                            <ProductComponent img={sport} title={"Comment Section"} description={"Show top comment of the day or something or different product highlight"}/>
                         </Grid>
 
                         <Grid item xs={12}>
-                            <ProductCategories img={sport} title={"News"} description={"Show some news related to products or a blog post or something"}/>
+                            <ProductComponent img={sport} title={"News"} description={"Show some news related to products or a blog post or something"}/>
                         </Grid>
                     </Grid>
                 </Grid>
                 {productData?.map((product, index) =>(
                     <Grid item xs={3} key={index}>
-                        <ProductCategories category={product.category} img={product.image} title={product.product} price={product.price} description={product.description} formatted_text={product.formatted_text} />
+                        <ProductComponent brand={product.brand} category={product.category} img={product.image} title={product.product} price={product.price} description={product.description} formatted_text={product.formatted_text} />
                     </Grid>
                 ))}
             </Grid>
