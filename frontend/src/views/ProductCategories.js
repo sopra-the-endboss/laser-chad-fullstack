@@ -1,13 +1,17 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
+import {CardActionArea} from "@mui/material";
+import {CardContentComponent} from "../components/CardContentComponent";
 
-export default function ProductCategories({ title, img, description, formatted_text, price}) {
+export default function ProductCategories({ title, img, description, formatted_text, price, category}) {
+
+  const onCardInteract = () => {
+    console.log("redirect to product");
+  }
+
   return (
-    <Card sx={{ height: 310}}>
+    <Card sx={{ height: 310}} onClick={onCardInteract}>
       <CardActionArea>
         <CardMedia
           component="img"
@@ -15,14 +19,13 @@ export default function ProductCategories({ title, img, description, formatted_t
           image={img}
           alt="green iguana"
         />
-        <CardContent sx={{ height: 310}}>
-          <Typography gutterBottom variant="h5" component="div">
-            <span style={{color: "red", textDecoration: "underline"}}>{formatted_text?.toUpperCase()}</span> {title}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {description ?? "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod."}
-          </Typography>
-        </CardContent>
+        <CardContentComponent
+          formatted_text={formatted_text}
+          title={title}
+          description={description}
+          price={price}
+          category={category}
+          />
       </CardActionArea>
     </Card>
   );

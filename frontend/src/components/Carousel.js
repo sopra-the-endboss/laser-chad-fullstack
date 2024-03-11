@@ -2,8 +2,6 @@ import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MobileStepper from '@mui/material/MobileStepper';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
@@ -12,6 +10,7 @@ import { autoPlay } from 'react-swipeable-views-utils';
 import {CardActionArea} from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import Card from "@mui/material/Card";
+import {CardContentComponent} from "./CardContentComponent";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 function Carousel({carouselData}) {
@@ -36,23 +35,10 @@ function Carousel({carouselData}) {
 
         return (
 
-            <Card sx={{height: "100%"}}>
+            <Card sx={{height: "100%", maxHeight: 635}}>
                 <CardActionArea sx={{height: "100%"}}>
                     <CardContent sx={{padding: 0}}>
                         <Box sx={{flexGrow: 1 }}>
-                            <Paper
-                                square
-                                elevation={0}
-                                sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    height: 50,
-                                    pl: 2,
-                                    bgcolor: 'background.default',
-                                }}
-                            >
-                                <Typography>{carouselData[activeStep]?.product}</Typography>
-                            </Paper>
                             <AutoPlaySwipeableViews
                                 axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                                 index={activeStep}
@@ -77,7 +63,17 @@ function Carousel({carouselData}) {
                                     </div>
                                 ))}
                             </AutoPlaySwipeableViews>
+                            <CardContentComponent
+                                title={carouselData[activeStep]?.product}
+                                formatted_text={carouselData[activeStep]?.formatted_text}
+                                category={carouselData[activeStep]?.category}
+                                price={carouselData[activeStep]?.price}
+                                description={carouselData[activeStep]?.description}
+                                height={120}
+                            />
+
                             <MobileStepper
+                                style={{backgroundColor: "white"}}
                                 steps={maxSteps}
                                 position="static"
                                 activeStep={activeStep}

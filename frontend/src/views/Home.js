@@ -51,9 +51,9 @@ function Home() {
                         </Grid>
                     </Grid>
                 </Grid>
-                {productData?.map(product =>(
-                    <Grid item xs={3}>
-                        <ProductCategories img={product.image} title={product.product} price={product.price} description={product.description} formatted_text={product.formatted_text} />
+                {productData?.map((product, index) =>(
+                    <Grid item xs={3} key={index}>
+                        <ProductCategories category={product.category} img={product.image} title={product.product} price={product.price} description={product.description} formatted_text={product.formatted_text} />
                     </Grid>
                 ))}
             </Grid>
