@@ -14,6 +14,12 @@ const Home = ({isSearchQuerySubmitted, data}) => {
         setProductData(data.filter(e => !e.highlighted));
     }, [data]);
 
+    const onCardInteract = (clickable) => {
+        if(clickable){
+            console.log("redirect to product");
+        }
+    }
+
     return (
         <Container maxWidth="lg">
             <Grid container spacing={2}>
@@ -41,18 +47,20 @@ const Home = ({isSearchQuerySubmitted, data}) => {
                             </Box>
                         </Grid>
                         <Grid item xs={8}>
-                            <CarouselComponent carouselData={carouselData}/>
+                            <CarouselComponent carouselData={carouselData} onCardInteract={onCardInteract} />
                         </Grid>
                         <Grid item xs={4}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
                                     <ProductComponent img={sport} title={"Comment Section"}
-                                                      description={"Show top comment of the day or something or different product highlight"}/>
+                                                      description={"Show top comment of the day or something or different product highlight"}
+                                                      onCardInteract={onCardInteract} />
                                 </Grid>
 
                                 <Grid item xs={12}>
                                     <ProductComponent img={sport} title={"News"}
-                                                      description={"Show some news related to products or a blog post or something"}/>
+                                                      description={"Show some news related to products or a blog post or something"}
+                                                      onCardInteract={onCardInteract} />
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -62,7 +70,8 @@ const Home = ({isSearchQuerySubmitted, data}) => {
                     <Grid item xs={3} key={index}>
                         <ProductComponent brand={product.brand} category={product.category} img={product.image}
                                           title={product.product} price={product.price}
-                                          description={product.description} formatted_text={product.formatted_text}/>
+                                          description={product.description} formatted_text={product.formatted_text}
+                                          onCardInteract={onCardInteract} />
                     </Grid>
                 ))}
             </Grid>

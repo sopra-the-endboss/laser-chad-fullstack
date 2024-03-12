@@ -4,16 +4,10 @@ import CardMedia from "@mui/material/CardMedia";
 import {CardActionArea} from "@mui/material";
 import {CardContentComponent} from "./CardContentComponent";
 
-export default function ProductComponent({ brand, title, img, description, formatted_text, price, category, clickable = true}) {
-
-  const onCardInteract = () => {
-    if(clickable){
-      console.log("redirect to product");
-    }
-  }
+export default function ProductComponent({ brand, title, img, description, formatted_text, price, category, clickable = true, onCardInteract}) {
 
   return (
-    <Card sx={{ height: 310}} onClick={onCardInteract}>
+    <Card sx={{ height: 310}} onClick={() => onCardInteract(clickable)}>
       <CardActionArea>
         <CardMedia
           component="img"

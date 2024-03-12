@@ -1,5 +1,6 @@
 [
   {
+    "product_id": 1,
     "product": "Apple iPhone 15 Pro",
     "highlighted": true,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -9,6 +10,7 @@
     "brand": "Apple"
   },
   {
+    "product_id": 2,
     "product": "Apple MacBook Air",
     "highlighted": true,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -18,6 +20,7 @@
     "brand": "Apple"
   },
   {
+    "product_id": 3,
     "product": "Samsung Galaxy S9",
     "highlighted": true,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -27,6 +30,7 @@
     "brand": "Samsung"
   },
   {
+    "product_id": 4,
     "product": "Lenovo Thinkpad",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -36,6 +40,7 @@
     "brand": "Lenovo"
   },
   {
+    "product_id": 5,
     "product": "Dell XPS 15",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -45,6 +50,7 @@
     "brand": "Dell"
   },
   {
+    "product_id": 6,
     "product": "Microsoft Surface Pro 7",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -54,6 +60,7 @@
     "brand": "Microsoft"
   },
   {
+    "product_id": 7,
     "product": "Google Pixelbook Go",
     "highlighted": true,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -63,6 +70,7 @@
     "brand": "Google"
   },
   {
+    "product_id": 8,
     "product": "Sony WH-1000XM4 Headphones",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -72,6 +80,7 @@
     "brand": "Sony"
   },
   {
+    "product_id": 9,
     "product": "Bose QuietComfort 35 II",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -81,6 +90,7 @@
     "brand": "Bose"
   },
   {
+    "product_id": 10,
     "product": "Nvidia GeForce RTX 3080",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -90,6 +100,7 @@
     "brand": "Nvidia"
   },
   {
+    "product_id": 10,
     "product": "AMD Ryzen 9 5900X",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -99,6 +110,7 @@
     "brand": "AMD"
   },
   {
+    "product_id": 10,
     "product": "Canon EOS R5 Camera",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -108,6 +120,7 @@
     "brand": "Canon"
   },
   {
+    "product_id": 10,
     "product": "GoPro HERO9 Black",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -117,6 +130,7 @@
     "brand": "GoPro"
   },
   {
+    "product_id": 10,
     "product": "DJI Mavic Air 2 Drone",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -126,6 +140,7 @@
     "brand": "DJI"
   },
   {
+    "product_id": 10,
     "product": "Apple iPad Pro",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -135,6 +150,7 @@
     "brand": "Apple"
   },
   {
+    "product_id": 10,
     "product": "Samsung Galaxy Tab S7",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -144,6 +160,7 @@
     "brand": "Samsung"
   },
   {
+    "product_id": 10,
     "product": "Amazon Kindle Paperwhite",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -153,6 +170,7 @@
     "brand": "Amazon"
   },
   {
+    "product_id": 10,
     "product": "Fitbit Charge 4",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -162,6 +180,7 @@
     "brand": "Fitbit"
   },
   {
+    "product_id": 10,
     "product": "Garmin Forerunner 945",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -171,6 +190,7 @@
     "brand": "Garmin"
   },
   {
+    "product_id": 10,
     "product": "Philips Hue Smart Bulbs",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -180,6 +200,7 @@
     "brand": "Philips"
   },
   {
+    "product_id": 10,
     "product": "Sonos One Speaker",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -189,6 +210,7 @@
     "brand": "Sonos"
   },
   {
+    "product_id": 10,
     "product": "Google Nest Hub Max",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -198,6 +220,7 @@
     "brand": "Google"
   },
   {
+    "product_id": 10,
     "product": "Ring Video Doorbell 3",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -207,6 +230,7 @@
     "brand": "Ring"
   },
   {
+    "product_id": 10,
     "product": "Apple Watch Series 6",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -216,6 +240,7 @@
     "brand": "Apple"
   },
   {
+    "product_id": 10,
     "product": "Oculus Quest 2 VR Headset",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -225,6 +250,7 @@
     "brand": "Oculus"
   },
   {
+    "product_id": 10,
     "product": "Xiaomi Mi 11 Ultra",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -234,6 +260,7 @@
     "brand": "Xiaomi"
   },
   {
+    "product_id": 10,
     "product": "Logitech MX Master 3 Mouse",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -243,6 +270,7 @@
     "brand": "Logitech"
   },
   {
+    "product_id": 10,
     "product": "Razer Blade 15 Gaming Laptop",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -252,6 +280,7 @@
     "brand": "Razer"
   },
   {
+    "product_id": 10,
     "product": "Anker PowerCore 10000 Portable Charger",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -261,6 +290,7 @@
     "brand": "Anker"
   },
   {
+    "product_id": 10,
     "product": "Apple AirPods Pro",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -270,6 +300,7 @@
     "brand": "Apple"
   },
   {
+    "product_id": 10,
     "product": "Samsung QLED 4K Smart TV",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -279,6 +310,7 @@
     "brand": "Samsung"
   },
   {
+    "product_id": 10,
     "product": "LG OLED CX TV",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -288,6 +320,7 @@
     "brand": "LG"
   },
   {
+    "product_id": 10,
     "product": "Asus ROG Strix GeForce RTX 3090",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -297,6 +330,7 @@
     "brand": "Asus"
   },
   {
+    "product_id": 10,
     "product": "HyperX Cloud II Gaming Headset",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -306,6 +340,7 @@
     "brand": "HyperX"
   },
   {
+    "product_id": 10,
     "product": "Yamaha P-45 Digital Piano",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -315,6 +350,7 @@
     "brand": "Yamaha"
   },
   {
+    "product_id": 10,
     "product": "Wacom Intuos Graphic Drawing Tablet",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -324,6 +360,7 @@
     "brand": "Wacom"
   },
   {
+    "product_id": 10,
     "product": "Blue Yeti USB Microphone",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -333,6 +370,7 @@
     "brand": "Blue"
   },
   {
+    "product_id": 10,
     "product": "Elgato Stream Deck",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -342,6 +380,7 @@
     "brand": "Elgato"
   },
   {
+    "product_id": 10,
     "product": "Netgear Nighthawk AX12 Router",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -351,6 +390,7 @@
     "brand": "Netgear"
   },
   {
+    "product_id": 10,
     "product": "TP-Link Deco Mesh WiFi System",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -360,6 +400,7 @@
     "brand": "TP-Link"
   },
   {
+    "product_id": 10,
     "product": "Eero 6 Mesh WiFi System",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -369,6 +410,7 @@
     "brand": "Eero"
   },
   {
+    "product_id": 10,
     "product": "Corsair K95 RGB Mechanical Keyboard",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -378,6 +420,7 @@
     "brand": "Corsair"
   },
   {
+    "product_id": 10,
     "product": "SteelSeries Arctis Pro Wireless Headset",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -387,6 +430,7 @@
     "brand": "SteelSeries"
   },
   {
+    "product_id": 10,
     "product": "Roku Streaming Stick+",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -396,6 +440,7 @@
     "brand": "Roku"
   },
   {
+    "product_id": 10,
     "product": "Amazon Echo Dot (4th Gen)",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -405,6 +450,7 @@
     "brand": "Amazon"
   },
   {
+    "product_id": 10,
     "product": "Microsoft Xbox Series X",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -414,6 +460,7 @@
     "brand": "Microsoft"
   },
   {
+    "product_id": 10,
     "product": "Sony PlayStation 5",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -423,6 +470,7 @@
     "brand": "Sony"
   },
   {
+    "product_id": 10,
     "product": "Nintendo Switch",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -432,6 +480,7 @@
     "brand": "Nintendo"
   },
   {
+    "product_id": 10,
     "product": "Apple Mac Mini M1",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -441,6 +490,7 @@
     "brand": "Apple"
   },
   {
+    "product_id": 10,
     "product": "Samsung T5 Portable SSD",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -450,6 +500,7 @@
     "brand": "Samsung"
   },
   {
+    "product_id": 10,
     "product": "Seagate Backup Plus External Hard Drive",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -459,6 +510,7 @@
     "brand": "Seagate"
   },
   {
+    "product_id": 10,
     "product": "Canon PIXMA All-in-One Printer",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -468,6 +520,7 @@
     "brand": "Canon"
   },
   {
+    "product_id": 10,
     "product": "Dyson V11 Torque Drive Cordless Vacuum",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -477,6 +530,7 @@
     "brand": "Dyson"
   },
   {
+    "product_id": 10,
     "product": "iRobot Roomba s9+ Robot Vacuum",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -486,6 +540,7 @@
     "brand": "iRobot"
   },
   {
+    "product_id": 10,
     "product": "Philips Norelco Electric Shaver",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -495,6 +550,7 @@
     "brand": "Philips"
   },
   {
+    "product_id": 10,
     "product": "Braun Series 9 Electric Razor",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -504,6 +560,7 @@
     "brand": "Braun"
   },
   {
+    "product_id": 10,
     "product": "KitchenAid Artisan Stand Mixer",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -513,6 +570,7 @@
     "brand": "KitchenAid"
   },
   {
+    "product_id": 10,
     "product": "Instant Pot Duo 7-in-1 Electric Pressure Cooker",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -522,6 +580,7 @@
     "brand": "Instant"
   },
   {
+    "product_id": 10,
     "product": "Nespresso Vertuo Coffee and Espresso Machine",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -531,6 +590,7 @@
     "brand": "Nespresso"
   },
   {
+    "product_id": 10,
     "product": "Sony A7 III Mirrorless Camera",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -540,6 +600,7 @@
     "brand": "Sony"
   },
   {
+    "product_id": 10,
     "product": "Fujifilm X-T4 Mirrorless Camera",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -549,6 +610,7 @@
     "brand": "Fujifilm"
   },
   {
+    "product_id": 10,
     "product": "GoPro MAX Action Camera",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -558,6 +620,7 @@
     "brand": "GoPro"
   },
   {
+    "product_id": 10,
     "product": "Dell UltraSharp 27 4K Monitor",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -567,6 +630,7 @@
     "brand": "Dell"
   },
   {
+    "product_id": 10,
     "product": "Apple Magic Keyboard",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
@@ -576,6 +640,7 @@
     "brand": "Apple"
   },
   {
+    "product_id": 10,
     "product": "Logitech G Pro Wireless Gaming Mouse",
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
