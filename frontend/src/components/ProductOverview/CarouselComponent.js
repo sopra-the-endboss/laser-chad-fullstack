@@ -56,7 +56,6 @@ function CarouselComponent({carouselData, clickable=true}) {
                                     <div key={step.product}>
                                         {Math.abs(activeStep - index) <= 2 ? (
                                             <Box
-                                                onClick={(e) => {console.log(e.target.src)}}
                                                 component="img"
                                                 sx={{
                                                     display: 'block',
@@ -76,7 +75,7 @@ function CarouselComponent({carouselData, clickable=true}) {
                                 category={carouselData[activeStep]?.category}
                                 price={carouselData[activeStep]?.price}
                                 description={carouselData[activeStep]?.description}
-                                height={120}
+                                height={110}
                                 brand={carouselData[activeStep]?.brand}
                             />
 
