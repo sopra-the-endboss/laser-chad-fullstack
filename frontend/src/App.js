@@ -1,6 +1,7 @@
 import "./App.css";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Home from "./views/Home";
+import Login from "./views/Login";
 import Navigation from "./components/Navigation";
 import {useState} from "react";
 
@@ -16,7 +17,7 @@ function App() {
                 <div style={{marginTop: "80px"}}>
                     <Routes>
                         <Route path="/" element={<Home/>}/>
-                        {/* Browse Products */}
+                        <Route path="/login" element={<Login/>}/>
                     </Routes>
                 </div>
             </BrowserRouter>
