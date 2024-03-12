@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import AllProductsnameMock from "../data/AllProductsNameMock.json"
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 const Navbar = ({setData, searchQuerySubmitted}) => {
 
     const navigate = useNavigate();
@@ -60,7 +60,7 @@ const Navbar = ({setData, searchQuerySubmitted}) => {
                         <div className="hidden sm:ml-6 sm:block">
                             <div className="flex space-x-4">
                                 {routes.map(route =>
-                                    <a key={route.location} href={route.route} className={route.route === window.location.pathname ? active : inactive}>{route.location}</a>)
+                                    <Link key={route.location} to={route.route} className={route.route === window.location.pathname ? active : inactive}>{route.location}</Link>)
                                 }
                             </div>
                         </div>
