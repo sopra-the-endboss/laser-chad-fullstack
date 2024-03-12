@@ -1,7 +1,10 @@
 import React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import AllProductsnameMock from "../data/AllProductsNameMock.json"
+import {useNavigate} from "react-router-dom";
 const Navbar = ({setData, searchQuerySubmitted}) => {
+
+    const navigate = useNavigate();
     const searchWithinProducts = (event) => {
         //TODO: insert search items in backend.
         // returned products will be set and content will be generated accordingly
@@ -9,6 +12,7 @@ const Navbar = ({setData, searchQuerySubmitted}) => {
         const filtered = AllProductsnameMock.filter(product => product.product.toLowerCase().includes(event.target.value.toLowerCase()));
 
         if(event.keyCode === 13 && event.target.value){
+            navigate('/');
             searchQuerySubmitted(true);
             setData(filtered);
         }
