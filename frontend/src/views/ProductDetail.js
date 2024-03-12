@@ -25,9 +25,6 @@ export const ProductDetail = () => {
         setProductComments(ProductComments.filter(productComment => productComment.product_id === parseInt(product_id))[0]);
     }, [ProductComments]);
 
-    console.log(productDetails);
-    console.log(productComments);
-
     return (
         <>
             <Grid item xs={8}>
