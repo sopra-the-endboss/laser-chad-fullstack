@@ -1,7 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import SearchIcon from '@mui/icons-material/Search';
+import AllProductsnameMock from "../data/AllProductsNameMock.json"
+const Navbar = ({setData, searchQuerySubmitted}) => {
+    const searchWithinProducts = (searchTerm) => {
+        //TODO: insert search items in backend.
+        // returned products will be set and content will be generated accordingly
+        const filtered = AllProductsnameMock.filter(product => product.product.search(searchTerm));
+        console.log("hello")
+        console.log(filtered);
+        setData(filtered);
+        //searchQuerySubmitted(true);
+    }
 
-const Navbar = () => {
     return (
         <nav className="bg-white shadow fixed top-0 left-0 w-full z-10">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4 mb-4">
@@ -22,7 +32,7 @@ const Navbar = () => {
                     </div>
                     <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                         <div className="ml-3 relative flex items-center">
-                            <input type="text" className="h-10 pl-10 pr-2 rounded-md text-sm border-gray-300" placeholder="Search..."/>
+                            <input type="text" className="h-10 pl-10 pr-2 rounded-md text-sm border-gray-300" placeholder="Search..." onChange={(e) => searchWithinProducts(e.target.value) }/>
                             <SearchIcon className="absolute left-3 h-5 w-5 text-gray-500 pl-2" />
                         </div>
                     </div>

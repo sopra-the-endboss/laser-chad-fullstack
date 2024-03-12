@@ -1,23 +1,27 @@
 import "./App.css";
-import Header from "./components/Header/Header";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Home from "./views/Home";
 import Navigation from "./components/Navigation";
+import {useState} from "react";
 
 function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Navigation />
-          <div style={{marginTop: "80px"}}>
-              <Routes>
-                  <Route path="/" element={<Home />} />
-                  {/* Add your routes here */}
-              </Routes>
-          </div>
-      </BrowserRouter>
-    </div>
-  );
+
+    const [data, setData] = useState([]);
+    const [isSearchQuerySubmitted, searchQuerySubmitted] = useState(false);
+
+    return (
+        <div className="App">
+            <BrowserRouter>
+                <Navigation setData={setData} />
+                <div style={{marginTop: "80px"}}>
+                    <Routes>
+                        <Route path="/" element={<Home/>}/>
+                        {/* Browse Products */}
+                    </Routes>
+                </div>
+            </BrowserRouter>
+        </div>
+    );
 }
 
 export default App;
