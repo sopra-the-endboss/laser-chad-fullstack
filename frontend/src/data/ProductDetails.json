@@ -1,0 +1,199 @@
+[
+  {
+    "id": 1,
+    "product": "Dell XPS 15",
+    "highlighted": false,
+    "images": [
+      "https://example.com/images/product1_view1.jpg",
+      "https://example.com/images/product1_view2.jpg",
+      "https://example.com/images/product1_view3.jpg"
+    ],
+    "price": 17.32,
+    "formatted_text": "",
+    "category": "Tech",
+    "brand": "Dell",
+    "technical_details": {
+      "processor": "Intel Core i7",
+      "ram": "16GB",
+      "storage": "512GB SSD",
+      "screen": "15.6-inch 4K UHD",
+      "battery": "86Wh",
+      "operating_system": "Windows 10 Home",
+      "graphics": "NVIDIA GeForce GTX 1650 Ti",
+      "ports": {
+        "usb_c": 2,
+        "hdmi": 1,
+        "headphone_jack": 1,
+        "sd_card_reader": 1
+      },
+      "weight": "1.83kg"
+    },
+    "warranty": "1 year",
+    "color": "Silver",
+    "availability": "In stock"
+  },
+  {
+    "id": 2,
+    "product": "Asus ROG Zephyrus G14",
+    "highlighted": true,
+    "images": [
+      "https://example.com/images/product2_view1.jpg",
+      "https://example.com/images/product2_view2.jpg",
+      "https://example.com/images/product2_view3.jpg"
+    ],
+    "price": 24.99,
+    "formatted_text": "The ultimate gaming laptop.",
+    "category": "Tech",
+    "brand": "Asus",
+    "technical_details": {
+      "processor": "AMD Ryzen 9",
+      "ram": "16GB",
+      "storage": "1TB SSD",
+      "screen": "14-inch Full HD",
+      "battery": "75Wh",
+      "operating_system": "Windows 10 Home",
+      "graphics": "NVIDIA GeForce RTX 2060",
+      "ports": {
+        "usb_c": 2,
+        "usb_a": 2,
+        "hdmi": 1,
+        "headphone_jack": 1
+      },
+      "weight": "1.6kg"
+    },
+    "warranty": "2 years",
+    "color": "Eclipse Gray",
+    "availability": "In stock"
+  },
+  {
+    "id": 3,
+    "product": "Apple MacBook Pro 16",
+    "highlighted": false,
+    "images": [
+      "https://example.com/images/product3_view1.jpg",
+      "https://example.com/images/product3_view2.jpg",
+      "https://example.com/images/product3_view3.jpg"
+    ],
+    "price": 39.99,
+    "formatted_text": "",
+    "category": "Tech",
+    "brand": "Apple",
+    "technical_details": {
+      "processor": "Apple M1 Pro",
+      "ram": "16GB",
+      "storage": "512GB SSD",
+      "screen": "16-inch Retina",
+      "battery": "100Wh",
+      "operating_system": "macOS",
+      "graphics": "Integrated 16-core GPU",
+      "ports": {
+        "thunderbolt": 3,
+        "hdmi": 1,
+        "headphone_jack": 1,
+        "sd_card_reader": 1
+      },
+      "weight": "2.1kg"
+    },
+    "warranty": "1 year",
+    "color": "Space Gray",
+    "availability": "In stock"
+  },
+  {
+    "id": 4,
+    "product": "HP Spectre x360",
+    "highlighted": false,
+    "images": [
+      "https://example.com/images/product4_view1.jpg",
+      "https://example.com/images/product4_view2.jpg",
+      "https://example.com/images/product4_view3.jpg"
+    ],
+    "price": 20.99,
+    "formatted_text": "Versatility meets performance.",
+    "category": "Tech",
+    "brand": "HP",
+    "technical_details": {
+      "processor": "Intel Core i7",
+      "ram": "16GB",
+      "storage": "512GB SSD",
+      "screen": "13.3-inch Full HD touch",
+      "battery": "66Wh",
+      "operating_system": "Windows 10 Pro",
+      "graphics": "Integrated Intel Iris Xe",
+      "ports": {
+        "usb_c": 2,
+        "thunderbolt": 2,
+        "headphone_jack": 1
+      },
+      "weight": "1.3kg"
+    },
+    "warranty": "1 year",
+    "color": "Nightfall Black",
+    "availability": "In stock"
+  },
+  {
+    "id": 5,
+    "product": "Lenovo ThinkPad X1 Carbon",
+    "highlighted": true,
+    "images": [
+      "https://example.com/images/product5_view1.jpg",
+      "https://example.com/images/product5_view2.jpg",
+      "https://example.com/images/product5_view3.jpg"
+    ],
+    "price": 18.50,
+    "formatted_text": "Built for business.",
+    "category": "Tech",
+    "brand": "Lenovo",
+    "technical_details": {
+      "processor": "Intel Core i7",
+      "ram": "16GB",
+      "storage": "1TB SSD",
+      "screen": "14-inch UHD",
+      "battery": "80Wh",
+      "operating_system": "Windows 10 Pro",
+      "graphics": "Integrated Intel UHD",
+      "ports": {
+        "usb_c": 2,
+        "hdmi": 1,
+        "headphone_jack": 1,
+        "network_extension": 1
+      },
+      "weight": "1.09kg"
+    },
+    "warranty": "3 years",
+    "color": "Black",
+    "availability": "Pre-order"
+  },
+  {
+    "id": 6,
+    "product": "Microsoft Surface Laptop 4",
+    "highlighted": false,
+    "images": [
+      "https://example.com/images/product6_view1.jpg",
+      "https://example.com/images/product6_view2.jpg",
+      "https://example.com/images/product6_view3.jpg"
+    ],
+    "price": 2299,
+    "formatted_text": "Sleek design, powerful performance.",
+    "category": "Tech",
+    "brand": "Microsoft",
+    "technical_details": {
+      "processor": "AMD Ryzen 5",
+      "ram": "8GB",
+      "storage": "256GB SSD",
+      "screen": "13.5-inch PixelSense",
+      "battery": "47.4Wh",
+      "operating_system": "Windows 10 Home",
+      "graphics": "AMD Radeon Graphics",
+      "ports": {
+        "usb_c": 1,
+        "usb_a": 1,
+        "headphone_jack": 1,
+        "surface_connect": 1
+      },
+      "weight": "1.54kg"
+    },
+    "warranty": "1 year",
+    "color": "Platinum",
+    "availability": "In stock"
+  }
+]

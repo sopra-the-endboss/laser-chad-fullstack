@@ -13,18 +13,20 @@ import Card from "@mui/material/Card";
 import {CardContentComponent} from "./CardContentComponent";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
-function Carousel({carouselData}) {
+function CarouselComponent({carouselData, clickable=true}) {
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
 
     if(carouselData){
         const maxSteps = carouselData?.length;
 
-        const handleNext = () => {
+        const handleNext = (e) => {
+            e.stopPropagation();
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         };
 
-        const handleBack = () => {
+        const handleBack = (e) => {
+            e.stopPropagation();
             setActiveStep((prevActiveStep) => prevActiveStep - 1);
         };
 
@@ -32,10 +34,15 @@ function Carousel({carouselData}) {
             setActiveStep(step);
         };
 
+        const onCardInteract = () => {
+            if(clickable){
+                console.log("redirect to product");
+            }
+        }
 
         return (
 
-            <Card sx={{height: "100%", maxHeight: 635}}>
+            <Card sx={{height: "100%", maxHeight: 635}} onClick={onCardInteract}>
                 <CardActionArea sx={{height: "100%"}}>
                     <CardContent sx={{padding: 0}}>
                         <Box sx={{flexGrow: 1 }}>
@@ -109,4 +116,4 @@ function Carousel({carouselData}) {
     }
 }
 
-export default Carousel;
+export default CarouselComponent;

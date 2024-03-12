@@ -1,8 +1,8 @@
 import {Box, Container, Grid, Typography} from "@mui/material";
 import sport from "../assets/sports.jpg";
 import React, {useEffect, useState} from "react";
-import ProductComponent from "../components/ProductComponent";
-import Carousel from "../components/Carousel";
+import ProductComponent from "../components/ProductOverview/ProductComponent";
+import CarouselComponent from "../components/ProductOverview/CarouselComponent";
 
 
 const Home = ({isSearchQuerySubmitted, data}) => {
@@ -10,7 +10,6 @@ const Home = ({isSearchQuerySubmitted, data}) => {
     const [productData, setProductData] = useState([]);
 
     useEffect(() => {
-        console.log(data)
         setCarouselData(data.filter(e => e.highlighted));
         setProductData(data.filter(e => !e.highlighted));
     }, [data]);
@@ -42,7 +41,7 @@ const Home = ({isSearchQuerySubmitted, data}) => {
                             </Box>
                         </Grid>
                         <Grid item xs={8}>
-                            <Carousel carouselData={carouselData}/>
+                            <CarouselComponent carouselData={carouselData}/>
                         </Grid>
                         <Grid item xs={4}>
                             <Grid container spacing={2}>

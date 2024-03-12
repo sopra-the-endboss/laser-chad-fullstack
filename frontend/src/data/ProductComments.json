@@ -1,0 +1,88 @@
+[
+  {
+    "product_id": 1,
+    "reviews": [
+      {
+        "user": "JaneDoe123",
+        "rating": 5,
+        "title": "Great Laptop for Professionals",
+        "comment": "I've been using the Dell XPS 15 for work and it's a powerhouse. Handles all my tasks with ease.",
+        "date": "2024-03-01"
+      },
+      {
+        "user": "TechSavvy",
+        "rating": 4,
+        "title": "Solid Performance, but Gets Hot",
+        "comment": "The laptop performance is top-notch for programming and design, but it does get quite hot under heavy load.",
+        "date": "2024-02-24"
+      }
+    ]
+  },
+  {
+    "product_id": 2,
+    "reviews": [
+      {
+        "user": "GamerGal83",
+        "rating": 4.5,
+        "title": "Awesome for Gaming on the Go",
+        "comment": "I love the portability and the battery life is decent enough for my gaming sessions.",
+        "date": "2024-03-10"
+      },
+      {
+        "user": "GotRailedInTheBack",
+        "rating": 4.0,
+        "title": "Awesome to watch Netflix and getting drilled",
+        "comment": "Took the virginity of 72 men with the help of this bad boy and got banged while watching Netflix.",
+        "date": "2024-02-06"
+      }
+    ]
+  },
+  {
+    "product_id": 3,
+    "reviews": [
+      {
+        "user": "CreativePro",
+        "rating": 4.7,
+        "title": "Perfect for Design Work",
+        "comment": "The color accuracy and performance are amazing for my design projects.",
+        "date": "2024-03-05"
+      }
+    ]
+  },
+  {
+    "product_id": 4,
+    "reviews": [
+      {
+        "user": "BizExec",
+        "rating": 4,
+        "title": "Versatile and Reliable",
+        "comment": "The 2-in-1 form factor is a game-changer for presentations and meetings.",
+        "date": "2024-03-15"
+      }
+    ]
+  },
+  {
+    "product_id": 5,
+    "reviews": [
+      {
+        "user": "RoadWarrior",
+        "rating": 4.8,
+        "title": "Travel Friendly and Durable",
+        "comment": "It holds up well to the rigors of travel, and the keyboard is the best.",
+        "date": "2024-03-20"
+      }
+    ]
+  },
+  {
+    "product_id": 6,
+    "reviews": [
+      {
+        "user": "StudentLife",
+        "rating": 4.3,
+        "title": "Lightweight and Fast",
+        "comment": "It's perfect for my college classes and the touch screen is a nice bonus.",
+        "date": "2024-03-18"
+      }
+    ]
+  }
+]

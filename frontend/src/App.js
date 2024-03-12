@@ -4,6 +4,7 @@ import Home from "./views/Home";
 import Navigation from "./components/Navigation";
 import {useState} from "react";
 import AllProductsnameMock from "./data/AllProductsNameMock.json"
+import {ProductDetail} from "./views/ProductDetail";
 
 function App() {
 
@@ -17,7 +18,7 @@ function App() {
                 <div style={{marginTop: "80px"}}>
                     <Routes>
                         <Route path="/" element={<Home isSearchQuerySubmitted={isSearchQuerySubmitted} data={data} />}/>
-                        {/* Browse Products */}
+                        <Route path="/product/:id" element={<ProductDetail />}/>
                     </Routes>
                 </div>
             </BrowserRouter>
