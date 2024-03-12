@@ -5,6 +5,7 @@ import Navigation from "./components/Navigation";
 import {useState} from "react";
 import AllProductsnameMock from "./data/AllProductsNameMock.json"
 import {ProductDetail} from "./views/ProductDetail";
+import {Container, Grid} from "@mui/material";
 
 function App() {
 
@@ -14,12 +15,18 @@ function App() {
     return (
         <div className="App">
             <BrowserRouter>
-                <Navigation setData={setData} searchQuerySubmitted={searchQuerySubmitted} />
+                <Navigation setData={setData} searchQuerySubmitted={searchQuerySubmitted}/>
                 <div style={{marginTop: "80px"}}>
-                    <Routes>
-                        <Route path="/" element={<Home isSearchQuerySubmitted={isSearchQuerySubmitted} data={data} />}/>
-                        <Route path="/product/:id" element={<ProductDetail />}/>
-                    </Routes>
+                    <Container maxWidth="lg">
+                        <Grid container spacing={2}>
+                            <Routes>
+                                <Route path="/"
+                                       element={<Home isSearchQuerySubmitted={isSearchQuerySubmitted} data={data}/>}/>
+                                <Route path="/product/:product_id" element={<ProductDetail/>}/>
+                            </Routes>
+
+                        </Grid>
+                    </Container>
                 </div>
             </BrowserRouter>
         </div>

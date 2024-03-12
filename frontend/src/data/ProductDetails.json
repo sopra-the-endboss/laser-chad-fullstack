@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "product_id": 1,
     "product": "Dell XPS 15",
     "highlighted": false,
     "images": [
@@ -19,7 +19,7 @@
       "screen": "15.6-inch 4K UHD",
       "battery": "86Wh",
       "operating_system": "Windows 10 Home",
-      "graphics": "NVIDIA GeForce GTX 1650 Ti",
+      "graphics": "NVproduct_idIA GeForce GTX 1650 Ti",
       "ports": {
         "usb_c": 2,
         "hdmi": 1,
@@ -33,7 +33,7 @@
     "availability": "In stock"
   },
   {
-    "id": 2,
+    "product_id": 2,
     "product": "Asus ROG Zephyrus G14",
     "highlighted": true,
     "images": [
@@ -52,7 +52,7 @@
       "screen": "14-inch Full HD",
       "battery": "75Wh",
       "operating_system": "Windows 10 Home",
-      "graphics": "NVIDIA GeForce RTX 2060",
+      "graphics": "NVproduct_idIA GeForce RTX 2060",
       "ports": {
         "usb_c": 2,
         "usb_a": 2,
@@ -66,7 +66,7 @@
     "availability": "In stock"
   },
   {
-    "id": 3,
+    "product_id": 3,
     "product": "Apple MacBook Pro 16",
     "highlighted": false,
     "images": [
@@ -99,7 +99,7 @@
     "availability": "In stock"
   },
   {
-    "id": 4,
+    "product_id": 4,
     "product": "HP Spectre x360",
     "highlighted": false,
     "images": [
@@ -131,7 +131,7 @@
     "availability": "In stock"
   },
   {
-    "id": 5,
+    "product_id": 5,
     "product": "Lenovo ThinkPad X1 Carbon",
     "highlighted": true,
     "images": [
@@ -164,7 +164,139 @@
     "availability": "Pre-order"
   },
   {
-    "id": 6,
+    "product_id": 6,
+    "product": "Microsoft Surface Laptop 4",
+    "highlighted": false,
+    "images": [
+      "https://example.com/images/product6_view1.jpg",
+      "https://example.com/images/product6_view2.jpg",
+      "https://example.com/images/product6_view3.jpg"
+    ],
+    "price": 2299,
+    "formatted_text": "Sleek design, powerful performance.",
+    "category": "Tech",
+    "brand": "Microsoft",
+    "technical_details": {
+      "processor": "AMD Ryzen 5",
+      "ram": "8GB",
+      "storage": "256GB SSD",
+      "screen": "13.5-inch PixelSense",
+      "battery": "47.4Wh",
+      "operating_system": "Windows 10 Home",
+      "graphics": "AMD Radeon Graphics",
+      "ports": {
+        "usb_c": 1,
+        "usb_a": 1,
+        "headphone_jack": 1,
+        "surface_connect": 1
+      },
+      "weight": "1.54kg"
+    },
+    "warranty": "1 year",
+    "color": "Platinum",
+    "availability": "In stock"
+  },
+  {
+    "product_id": 7,
+    "product": "Microsoft Surface Laptop 4",
+    "highlighted": false,
+    "images": [
+      "https://example.com/images/product6_view1.jpg",
+      "https://example.com/images/product6_view2.jpg",
+      "https://example.com/images/product6_view3.jpg"
+    ],
+    "price": 2299,
+    "formatted_text": "Sleek design, powerful performance.",
+    "category": "Tech",
+    "brand": "Microsoft",
+    "technical_details": {
+      "processor": "AMD Ryzen 5",
+      "ram": "8GB",
+      "storage": "256GB SSD",
+      "screen": "13.5-inch PixelSense",
+      "battery": "47.4Wh",
+      "operating_system": "Windows 10 Home",
+      "graphics": "AMD Radeon Graphics",
+      "ports": {
+        "usb_c": 1,
+        "usb_a": 1,
+        "headphone_jack": 1,
+        "surface_connect": 1
+      },
+      "weight": "1.54kg"
+    },
+    "warranty": "1 year",
+    "color": "Platinum",
+    "availability": "In stock"
+  },
+  {
+    "product_id": 8,
+    "product": "Microsoft Surface Laptop 4",
+    "highlighted": false,
+    "images": [
+      "https://example.com/images/product6_view1.jpg",
+      "https://example.com/images/product6_view2.jpg",
+      "https://example.com/images/product6_view3.jpg"
+    ],
+    "price": 2299,
+    "formatted_text": "Sleek design, powerful performance.",
+    "category": "Tech",
+    "brand": "Microsoft",
+    "technical_details": {
+      "processor": "AMD Ryzen 5",
+      "ram": "8GB",
+      "storage": "256GB SSD",
+      "screen": "13.5-inch PixelSense",
+      "battery": "47.4Wh",
+      "operating_system": "Windows 10 Home",
+      "graphics": "AMD Radeon Graphics",
+      "ports": {
+        "usb_c": 1,
+        "usb_a": 1,
+        "headphone_jack": 1,
+        "surface_connect": 1
+      },
+      "weight": "1.54kg"
+    },
+    "warranty": "1 year",
+    "color": "Platinum",
+    "availability": "In stock"
+  },
+  {
+    "product_id": 9,
+    "product": "Microsoft Surface Laptop 4",
+    "highlighted": false,
+    "images": [
+      "https://example.com/images/product6_view1.jpg",
+      "https://example.com/images/product6_view2.jpg",
+      "https://example.com/images/product6_view3.jpg"
+    ],
+    "price": 2299,
+    "formatted_text": "Sleek design, powerful performance.",
+    "category": "Tech",
+    "brand": "Microsoft",
+    "technical_details": {
+      "processor": "AMD Ryzen 5",
+      "ram": "8GB",
+      "storage": "256GB SSD",
+      "screen": "13.5-inch PixelSense",
+      "battery": "47.4Wh",
+      "operating_system": "Windows 10 Home",
+      "graphics": "AMD Radeon Graphics",
+      "ports": {
+        "usb_c": 1,
+        "usb_a": 1,
+        "headphone_jack": 1,
+        "surface_connect": 1
+      },
+      "weight": "1.54kg"
+    },
+    "warranty": "1 year",
+    "color": "Platinum",
+    "availability": "In stock"
+  },
+  {
+    "product_id": 10,
     "product": "Microsoft Surface Laptop 4",
     "highlighted": false,
     "images": [

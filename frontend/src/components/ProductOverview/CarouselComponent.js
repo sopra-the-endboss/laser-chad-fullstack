@@ -36,7 +36,7 @@ function CarouselComponent({carouselData, clickable=true, onCardInteract}) {
 
         return (
 
-            <Card sx={{height: "100%", maxHeight: 635}} onClick={() => onCardInteract(clickable)}>
+            <Card sx={{height: "100%", maxHeight: 635}} onClick={() => onCardInteract(clickable, carouselData[activeStep]?.product_id)}>
                 <CardActionArea sx={{height: "100%"}}>
                     <CardContent sx={{padding: 0}}>
                         <Box sx={{flexGrow: 1 }}>
