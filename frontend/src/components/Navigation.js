@@ -1,15 +1,21 @@
-import React, {useState} from 'react';
+import React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import AllProductsnameMock from "../data/AllProductsNameMock.json"
 const Navbar = ({setData, searchQuerySubmitted}) => {
-    const searchWithinProducts = (searchTerm) => {
+    const searchWithinProducts = (event) => {
         //TODO: insert search items in backend.
         // returned products will be set and content will be generated accordingly
-        const filtered = AllProductsnameMock.filter(product => product.product.search(searchTerm));
-        console.log("hello")
-        console.log(filtered);
-        setData(filtered);
-        //searchQuerySubmitted(true);
+        // currently filtering is extremely strict, use levenstein distance or fuse.js to also account for misspells.
+        const filtered = AllProductsnameMock.filter(product => product.product.toLowerCase().includes(event.target.value.toLowerCase()));
+
+        if(event.keyCode === 13 && event.target.value){
+            searchQuerySubmitted(true);
+            setData(filtered);
+        }
+        else if(event.keyCode === 13){
+            searchQuerySubmitted(false);
+            setData(filtered);
+        }
     }
 
     return (
@@ -32,7 +38,7 @@ const Navbar = ({setData, searchQuerySubmitted}) => {
                     </div>
                     <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                         <div className="ml-3 relative flex items-center">
-                            <input type="text" className="h-10 pl-10 pr-2 rounded-md text-sm border-gray-300" placeholder="Search..." onChange={(e) => searchWithinProducts(e.target.value) }/>
+                            <input type="text" className="h-10 pl-10 pr-2 rounded-md text-sm border-gray-300" placeholder="Search..." onKeyDown={(e) => searchWithinProducts(e)} />
                             <SearchIcon className="absolute left-3 h-5 w-5 text-gray-500 pl-2" />
                         </div>
                     </div>

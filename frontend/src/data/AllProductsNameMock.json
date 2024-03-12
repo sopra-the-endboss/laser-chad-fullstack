@@ -1,7 +1,7 @@
 [
   {
     "product": "Apple iPhone 15 Pro",
-    "highlighted": false,
+    "highlighted": true,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 57.46,
     "formatted_text": "",
@@ -10,7 +10,7 @@
   },
   {
     "product": "Apple MacBook Air",
-    "highlighted": false,
+    "highlighted": true,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 775.82,
     "formatted_text": "",
@@ -19,7 +19,7 @@
   },
   {
     "product": "Samsung Galaxy S9",
-    "highlighted": false,
+    "highlighted": true,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 482.89,
     "formatted_text": "",
@@ -55,7 +55,7 @@
   },
   {
     "product": "Google Pixelbook Go",
-    "highlighted": false,
+    "highlighted": true,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 364.66,
     "formatted_text": "",
