@@ -34,10 +34,10 @@ export const ProductDetail = () => {
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Typography gutterBottom variant="h3" component="div" color="red" align="left">
-                            ${productDetails.price}
+                            ${productDetails?.price}
                         </Typography>
                         <Typography gutterBottom variant="h5" component="div" color="black" style={{ fontWeight: 'bold' }} align="left">
-                            {productDetails.brand} <Typography gutterBottom variant="h5" component="span" color="black" align="left">{productDetails.product}</Typography>
+                            {productDetails?.brand} <Typography gutterBottom variant="h5" component="span" color="black" align="left">{productDetails?.product}</Typography>
                         </Typography>
                         <Typography gutterBottom variant="body2" color="text.secondary" align="left">
                             {productDetails?.subheader}
@@ -64,7 +64,7 @@ export const ProductDetail = () => {
                     <Typography variant="h6" align="left">Specs</Typography>
                     <Paper elevation={0} variant="outlined" square sx={{ p: 2 }}>
                         {/* Display each technical detail */}
-                        {Object.entries(productDetails?.technical_details).map(([key, value], i) => (
+                        {Object.entries(productDetails?.technical_details)?.map(([key, value], i) => (
                             <Typography key={i} gutterBottom variant="body2" color="text.secondary" align="left">
                                 {`${key}: ${value}`}
                             </Typography>
