@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import AllProductsnameMock from "../data/AllProductsNameMock.json"
 import {useNavigate} from "react-router-dom";
 const Navbar = ({setData, searchQuerySubmitted}) => {
 
     const navigate = useNavigate();
+
     const searchWithinProducts = (event) => {
         //TODO: insert search items in backend.
         // returned products will be set and content will be generated accordingly
@@ -22,6 +23,32 @@ const Navbar = ({setData, searchQuerySubmitted}) => {
         }
     }
 
+    const inactive = "text-gray-600 hover:bg-gray-200 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium";
+    const active = "text-gray-800 px-3 py-2 rounded-md text-sm font-medium"
+
+    const routes = [
+        {
+            route: "/",
+            location: "Overview"
+        },
+        {
+            route: "/categories",
+            location: "Categories"
+        },
+        {
+            route: "/shopping-cart",
+            location: "Shopping Cart"
+        },
+        {
+            route: "/pinned",
+            location: "Pinned Products"
+        },
+        {
+            route: "/login",
+            location: "Login"
+        },
+    ]
+
     return (
         <nav className="bg-white shadow fixed top-0 left-0 w-full z-10">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4 mb-4">
@@ -32,11 +59,9 @@ const Navbar = ({setData, searchQuerySubmitted}) => {
                         </div>
                         <div className="hidden sm:ml-6 sm:block">
                             <div className="flex space-x-4">
-                                <a href="/" className="text-gray-800 px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Overview</a>
-                                <a href="/categories" className="text-gray-600 hover:bg-gray-200 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">Categories</a>
-                                <a href="/shopping-cart" className="text-gray-600 hover:bg-gray-200 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">Shopping Cart</a>
-                                <a href="/pinned" className="text-gray-600 hover:bg-gray-200 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">Pinned Products</a>
-                                <a href="/login" className="text-gray-600 hover:bg-gray-200 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">Login</a>
+                                {routes.map(route =>
+                                    <a key={route.location} href={route.route} className={route.route === window.location.pathname ? active : inactive}>{route.location}</a>)
+                                }
                             </div>
                         </div>
                     </div>
