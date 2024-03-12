@@ -1,5 +1,4 @@
 import {Box, Grid, Typography} from "@mui/material";
-import sport from "../assets/sports.jpg";
 import React, {useEffect, useState} from "react";
 import ProductComponent from "../components/ProductOverview/ProductComponent";
 import CarouselComponent from "../components/ProductOverview/CarouselComponent";
@@ -53,13 +52,13 @@ const Home = ({isSearchQuerySubmitted, data}) => {
                     <Grid item xs={4}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <ProductComponent img={sport} title={"Comment Section"}
+                                <ProductComponent title={"Comment Section"} img={"https://preview.redd.it/madoka-ayukawa-from-kimagure-orange-road-1987-v0-fx15w3vtkjz81.png?width=640&crop=smart&auto=webp&s=471f01d04aec447193f23c558de3746b8e61e25a"}
                                                   description={"Show top comment of the day or something or different product highlight"}
                                                   onCardInteract={onCardInteract}/>
                             </Grid>
 
                             <Grid item xs={12}>
-                                <ProductComponent img={sport} title={"News"}
+                                <ProductComponent title={"News"} img={"https://preview.redd.it/madoka-ayukawa-from-kimagure-orange-road-1987-v0-fx15w3vtkjz81.png?width=640&crop=smart&auto=webp&s=471f01d04aec447193f23c558de3746b8e61e25a"}
                                                   description={"Show some news related to products or a blog post or something"}
                                                   onCardInteract={onCardInteract}/>
                             </Grid>

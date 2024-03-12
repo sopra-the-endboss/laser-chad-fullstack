@@ -11,9 +11,9 @@ export default function ProductComponent({ product_id, brand, title, img, descri
       <CardActionArea>
         <CardMedia
           component="img"
-          height="140"
           image={img}
           alt="green iguana"
+          sx={{height: 160}}
         />
         <CardContentComponent
           formatted_text={formatted_text}
@@ -22,6 +22,7 @@ export default function ProductComponent({ product_id, brand, title, img, descri
           price={price}
           category={category}
           brand={brand}
+          height={150}
           />
       </CardActionArea>
     </Card>
