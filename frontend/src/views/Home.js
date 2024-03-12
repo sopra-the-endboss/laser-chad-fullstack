@@ -1,4 +1,4 @@
-import {Box, Container, Grid, Typography} from "@mui/material";
+import {Box, Grid, Typography} from "@mui/material";
 import sport from "../assets/sports.jpg";
 import React, {useEffect, useState} from "react";
 import ProductComponent from "../components/ProductOverview/ProductComponent";

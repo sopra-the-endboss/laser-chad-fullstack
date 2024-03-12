@@ -1,11 +1,9 @@
-import {Container, Grid, Paper, Rating} from "@mui/material";
+import {Grid, Paper, Rating} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import ProductDetails from "../data/ProductDetails.json"
 import ProductComments from "../data/ProductComments.json"
 import {useParams} from "react-router-dom";
 import CarouselComponent from "../components/ProductOverview/CarouselComponent";
-import ProductComponent from "../components/ProductOverview/ProductComponent";
-import sport from "../assets/sports.jpg";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
@@ -18,13 +16,13 @@ export const ProductDetail = () => {
     useEffect(() => {
         //TODO: fetch Product deatails for this stuff from backend
         // I expect an object, that's why the [0]
-        setProductDetails(ProductDetails.filter(productDetail => productDetail.product_id == product_id)[0]);
+        setProductDetails(ProductDetails.filter(productDetail => productDetail.product_id === parseInt(product_id))[0]);
     }, [ProductDetails]);
 
     useEffect(() => {
         //TODO: fetch Product deatails for this stuff from backend
         //ProductComments
-        setProductComments(ProductComments.filter(productComment => productComment.product_id == product_id)[0]);
+        setProductComments(ProductComments.filter(productComment => productComment.product_id === parseInt(product_id))[0]);
     }, [ProductComments]);
 
     console.log(productDetails);
