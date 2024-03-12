@@ -17,13 +17,13 @@ export const ProductDetail = () => {
         //TODO: fetch Product deatails for this stuff from backend
         // I expect an object, that's why the [0]
         setProductDetails(ProductDetails.filter(productDetail => productDetail.product_id === parseInt(product_id))[0]);
-    }, [ProductDetails]);
+    }, [product_id]);
 
     useEffect(() => {
         //TODO: fetch Product deatails for this stuff from backend
         //ProductComments
         setProductComments(ProductComments.filter(productComment => productComment.product_id === parseInt(product_id))[0]);
-    }, [ProductComments]);
+    }, [product_id]);
 
     return (
         <>

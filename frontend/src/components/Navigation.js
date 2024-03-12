@@ -33,10 +33,10 @@ const Navbar = ({setData, searchQuerySubmitted}) => {
                         <div className="hidden sm:ml-6 sm:block">
                             <div className="flex space-x-4">
                                 <a href="/" className="text-gray-800 px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Overview</a>
-                                <a href="#" className="text-gray-600 hover:bg-gray-200 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">Categories</a>
-                                <a href="#" className="text-gray-600 hover:bg-gray-200 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">Shopping Cart</a>
-                                <a href="#" className="text-gray-600 hover:bg-gray-200 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">Pinned Products</a>
-                                <a href="#" className="text-gray-600 hover:bg-gray-200 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">Login</a>
+                                <a href="/categories" className="text-gray-600 hover:bg-gray-200 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">Categories</a>
+                                <a href="/shopping-cart" className="text-gray-600 hover:bg-gray-200 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">Shopping Cart</a>
+                                <a href="/pinned" className="text-gray-600 hover:bg-gray-200 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">Pinned Products</a>
+                                <a href="/login" className="text-gray-600 hover:bg-gray-200 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">Login</a>
                             </div>
                         </div>
                     </div>
