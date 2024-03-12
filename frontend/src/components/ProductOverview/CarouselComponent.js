@@ -23,12 +23,12 @@ function CarouselComponent({carouselData, clickable = true, onCardInteract}) {
 
         const handleNext = (e) => {
             e.stopPropagation();
-            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            setActiveStep((prevActiveStep) => (prevActiveStep+1) % maxSteps);
         };
 
         const handleBack = (e) => {
             e.stopPropagation();
-            setActiveStep((prevActiveStep) => prevActiveStep - 1);
+            setActiveStep((prevActiveStep) => (prevActiveStep-1+ maxSteps) % maxSteps);
         };
 
         const handleStepChange = (step) => {
@@ -100,22 +100,13 @@ function CarouselComponent({carouselData, clickable = true, onCardInteract}) {
                                     <Button
                                         size="small"
                                         onClick={handleNext}
-                                        disabled={activeStep === maxSteps - 1}
                                     >
-                                        {theme.direction === 'rtl' ? (
-                                            <KeyboardArrowLeft/>
-                                        ) : (
-                                            <KeyboardArrowRight/>
-                                        )}
+                                        <KeyboardArrowRight/>
                                     </Button>
                                 }
                                 backButton={
-                                    <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                                        {theme.direction === 'rtl' ? (
-                                            <KeyboardArrowRight/>
-                                        ) : (
-                                            <KeyboardArrowLeft/>
-                                        )}
+                                    <Button size="small" onClick={handleBack}>
+                                        <KeyboardArrowLeft/>
                                     </Button>
                                 }
                             />
