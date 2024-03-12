@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import AllProductsnameMock from "../data/AllProductsNameMock.json"
 import {useNavigate} from "react-router-dom";
