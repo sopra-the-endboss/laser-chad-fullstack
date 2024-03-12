@@ -6,7 +6,7 @@
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 57.46,
     "formatted_text": "",
-    "category": "Tech",
+    "category": "Smartphone",
     "brand": "Apple"
   },
   {
@@ -16,7 +16,7 @@
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 775.82,
     "formatted_text": "",
-    "category": "Tech",
+    "category": "Laptop",
     "brand": "Apple"
   },
   {
@@ -26,7 +26,7 @@
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 482.89,
     "formatted_text": "",
-    "category": "Tech",
+    "category": "Smartphone",
     "brand": "Samsung"
   },
   {
@@ -46,7 +46,7 @@
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 17.32,
     "formatted_text": "",
-    "category": "Tech",
+    "category": "Laptop",
     "brand": "Dell"
   },
   {
@@ -66,7 +66,7 @@
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 364.66,
     "formatted_text": "",
-    "category": "Tech",
+    "category": "Smartphone",
     "brand": "Google"
   },
   {
@@ -76,7 +76,7 @@
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 155.12,
     "formatted_text": "",
-    "category": "Tech",
+    "category": "Accessories",
     "brand": "Sony"
   },
   {
@@ -86,7 +86,7 @@
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 307.63,
     "formatted_text": "",
-    "category": "Tech",
+    "category": "Audio",
     "brand": "Bose"
   },
   {
@@ -116,7 +116,7 @@
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 297.81,
     "formatted_text": "",
-    "category": "Tech",
+    "category": "Photo",
     "brand": "Canon"
   },
   {
@@ -126,7 +126,7 @@
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 175.1,
     "formatted_text": "",
-    "category": "Tech",
+    "category": "Photo",
     "brand": "GoPro"
   },
   {

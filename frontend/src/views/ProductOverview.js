@@ -2,18 +2,24 @@ import {Box, Grid, Typography} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import ProductComponent from "../components/ProductOverview/ProductComponent";
 import CarouselComponent from "../components/ProductOverview/CarouselComponent";
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 
 
-const Home = ({isSearchQuerySubmitted, data}) => {
+const ProductOverview = ({isSearchQuerySubmitted, data, setCategoryFilter}) => {
     const [carouselData, setCarouselData] = useState([]);
     const [productData, setProductData] = useState([]);
     const navigate = useNavigate();
+    const {categoryFilter} = useParams();
 
     useEffect(() => {
         setCarouselData(data.filter(e => e.highlighted));
         setProductData(data.filter(e => !e.highlighted));
     }, [data]);
+
+    useEffect(() => {
+        if(categoryFilter)
+            setCategoryFilter(categoryFilter);
+    }, [categoryFilter, setCategoryFilter])
 
     const onCardInteract = (clickable, id) => {
         if (clickable) {
@@ -78,4 +84,4 @@ const Home = ({isSearchQuerySubmitted, data}) => {
     );
 }
 
-export default Home;
+export default ProductOverview;
