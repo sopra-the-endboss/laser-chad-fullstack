@@ -14,6 +14,7 @@
     "formatted_text": "",
     "category": "Tech",
     "brand": "Dell",
+    "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
     "technical_details": {
       "processor": "Intel Core i7",
       "ram": "16GB",
@@ -48,6 +49,7 @@
     "formatted_text": "The ultimate gaming laptop.",
     "category": "Tech",
     "brand": "Asus",
+    "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
     "technical_details": {
       "processor": "AMD Ryzen 9",
       "ram": "16GB",
@@ -72,6 +74,7 @@
     "product_id": 3,
     "product": "Apple MacBook Pro 16",
     "highlighted": false,
+    "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
     "images": [
       "https://www.digitec.ch/im/productimages/5/6/4/4/7/4/1/9/1/3/5/2/5/4/9/4/6/2/caac20ef-b06f-41e9-a0bf-d88900ec25b3.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
       "https://www.digitec.ch/im/productimages/7/7/2/2/6/5/2/3/5/4/7/0/1/1/3/4/5/5/6/220f7345-2c62-41af-848b-c8eaebe160fc.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
@@ -112,6 +115,7 @@
     "product_id": 4,
     "product": "HP Spectre x360",
     "highlighted": false,
+    "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
     "images": [
       "https://www.digitec.ch/im/productimages/5/5/4/3/5/7/5/8/0/8/7/5/6/2/7/4/5/2/3/7e21c178-76b1-4d2f-a8f0-2c2a1fe00e46_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
       "https://www.digitec.ch/im/productimages/3/0/9/0/0/2/7/8/4/7/5/4/1/6/3/4/8/2/63932b8e-0201-4111-b352-a52defa5c828_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
@@ -143,6 +147,7 @@
     "product_id": 5,
     "product": "Lenovo ThinkPad X1 Carbon",
     "highlighted": true,
+    "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
     "images": [
       "https://www.digitec.ch/im/productimages/5/5/2/0/3/0/5/5/4/7/2/4/3/2/0/3/8/0/3/390a1a62-552f-4a83-a567-4bad5724f058_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
       "https://www.digitec.ch/im/productimages/6/7/9/9/7/8/3/8/7/5/3/5/6/9/3/2/3/0/9/a50edc45-19f4-43ee-8fd4-5f2a1ced4d81_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
@@ -184,6 +189,7 @@
     "formatted_text": "Sleek design, powerful performance.",
     "category": "Tech",
     "brand": "Microsoft",
+    "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
     "technical_details": {
       "processor": "AMD Ryzen 5",
       "ram": "8GB",

@@ -6,6 +6,7 @@ import {useParams} from "react-router-dom";
 import CarouselComponent from "../components/ProductOverview/CarouselComponent";
 import ProductComponent from "../components/ProductOverview/ProductComponent";
 import sport from "../assets/sports.jpg";
+import Typography from "@mui/material/Typography";
 
 export const ProductDetail = () => {
 
@@ -31,11 +32,21 @@ export const ProductDetail = () => {
             <Grid item xs={4}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        Price
+                        <Typography gutterBottom variant="h3" component="div" color={"red"} align={"left"}>
+                            {productDetails.price}
+                        </Typography>
+                        <Typography gutterBottom variant="h5" component="div" color={"black"} style={{fontWeight: "bold"}} align={"left"}>
+                            {productDetails.brand} <Typography gutterBottom variant="h5" component="span" color={"black"} align={"left"}>{productDetails.product}</Typography>
+                        </Typography>
+                        <Typography gutterBottom variant="body2" color="text.secondary" align={"left"}>
+                            {productDetails?.subheader}
+                        </Typography>
+
                     </Grid>
 
                     <Grid item xs={12}>
-                        Rating
+
+
                     </Grid>
                 </Grid>
             </Grid>
