@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   CognitoUserPool,
   CognitoUserAttribute,
@@ -7,13 +7,14 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
+import { v4 as uuidv4 } from "uuid";
 
 // styling
 import "./styles/SignUp.scss";
 
 const userPool = new CognitoUserPool({
-  UserPoolId: process.env.BUYER_APP_USERPOOL_ID,
-  ClientId: process.env.BUYER_APP_APPCLIENT_ID,
+  UserPoolId: process.env.REACT_APP_USERPOOL_ID,
+  ClientId: process.env.REACT_APP_APPCLIENT_ID,
 });
 
 export const SignUp = () => {
@@ -22,6 +23,7 @@ export const SignUp = () => {
   const handleSubmit = (values) => {
     const email = values.email.trim();
     const password = values.password.trim();
+    const username = uuidv4();
     const attributeList = [
       new CognitoUserAttribute({
         Name: "email",
@@ -44,13 +46,13 @@ export const SignUp = () => {
         Value: values.address,
       }),
     ];
-    userPool.signUp(email, password, attributeList, null, (err, result) => {
+    userPool.signUp(username, password, attributeList, null, (err, result) => {
       if (err) {
         console.error(err);
         return;
       }
       console.log(result);
-      navigate("/");
+      navigate("/logged_in"); // Redirect to the logged in userpage needs to be replaced once logged in state is implemented
     });
   };
   const formik = useFormik({
@@ -90,12 +92,10 @@ export const SignUp = () => {
       <div className="signup__container">
         <div className="signup__form" onSubmit={formik.handleSubmit}>
           <h1>Sign Up</h1>
-          <div className="signup__fieldName" htmlFor="given_name">
-            Given Name
-          </div>
-          <input
+          <TextField
             className="signup__inputField"
             name="given_name"
+            label="Given Name"
             type="text"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -105,12 +105,10 @@ export const SignUp = () => {
             <div className="signup__error">{formik.errors.given_name}</div>
           ) : null}
 
-          <div className="signup__fieldName" htmlFor="family_name">
-            Family Name
-          </div>
-          <input
+          <TextField
             className="signup__inputField"
             name="family_name"
+            label="Family Name"
             type="text"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -120,10 +118,7 @@ export const SignUp = () => {
             <div className="signup__error">{formik.errors.family_name}</div>
           ) : null}
 
-          <div className="signup__fieldName" htmlFor="birthdate">
-            Birthdate
-          </div>
-          <input
+          <TextField
             className="signup__inputField"
             name="birthdate"
             type="date"
@@ -135,12 +130,10 @@ export const SignUp = () => {
             <div className="signup__error">{formik.errors.birthdate}</div>
           ) : null}
 
-          <div className="signup__fieldName" htmlFor="address">
-            Address
-          </div>
-          <input
+          <TextField
             className="signup__inputField"
             name="address"
+            label="Address"
             type="text"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -150,12 +143,10 @@ export const SignUp = () => {
             <div className="signup__error">{formik.errors.address}</div>
           ) : null}
 
-          <div className="signup__fieldName" htmlFor="email">
-            Email Address
-          </div>
-          <input
+          <TextField
             className="signup__inputField"
             name="email"
+            label="Email"
             type="email"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -165,12 +156,10 @@ export const SignUp = () => {
             <div className="signup__error">{formik.errors.email}</div>
           ) : null}
 
-          <div className="signup__fieldName" htmlFor="password">
-            Password
-          </div>
-          <input
+          <TextField
             className="signup__inputField"
             name="password"
+            label="Password"
             type="password"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -195,7 +184,14 @@ export const SignUp = () => {
                     <div className="signup__error">{formik.errors.confirmPassword}</div>
                 ) : null} */}
 
-          <Button name="Hello" onClick={() => handleSubmit(formik.values)}>
+          <Button
+            type="submit"
+            variant="contained"
+            name="Submit"
+            color="primary"
+            onClick={() => handleSubmit(formik.values)}
+            sx={{ width: 400, marginTop: "10px" }}
+          >
             Submit
           </Button>
         </div>
