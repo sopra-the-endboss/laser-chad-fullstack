@@ -1,5 +1,6 @@
 version: "3"
 services:
+
   frontend:
     container_name: "frontend"
     build: ./frontend
@@ -10,6 +11,7 @@ services:
     volumes:
       - "./frontend/public:/app/public"
       - "./frontend/src:/app/src"
+
   localstack:
     container_name: "localstack"
     image: localstack/localstack:latest
@@ -17,7 +19,7 @@ services:
       - "4566:4566" # localstack gateway
       - "4510-4559:4510-4559" # external services port range
     environment:
-      - SERVICES=lambda,s3
+      - SERVICES=lambda,s3,dynamodb,apigateway
       - DEBUG=1
       - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR-}
       - DOCKER_HOST=unix:///var/run/docker.sock
@@ -30,3 +32,45 @@ services:
     volumes:
       - ".volume:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - backend
+  
+  shopprofile:
+    container_name: "shopprofile"
+    build:
+      context: ./backend
+      dockerfile: dockerfile
+      no_cache: true
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ENDPOINT_URL=http://localstack:4566 # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=fakecred # Sometimes boto3 needs credentials
+      - AWS_SECRET_ACCESS_KEY=fakecred
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - localstack
+    networks:
+      - backend
+  
+  shopprofile-debugger:
+    container_name: "shopprofile-debugger"
+    build:
+      context: ./backend
+      dockerfile: dockerfile_debugger
+      no_cache: true
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ENDPOINT_URL=http://localstack:4566 # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=fakecred # Sometimes boto3 needs credentials
+      - AWS_SECRET_ACCESS_KEY=fakecred
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - localstack
+    networks:
+      - backend
+
+networks:
+  backend:
+    external: false
