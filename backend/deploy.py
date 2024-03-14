@@ -19,7 +19,7 @@ from botocore import exceptions
 import json
 
 # FOR MANUAL RUNING ONLY
-# os.chdir("./backend")
+# os.chdir("./minimal-backend-service")
 # Also set ENDPOINT_URL to the localhost container, if running manually
 # os.environ['AWS_ENDPOINT_URL']='http://localstack:4566'
 
@@ -52,24 +52,19 @@ CONFIG_ENV = {
 }
 for env_var, env_value in CONFIG_ENV.items():
     try:
-        print(f"{env_var} set to {os.environ[env_var]}")
+        print(f"{env_var} set to {os.environ[env_var]})")
     except KeyError:
         os.environ[env_var] = env_value
 
 # Create clients
-print("Try to establish boto3 clients ...")
 lambda_client = boto3.client("lambda")
 dynamo_client = boto3.client("dynamodb")
 apig_client = boto3.client("apigateway")
-print("Success establishing boto3 clients")
 
 
 
 ###
-# Dynamo DB deployment
-print("Try to create DB table ...")
-print("With env")
-print(os.environ)
+# Dynamo DB deployment  
 dynamo_client.create_table(**db_schema)
 print("Dynamo DB created")
 
