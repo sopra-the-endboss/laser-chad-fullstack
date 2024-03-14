@@ -10,6 +10,7 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateData } from "../reducers/slices/authSlice";
+import { useSelector } from "react-redux";
 
 import "./styles/Login.scss";
 
@@ -21,6 +22,8 @@ const userPool = new CognitoUserPool({
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [user, setUser] = useState();
+  const userData = useSelector((state) => state.auth.userData);
 
   const handleSubmit = (values) => {
     const cognitoUser = new CognitoUser({
@@ -36,13 +39,15 @@ const Login = () => {
     cognitoUser.authenticateUser(authenticationDetails, {
       onSuccess: (result) => {
         cognitoUser.getUserAttributes(function (err, result) {
+          console.log("result", result);
           if (err) {
             console.log("err", err);
             return;
           }
           dispatch(
             updateData({
-              name: result[2].Value,
+              id: result[0].Value,
+              name: result[4].Value,
               email: values.email,
             })
           );
@@ -53,6 +58,11 @@ const Login = () => {
         console.log("login failed", err);
       },
     });
+    // set user state
+    setUser(userData);
+    // store user in localStorage
+    localStorage.setItem("user", JSON.stringify(userData));
+    console.log("user", userData);
   };
 
   const formik = useFormik({
