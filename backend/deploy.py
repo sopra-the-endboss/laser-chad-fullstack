@@ -19,7 +19,7 @@ from botocore import exceptions
 import json
 
 # FOR MANUAL RUNING ONLY
-# os.chdir("./minimal-backend-service")
+# os.chdir("./backend")
 # Also set ENDPOINT_URL to the localhost container, if running manually
 # os.environ['AWS_ENDPOINT_URL']='http://localstack:4566'
 
@@ -52,7 +52,7 @@ CONFIG_ENV = {
 }
 for env_var, env_value in CONFIG_ENV.items():
     try:
-        print(f"{env_var} set to {os.environ[env_var]})")
+        print(f"{env_var} set to {os.environ[env_var]}")
     except KeyError:
         os.environ[env_var] = env_value
 
