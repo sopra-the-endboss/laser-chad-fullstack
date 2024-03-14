@@ -18,12 +18,14 @@ To test the functionality, the script `test/test_services.py` can be run with th
 The API endpoint is not yet set up with an interface. In the log of the shopprofile container, the API endpoint is printed in the end, looks something like this:
 - `http://localstack:4566/restapis/{API_ID}/apig_shopprofiles/_user_request_/list_shopprofiles`
 where API_ID is created upon deployment of the API Gateway service.
+![Where to find the API URL](./README_files/api_url.png)
 To test it, use the shopprofile-debugger container:
 - `docker exec -it shopprofile-debugger /bin/sh` to connect to the container
 - curl -v <API_ENDPOINT> to see the result
 - This request is then visible in a new container, spun up by localstack which is called `localstack-lambda-list-shopprofiles-{RESOURCE_ID}`. The request and any prints from the lambda handler can be seen there.
+![Where to see the lambda output](./README_files/lambda_output.png)
 
-<!-- ![Where to find the API URL](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true) -->
+
 
 
 
@@ -31,3 +33,4 @@ To test it, use the shopprofile-debugger container:
 - lambda function `write_shopprofile` is not yet set up with the API gateway
     - Need to add a API method and integration in the `deploy.py` file
     - Need to change return value of the handler so that a valid HTTP response is generated for the API
+    - Need deeper understanding of the integration and how to map query parameters, path parameters, header and body to inputs for the lambda funciton
