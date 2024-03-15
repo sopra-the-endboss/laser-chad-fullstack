@@ -1,0 +1,19 @@
+{
+"writeShopprofile": {
+    "model_spec": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "writeShopprofile",
+        "type" : "object",
+        "required" : ["shopemail","shoppassword"],
+        "properties" : {
+            "shopemail" : {
+                "type" : "string"
+            },
+            "shoppassword" : {
+                "type" : "string"
+            }
+        }
+    },
+    "contentType" : "application/json"
+}
+}

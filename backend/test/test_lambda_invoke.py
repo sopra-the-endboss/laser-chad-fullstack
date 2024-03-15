@@ -21,8 +21,7 @@ DYNAMO_TABLE_NAME = db_schema['TableName']
 lambda_client = boto3.client("lambda")
 dynamo_resource = boto3.resource("dynamodb")
 dynamo_table = dynamo_resource.Table(DYNAMO_TABLE_NAME)
-
-
+apig_client = boto3.client("apigateway")
 
 ###
 # Test invoking list. list does not need payload
@@ -38,31 +37,42 @@ pp.pprint(response_invoke)
 
 
 
+###
+# Test invoking write. Needs an item to put
+# Test with invalid payload -> Returns a parsable error object
+response_invoke_write = lambda_client.invoke(
+    FunctionName = "write_shopprofile",
+    Payload = '{"asdf":"asdf"}'
+)
+# Parse the actual payload of the lambda function that was returned
+print("-------------")
+pp.pprint(response_invoke_write)
+response_invoke_write = json.loads(response_invoke_write['Payload'].read())
+pp.pprint(response_invoke_write)
 
-# ###
-# # Test invoking write. Needs an item to put
-# # Test with invalid payload -> Returns a parsable error object
-# response_invoke_write = lambda_client.invoke(
-#     FunctionName = "write_shopprofile",
-#     Payload = '{"asdf":"asdf"}'
-# )
-# # Parse the actual payload of the lambda function that was returned
-# print("-------------")
+
+
+# Test with valid object
+response_invoke_write = lambda_client.invoke(
+    FunctionName = "write_shopprofile",
+    Payload = '{"shopemail":"asdfasdfasdfasdf", "shoppassword":"asdasdfasdfasdff"}'
+)
+# Parse the actual payload of the lambda function that was returned
+print("-------------")
 # pp.pprint(response_invoke_write)
-# # response_invoke_write = json.loads(response_invoke_write['Payload'].read())
-# # pp.pprint(response_invoke_write)
+response_invoke_write = json.loads(response_invoke_write['Payload'].read())
+pp.pprint(response_invoke_write)
 
-# # Test with valid object
-# response_invoke_write = lambda_client.invoke(
-#     FunctionName = "write_shopprofile",
-#     Payload = '{"shopemail":"asdfasdfasdfasdf", "shoppassword":"asdasdfasdfasdff"}'
-# )
-# # Parse the actual payload of the lambda function that was returned
-# print("-------------")
-# # pp.pprint(response_invoke_write)
-# response_invoke_write = json.loads(response_invoke_write['Payload'].read())
-# pp.pprint(response_invoke_write)
-
+###
+# Test invoking list again. should contain one item
+response_invoke = lambda_client.invoke(
+    FunctionName = "list_shopprofiles"
+)
+# Parse the actual payload of the lambda function that was returned
+pp.pprint(response_invoke)
+print("--------------")
+response_invoke = json.loads(response_invoke['Payload'].read())
+pp.pprint(response_invoke)
 
 
 

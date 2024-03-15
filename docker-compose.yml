@@ -20,7 +20,7 @@ services:
       - "4510-4559:4510-4559" # external services port range
     environment:
       - SERVICES=lambda,s3,dynamodb,apigateway
-      - DEBUG=1
+      - DEBUG=0
       - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR-}
       - DOCKER_HOST=unix:///var/run/docker.sock
       - SKIP_SSL_CERT_DOWNLOAD=1
@@ -45,7 +45,10 @@ services:
       - AWS_DEFAULT_REGION=us-east-1
       - AWS_ENDPOINT_URL=http://localstack:4566 # host localstack must match the name of the service which runs localstack
       - AWS_ACCESS_KEY_ID=fakecred # Sometimes boto3 needs credentials
-      - AWS_SECRET_ACCESS_KEY=fakecred
+      - AWS_SECRET_ACCESS_KEY=fakecred # Sometimes boto3 needs credentials
+      - APIG_TAG_ID=API_TAG_ID
+      - APIG_TAG=apig_shopprofiles
+      - APIG_STAGE=PROD
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     depends_on:

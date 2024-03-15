@@ -6,6 +6,7 @@ FROM python:3.10-alpine
 
 WORKDIR /app
 COPY ./deploy.py /app/
+COPY ./deploy_utils.py /app/
 COPY ./lambdas /app/lambdas/
 COPY ./config /app/config/
 COPY ./test /app/test/

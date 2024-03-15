@@ -13,10 +13,10 @@ NOT YET IMPLEMENTED:
 """
 
 import os
-import zipfile
 import boto3
-from botocore import exceptions
 import json
+
+import deploy_utils
 
 # FOR MANUAL RUNING ONLY
 # os.chdir("./backend")
@@ -35,26 +35,74 @@ def get_db_config() -> dict[str]:
         print("Did not find json file with db config")
     return db_schema
 
+def get_request_models() -> dict[str]:
+    """
+    Retreive all configurations for the request models
+    """
+    print("Try to load request models ...")
+    try:
+        with open("config/request_models.json","r") as file:
+            models = json.load(file)
+    except FileNotFoundError:
+        print("Did not find json file with request models config")
+    return models
+
+def get_request_validators() -> dict[str]:
+    """
+    Retreive all configurations for the request validators
+    """
+    print("Try to load request validators ...")
+    try:
+        with open("config/request_validators.json","r") as file:
+            validators = json.load(file)
+    except FileNotFoundError:
+        print("Did not find json file with request validators config")
+    return validators
+
+def get_resources_to_create() -> dict:
+    """
+    Retreive all configurations for the resources to create
+    """
+    print("Try to load resrouces to create config ...")
+    try:
+        with open("config/resources_to_create.json","r") as file:
+            res = json.load(file)
+    except FileNotFoundError:
+        print("Did not find json file with resources to create config")
+    return res
+
+
+# # Set env variables - Should be given by docker-compose
+# CONFIG_ENV = {
+#     'AWS_DEFAULT_REGION' : 'us-east-1',
+#     'AWS_ENDPOINT_URL' : 'http://localhost.localstack.cloud:4566',
+#     'AWS_ACCESS_KEY_ID' : 'fakecredentials',
+#     'AWS_SECRET_ACCESS_KEY' : 'fakecredentials',
+#     'APIG_TAG_ID' : 'API_TAG_ID',
+#     'APIG_TAG' : 'apig_shopprofiles',
+#     'APIG_STAGE' : 'PROD'
+# }
+# for env_var, env_value in CONFIG_ENV.items():
+#     try:
+#         print(f"{env_var} set to {os.environ[env_var]}")
+#     except KeyError:
+#         os.environ[env_var] = env_value
+print(os.environ)
+
 # Parameters
+db_schema = get_db_config()
+request_models = get_request_models()
+request_validators = get_request_validators()
+resources_to_create = get_resources_to_create()
+
 LAMBDA_FUNCTIONS_TO_DEPLOY = ["list_shopprofiles","write_shopprofile"]
 LAMBDA_ROLE = "arn:aws:iam::000000000000:role/lambda-role" # given by localstack
-db_schema = get_db_config()
+
 DYNAMO_DB_NAME = db_schema['TableName']
-APIG_NAME = "apig_shopprofiles"
+APIG_NAME = os.environ['APIG_TAG']
+APIG_TAG_ID = os.environ['APIG_TAG_ID']
 APIG_ROUTE_LIST = "list_shopprofiles"
 
-# Set env variables - Should be given by docker-compose
-CONFIG_ENV = {
-    'AWS_DEFAULT_REGION' : 'us-east-1',
-    'AWS_ENDPOINT_URL' : 'http://localhost.localstack.cloud:4566',
-    'AWS_ACCESS_KEY_ID' : 'fakecredentials',
-    'AWS_SECRET_ACCESS_KEY' : 'fakecredentials',
-}
-for env_var, env_value in CONFIG_ENV.items():
-    try:
-        print(f"{env_var} set to {os.environ[env_var]}")
-    except KeyError:
-        os.environ[env_var] = env_value
 
 # Create clients
 lambda_client = boto3.client("lambda")
@@ -72,97 +120,76 @@ print("Dynamo DB created")
 
 ###
 # Lambda deployment
-
-# zip the lambda handler function file to create a deployment package
-for lambda_function in LAMBDA_FUNCTIONS_TO_DEPLOY:
-    with zipfile.ZipFile(f'lambdas/{lambda_function}/handler.zip', mode='w') as tmp:
-        complete_file_path = f'lambdas/{lambda_function}/handler.py'
-        tmp.write(complete_file_path, arcname=os.path.basename(complete_file_path))
-
-# purge all lambda functions with the name we want to deploy, if it exists
-# For error handling see here: https://boto3.amazonaws.com/v1/documentation/api/latest/guide/error-handling.html#aws-service-exceptions
-for lambda_function in LAMBDA_FUNCTIONS_TO_DEPLOY:
-    try:
-        lambda_client.delete_function(FunctionName = lambda_function)
-    except exceptions.ClientError as error:
-        if error.response['Error']['Code'] == 'ResourceNotFoundException':
-            print(f'Delete function {lambda_function}: function does not exist in the first place')
-        else:
-            raise error
-
-# deploy the functions
-for lambda_function in LAMBDA_FUNCTIONS_TO_DEPLOY:
-    print(f"Deploying function {lambda_function} ...")
-    response_create = lambda_client.create_function(
-        FunctionName = lambda_function,
-        Role = LAMBDA_ROLE,
-        Handler = "handler.handler",
-        Runtime = "python3.10",
-        Code = {'ZipFile': open(f'./lambdas/{lambda_function}/handler.zip', 'rb').read()},
-        # Pass the table name as environment variable
-        Environment={
-            'Variables': {"TableName" : db_schema['TableName']}
-        },
+lambdas = {}
+for lambda_function_to_create in LAMBDA_FUNCTIONS_TO_DEPLOY:
+    lambdas[lambda_function_to_create] = deploy_utils.deploy_lambda(
+        lambda_function_to_create,
+        env = {"TableName" : DYNAMO_DB_NAME}
     )
-    # Create an URL to invoke
-    response_create_url = lambda_client.create_function_url_config(
-        FunctionName=lambda_function,
-        AuthType='NONE'
-    )
-    print(response_create_url) # To print the URL we can invoke the function with
-    # TODO: Print the URL to console for easier usability
-
-    # Wait until the lambda is active
-    lambda_client.get_waiter("function_active_v2").wait(FunctionName = lambda_function)
-
-    # When ready, invoke the lambda function
-    print("Waiting over, function is ready")
-
+    print(f"Waiting over, function {lambda_function_to_create} is ready")
 
 ###
-# API Gateway deployment - List Shopprofiles
-LAMBDA_FUNCTION_NAME_TO_INTEGRATE = "list_shopprofiles"
+# API Gateway deployment
+print(f"Deploying api gateway ...")
 
-# First fetch the ARN of the lambda function that should be linked
-lambda_arn = [function_def['FunctionArn'] for function_def in lambda_client.list_functions()['Functions'] if function_def['FunctionName']==LAMBDA_FUNCTION_NAME_TO_INTEGRATE][0]
-
-# Create the REST API
-apig_rest_api = apig_client.create_rest_api(name = APIG_NAME)
-apig_id = apig_rest_api["id"]
-
-# Fetch all resources
-apig_resources = apig_client.get_resources(restApiId = apig_id)
-
-# Add resource for a desired path
-apig_new_resource = apig_client.create_resource(
-    restApiId = apig_id,
-    parentId = apig_resources['items'][0]['id'],
-    pathPart = APIG_ROUTE_LIST
+api_id = deploy_utils.create_api(
+    api_name = APIG_NAME,
+    api_tag = APIG_NAME,
+    tag_id = APIG_TAG_ID
 )
 
-# Put a HTTP method to a resource, for list its a GET
-apig_new_method = apig_client.put_method(
-    restApiId = apig_id,
-    resourceId = apig_new_resource['id'],
-    httpMethod = "GET",
-    authorizationType = "NONE",
-    apiKeyRequired = False
-)
+print(f"Create api request models ...")
+for model_name, model in request_models.items():
+    apig_client.create_model(
+        restApiId = api_id,
+        name = model_name,
+        schema = json.dumps(model['model_spec']),
+        contentType = model['contentType']        
+    )
 
-# Put an integration to link the lambda function for list
-apig_new_integration = apig_client.put_integration(
-    restApiId = apig_id,
-    resourceId = apig_new_resource['id'],
-    httpMethod = "GET",
-    type = "AWS_PROXY",
-    integrationHttpMethod = "GET",
-    uri = f"arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/{lambda_arn}/invocations"
-)
+print("Create api request validators ...")
+api_validators = {}
+for validator_name, validator in request_validators.items():
+    validator = apig_client.create_request_validator(
+        restApiId = api_id,
+        name = validator_name,
+        validateRequestBody = validator['validateRequestBody'],
+        validateRequestParameters = validator['validateRequestParameters']
+    )
+    api_validators[validator_name] = validator['id']
 
-# Deploy the API
-apig_deployment = apig_client.create_deployment(
-    restApiId = apig_id
-)
+print("Create method and integration ...")
+for resource_type, resource_list in resources_to_create.items():
+    print(f"create {resource_type} ... ")
+    for i,resource_mapping in enumerate(resource_list):
+        print(f"create resources ...")
+        print(resource_mapping)
+        lambda_arn = lambdas[resource_mapping['lambda_fct']]
+        print(lambda_arn)
+        if i == 0:
+            tmp_parent_res_id = None
+        tmp_parent_res_id = deploy_utils.create_resource(
+            api_id = api_id,
+            parent_id = tmp_parent_res_id,
+            resource_path=resource_mapping['path']
+        )
+        resource_mapping['resource_id'] = tmp_parent_res_id
+        print(f"write lambda and integration for resoucres {resource_type} ...")
+        apig_new_method, apig_new_integration = deploy_utils.add_lambda_method_and_integration_to_resource(
+            api_id = api_id,
+            resource_id=tmp_parent_res_id,
+            lambda_arn = lambda_arn,
+            method = resource_mapping['method'],
+            requestParameters = resource_mapping.get('requestParameters',{}), # This is optional, if empty pass empty dict
+            requestModels = resource_mapping.get('requestModels',{}), # This is optional, if empty pass empty dict
+            requestValidatorId = api_validators['bodyOnly'] # The default bodyOnly validator
+        )
 
-# Test - Create a url to curl
-print(f"{os.environ['AWS_ENDPOINT_URL']}/restapis/{apig_id}/{APIG_NAME}/_user_request_/{APIG_ROUTE_LIST}")
+        print(apig_new_method)
+        print(apig_new_integration)
+
+print("Create api deployment ...")
+deploy_utils.deploy_api(
+    api_id = api_id,
+    stage_name = os.environ['APIG_STAGE']
+)

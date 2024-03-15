@@ -12,8 +12,9 @@ pp = PrettyPrinter(indent=2)
 
 HTTP_RESPONSE_DICT = {
     'statusCode' : '',
+    'isBase64Encoded' : False,
     'headers' : {},
-    'body' : '' # Returns a JSON as a string
+    # Here comes to body, as a JSON string
 }
 
 def handler(event, context) -> list[dict]:
