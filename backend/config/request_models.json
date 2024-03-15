@@ -1,8 +1,8 @@
 {
-"writeShopprofile": {
+"post_shopprofile": {
     "model_spec": {
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "title": "writeShopprofile",
+        "title": "post_shopprofile",
         "type" : "object",
         "required" : ["shopemail","shoppassword"],
         "properties" : {

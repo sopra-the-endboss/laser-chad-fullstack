@@ -7,14 +7,13 @@ Deploy one Dynamo DB
 Deploy two lambda functions
 - list_shopprofiles for listing all currently saved shop profile items
 - write_shopprofile for writing a new shopprofile
-
-NOT YET IMPLEMENTED:
-- API Gateway
 """
 
 import os
 import boto3
 import json
+from pprint import PrettyPrinter
+pp = PrettyPrinter(indent=2)
 
 import deploy_utils
 
@@ -71,23 +70,8 @@ def get_resources_to_create() -> dict:
         print("Did not find json file with resources to create config")
     return res
 
-
-# # Set env variables - Should be given by docker-compose
-# CONFIG_ENV = {
-#     'AWS_DEFAULT_REGION' : 'us-east-1',
-#     'AWS_ENDPOINT_URL' : 'http://localhost.localstack.cloud:4566',
-#     'AWS_ACCESS_KEY_ID' : 'fakecredentials',
-#     'AWS_SECRET_ACCESS_KEY' : 'fakecredentials',
-#     'APIG_TAG_ID' : 'API_TAG_ID',
-#     'APIG_TAG' : 'apig_shopprofiles',
-#     'APIG_STAGE' : 'PROD'
-# }
-# for env_var, env_value in CONFIG_ENV.items():
-#     try:
-#         print(f"{env_var} set to {os.environ[env_var]}")
-#     except KeyError:
-#         os.environ[env_var] = env_value
-print(os.environ)
+print("Environment:\n")
+pp.pprint(os.environ)
 
 # Parameters
 db_schema = get_db_config()
@@ -95,31 +79,27 @@ request_models = get_request_models()
 request_validators = get_request_validators()
 resources_to_create = get_resources_to_create()
 
-LAMBDA_FUNCTIONS_TO_DEPLOY = ["list_shopprofiles","write_shopprofile"]
+LAMBDA_FUNCTIONS_TO_DEPLOY = ["get_shopprofile","post_shopprofile"]
 LAMBDA_ROLE = "arn:aws:iam::000000000000:role/lambda-role" # given by localstack
 
 DYNAMO_DB_NAME = db_schema['TableName']
 APIG_NAME = os.environ['APIG_TAG']
 APIG_TAG_ID = os.environ['APIG_TAG_ID']
-APIG_ROUTE_LIST = "list_shopprofiles"
-
 
 # Create clients
 lambda_client = boto3.client("lambda")
 dynamo_client = boto3.client("dynamodb")
 apig_client = boto3.client("apigateway")
 
-
-
 ###
 # Dynamo DB deployment  
+print("Dynamo DB deployment ...")
 dynamo_client.create_table(**db_schema)
 print("Dynamo DB created")
 
-
-
 ###
 # Lambda deployment
+print("Lambda deployment ...")
 lambdas = {}
 for lambda_function_to_create in LAMBDA_FUNCTIONS_TO_DEPLOY:
     lambdas[lambda_function_to_create] = deploy_utils.deploy_lambda(
@@ -127,17 +107,16 @@ for lambda_function_to_create in LAMBDA_FUNCTIONS_TO_DEPLOY:
         env = {"TableName" : DYNAMO_DB_NAME}
     )
     print(f"Waiting over, function {lambda_function_to_create} is ready")
+print("Lambda deployment done")
 
 ###
 # API Gateway deployment
-print(f"Deploying api gateway ...")
-
+print("API Gateway deployment ...")
 api_id = deploy_utils.create_api(
     api_name = APIG_NAME,
     api_tag = APIG_NAME,
     tag_id = APIG_TAG_ID
 )
-
 print(f"Create api request models ...")
 for model_name, model in request_models.items():
     apig_client.create_model(
@@ -146,7 +125,6 @@ for model_name, model in request_models.items():
         schema = json.dumps(model['model_spec']),
         contentType = model['contentType']        
     )
-
 print("Create api request validators ...")
 api_validators = {}
 for validator_name, validator in request_validators.items():
@@ -157,15 +135,12 @@ for validator_name, validator in request_validators.items():
         validateRequestParameters = validator['validateRequestParameters']
     )
     api_validators[validator_name] = validator['id']
-
 print("Create method and integration ...")
 for resource_type, resource_list in resources_to_create.items():
     print(f"create {resource_type} ... ")
     for i,resource_mapping in enumerate(resource_list):
         print(f"create resources ...")
-        print(resource_mapping)
         lambda_arn = lambdas[resource_mapping['lambda_fct']]
-        print(lambda_arn)
         if i == 0:
             tmp_parent_res_id = None
         tmp_parent_res_id = deploy_utils.create_resource(
@@ -174,10 +149,10 @@ for resource_type, resource_list in resources_to_create.items():
             resource_path=resource_mapping['path']
         )
         resource_mapping['resource_id'] = tmp_parent_res_id
-        print(f"write lambda and integration for resoucres {resource_type} ...")
+        print(f"write lambda and integration for resoucres mapping {json.dumps(resource_mapping)} ...")
         apig_new_method, apig_new_integration = deploy_utils.add_lambda_method_and_integration_to_resource(
             api_id = api_id,
-            resource_id=tmp_parent_res_id,
+            resource_id = tmp_parent_res_id,
             lambda_arn = lambda_arn,
             method = resource_mapping['method'],
             requestParameters = resource_mapping.get('requestParameters',{}), # This is optional, if empty pass empty dict
@@ -185,11 +160,11 @@ for resource_type, resource_list in resources_to_create.items():
             requestValidatorId = api_validators['bodyOnly'] # The default bodyOnly validator
         )
 
-        print(apig_new_method)
-        print(apig_new_integration)
-
 print("Create api deployment ...")
 deploy_utils.deploy_api(
     api_id = api_id,
     stage_name = os.environ['APIG_STAGE']
 )
+print("API Gateway deployment done")
+
+print("Deployment done")

@@ -1,22 +1,22 @@
 {
-    "listShopprofiles" : [
+    "shopprofile_get" : [
         {
-            "path":"listShopprofiles",
+            "path":"shopprofile",
             "method":"GET",
-            "lambda_fct":"list_shopprofiles"
+            "lambda_fct":"get_shopprofile"
         },
         {
             "path":"{shopprofile_id}",
             "method":"GET",
-            "lambda_fct":"list_shopprofiles"
+            "lambda_fct":"get_shopprofile"
         }
     ],
-    "writeShopprofile" : [
+    "shopprofile_post" : [
         {
-            "path":"writeShopprofile",
+            "path":"shopprofile",
             "method":"POST",
-            "lambda_fct":"write_shopprofile",
-            "requestModels":{"application/json":"writeShopprofile"}
+            "lambda_fct":"post_shopprofile",
+            "requestModels":{"application/json":"post_shopprofile"}
         }
     ]
 }
