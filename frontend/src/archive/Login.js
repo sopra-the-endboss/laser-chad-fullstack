@@ -58,11 +58,6 @@ const Login = () => {
         console.log("login failed", err);
       },
     });
-    // set user state
-    setUser(userData);
-    // store user in localStorage
-    localStorage.setItem("user", JSON.stringify(userData));
-    console.log("user", userData);
   };
 
   const formik = useFormik({

@@ -48,16 +48,10 @@ const Navbar = ({ setData, searchQuerySubmitted }) => {
                   Pinned Products
                 </a>
                 <a
-                  href="/login"
+                  href="/account"
                   className="text-gray-600 hover:bg-gray-200 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium"
                 >
-                  Login
-                </a>
-                <a
-                  href="/signup"
-                  className="text-gray-600 hover:bg-gray-200 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Sign Up
+                  Account
                 </a>
               </div>
             </div>
