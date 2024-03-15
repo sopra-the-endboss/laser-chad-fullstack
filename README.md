@@ -7,4 +7,13 @@ A Microservice consist of three components:
 - Lambda functions
 - Dynamo DB
 
+Authentication setup:
+AWS Cognito and Amplify are used for Authentication.
+
+To setup Amplify Cli run this in command line (Windows)
+curl -sL https://aws-amplify.github.io/amplify-cli/install-win -o install.cmd && install.cmd
+
+To pull amplify project:
+amplify pull --appId d47a6guqh1kks --envName staging
+
 Docker compose up to run
