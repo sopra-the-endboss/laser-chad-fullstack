@@ -2,7 +2,7 @@ import os
 import re
 from pyperclip import copy
 
-os.chdir("./minimal-backend-service")
+os.chdir("./backend")
 
 import boto3
 import zipfile
@@ -17,6 +17,8 @@ os.environ['AWS_SECRET_ACCESS_KEY']='fakecredentials'
 
 lambda_client = boto3.client("lambda")
 apig_client = boto3.client("apigateway")
+TAG_ID = "API_TAG_ID" # This is the name of the tag we're looking for to identify our API later
+
 
 def deploy_lambda(fct_name: str):
     """
@@ -36,12 +38,17 @@ def deploy_lambda(fct_name: str):
         )
     return response_lambda_create['FunctionArn']
     
-def create_api(api_name: str):
+def create_api(api_name: str, api_tag: str, tag_id: str):
     """
     Wrapper to create API Gateway
+    Each API created must have a tag in the form of <tag_id>:<api_tag>
     """
+
     # Create the REST API
-    apig_rest_api = apig_client.create_rest_api(name = api_name)
+    apig_rest_api = apig_client.create_rest_api(
+        name = api_name,
+        tags={tag_id:api_tag}
+    )
     return apig_rest_api
 
 def create_resource(api_id: str, parent_id: str, resource_path: str) -> str:
@@ -135,6 +142,31 @@ def deploy_api(api_id: str):
 
     return apig_deployment
 
+def find_api_id_by_tag(tag_key:str, tag_value:str) -> str:
+    """
+    Find from all deployed apis the ID where the api has a tag with value tag_key and value tag_value
+    Throws error if multiple found
+    Throw error if none found
+
+    Returns
+        str with the API ID
+    """
+
+    api_ids_found = []
+    for api_item in apig_client.get_rest_apis()['items']:
+        api_item_tags = api_item['tags']
+        if tag_key in api_item_tags:
+            if api_item_tags[tag_key] == tag_value:
+                api_ids_found.append(api_item['id'])
+    
+    if not api_ids_found:
+        raise ValueError(f"No API ID found with tag_key {tag_key} and tag_value {tag_value}")
+    
+    if len(api_ids_found) > 1:
+        raise ValueError(f"Multiple API ID found with tag_key {tag_key} and tag_value {tag_value}")
+    
+    return api_ids_found[0]
+
 def get_resource_path(api_id: str, resource_path: str) -> str:
     """
     According to localstack documentation build the url
@@ -163,7 +195,6 @@ def get_resource_path(api_id: str, resource_path: str) -> str:
 
 
 
-
 ###
 # Deploy
 tag_to_use = "4"
@@ -179,7 +210,8 @@ paths_and_methods_to_create = {
     ]
 }
 
-response_create_api = create_api(f"api_test_{tag_to_use}")
+response_create_api = create_api(f"api_test_{tag_to_use}", f"tag_{tag_to_use}", TAG_ID) # mit tag
+# response_create_api = create_api(f"api_test_{tag_to_use}") # ohne tag
 pp.pprint(response_create_api)
 api_id = response_create_api['id']
 
@@ -198,8 +230,12 @@ for resource_type, resource_list in paths_and_methods_to_create.items():
 
 response_deploy_api = deploy_api(api_id = api_id)
 
-# Now generate URLs
-copy(get_resource_path(api_id = api_id , resource_path="/getSomething/1"))
+# Look at apis, get specific api
+pp.pprint(apig_client.get_rest_apis()['items'])
 
+# Now generate URLs with a given tag
+path_to_build_url_for = "/getSomething/69"
+api_id_to_build_url_for = find_api_id_by_tag(tag_key = TAG_ID, tag_value = f"tag_{tag_to_use}")
 
-
+copy(get_resource_path(api_id = api_id_to_build_url_for , resource_path=path_to_build_url_for))
+get_resource_path(api_id = api_id_to_build_url_for , resource_path=path_to_build_url_for)
