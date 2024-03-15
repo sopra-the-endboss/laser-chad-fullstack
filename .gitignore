@@ -49,3 +49,5 @@ amplifytools.xcconfig
 #amplify-do-not-edit-end
 
 lambda_test
+
+.venv/
