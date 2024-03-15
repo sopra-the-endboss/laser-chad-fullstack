@@ -86,19 +86,22 @@ print(f"ALL RESOURCES TO {api_id} FOUND:\n")
 pp.pprint(apig_client.get_resources(restApiId = api_id))
 print("-----------------")
 
-url = get_resource_path(
-    api_id = api_id,
-    resource_path = "listShopprofiles"
-)
 
-# Send requests to test GET
+# Send requests to test GET - should return empty
+url = get_resource_path(api_id, resource_path = "listShopprofiles")
 print(f"Sending GET to {url}")
 response = requests.get(url)
 print(response.text)
 
 # Send requests to test POST
 url = get_resource_path(api_id, "writeShopprofile")
-payload = {"shopemail":"test1", "shoppassword":"test1"}
+payload = {"shopemail":"test2", "shoppassword":"test2"}
 print(f"Sending POST to {url} with payload {json.dumps(payload)}")
 response = requests.post(url, json = payload)
+print(response.text)
+
+# Send requests to test GET - should return with one object
+url = get_resource_path(api_id, resource_path = "listShopprofiles")
+print(f"Sending GET to {url}")
+response = requests.get(url)
 print(response.text)

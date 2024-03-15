@@ -5,22 +5,29 @@ If an error occurs within the handler (not wrong parameters for the lambda invoc
 - This handler does not handle that but simply returns the object
 
 TODO: Error handling (either let handler function fail, or wrap?), duplicates?
-TODO: Resonse should not be a dict but a valid HTTP Response like in the handler of list_shopprofiles
 
 The handler has the name of the table hardcoded, this is determined by the config file config/db_schema.json upon deployment
 """
 import os
 import boto3
+import json
 
 # TODO: Remove later
 from pprint import PrettyPrinter
 pp = PrettyPrinter(indent=2)
 
+HTTP_RESPONSE_DICT = {
+    'statusCode' : '',
+    'isBase64Encoded' : False,
+    'headers' : {},
+    # Here comes to body, as a JSON string
+}
+
+
 def handler(event: dict, context) -> dict:
     """
     event is a dict which contains the payload
-    It is passed as is as the Item, assuming that the invoking entity specified all neccessary fields in the DB
-    If a field is missing, the handler will throw an error which will be returned as an error object
+    The API Gateway which takes the POST request is validating that all fields are present in the payload in the event body
     """
     
     print("write_shopprofile invoked")
@@ -37,13 +44,27 @@ def handler(event: dict, context) -> dict:
     dynamo_resource = boto3.resource("dynamodb")
     dynamo_table = dynamo_resource.Table(TableName)
 
+    print("Parse body")
+    try:
+        item = json.loads(event['body'])
+    except json.decoder.JSONDecodeError as e:
+        print("JSONDecodeError IN PARSING BODY OF write_shopprofile")
+        raise e
+
     print("Try writing item")
     response_put = dynamo_table.put_item(
         TableName = TableName,
         ReturnValues = "ALL_OLD",
-        Item = event
+        Item = item
     )
-    return(response_put)
+
+    print("Return HTTP object")
+    HTTP_RESPONSE_DICT['statusCode'] = '200'
+    HTTP_RESPONSE_DICT['headers'] = {"Content-Type": "application/json"}
+    HTTP_RESPONSE_DICT['body'] = json.dumps(response_put) # We return the full dict from the dynamo.put_item method
+
+    return HTTP_RESPONSE_DICT
+    
 
 if __name__ == "__main__":
     print(handler(None, None))
