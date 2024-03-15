@@ -37,9 +37,9 @@ def find_api_id_by_tag(tag_key:str, tag_value:str) -> str:
 
 def get_resource_path(api_id: str, resource_path: str) -> str:
     """
-    According to localstack documentation build the url
+    According to localstack documentation build the url in an alternative format
     """ 
-    url_base = "http://{api_id}.execute-api.{endpoint}/{stage_name}{resource_path}"
+    url_base = "http://{endpoint}/restapis/{api_id}/{stage_name}/_user_request_/{resource_path}"
 
     endpoint = os.environ['AWS_ENDPOINT_URL']
     # Strip protocol
@@ -53,8 +53,8 @@ def get_resource_path(api_id: str, resource_path: str) -> str:
     stage_name = "PROD"
 
     url = url_base.format(
-        api_id = api_id,
         endpoint = endpoint,
+        api_id = api_id,
         stage_name = stage_name,
         resource_path = resource_path
     )
@@ -66,9 +66,6 @@ def get_resource_path(api_id: str, resource_path: str) -> str:
 # Create clients
 apig_client = boto3.client("apigateway")
 
-# APIG_TAG_ID=API_TAG_ID
-# APIG_TAG=apig_shopprofiles
-
 api_tag_id = "API_TAG_ID"
 api_id_to_seach = "apig_shopprofiles"
 
@@ -77,20 +74,31 @@ api_id = find_api_id_by_tag(
     tag_value = api_id_to_seach
 )
 
+print("ALL APIS FOUND:\n")
 print(apig_client.get_rest_apis())
+print("-----------------")
 
-# print(api_id)
-# pp.pprint(apig_client.get_rest_api(restApiId=api_id))
+print(f"ALL DEPLOYMENTS TO {api_id} FOUND:\n")
+print(apig_client.get_deployments(restApiId=api_id))
+print("-----------------")
 
-# pp.pprint(apig_client.get_resources(restApiId = api_id))
+print(f"ALL RESOURCES TO {api_id} FOUND:\n")
+pp.pprint(apig_client.get_resources(restApiId = api_id))
+print("-----------------")
 
-# url = get_resource_path(
-#     api_id = api_id,
-#     resource_path = "/listShopprofiles"
-# )
+url = get_resource_path(
+    api_id = api_id,
+    resource_path = "listShopprofiles"
+)
 
-# print(url)
+# Send requests to test GET
+print(f"Sending GET to {url}")
+response = requests.get(url)
+print(response.text)
 
-# # Send requests to test
-# response = requests.get(url)
-# print(response.text)
+# Send requests to test POST
+url = get_resource_path(api_id, "writeShopprofile")
+payload = {"shopemail":"test1", "shoppassword":"test1"}
+print(f"Sending POST to {url} with payload {json.dumps(payload)}")
+response = requests.post(url, json = payload)
+print(response.text)
