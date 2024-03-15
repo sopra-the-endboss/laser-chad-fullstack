@@ -1,5 +1,7 @@
 import os
 import re
+import json
+import requests
 from pyperclip import copy
 
 os.chdir("./backend")
@@ -84,7 +86,15 @@ def create_resource(api_id: str, parent_id: str, resource_path: str) -> str:
     
     return apig_new_resource['id']
 
-def add_lambda_method_and_integration_to_resource(api_id: str, resource_id: str, lambda_arn: str, method: str):
+def add_lambda_method_and_integration_to_resource(
+        api_id: str,
+        resource_id: str,
+        lambda_arn: str,
+        method: str,
+        requestParameters: dict[str,bool],
+        requestModels: dict[str,str],
+        requestValidatorId: str
+    ):
     """
     Wrapper to add a method to an existing resource
     """
@@ -107,10 +117,11 @@ def add_lambda_method_and_integration_to_resource(api_id: str, resource_id: str,
         resourceId = resource_id,
         httpMethod = method,
         authorizationType = "NONE",
-        apiKeyRequired = False
+        apiKeyRequired = False,
+        requestParameters = requestParameters,
+        requestModels = requestModels,
+        requestValidatorId = requestValidatorId
     )
-
-    # NOTE: query string parameters ( a la /getsomething?param=1) is NOT SUPPORTED by boto3
 
     # Put an integration
     apig_new_integration = apig_client.put_integration(
@@ -197,45 +208,152 @@ def get_resource_path(api_id: str, resource_path: str) -> str:
 
 ###
 # Deploy
-tag_to_use = "4"
+tag_to_use = "3"
 lambda_arn = deploy_lambda(fct_name=f"lambda_test_{tag_to_use}")
+
+request_models = {
+    "postSomething": {
+        "model_spec": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "postSomething",
+            "type" : "object",
+            "required" : [ "post1"],
+            "properties" : {
+                "post1" : {
+                    "type" : "string"
+                }
+            }
+        },
+        "contentType" : "application/json"
+    }
+}
+pp.pprint(request_models)
+
+request_validators = {
+    "bodyOnly" : {
+        "name":"bodyOnly",
+        "validateRequestBody":True,
+        "validateRequestParameters":False
+    }
+}
 
 paths_and_methods_to_create = {
     'getSomething' : [
-        {"path":"getSomething", "method":"GET", "lambda_arn":lambda_arn},
-        {"path":"{getSomething_id}", "method":"GET", "lambda_arn":lambda_arn},
+        {
+            "path":"getSomething",
+            "method":"GET",
+            "lambda_arn":lambda_arn
+        },
+        {
+            "path":"{getSomething_id}",
+            "method":"GET",
+            "lambda_arn":lambda_arn
+        },
     ],
     'postSomething' : [
-        {"path":"postSomething", "method":"POST", "lambda_arn":lambda_arn},
+        {
+            "path":"postSomething",
+            "method":"POST",
+            "lambda_arn":lambda_arn,
+            "requestModels":{"application/json":"postSomething"}
+        },
     ]
 }
+pp.pprint(paths_and_methods_to_create)
 
 response_create_api = create_api(f"api_test_{tag_to_use}", f"tag_{tag_to_use}", TAG_ID) # mit tag
 # response_create_api = create_api(f"api_test_{tag_to_use}") # ohne tag
 pp.pprint(response_create_api)
 api_id = response_create_api['id']
 
+# For the API, create all the models
+model_name, model = list(request_models.items())[0]
+for model_name, model in request_models.items():
+    apig_client.create_model(
+        restApiId = api_id,
+        name = model_name,
+        schema = json.dumps(model['model_spec']),
+        contentType = model['contentType']        
+    )
+
+# Also create validators and store in dict with name:id
+api_validators = {}
+validator_name, validator = list(request_validators.items())[0]
+for validator_name, validator in request_validators.items():
+    validator = apig_client.create_request_validator(
+        restApiId = api_id,
+        name = validator_name,
+        validateRequestBody = validator['validateRequestBody'],
+        validateRequestParameters = validator['validateRequestParameters']
+    )
+    api_validators[validator_name] = validator['id']
+
 # Create resources, for each elemetn in paths_and_methods_to_create
 # Each element contains a tuple with PATH,METHOD,LAMBDA_ARN
 # Each subsequent tuple uses the newly created resource of the previous as parent resource
-
+resource_type = "postSomething" ; resource_list = dict(paths_and_methods_to_create.items())[resource_type]
 for resource_type, resource_list in paths_and_methods_to_create.items():
     print(f"create {resource_type} ... ")
-    for i,resource_tuple in enumerate(resource_list):
+    i = 0
+    for i,resource_mapping in enumerate(resource_list):
         if i == 0:
             tmp_parent_res_id = None
-        tmp_parent_res_id = create_resource(api_id = api_id, parent_id = tmp_parent_res_id, resource_path=resource_tuple['path'])
-        resource_tuple['resource_id'] = tmp_parent_res_id
-        _,_ = add_lambda_method_and_integration_to_resource(api_id = api_id, resource_id=tmp_parent_res_id, lambda_arn = resource_tuple['lambda_arn'], method = resource_tuple['method'])
+        # if i == 1:
+            # resource_mapping = resource_list[i]
+            # break
+        tmp_parent_res_id = create_resource(
+            api_id = api_id,
+            parent_id = tmp_parent_res_id,
+            resource_path=resource_mapping['path']
+        )
+        resource_mapping['resource_id'] = tmp_parent_res_id
+        _,_ = add_lambda_method_and_integration_to_resource(
+            api_id = api_id,
+            resource_id=tmp_parent_res_id,
+            lambda_arn = resource_mapping['lambda_arn'],
+            method = resource_mapping['method'],
+            requestParameters = resource_mapping.get('requestParameters',{}), # This is optional, if empty pass empty dict
+            requestModels = resource_mapping.get('requestModels',{}), # This is optional, if empty pass empty dict
+            requestValidatorId = api_validators['bodyOnly'] # The default bodyOnly validator
+        )
 
 response_deploy_api = deploy_api(api_id = api_id)
 
-# Look at apis, get specific api
-pp.pprint(apig_client.get_rest_apis()['items'])
+
+
 
 # Now generate URLs with a given tag
-path_to_build_url_for = "/getSomething/69"
+path_to_build_url_for = "/postSomething"
 api_id_to_build_url_for = find_api_id_by_tag(tag_key = TAG_ID, tag_value = f"tag_{tag_to_use}")
 
+# Look at available resources
+pp.pprint(apig_client.get_resources(restApiId = api_id_to_build_url_for)['items'])
+[res['path'] for res in apig_client.get_resources(restApiId = api_id_to_build_url_for)['items']]
+
 copy(get_resource_path(api_id = api_id_to_build_url_for , resource_path=path_to_build_url_for))
-get_resource_path(api_id = api_id_to_build_url_for , resource_path=path_to_build_url_for)
+url_built = get_resource_path(api_id = api_id_to_build_url_for , resource_path=path_to_build_url_for)
+url_built
+
+# Send requests to test
+response = requests.get(
+    get_resource_path(
+        api_id = find_api_id_by_tag(tag_key = TAG_ID, tag_value = f"tag_{tag_to_use}"),
+        resource_path = "/getSomething"
+    )
+)
+print(response.text)
+
+response = requests.get(
+    get_resource_path(
+        api_id = find_api_id_by_tag(tag_key = TAG_ID, tag_value = f"tag_{tag_to_use}"),
+        resource_path = "/getSomething/69"
+    )
+)
+print(response.text)
+
+response = requests.post(
+    url_built,
+    headers = {'Content-Type':'application/json'},
+    json = {"post1":"somestring","post2":{"nested1":1}}
+)
+print(response.text)
