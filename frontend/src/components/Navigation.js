@@ -44,8 +44,8 @@ const Navbar = ({setData, searchQuerySubmitted}) => {
             location: "Pinned Products"
         },
         {
-            route: "/login",
-            location: "Login"
+            route: "/account",
+            location: "Account"
         },
     ]
 
