@@ -9,7 +9,7 @@ const amplifyLogin = ({ signOut, user }) => {
   return (
     <div>
       <h1>Logged in</h1>
-      <p>Welcome, {user.signInDetails.loginId}</p>
+      <p>Welcome, {user.username}</p>
       <button onClick={signOut}>Sign out</button>
     </div>
   );
