@@ -106,7 +106,7 @@ function CarouselComponent({carouselData, clickable = true, onCardInteract}) {
                 slidesToSlide={1}
                 swipeable
             >
-                {normalizedCarouselData?.map((item, index) => (
+                {normalizedCarouselData?.map((item) => (
                     item.images.map((image, imgIndex) => (
                         carouselContent(item, image, imgIndex)
                     ))
