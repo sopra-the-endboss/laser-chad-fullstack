@@ -152,7 +152,7 @@ for resource_type, resource_list in resources_to_create.items():
         print(f"write lambda and integration for resoucres mapping {json.dumps(resource_mapping)} ...")
         apig_new_method, apig_new_integration = deploy_utils.add_lambda_method_and_integration_to_resource(
             api_id = api_id,
-            resource_id = tmp_parent_res_id,
+            resource_id = resource_mapping['resource_id'],
             lambda_arn = lambda_arn,
             method = resource_mapping['method'],
             requestParameters = resource_mapping.get('requestParameters',{}), # This is optional, if empty pass empty dict

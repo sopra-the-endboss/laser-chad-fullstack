@@ -1,7 +1,7 @@
 """
 to copy the file to a running container to run and run it right away
 run this from a terminal in the host machine, not a container
-docker cp test\test_apig.py shopprofile-debugger:/app && docker exec shopprofile-debugger /bin/sh -c "python test_apig.py"
+docker cp test/test_apig.py shopprofile-debugger:/app && docker exec shopprofile-debugger /bin/sh -c "python test_apig.py"
 """
 
 import boto3
@@ -28,16 +28,29 @@ api_id = deploy_utils.find_api_id_by_tag(
 )
 
 print("ALL APIS FOUND:\n")
-print(apig_client.get_rest_apis())
+print(apig_client.get_rest_apis()['items'])
 print("-----------------")
 
 print(f"ALL DEPLOYMENTS TO {api_id} FOUND:\n")
-print(apig_client.get_deployments(restApiId=api_id))
+print(apig_client.get_deployments(restApiId=api_id)['items'])
+deployment_id = apig_client.get_deployments(restApiId=api_id)['items'][0]['id']
+print("-----------------")
+
+print(f"ALL STAGES TO {api_id} AND DEPLOYMENT {deployment_id} FOUND:\n")
+print(apig_client.get_stages(restApiId=api_id, deploymentId = deployment_id))
 print("-----------------")
 
 print(f"ALL RESOURCES TO {api_id} FOUND:\n")
-pp.pprint(apig_client.get_resources(restApiId = api_id))
+pp.pprint(apig_client.get_resources(restApiId = api_id)['items'])
+resources_id = [res['id'] for res in apig_client.get_resources(restApiId = api_id)['items']]
 print("-----------------")
+
+# # THORWS ERROR?? boto3 bug i think...
+# print(f"ALL INTEGRATIONS TO RESSOURCES FOUND:\n")
+# for res_id in resources_id:
+#     # print(res_id)
+#     pp.pprint(apig_client.get_integration(restApiId = api_id, resourceId = res_id, httpMethod = "POST"))
+# print("-----------------")
 
 print(f"ALL LAMBDA FUNCTION TO {api_id} FOUND:\n")
 pp.pprint(lambda_client.list_functions())
@@ -45,7 +58,7 @@ print("-----------------")
 
 
 # Send requests to test GET - should return empty
-url = deploy_utils.get_resource_path(api_id, stage_name = api_stage_name, resource_path = "asdf")
+url = deploy_utils.get_resource_path(api_id, stage_name = api_stage_name, resource_path = "shopprofile")
 print(f"Sending GET to {url}")
 response = requests.get(url)
 print(response.text)
