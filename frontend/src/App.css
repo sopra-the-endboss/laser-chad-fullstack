@@ -60,3 +60,7 @@ body {
 .pageLinkActive {
   color: white;
 }
+
+.carousel-style {
+  height: 100%;
+}
