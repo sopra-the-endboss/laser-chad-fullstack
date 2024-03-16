@@ -2,12 +2,10 @@ import "./App.css";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import ProductOverview from "./views/ProductOverview";
 import Navigation from "./components/Navigation";
-import {Provider} from "react-redux";
-import store from "./reducers/store";
 import Account from "./views/Account";
 import {getCurrentUser} from "aws-amplify/auth";
 import {useEffect, useState} from "react";
-import AllProductsnameMock from "./data/AllProductsNameMock.json"
+import AllProductsNameMock from "./data/AllProductsNameMock.json"
 import {ProductDetail} from "./views/ProductDetail";
 import {Container, Grid} from "@mui/material";
 import {Categories} from "./views/Categories";
@@ -21,9 +19,9 @@ function App() {
     useEffect(() => {
         // filter data for category
         if (categoryFilter)
-            setData(AllProductsnameMock.filter(element => element.category === categoryFilter));
+            setData(AllProductsNameMock.filter(element => element.category === categoryFilter));
         else
-            setData(AllProductsnameMock);
+            setData(AllProductsNameMock);
     }, [categoryFilter]);
 
     async function currentAuthenticatedUser() {
@@ -42,34 +40,32 @@ function App() {
     }, []);
 
     return (
-        <Provider store={store}>
-            <div className="App">
-                <BrowserRouter>
-                    <Navigation setData={setData} searchQuerySubmitted={searchQuerySubmitted}/>
-                    <div style={{marginTop: "100px"}}>
-                        <Container maxWidth="lg">
-                            <Grid container spacing={2}>
+        <div className="App">
+            <BrowserRouter>
+                <Navigation setData={setData} searchQuerySubmitted={searchQuerySubmitted}/>
+                <div style={{marginTop: "100px"}}>
+                    <Container maxWidth="lg">
+                        <Grid container spacing={2}>
 
-                                <Routes>
-                                    <Route path="/"
-                                           element={<ProductOverview isSearchQuerySubmitted={isSearchQuerySubmitted}
-                                                                     data={data}
-                                                                     setCategoryFilter={setCategoryFilter}/>}/>
-                                    <Route path="/categories" element={<Categories/>}/>
-                                    <Route path="/categories/:categoryFilter"
-                                           element={<ProductOverview isSearchQuerySubmitted={isSearchQuerySubmitted}
-                                                                     data={data}
-                                                                     setCategoryFilter={setCategoryFilter}/>}/>
-                                    <Route path="/product/:product_id" element={<ProductDetail/>}/>
-                                    <Route path="/account" element={<Account/>}/>
-                                </Routes>
+                            <Routes>
+                                <Route path="/"
+                                       element={<ProductOverview isSearchQuerySubmitted={isSearchQuerySubmitted}
+                                                                 data={data}
+                                                                 setCategoryFilter={setCategoryFilter}/>}/>
+                                <Route path="/categories" element={<Categories/>}/>
+                                <Route path="/categories/:categoryFilter"
+                                       element={<ProductOverview isSearchQuerySubmitted={isSearchQuerySubmitted}
+                                                                 data={data}
+                                                                 setCategoryFilter={setCategoryFilter}/>}/>
+                                <Route path="/product/:product_id" element={<ProductDetail/>}/>
+                                <Route path="/account" element={<Account/>}/>
+                            </Routes>
 
-                            </Grid>
-                        </Container>
-                    </div>
-                </BrowserRouter>
-            </div>
-        </Provider>
+                        </Grid>
+                    </Container>
+                </div>
+            </BrowserRouter>
+        </div>
     );
 }
 

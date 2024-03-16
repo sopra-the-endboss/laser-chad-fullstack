@@ -14,7 +14,7 @@ export function CardContentComponent({formatted_text, title, category, price, de
     }
 
     return (
-        <CardContent sx={{ height: height}}>
+        <CardContent sx={{ minHeight: height, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             {formatted_text && <span style={{position: "absolute", left: "10px", top: "20px"}}><Chip
                 label={formatted_text}
                 variant="filled"
