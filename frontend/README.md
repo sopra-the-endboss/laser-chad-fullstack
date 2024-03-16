@@ -68,3 +68,13 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+### Setup Amplify in your environment
+
+- Download amplify cli and set up your local env with it (TBD: Docker): 
+  - Windows `curl -sL https://aws-amplify.github.io/amplify-cli/install-win -o install.cmd && install.cmd`
+  - Mac / Linux `curl -sL https://aws-amplify.github.io/amplify-cli/install | bash && $SHELL`
+- Fetch the image from our aws organization: `amplify pull --appId d47a6guqh1kks --envName staging`
+- npm install --legacy-peer-deps
+- should work now. 

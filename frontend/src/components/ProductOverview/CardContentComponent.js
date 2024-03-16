@@ -2,11 +2,15 @@ import {Chip} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import CardContent from "@mui/material/CardContent";
+import {useNavigate} from "react-router-dom";
 
-export function CardContentComponent({formatted_text, title, category, price, description, height, brand}){
-
-    const onChipInteract = () => {
-        console.log("redirect to category");
+export function CardContentComponent({formatted_text, title, category, price, description, height, brand, clickable = true}){
+    const navigate = useNavigate();
+    const onChipInteract = (e) => {
+        e.stopPropagation(); // stopping the click to go further
+        if(clickable){
+            navigate('/categories/'+category);
+        }
     }
 
     return (
@@ -26,6 +30,7 @@ export function CardContentComponent({formatted_text, title, category, price, de
                         label={category}
                         component="a"
                         variant="outlined"
+                        clickable
                         onClick={onChipInteract}
                         size={"small"}
                     />}
