@@ -7,6 +7,11 @@ WORKDIR /app
 # Execute the curl command to install AWS Amplify CLI
 RUN npm install -g @aws-amplify/cli
 
+# copy package.json
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm install --silent
+
 # Copy the rest of your source code to the container
 COPY . .
 
