@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   CognitoUserPool,
   CognitoUserAttribute,
@@ -8,7 +8,7 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
-import { useSelector } from "react-redux";
+//import { useSelector } from "react-redux";
 
 // styling
 import "./styles/SignUp.scss";
@@ -20,8 +20,8 @@ const userPool = new CognitoUserPool({
 
 export const SignUp = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState();
-  const userData = useSelector((state) => state.auth.userData);
+  //const [user, setUser] = useState();
+  //const userData = useSelector((state) => state.auth.userData);
 
   const handleSubmit = (values) => {
     const email = values.email.trim();
