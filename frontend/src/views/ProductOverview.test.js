@@ -3,7 +3,17 @@ import { BrowserRouter } from 'react-router-dom';
 import ProductOverview from "./ProductOverview";
 
 test('ProductOverview renders correctly when no search query is submitted', () => {
-    const mockData = []; // Provide mock data as needed
+    const mockData = [
+        {
+            "product_id": 10,
+            "product": "AMD Ryzen 9 5900X",
+            "highlighted": false,
+            "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
+            "price": 138.88,
+            "formatted_text": "",
+            "category": "Tech",
+            "brand": "AMD"
+        }];
     render(
         <BrowserRouter>
             <ProductOverview isSearchQuerySubmitted={false} data={mockData} setCategoryFilter={() => {}} />

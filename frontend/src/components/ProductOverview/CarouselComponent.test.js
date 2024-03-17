@@ -1,6 +1,6 @@
 import {BrowserRouter} from "react-router-dom";
 import CarouselComponent from "./CarouselComponent";
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 test('CarouselComponent displays the correct number of carousel items', () => {
     const mockCarouselData = [
