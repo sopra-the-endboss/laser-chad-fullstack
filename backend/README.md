@@ -12,7 +12,7 @@ The workflow is as follows:
 - Wait (ca 30sec) until the shopprofile container exits, this means that the deployment is over (can check the logs in the container)
 
 ## Test lambda functions manually
-To test the functionality, the script `test/test_XX.py` can be run with the docker command listed in the beginning of the script. It copies the file into the running shopprofile-debugger and runs it to see the invocations of the lambda functions or the API calls to the API Gateway.
+To test the functionality, the script `test/test_XX.py` can be run with the docker command listed in the beginning of the respective script. It copies the file into the running shopprofile-debugger and runs it to see the invocations of the lambda functions or the API calls to the API Gateway.
 
 ## Test API endpoint
 The API endpoint is constructed in the method `deploy_utils.py` method `find_api_id_by_tag` and `get_resource_path` and follows the pattern
@@ -20,9 +20,6 @@ The API endpoint is constructed in the method `deploy_utils.py` method `find_api
 
 To obtain an URL see the file `test_apig.py`.
 
-
-
-
-
 ## TODO
-- The invocation returns curenntly "Unable to find path xxx" since I renamed the resources_to_create.json routes...
+- Rename routes to conform to HTTP standards
+- Finalize deploy_utils.py so that all methods are contained there
