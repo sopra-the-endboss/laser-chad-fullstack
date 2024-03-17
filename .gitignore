@@ -51,4 +51,6 @@ amplifytools.xcconfig
 
 lambda_test
 
+# Python venv and compiled files
 .venv/
+*.pyc

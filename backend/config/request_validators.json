@@ -1,0 +1,7 @@
+{
+    "bodyOnly" : {
+        "name":"bodyOnly",
+        "validateRequestBody":true,
+        "validateRequestParameters":false
+    }
+}
