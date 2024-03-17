@@ -27,10 +27,10 @@ services:
       POSTGRES_DB: "postgresdb"
       POSTGRES_USER: "admin"
       POSTGRES_PASSWORD: "admin"
-    volumes:
-      - dbvolume:/var/lib/postgresql/data
+    #volumes:
+    #  - dbvolume:/var/lib/postgresql/data
 
-volumes:
-  dbvolume:
+#volumes:
+#  dbvolume:
 
   
