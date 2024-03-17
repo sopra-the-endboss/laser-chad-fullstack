@@ -36,15 +36,12 @@ const Navbar = ({ setData, searchQuerySubmitted, isAuthenticated }) => {
       route: "/categories",
       location: "Categories",
     },
-    ...(isAuthenticated
-      ? [
-          {
-            // if not authenticated, hide the shopping cart)
-            route: "/shopping-cart",
-            location: "Shopping Cart",
-          },
-        ]
-      : []),
+
+    {
+      route: "/shopping-cart",
+      location: "Shopping Cart",
+    },
+
     {
       route: "/pinned",
       location: "Pinned Products",
