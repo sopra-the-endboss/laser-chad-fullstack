@@ -7,7 +7,7 @@ import {CardContentComponent} from "./CardContentComponent";
 export default function ProductComponent({ product_id, brand, title, img, description, formatted_text, price, category, clickable = true, onCardInteract}) {
 
   return (
-    <Card sx={{ height: 310}} onClick={() => onCardInteract(clickable, product_id)}>
+    <Card sx={{ height: 310}} onClick={() => onCardInteract(clickable, product_id)} data-testid="card-clickable">
       <CardActionArea>
         <CardMedia
           component="img"
