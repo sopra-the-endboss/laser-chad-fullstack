@@ -6,7 +6,7 @@ import config from "../config/amplifyconfiguration.json";
 
 Amplify.configure(config);
 
-function amplifyLogin() {
+const AmplifyLogin = () => {
   return (
     <div className="authenticator">
       <Authenticator>
@@ -20,6 +20,6 @@ function amplifyLogin() {
       </Authenticator>
     </div>
   );
-}
+};
 
-export default amplifyLogin;
+export default AmplifyLogin;
