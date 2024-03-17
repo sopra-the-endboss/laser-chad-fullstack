@@ -8,14 +8,14 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy only the requirements.txt file into the container at /app/backend
-COPY djangoproject/requirements.txt .
+# Copy only the requirements.txt file into the container at /app/djangoproject
+COPY requirements.txt .
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-# Copy the rest of the application code into the container at /app/backend
+# Copy the rest of the application code into the container at /app/djangoproject
 COPY . .
 
 # Expose the port Django will run on
