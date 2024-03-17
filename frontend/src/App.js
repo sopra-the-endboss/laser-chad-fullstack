@@ -1,23 +1,68 @@
 import "./App.css";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import Home from "./views/Home";
+import ProductOverview from "./views/ProductOverview";
 import Navigation from "./components/Navigation";
-import {useState} from "react";
+import Account from "./views/Account";
+import {getCurrentUser} from "aws-amplify/auth";
+import {useEffect, useState} from "react";
+import AllProductsNameMock from "./data/AllProductsNameMock.json"
+import {ProductDetail} from "./views/ProductDetail";
+import {Container, Grid} from "@mui/material";
+import {Categories} from "./views/Categories";
 
 function App() {
 
     const [data, setData] = useState([]);
     const [isSearchQuerySubmitted, searchQuerySubmitted] = useState(false);
+    const [categoryFilter, setCategoryFilter] = useState('');
+
+    useEffect(() => {
+        // filter data for category
+        if (categoryFilter)
+            setData(AllProductsNameMock.filter(element => element.category === categoryFilter));
+        else
+            setData(AllProductsNameMock);
+    }, [categoryFilter]);
+
+    async function currentAuthenticatedUser() {
+            return await getCurrentUser();
+    }
+
+    useEffect( () => {
+        currentAuthenticatedUser()
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+    }, []);
 
     return (
         <div className="App">
             <BrowserRouter>
-                <Navigation setData={setData} />
-                <div style={{marginTop: "80px"}}>
-                    <Routes>
-                        <Route path="/" element={<Home/>}/>
-                        {/* Browse Products */}
-                    </Routes>
+                <Navigation setData={setData} searchQuerySubmitted={searchQuerySubmitted}/>
+                <div style={{marginTop: "100px"}}>
+                    <Container maxWidth="lg">
+                        <Grid container spacing={2}>
+
+                            <Routes>
+                                <Route path="/"
+                                       element={<ProductOverview isSearchQuerySubmitted={isSearchQuerySubmitted}
+                                                                 data={data}
+                                                                 setCategoryFilter={setCategoryFilter}/>}/>
+                                <Route path="/categories" element={<Categories/>}/>
+                                <Route path="/categories/:categoryFilter"
+                                       element={<ProductOverview isSearchQuerySubmitted={isSearchQuerySubmitted}
+                                                                 data={data}
+                                                                 setCategoryFilter={setCategoryFilter}/>}/>
+                                <Route path="/product/:product_id" element={<ProductDetail/>}/>
+                                <Route path="/account" element={<Account/>}/>
+                            </Routes>
+
+                        </Grid>
+                    </Container>
                 </div>
             </BrowserRouter>
         </div>
