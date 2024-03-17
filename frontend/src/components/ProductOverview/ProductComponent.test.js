@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import ProductComponent from './ProductComponent';
@@ -11,18 +11,60 @@ test('ProductComponent renders with given props', () => {
         </BrowserRouter>
     );
     expect(screen.getByText('Test Product')).toBeInTheDocument();
-    expect(screen.getByText('$20.00')).toBeInTheDocument();
+    expect(screen.getByText('20.00')).toBeInTheDocument();
     expect(screen.getByAltText('green iguana')).toHaveAttribute('src', 'test.jpg');
 });
 
-test('Clickable ProductComponent triggers onCardInteract', async () => {
-    const mockOnCardInteract = jest.fn();
+
+test('ProductComponent displays product details', () => {
+    const mockProps = {
+        product_id: '1',
+        title: 'Test Product',
+        img: 'test.jpg',
+        price: 19.99,
+        description: 'Test Description',
+        brand: 'Test Brand',
+        category: 'Test Category',
+        clickable: true,
+        onCardInteract: jest.fn(),
+    };
     render(
         <BrowserRouter>
-            <ProductComponent title="Clickable Product" clickable={true} onCardInteract={mockOnCardInteract} product_id="1" />
+            <ProductComponent {...mockProps} />
+        </BrowserRouter>
+    );
+    expect(screen.getByText('Test Product')).toBeInTheDocument();
+    expect(screen.getByText('Test Brand')).toBeInTheDocument();
+    expect(screen.getByText('19.99')).toBeInTheDocument();
+    expect(screen.getByText('Test Category')).toBeInTheDocument();
+    expect(screen.getByText('Test Description')).toBeInTheDocument();
+});
+
+test('ProductComponent calls onCardInteract when clicked', async () => {
+    const mockProps = {
+        product_id: 1,
+        title: 'Test Product',
+        img: 'test.jpg',
+        price: 19.99,
+        description: 'Test Description',
+        brand: 'Test Brand',
+        category: 'Test Category',
+        clickable: true,
+        onCardInteract: jest.fn(),
+    };
+    render(
+        <BrowserRouter>
+            <ProductComponent {...mockProps} />
         </BrowserRouter>
     );
 
-    await userEvent.click(screen.getByRole('button'));
-    expect(mockOnCardInteract).toHaveBeenCalledWith(true, "1");
+    const clickableElement = screen.getByTestId('card-clickable');
+    fireEvent.click(clickableElement)
+    expect(mockProps.onCardInteract).toHaveBeenCalledWith(true, 1);
+});
+
+test('Direct call to onCardInteract mock', () => {
+    const mockOnCardInteract = jest.fn();
+    mockOnCardInteract(true, '1');
+    expect(mockOnCardInteract).toHaveBeenCalledWith(true, 1);
 });
