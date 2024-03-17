@@ -14,10 +14,10 @@
     "categories": {
       "auth": {
         "ase": {
-          "nativeClientId": "2ft98gahfe9fl5ss218gegmqjt",
-          "userPoolId": "eu-north-1_eiI8Vk9jq",
-          "userPoolName": "buyer",
-          "webClientId": "2ft98gahfe9fl5ss218gegmqjt"
+          "userPoolId": "eu-north-1_itzGrLoRL",
+          "userPoolName": "cogbuyer",
+          "webClientId": "68r37ihomeqvje07ajr4v5748a",
+          "nativeClientId": "68r37ihomeqvje07ajr4v5748a"
         }
       }
     }

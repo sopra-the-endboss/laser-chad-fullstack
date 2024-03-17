@@ -60,3 +60,9 @@ body {
 .pageLinkActive {
   color: white;
 }
+
+.authenticator {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
