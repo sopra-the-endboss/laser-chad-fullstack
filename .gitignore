@@ -26,5 +26,6 @@ yarn-error.log*
 LICENSE
 DOCKER-COMPOSE-LOCALSTACK
 
-# venv Python
+# Python
 .venv/
+*.pyc
