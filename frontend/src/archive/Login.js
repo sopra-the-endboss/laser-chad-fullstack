@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { TextField, Button } from "@mui/material";
 import {
   CognitoUserPool,
@@ -10,7 +10,7 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateData } from "../reducers/slices/authSlice";
-import { useSelector } from "react-redux";
+//import { useSelector } from "react-redux";
 
 import "./styles/Login.scss";
 
@@ -22,8 +22,8 @@ const userPool = new CognitoUserPool({
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [user, setUser] = useState();
-  const userData = useSelector((state) => state.auth.userData);
+  //const [user, setUser] = useState();
+  //const userData = useSelector((state) => state.auth.userData);
 
   const handleSubmit = (values) => {
     const cognitoUser = new CognitoUser({
@@ -37,7 +37,7 @@ const Login = () => {
     });
 
     cognitoUser.authenticateUser(authenticationDetails, {
-      onSuccess: (result) => {
+      onSuccess: () => {
         cognitoUser.getUserAttributes(function (err, result) {
           console.log("result", result);
           if (err) {
