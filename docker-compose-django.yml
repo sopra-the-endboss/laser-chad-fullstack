@@ -17,6 +17,8 @@ services:
     environment:
       POSTGRES_USER: "admin"
       POSTGRES_PASSWORD: "admin"
+    volumes:
+      - ./python/djangoproject:/app
 
   postgresdb_service:
     image: postgres:latest
