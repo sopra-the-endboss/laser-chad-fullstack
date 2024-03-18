@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+python/venv
 
 # testing
 /coverage
@@ -50,4 +51,6 @@ amplifytools.xcconfig
 
 lambda_test
 
+# Python venv and compiled files
 .venv/
+*.pyc

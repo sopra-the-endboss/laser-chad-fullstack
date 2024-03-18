@@ -10,7 +10,9 @@ const Navbar = ({ setData, searchQuerySubmitted, isAuthenticated }) => {
     // returned products will be set and content will be generated accordingly
     // currently filtering is extremely strict, use levenstein distance or fuse.js to also account for misspells.
     const filtered = AllProductsnameMock.filter((product) =>
-      product.product.toLowerCase().includes(event.target.value.toLowerCase())
+      product["product"]
+        .toLowerCase()
+        .includes(event.target.value.toLowerCase())
     );
 
     if (event.keyCode === 13 && event.target.value) {

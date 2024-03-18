@@ -37,7 +37,7 @@ export const ProductDetail = () => {
                             ${productDetails?.price}
                         </Typography>
                         <Typography gutterBottom variant="h5" component="div" color="black" style={{ fontWeight: 'bold' }} align="left">
-                            {productDetails?.brand} <Typography gutterBottom variant="h5" component="span" color="black" align="left">{productDetails?.product}</Typography>
+                            {productDetails?.brand} <Typography gutterBottom variant="h5" component="span" color="black" align="left">{productDetails['product']}</Typography>
                         </Typography>
                         <Typography gutterBottom variant="body2" color="text.secondary" align="left">
                             {productDetails?.subheader}

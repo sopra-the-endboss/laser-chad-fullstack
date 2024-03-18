@@ -61,6 +61,10 @@ body {
   color: white;
 }
 
+.carousel-style {
+  height: 100%;
+}
+
 .authenticator {
   display: flex;
   justify-content: center;
