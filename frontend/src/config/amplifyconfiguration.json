@@ -1,19 +1,16 @@
 {
   "aws_project_region": "eu-north-1",
   "aws_cognito_region": "eu-north-1",
-  "aws_user_pools_id": "eu-north-1_eiI8Vk9jq",
-  "aws_user_pools_web_client_id": "2ft98gahfe9fl5ss218gegmqjt",
-  "oauth": {
-    "domain": "aes.auth.eu-north-1.amazoncognito.com"
-  },
-  "aws_cognito_username_attributes": [],
+  "aws_user_pools_id": "eu-north-1_itzGrLoRL",
+  "aws_user_pools_web_client_id": "68r37ihomeqvje07ajr4v5748a",
+  "oauth": {},
+  "aws_cognito_username_attributes": ["EMAIL"],
   "aws_cognito_social_providers": [],
   "aws_cognito_signup_attributes": [
     "GIVEN_NAME",
     "FAMILY_NAME",
     "EMAIL",
-    "BIRTHDATE",
-    "ADDRESS"
+    "BIRTHDATE"
   ],
   "aws_cognito_mfa_configuration": "OFF",
   "aws_cognito_mfa_types": [],
@@ -26,7 +23,5 @@
       "REQUIRES_SYMBOLS"
     ]
   },
-  "aws_cognito_verification_mechanisms": [
-    "EMAIL"
-  ]
+  "aws_cognito_verification_mechanisms": ["EMAIL"]
 }
