@@ -20,7 +20,7 @@ The API endpoint that is deployed and will be reachable for other services like 
 - The endpoint is in this case the name and port of the service that hosts localstack, in this case localstack:4566
 - The api_id is an ID which is assigned upon API creation. It is found via a tag with name `APIG_TAG_ID` and  value `apig_shopprofile` specified in the docker-compose.yaml
 - stage_name is a constant PROD, specified in the docker-compose.yaml
-- resource_path is the path of the API that should be called and is linked to a Lambda function. In this example it is either `/listShopprofiles`, `/listShopprofiles/{shopprofile_id}` or `/writeShopprofile` with GET or POST
+- resource_path is the path of the API that should be called and is linked to a Lambda function. In this example it is either `/listShopprofiles`, `/listShopprofiles/{shopprofile_email}` or `/writeShopprofile` with GET or POST
 
 To actually test the API endpoints, the [test api script](test/test_apig.py) contains the code to send requests to de deployed API and print the results. Same as with the invocations, the command at the beginning of the script can be run in a UNIX terminal which will run the script on the shopprofile-debugger and print the responses from the service.
 
@@ -29,5 +29,5 @@ To obtain an URL see the file `test_apig.py`.
 ## TODO
 - Rename routes to conform to HTTP standards
 - Finalize deploy_utils.py so that all methods are contained there
-- Route /listShopprofiles/{shopprofile_id} is not yet set up with the Lambda function. The route does exist, but it simply calls the same Lambda function list_shopprofiles which does not yet use the paramter {shopprofile_id}
+- Route /listShopprofiles/{shopemail} is not yet set up with the Lambda function. The route does exist, but it simply calls the same Lambda function list_shopprofiles which does not yet use the paramter {shopemail}
 - Once finalized remove all tmp_XXX files

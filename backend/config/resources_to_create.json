@@ -8,7 +8,7 @@
             ]
         },
         {
-            "path":"{shopprofile_id}",
+            "path":"{shopemail}",
             "methods_for_that_path":[
                 {"method":"GET","lambda_fct":"get_shopprofile"}
             ]
