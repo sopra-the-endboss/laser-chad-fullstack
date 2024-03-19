@@ -1,3 +1,7 @@
+body {
+  min-height: auto !important;
+}
+
 .App {
   text-align: center;
 }
@@ -55,4 +59,14 @@
 
 .pageLinkActive {
   color: white;
+}
+
+.carousel-style {
+  height: 100%;
+}
+
+.authenticator {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }

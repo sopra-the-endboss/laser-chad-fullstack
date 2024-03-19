@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "name": "Tech"
+  },
+  {
+    "id": 2,
+    "name": "Smartphone"
+  },
+  {
+    "id": 3,
+    "name": "Laptop"
+  },
+  {
+    "id": 4,
+    "name": "Accessories"
+  },
+  {
+    "id": 5,
+    "name": "Gaming"
+  },
+  {
+    "id": 6,
+    "name": "Anime"
+  },
+  {
+    "id": 7,
+    "name": "Photo"
+  },
+  {
+    "id": 8,
+    "name": "Sale"
+  }
+]

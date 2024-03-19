@@ -1,0 +1,25 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-ase-staging-123450-authRole",
+      "UnauthRoleArn": "arn:aws:iam::533267069372:role/amplify-ase-staging-123450-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::533267069372:role/amplify-ase-staging-123450-authRole",
+      "Region": "eu-north-1",
+      "DeploymentBucketName": "amplify-ase-staging-123450-deployment",
+      "UnauthRoleName": "amplify-ase-staging-123450-unauthRole",
+      "StackName": "amplify-ase-staging-123450",
+      "StackId": "arn:aws:cloudformation:eu-north-1:533267069372:stack/amplify-ase-staging-123450/6abea680-e2c8-11ee-8840-06f8d36651bc",
+      "AmplifyAppId": "d47a6guqh1kks"
+    },
+    "categories": {
+      "auth": {
+        "ase": {
+          "userPoolId": "eu-north-1_itzGrLoRL",
+          "userPoolName": "cogbuyer",
+          "webClientId": "68r37ihomeqvje07ajr4v5748a",
+          "nativeClientId": "68r37ihomeqvje07ajr4v5748a"
+        }
+      }
+    }
+  }
+}
