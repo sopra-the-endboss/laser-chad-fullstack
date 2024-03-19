@@ -18,6 +18,7 @@ pp = PrettyPrinter(indent=2)
 IN_DOCKER = os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', False)
 
 if not IN_DOCKER:
+    print("Running script in non-docker mode")
     os.chdir("./backend")
     # Also set all AWS env vars, point to running localstack container not in a docker-compose network
     os.environ['AWS_DEFAULT_REGION']='us-east-1'
@@ -27,6 +28,7 @@ if not IN_DOCKER:
     os.environ['APIG_TAG'] = "apig_shopprofiles"
     os.environ['APIG_TAG_ID'] = "API_TAG_ID"
     os.environ['APIG_STAGE'] = "PROD"
+    os.environ['PROTOCOL'] = "https"
 # FOR MANUAL RUNING ONLY END
 ##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--
 
@@ -64,33 +66,51 @@ pp.pprint(apig_client.get_resources(restApiId = api_id)['items'])
 resources_id = [res['id'] for res in apig_client.get_resources(restApiId = api_id)['items']]
 print("-----------------")
 
-# # THORWS ERROR?? boto3 bug i think...
-# print(f"ALL INTEGRATIONS TO RESSOURCES FOUND:\n")
-# for res_id in resources_id:
-#     # print(res_id)
-#     pp.pprint(apig_client.get_integration(restApiId = api_id, resourceId = res_id, httpMethod = "POST"))
-# print("-----------------")
-
 print(f"ALL LAMBDA FUNCTION TO {api_id} FOUND:\n")
 pp.pprint(lambda_client.list_functions())
 print("-----------------")
 
 
-# Send requests to test GET - should return empty
-url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "shopprofile", protocol="https")
+###
+# Send requests
+
+# if in manual mode, get corresponding protocol, in dockermode is None, defaults to http
+PROTOCOL_TO_USE = os.getenv("PROTOCOL", None)
+
+# Send request to test GET - should return empty
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "shopprofile", protocol=PROTOCOL_TO_USE)
 print(f"Sending GET to {url}")
 response = requests.get(url)
 print(response.text)
 
-# # Send requests to test POST
-# url = deploy_utils.get_resource_path(api_id, stage_name = api_stage_name, resource_path = "shopprofile")
-# payload = {"shopemail":"test2", "shoppassword":"test2"}
-# print(f"Sending POST to {url} with payload {json.dumps(payload)}")
-# response = requests.post(url, json = payload)
-# print(response.text)
+# Send requests to test POST
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "shopprofile", protocol=PROTOCOL_TO_USE)
+payload = {"shopemail":"test2", "shoppassword":"test2"}
+print(f"Sending POST to {url} with payload {json.dumps(payload)}")
+response = requests.post(url, json = payload)
+print(response.text)
 
-# # Send requests to test GET - should return with one object
-# url = deploy_utils.get_resource_path(api_id, stage_name = api_stage_name, resource_path = "shopprofile")
-# print(f"Sending GET to {url}")
-# response = requests.get(url)
-# print(response.text)
+# Send requests to test GET - should return with one object
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "shopprofile", protocol=PROTOCOL_TO_USE)
+print(f"Sending GET to {url}")
+response = requests.get(url)
+print(response.text)
+
+# Send requests to test POST with invalid payload. Missing shoppassword -> 400
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "shopprofile", protocol=PROTOCOL_TO_USE)
+payload = {"shopemail":"test2"}
+print(f"Sending POST to {url} with payload {json.dumps(payload)}")
+response = requests.post(url, json = payload)
+print(response.text)
+
+# Send requests to test POST with payload with additional field, valid -> 200, we have an entry with an additional field
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "shopprofile", protocol=PROTOCOL_TO_USE)
+payload = {"shopemail":"test_additional_field", "shoppassword":"test_additional_field", "additional field":"test_additional_field"}
+print(f"Sending POST to {url} with payload {json.dumps(payload)}")
+response = requests.post(url, json = payload)
+print(response.text)
+# Check with GET
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "shopprofile", protocol=PROTOCOL_TO_USE)
+print(f"Sending GET to {url}")
+response = requests.get(url)
+print(response.text)

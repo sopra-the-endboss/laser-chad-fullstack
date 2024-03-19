@@ -173,7 +173,11 @@ def find_api_id_by_tag(apig_client, tag_key:str, tag_value:str) -> str:
 def get_resource_path(apig_client, api_id: str, stage_name:str, resource_path: str, protocol: str = "http") -> str:
     """
     According to localstack documentation build the url in an alternative format
-    """ 
+    """
+
+    if not protocol:
+        protocol="http"
+    
     url_base = "{protocol}://{endpoint}/restapis/{api_id}/{stage_name}/_user_request_/{resource_path}"
 
     endpoint = os.environ['AWS_ENDPOINT_URL']
