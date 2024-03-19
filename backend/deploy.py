@@ -15,12 +15,24 @@ import json
 from pprint import PrettyPrinter
 pp = PrettyPrinter(indent=2)
 
-import deploy_utils
+##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--
+# FOR MANUAL RUNING ONLY - DO NOT RUN IF IN A DOCKER CONTAINER
+IN_DOCKER = os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', False)
 
-# FOR MANUAL RUNING ONLY
-# os.chdir("./backend")
-# Also set ENDPOINT_URL to the localhost container, if running manually
-# os.environ['AWS_ENDPOINT_URL']='http://localstack:4566'
+if not IN_DOCKER:
+    os.chdir("./backend")
+    # Also set all AWS env vars, point to running localstack container not in a docker-compose network
+    os.environ['AWS_DEFAULT_REGION']='us-east-1'
+    os.environ['AWS_ENDPOINT_URL']='https://localhost.localstack.cloud:4566' # For manual, use the default localstack url
+    os.environ['AWS_ACCESS_KEY_ID']='fakecred' # Sometimes boto3 needs credentials
+    os.environ['AWS_SECRET_ACCESS_KEY']='fakecred' # Sometimes boto3 needs credentials
+    os.environ['APIG_TAG'] = "apig_shopprofiles"
+    os.environ['APIG_TAG_ID'] = "API_TAG_ID"
+    os.environ['APIG_STAGE'] = "PROD"
+# FOR MANUAL RUNING ONLY END
+##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--
+
+import deploy_utils
 
 def get_db_config() -> dict[str]:
     """
@@ -103,7 +115,8 @@ print("Lambda deployment ...")
 lambdas = {}
 for lambda_function_to_create in LAMBDA_FUNCTIONS_TO_DEPLOY:
     lambdas[lambda_function_to_create] = deploy_utils.deploy_lambda(
-        lambda_function_to_create,
+        lambda_client = lambda_client,
+        fct_name = lambda_function_to_create,
         env = {"TableName" : DYNAMO_DB_NAME}
     )
     print(f"Waiting over, function {lambda_function_to_create} is ready")
@@ -113,6 +126,7 @@ print("Lambda deployment done")
 # API Gateway deployment
 print("API Gateway deployment ...")
 api_id = deploy_utils.create_api(
+    apig_client = apig_client,
     api_name = APIG_NAME,
     api_tag = APIG_NAME,
     tag_id = APIG_TAG_ID
@@ -138,30 +152,48 @@ for validator_name, validator in request_validators.items():
 print("Create method and integration ...")
 for resource_type, resource_list in resources_to_create.items():
     print(f"create {resource_type} ... ")
-    for i,resource_mapping in enumerate(resource_list):
-        print(f"create resources ...")
-        lambda_arn = lambdas[resource_mapping['lambda_fct']]
+    # for i,resource_mapping in enumerate(resource_list):
+    for i,resource_path_and_methods_for_path in enumerate(resource_list):
+        # print(f"create resources ...")
+        i_path = resource_path_and_methods_for_path['path']
+        i_methods = resource_path_and_methods_for_path['methods_for_that_path']
+        print(f"create resource {i_path}")
+        # If we are in the first element of the top resource, the parent resource is root
         if i == 0:
             tmp_parent_res_id = None
+        # Otherwise we use the resrouce id of the previous element in resource_type as parent
         tmp_parent_res_id = deploy_utils.create_resource(
+            apig_client = apig_client,
             api_id = api_id,
             parent_id = tmp_parent_res_id,
-            resource_path=resource_mapping['path']
+            resource_path = i_path
         )
-        resource_mapping['resource_id'] = tmp_parent_res_id
-        print(f"write lambda and integration for resoucres mapping {json.dumps(resource_mapping)} ...")
-        apig_new_method, apig_new_integration = deploy_utils.add_lambda_method_and_integration_to_resource(
-            api_id = api_id,
-            resource_id = resource_mapping['resource_id'],
-            lambda_arn = lambda_arn,
-            method = resource_mapping['method'],
-            requestParameters = resource_mapping.get('requestParameters',{}), # This is optional, if empty pass empty dict
-            requestModels = resource_mapping.get('requestModels',{}), # This is optional, if empty pass empty dict
-            requestValidatorId = api_validators['bodyOnly'] # The default bodyOnly validator
-        )
+
+        print(f"create {len(i_methods)} methods for path {i_path}")
+        for j,j_method_dict in enumerate(i_methods):
+            j_method = j_method_dict['method']
+            j_lambda_fct = j_method_dict['lambda_fct']
+            print(f"create method {j_method} with function {j_lambda_fct}")
+            
+            # Get the lambda arn
+            lambda_arn = lambdas[j_lambda_fct]
+
+            # Create method and integration
+            apig_new_method, apig_new_integration = deploy_utils.add_lambda_method_and_integration_to_resource(
+                apig_client = apig_client,
+                lambda_client = lambda_client,
+                api_id = api_id,
+                resource_id = tmp_parent_res_id,
+                lambda_arn = lambda_arn,
+                method = j_method,
+                requestParameters = j_method_dict.get('requestParameters',{}), # This is optional, if empty pass empty dict
+                requestModels = j_method_dict.get('requestModels',{}), # This is optional, if empty pass empty dict
+                requestValidatorId = api_validators['bodyOnly'] # The default bodyOnly validator
+            )
 
 print("Create api deployment ...")
 deploy_utils.deploy_api(
+    apig_client = apig_client,
     api_id = api_id,
     stage_name = os.environ['APIG_STAGE']
 )

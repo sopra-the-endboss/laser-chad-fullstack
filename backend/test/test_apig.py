@@ -12,6 +12,24 @@ import requests
 from pprint import PrettyPrinter
 pp = PrettyPrinter(indent=2)
 
+##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--
+# FOR MANUAL RUNING ONLY
+
+IN_DOCKER = os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', False)
+
+if not IN_DOCKER:
+    os.chdir("./backend")
+    # Also set all AWS env vars, point to running localstack container not in a docker-compose network
+    os.environ['AWS_DEFAULT_REGION']='us-east-1'
+    os.environ['AWS_ENDPOINT_URL']='https://localhost.localstack.cloud:4566' # For manual, use the default localstack url
+    os.environ['AWS_ACCESS_KEY_ID']='fakecred' # Sometimes boto3 needs credentials
+    os.environ['AWS_SECRET_ACCESS_KEY']='fakecred' # Sometimes boto3 needs credentials
+    os.environ['APIG_TAG'] = "apig_shopprofiles"
+    os.environ['APIG_TAG_ID'] = "API_TAG_ID"
+    os.environ['APIG_STAGE'] = "PROD"
+# FOR MANUAL RUNING ONLY END
+##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--
+
 import deploy_utils
 
 # Create clients
@@ -23,6 +41,7 @@ api_tag_id = "API_TAG_ID"
 api_id_to_seach = "apig_shopprofiles"
 
 api_id = deploy_utils.find_api_id_by_tag(
+    apig_client,
     tag_key = api_tag_id,
     tag_value = api_id_to_seach
 )
@@ -58,7 +77,7 @@ print("-----------------")
 
 
 # Send requests to test GET - should return empty
-url = deploy_utils.get_resource_path(api_id, stage_name = api_stage_name, resource_path = "shopprofile")
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "shopprofile", protocol="https")
 print(f"Sending GET to {url}")
 response = requests.get(url)
 print(response.text)

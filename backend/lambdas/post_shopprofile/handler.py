@@ -23,7 +23,6 @@ HTTP_RESPONSE_DICT = {
     # Here comes to body, as a JSON string
 }
 
-
 def handler(event: dict, context) -> dict:
     """
     event is a dict which contains the payload
@@ -31,6 +30,9 @@ def handler(event: dict, context) -> dict:
     """
     
     print("write_shopprofile invoked")
+
+    print("DEBUG: This is the Event")
+    pp.pprint(event)
     
     try:
         TableName = os.environ["TableName"]
@@ -49,7 +51,10 @@ def handler(event: dict, context) -> dict:
         item = json.loads(event['body'])
     except json.decoder.JSONDecodeError as e:
         print("JSONDecodeError IN PARSING BODY OF write_shopprofile")
-        raise e
+        print("Try to write the event object to the table")
+        item = event
+    
+    # If an error occured in parsing the body, try to write the event object itself 
 
     print("Try writing item")
     response_put = dynamo_table.put_item(
