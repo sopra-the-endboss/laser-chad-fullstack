@@ -3,12 +3,7 @@ import re
 import zipfile
 import boto3
 
-# Create clients
-lambda_client = boto3.client("lambda")
-dynamo_client = boto3.client("dynamodb")
-apig_client = boto3.client("apigateway")
-
-def deploy_lambda(fct_name: str, env: dict[str, str]):
+def deploy_lambda(lambda_client, fct_name: str, env: dict[str, str]):
     """
     Wrapper to create a lambda function, assume tmp_handler.py file in root dir, consisting of handler function called handler
     Error if lambda function already exists
@@ -35,7 +30,7 @@ def deploy_lambda(fct_name: str, env: dict[str, str]):
 
     return response_lambda_create['FunctionArn']
     
-def create_api(api_name: str, api_tag: str, tag_id: str) -> str:
+def create_api(apig_client, api_name: str, api_tag: str, tag_id: str) -> str:
     """
     Wrapper to create API Gateway
     Each API created must have a tag in the form of <tag_id>:<api_tag>
@@ -51,7 +46,7 @@ def create_api(api_name: str, api_tag: str, tag_id: str) -> str:
     )
     return apig_rest_api['id']
 
-def create_resource(api_id: str, parent_id: str, resource_path: str) -> str:
+def create_resource(apig_client, api_id: str, parent_id: str, resource_path: str) -> str:
     """
     Wrapper for creating a resource
 
@@ -85,6 +80,8 @@ def create_resource(api_id: str, parent_id: str, resource_path: str) -> str:
     return apig_new_resource['id']
 
 def add_lambda_method_and_integration_to_resource(
+        apig_client,
+        lambda_client,
         api_id: str,
         resource_id: str,
         lambda_arn: str,
@@ -105,7 +102,7 @@ def add_lambda_method_and_integration_to_resource(
     if not resource_id in [res['id'] for res in apig_client.get_resources(restApiId = api_id)['items']]:
         raise ValueError(f"resource id {resource_id} not found")
 
-    # Get the ARN of the desired lambda function to integrate
+    # Check ARN of the desired lambda function to integrate
     if not lambda_arn in [function_def['FunctionArn'] for function_def in lambda_client.list_functions()['Functions']]:
         raise ValueError(f"lambda arn {lambda_arn} not found")
 
@@ -133,7 +130,7 @@ def add_lambda_method_and_integration_to_resource(
 
     return apig_new_method, apig_new_integration
 
-def deploy_api(api_id: str, stage_name: str):
+def deploy_api(apig_client, api_id: str, stage_name: str):
     """
     Deploy an api
     """
@@ -148,7 +145,7 @@ def deploy_api(api_id: str, stage_name: str):
         stageName = stage_name
     )
 
-def find_api_id_by_tag(tag_key:str, tag_value:str) -> str:
+def find_api_id_by_tag(apig_client, tag_key:str, tag_value:str) -> str:
     """
     Find from all deployed apis the ID where the api has a tag with value tag_key and value tag_value
     Throws error if multiple found
@@ -173,11 +170,11 @@ def find_api_id_by_tag(tag_key:str, tag_value:str) -> str:
     
     return api_ids_found[0]
 
-def get_resource_path(api_id: str, stage_name:str, resource_path: str) -> str:
+def get_resource_path(apig_client, api_id: str, stage_name:str, resource_path: str, protocol: str = "http") -> str:
     """
     According to localstack documentation build the url in an alternative format
     """ 
-    url_base = "http://{endpoint}/restapis/{api_id}/{stage_name}/_user_request_/{resource_path}"
+    url_base = "{protocol}://{endpoint}/restapis/{api_id}/{stage_name}/_user_request_/{resource_path}"
 
     endpoint = os.environ['AWS_ENDPOINT_URL']
     # Strip protocol
@@ -188,6 +185,7 @@ def get_resource_path(api_id: str, stage_name:str, resource_path: str) -> str:
         raise ValueError(f"api {api_id} not found")
     
     url = url_base.format(
+        protocol = protocol,
         endpoint = endpoint,
         api_id = api_id,
         stage_name = stage_name,
