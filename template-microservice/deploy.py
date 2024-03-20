@@ -1,12 +1,23 @@
 """
 Deploy one Dynamo DB
-- shopprofiles with the following keys
-    - shopemail
-    - shoppassword
+- template-microservice-db with the following keys
+    - template-microservice-key-1
+    - template-microservice-key-1
 
 Deploy two lambda functions
-- list_shopprofiles for listing all currently saved shop profile items
-- write_shopprofile for writing a new shopprofile
+- get_lambda for listing all currently saved items in the DB or a specific one with a given {id} in the pathParameter
+- post_lambda for putting a new item to the DB
+
+Deploy an API Gateway which provides routes as specified in resources_to_create.json
+- xxx/template-microservice GET
+    Get all items in the dynamo DB via lambda get_lambda
+    Lambda fct: get_lambda
+- xxx/template-microservice POST
+    Write an item to the DB
+    Lambda fct: post_lambda
+- xxx/template-microservice/{template-microservice-key-1} GET
+    Get all items where template-microservice-key-1 equals the value supplied in path between {}
+    Lambda fct: get_lambda
 """
 
 import os
@@ -20,13 +31,13 @@ pp = PrettyPrinter(indent=2)
 IN_DOCKER = os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', False)
 
 if not IN_DOCKER:
-    os.chdir("./backend")
+    os.chdir("./template-microservice")
     # Also set all AWS env vars, point to running localstack container not in a docker-compose network
     os.environ['AWS_DEFAULT_REGION']='us-east-1'
     os.environ['AWS_ENDPOINT_URL']='https://localhost.localstack.cloud:4566' # For manual, use the default localstack url
     os.environ['AWS_ACCESS_KEY_ID']='fakecred' # Sometimes boto3 needs credentials
     os.environ['AWS_SECRET_ACCESS_KEY']='fakecred' # Sometimes boto3 needs credentials
-    os.environ['APIG_TAG'] = "apig_shopprofiles"
+    os.environ['APIG_TAG'] = "apig_template"
     os.environ['APIG_TAG_ID'] = "API_TAG_ID"
     os.environ['APIG_STAGE'] = "PROD"
 # FOR MANUAL RUNING ONLY END
@@ -91,7 +102,7 @@ request_models = get_request_models()
 request_validators = get_request_validators()
 resources_to_create = get_resources_to_create()
 
-LAMBDA_FUNCTIONS_TO_DEPLOY = ["get_shopprofile","post_shopprofile"]
+LAMBDA_FUNCTIONS_TO_DEPLOY = ["get_lambda","post_lambda"] # TODO: Fetch names of all subdirs of lambdas/ instead of manually typing them out
 LAMBDA_ROLE = "arn:aws:iam::000000000000:role/lambda-role" # given by localstack
 
 DYNAMO_DB_NAME = db_schema['TableName']
@@ -131,6 +142,7 @@ api_id = deploy_utils.create_api(
     api_tag = APIG_NAME,
     tag_id = APIG_TAG_ID
 )
+
 print(f"Create api request models ...")
 for model_name, model in request_models.items():
     apig_client.create_model(
@@ -139,6 +151,7 @@ for model_name, model in request_models.items():
         schema = json.dumps(model['model_spec']),
         contentType = model['contentType']        
     )
+
 print("Create api request validators ...")
 api_validators = {}
 for validator_name, validator in request_validators.items():
@@ -149,6 +162,7 @@ for validator_name, validator in request_validators.items():
         validateRequestParameters = validator['validateRequestParameters']
     )
     api_validators[validator_name] = validator['id']
+
 print("Create method and integration ...")
 for resource_type, resource_list in resources_to_create.items():
     print(f"create {resource_type} ... ")

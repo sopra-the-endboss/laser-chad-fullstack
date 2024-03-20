@@ -1,5 +1,5 @@
 """
-Handle call which writes an item to the shopprofiles DB
+Handle call which writes an item to the template DB
 Return an answer object according to put_item
 If an error occurs within the handler (not wrong parameters for the lambda invocation itself), 200 is returned and an object that contains the error description
 - This handler does not handle that but simply returns the object
@@ -29,9 +29,12 @@ def handler(event: dict, context) -> dict:
     The API Gateway which takes the POST request is validating that all fields are present in the payload in the event body
     """
     
-    print("write_shopprofile invoked")
+    print("post_lambda invoked")
 
-    print("DEBUG: This is the Event")
+    print("DEBUG: This is the context")
+    pp.pprint(context)
+
+    print("DEBUG: This is the event")
     pp.pprint(event)
     
     try:
@@ -50,7 +53,7 @@ def handler(event: dict, context) -> dict:
     try:
         item = json.loads(event['body'])
     except json.decoder.JSONDecodeError as e:
-        print("JSONDecodeError IN PARSING BODY OF write_shopprofile")
+        print("JSONDecodeError IN PARSING BODY")
         print("Try to write the event object to the table")
         item = event
     

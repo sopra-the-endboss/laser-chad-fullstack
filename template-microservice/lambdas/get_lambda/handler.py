@@ -1,5 +1,5 @@
 """
-Handle call which lists all shopprofiles or a single shopprofile with a path variable shopemail
+Handle call which lists all template items or a single template item with a path variable {id}
 Returns a HTTP Response object, otherwise cannot work with API Gateway
 Returns an empty body if no item which matches shopemail is found
 
@@ -20,9 +20,9 @@ HTTP_RESPONSE_DICT = {
 
 def handler(event, context) -> list[dict]:
 
-    PATH_PARAMETER_FILTER = "shopemail"
+    PATH_PARAMETER_FILTER = "template-microservice-key-1" # Must match the name in resources_to_create.json in the path with {}
     
-    print("list_shopprofiles invoked")
+    print("get_lambda invoked")
 
     print("DEBUG: This is the context")
     pp.pprint(context)
@@ -43,9 +43,8 @@ def handler(event, context) -> list[dict]:
     dynamo_resource = boto3.resource("dynamodb")
     dynamo_table = dynamo_resource.Table(TableName)
 
-    print("Scanning table")
-    response_scan = dynamo_table.scan(TableName = "shopprofiles")
-    print(type(response_scan))
+    print("Scanning table, print result from scan")
+    response_scan = dynamo_table.scan()
     pp.pprint(response_scan)
     
     print("Extracting items")
@@ -53,8 +52,8 @@ def handler(event, context) -> list[dict]:
     found_items_list = response_scan['Items']
     print(f"Items found after scanning table: {json.dumps(found_items_list)}")
 
-    # Now check if we have a partParameter shopemail which is used as a filter
-    # If we have a non empty dict for event['pathParameters'] we have
+    # Now check if we have a partParameter id which is used as a filter
+    # If we have a non empty dict for event['pathParameters'] we want to apply a filter to all items found
     if event['pathParameters']:
         if PATH_PARAMETER_FILTER in event['pathParameters']:
             path_parameter_to_match = event['pathParameters'][PATH_PARAMETER_FILTER]

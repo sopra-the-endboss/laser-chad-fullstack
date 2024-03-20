@@ -35,10 +35,10 @@ services:
     networks:
       - backend
   
-  shopprofile:
-    container_name: "shopprofile"
+  template-microservice:
+    container_name: "template-microservice"
     build:
-      context: ./backend
+      context: ./template-microservice
       dockerfile: dockerfile
       no_cache: true
     environment:
@@ -47,7 +47,7 @@ services:
       - AWS_ACCESS_KEY_ID=fakecred # Sometimes boto3 needs credentials
       - AWS_SECRET_ACCESS_KEY=fakecred # Sometimes boto3 needs credentials
       - APIG_TAG_ID=API_TAG_ID
-      - APIG_TAG=apig_shopprofiles
+      - APIG_TAG=apig_template
       - APIG_STAGE=PROD
       - AM_I_IN_A_DOCKER_CONTAINER=True
     volumes:
@@ -57,10 +57,10 @@ services:
     networks:
       - backend
   
-  shopprofile-debugger:
-    container_name: "shopprofile-debugger"
+  template-microservice-debugger:
+    container_name: "template-microservice-debugger"
     build:
-      context: ./backend
+      context: ./template-microservice
       dockerfile: dockerfile_debugger
       no_cache: true
     environment:
