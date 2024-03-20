@@ -98,7 +98,7 @@ url = get_resource_path(api_id, "writeProduct")
 payload = {
     "product_id": 1,
     "product": "Apple iPhone 15 Pro",
-    "highlighted": true,
+    "highlighted": True,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 57.46,
     "formatted_text": "",

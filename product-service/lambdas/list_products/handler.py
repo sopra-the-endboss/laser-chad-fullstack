@@ -19,7 +19,7 @@ HTTP_RESPONSE_DICT = {
 
 def handler(event, context) -> list[dict]:
     
-    print("list_productss invoked")
+    print("list_products invoked")
 
     try:
         TableName = os.environ["TableName"]

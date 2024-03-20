@@ -52,31 +52,6 @@ def create_api(api_name: str, api_tag: str, tag_id: str) -> str:
     )
     return apig_rest_api['id']
 
-def get_api_id_by_tag(tag_key:str, tag_value:str) -> str:
-    """
-    Find from all deployed apis the ID where the api has a tag with value tag_key and value tag_value
-    Throws error if multiple found
-    Throw error if none found
-
-    Returns
-        str with the API ID
-    """
-
-    api_ids_found = []
-    for api_item in apig_client.get_rest_apis()['items']:
-        api_item_tags = api_item['tags']
-        if tag_key in api_item_tags:
-            if api_item_tags[tag_key] == tag_value:
-                api_ids_found.append(api_item['id'])
-    
-    if not api_ids_found:
-        raise ValueError(f"No API ID found with tag_key {tag_key} and tag_value {tag_value}")
-    
-    if len(api_ids_found) > 1:
-        raise ValueError(f"Multiple API ID found with tag_key {tag_key} and tag_value {tag_value}")
-    
-    return api_ids_found[0]
-
 def create_resource(api_id: str, parent_id: str, resource_path: str) -> str:
     """
     Wrapper for creating a resource
@@ -177,7 +152,7 @@ def deploy_api(api_id: str, stage_name: str):
         stageName = stage_name
     )
 
-def find_api_id_by_tag(tag_key:str, tag_value:str) -> str:
+def get_api_id_by_tag(tag_key:str, tag_value:str) -> str:
     """
     Find from all deployed apis the ID where the api has a tag with value tag_key and value tag_value
     Throws error if multiple found
@@ -186,21 +161,24 @@ def find_api_id_by_tag(tag_key:str, tag_value:str) -> str:
     Returns
         str with the API ID
     """
-
-    api_ids_found = []
-    for api_item in apig_client.get_rest_apis()['items']:
-        api_item_tags = api_item['tags']
-        if tag_key in api_item_tags:
-            if api_item_tags[tag_key] == tag_value:
-                api_ids_found.append(api_item['id'])
-    
-    if not api_ids_found:
-        raise ValueError(f"No API ID found with tag_key {tag_key} and tag_value {tag_value}")
-    
-    if len(api_ids_found) > 1:
-        raise ValueError(f"Multiple API ID found with tag_key {tag_key} and tag_value {tag_value}")
-    
-    return api_ids_found[0]
+    while True:
+        api_ids_found = []
+        for api_item in apig_client.get_rest_apis()['items']:
+            api_item_tags = api_item['tags']
+            if tag_key in api_item_tags:
+                if api_item_tags[tag_key] == tag_value:
+                    api_ids_found.append(api_item['id'])
+        
+        if not api_ids_found:
+            #raise ValueError(f"No API ID found with tag_key {tag_key} and tag_value {tag_value}")
+            print(f"No API ID found with tag_key {tag_key} and tag_value {tag_value}")
+        else:
+            if len(api_ids_found) > 1:
+                #raise ValueError(f"Multiple API ID found with tag_key {tag_key} and tag_value {tag_value}")
+                print(f"Multiple API ID found with tag_key {tag_key} and tag_value {tag_value}")
+            else:
+        
+                return api_ids_found[0]
 
 def get_resource_path(api_id: str, resource_path: str) -> str:
     """
