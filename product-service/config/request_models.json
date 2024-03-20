@@ -4,7 +4,7 @@
         "$schema": "http://json-schema.org/draft-04/schema#",
         "title": "writeProduct",
         "type" : "object",
-        "required" : ["product_id", "product", "highlighted", "image", "price", "formatted_text", "category", "brand"],
+        "required" : ["product_id", "product"],
         
 
         "properties" : {
@@ -12,24 +12,6 @@
                 "type" : "number"
             },
             "product" : {
-                "type" : "string"
-            },
-            "highlighted" : {
-                "type" : "boolean"
-            },
-            "image" : {
-                "type" : "string"
-            },
-            "price" : {
-                "type" : "number"
-            },
-            "formatted_text" : {
-                "type" : "string"
-            },
-            "category" : {
-                "type" : "string"
-            },
-            "brand" : {
                 "type" : "string"
             }
         }

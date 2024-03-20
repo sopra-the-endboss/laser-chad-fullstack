@@ -1,5 +1,5 @@
 {
-    "listShopprofiles" : [
+    "listProducts" : [
         {
             "path":"listProducts",
             "method":"GET",
@@ -11,7 +11,7 @@
             "lambda_fct":"list_products"
         }
     ],
-    "writeShopprofile" : [
+    "writeProduct" : [
         {
             "path":"writeProduct",
             "method":"POST",

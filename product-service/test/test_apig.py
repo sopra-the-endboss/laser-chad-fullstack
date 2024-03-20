@@ -97,13 +97,7 @@ print(response.text)
 url = get_resource_path(api_id, "writeProduct")
 payload = {
     "product_id": 1,
-    "product": "Apple iPhone 15 Pro",
-    "highlighted": true,
-    "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
-    "price": 57.46,
-    "formatted_text": "",
-    "category": "Smartphone",
-    "brand": "Apple"
+    "product": "Apple iPhone 15 Pro"
   }
 print(f"Sending POST to {url} with payload {json.dumps(payload)}")
 response = requests.post(url, json = payload)
