@@ -74,6 +74,46 @@ services:
     networks:
       - backend
 
+  product:
+    container_name: "product"
+    build:
+      context: ./product-service
+      dockerfile: dockerfile
+      no_cache: true
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ENDPOINT_URL=http://localstack:4566 # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=fakecred # Sometimes boto3 needs credentials
+      - AWS_SECRET_ACCESS_KEY=fakecred # Sometimes boto3 needs credentials
+      - APIG_TAG_ID=API_TAG_ID
+      - APIG_TAG=apig_shopprofiles
+      - APIG_STAGE=PROD
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - localstack
+      - shopprofile
+    networks:
+      - backend
+  
+  product-debugger:
+    container_name: "product-debugger"
+    build:
+      context: ./product-service
+      dockerfile: dockerfile_debugger
+      no_cache: true
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ENDPOINT_URL=http://localstack:4566 # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=fakecred # Sometimes boto3 needs credentials 
+      - AWS_SECRET_ACCESS_KEY=fakecred
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - localstack
+    networks:
+      - backend
+
 #  django:
 #    container_name: "djangoproject"
 #    build: ./python/djangoproject

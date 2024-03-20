@@ -1,0 +1,22 @@
+{
+    "listShopprofiles" : [
+        {
+            "path":"listProducts",
+            "method":"GET",
+            "lambda_fct":"list_products"
+        },
+        {
+            "path":"{product_id}",
+            "method":"GET",
+            "lambda_fct":"list_products"
+        }
+    ],
+    "writeShopprofile" : [
+        {
+            "path":"writeProduct",
+            "method":"POST",
+            "lambda_fct":"write_product",
+            "requestModels":{"application/json":"writeProduct"}
+        }
+    ]
+}
