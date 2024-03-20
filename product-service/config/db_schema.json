@@ -1,5 +1,5 @@
 {
-    "TableName": "products",
+    "TableName": "Products",
     "KeySchema": [
         {
             "AttributeName": "product_id",
