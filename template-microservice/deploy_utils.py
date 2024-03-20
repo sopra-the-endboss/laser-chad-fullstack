@@ -1,7 +1,6 @@
 import os
 import re
 import zipfile
-import boto3
 
 def deploy_lambda(lambda_client, fct_name: str, env: dict[str, str]):
     """
