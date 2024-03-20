@@ -1,10 +1,10 @@
 {
-"writeShopprofile": {
+"post_template": {
     "model_spec": {
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "title": "writeShopprofile",
+        "title": "post_template",
         "type" : "object",
-        "required" : ["shopemail","shoppassword"],
+        "required" : ["template-microservice-key-1","template-microservice-key-2"],
         "properties" : {
             "shopemail" : {
                 "type" : "string"
