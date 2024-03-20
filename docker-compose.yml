@@ -65,7 +65,7 @@ services:
     environment:
       - AWS_DEFAULT_REGION=us-east-1
       - AWS_ENDPOINT_URL=http://localstack:4566 # host localstack must match the name of the service which runs localstack
-      - AWS_ACCESS_KEY_ID=fakecred # Sometimes boto3 needs credentials
+      - AWS_ACCESS_KEY_ID=fakecred # Sometimes boto3 needs credentials 
       - AWS_SECRET_ACCESS_KEY=fakecred
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
@@ -74,40 +74,40 @@ services:
     networks:
       - backend
 
-  django:
-    container_name: "djangoproject"
-    build: ./python/djangoproject
-    ports:
-      - "8000:8000"
-    depends_on:
-      - postgresdb_service
-    command: >
-      bash -c "python manage.py wait_for_db &&
-      python manage.py makemigrations  --noinput &&
-      python manage.py migrate --noinput &&
-      python manage.py initadmin &&
-      python manage.py runserver 0.0.0.0:8000"
-    environment:
-      POSTGRES_USER: "admin"
-      POSTGRES_PASSWORD: "admin"
-    volumes:
-      - ./python/djangoproject:/app
-    networks:
-      - backend
+#  django:
+#    container_name: "djangoproject"
+#    build: ./python/djangoproject
+#    ports:
+#      - "8000:8000"
+#    depends_on:
+#      - postgresdb_service
+#    command: >
+#      bash -c "python manage.py wait_for_db &&
+#      python manage.py makemigrations  --noinput &&
+#      python manage.py migrate --noinput &&
+#      python manage.py initadmin &&
+#      python manage.py runserver 0.0.0.0:8000"
+#    environment:
+#      POSTGRES_USER: "admin"
+#      POSTGRES_PASSWORD: "admin"
+#    volumes:
+#      - ./python/djangoproject:/app
+#    networks:
+#      - backend
 
-  postgresdb_service:
-    image: postgres:latest
-    container_name: "postgresdb_container"
-    ports:
-      - "5400:5432"
-    environment:
-      POSTGRES_DB: "postgresdb"
-      POSTGRES_USER: "admin"
-      POSTGRES_PASSWORD: "admin"
-    networks:
-      - backend
-    #volumes:
-    #  - dbvolume:/var/lib/postgresql/data
+#  postgresdb_service:
+#    image: postgres:latest
+#    container_name: "postgresdb_container"
+#    ports:
+#      - "5400:5432"
+#    environment:
+#      POSTGRES_DB: "postgresdb"
+#      POSTGRES_USER: "admin"
+#      POSTGRES_PASSWORD: "admin"
+#    networks:
+#      - backend
+#    volumes:
+#      - dbvolume:/var/lib/postgresql/data
 
 #volumes:
 #  dbvolume:
