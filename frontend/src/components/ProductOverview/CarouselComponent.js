@@ -46,7 +46,7 @@ function CarouselComponent({carouselData, clickable = true, onCardInteract}) {
                             justifyContent: 'end' // Align content to the bottom
                         }}>
                             <CardContentComponent
-                                title={item?.product}
+                                title={item['product']}
                                 formatted_text={item?.formatted_text}
                                 category={item?.category}
                                 price={item?.price}

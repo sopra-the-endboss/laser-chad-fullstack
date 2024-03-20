@@ -45,10 +45,8 @@ const ProductOverview = ({isSearchQuerySubmitted, data, setCategoryFilter}) => {
                             Welcome to the LaserChads
                         </Typography>
                         <Box py={2} sx={{textAlign: "center", width: "70%", margin: "auto"}}>
-                            <Typography variant="p" component="p" sx={{color: "grey"}}>
-                                HPLaserChads E-Commerce Solution is a platform where you can buy and
-                                sell products. We have a wide range of products from different
-                                merchants. You can buy and sell products of your choice.
+                            <Typography variant="body1" sx={{color: "grey"}}>
+                                HPLaserChads E-Commerce Solution is a platform where you can buy and sell products. We have a wide range of products from different merchants. You can buy and sell products of your choice.
                             </Typography>
                         </Box>
                     </Grid>
@@ -74,10 +72,7 @@ const ProductOverview = ({isSearchQuerySubmitted, data, setCategoryFilter}) => {
             }
             {productData?.map((product, index) => (
                 <Grid item xs={3} key={index}>
-                    <ProductComponent brand={product.brand} category={product.category} img={product.image}
-                                      title={product.product} price={product.price}
-                                      description={product.description} formatted_text={product.formatted_text}
-                                      onCardInteract={onCardInteract} product_id={product.product_id}/>
+                    <ProductComponent {...product} img={ product.image} onCardInteract={onCardInteract}/>
                 </Grid>
             ))}
         </>

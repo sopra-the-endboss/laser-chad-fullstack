@@ -24,7 +24,7 @@ export function CardContentComponent({formatted_text, title, category, price, de
             <Typography gutterBottom variant="h6" component="span">
                 <span style={{fontWeight: "bold"}}>{brand}</span> {title}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" color="text.secondary" component="div">
                 {category &&
                     <Chip
                         label={category}
