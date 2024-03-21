@@ -7,7 +7,7 @@ docker cp template-microservice/test/test_apig.py template-microservice-debugger
 
 import boto3
 import os
-import json
+import simplejson as json
 import requests
 from pprint import PrettyPrinter
 pp = PrettyPrinter(indent=2)
@@ -112,6 +112,14 @@ response = requests.post(url, json = payload)
 print(response.status_code)
 print(response.text)
 
+# Send requests to test POST with invalid payload. Not number -> 400
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
+payload = {"template-microservice-key-1":"dummyvalue1", "template-microservice-key-2":"dummyvalue1", "template-microservice-key-numeric":"notanumber"}
+print(f"Sending POST to {url} with payload {json.dumps(payload)}")
+response = requests.post(url, json = payload)
+print(response.status_code)
+print(response.text)
+
 # Send requests to test POST with payload with additional field, valid -> 200, we have an entry with an additional field
 url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
 payload = {"template-microservice-key-1":"dummyvalue3", "template-microservice-key-2":"dummyvalue3", "additional field":"additionalvalue"}
@@ -124,8 +132,21 @@ print(response.text)
 url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
 print(f"Sending GET to {url}")
 response = requests.get(url)
+pp.pprint(response.json())
+
+# Send POST to test the number attribute. Send valid POST
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
+payload = {"template-microservice-key-1":"dummyvalue3", "template-microservice-key-2":"dummyvalue3", "template-microservice-key-numeric":42}
+print(f"Sending POST to {url} with payload {json.dumps(payload)}")
+response = requests.post(url, json = payload)
+print(response.status_code)
 print(response.text)
 
+# Check with GET
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
+print(f"Sending GET to {url}")
+response = requests.get(url)
+pp.pprint(response.json())
 
 
 

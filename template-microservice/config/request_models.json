@@ -11,6 +11,9 @@
             },
             "template-microservice-key-2" : {
                 "type" : "string"
+            },
+            "template-microservice-key-numeric" : {
+                "type" : "number"
             }
         }
     },

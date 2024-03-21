@@ -5,7 +5,7 @@ The handler has the name of the table hardcoded, this is determined by the confi
 """
 import os
 import boto3
-import json
+import simplejson as json
 
 # TODO: Remove later
 from pprint import PrettyPrinter

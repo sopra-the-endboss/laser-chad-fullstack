@@ -3,3 +3,4 @@ awscli
 awscli-local
 pyperclip
 requests
+simplejson
