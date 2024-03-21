@@ -22,7 +22,7 @@ Deploy an API Gateway which provides routes as specified in resources_to_create.
 
 import os
 import boto3
-import json
+import simplejson as json
 from pprint import PrettyPrinter
 pp = PrettyPrinter(indent=2)
 

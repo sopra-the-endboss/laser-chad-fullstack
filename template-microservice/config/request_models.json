@@ -6,11 +6,14 @@
         "type" : "object",
         "required" : ["template-microservice-key-1","template-microservice-key-2"],
         "properties" : {
-            "shopemail" : {
+            "template-microservice-key-1" : {
                 "type" : "string"
             },
-            "shoppassword" : {
+            "template-microservice-key-2" : {
                 "type" : "string"
+            },
+            "template-microservice-key-numeric" : {
+                "type" : "number"
             }
         }
     },

@@ -7,7 +7,7 @@ docker cp template-microservice/test/test_apig.py template-microservice-debugger
 
 import boto3
 import os
-import json
+import simplejson as json
 import requests
 from pprint import PrettyPrinter
 pp = PrettyPrinter(indent=2)
@@ -87,6 +87,7 @@ url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage
 payload = {"template-microservice-key-1":"dummyvalue1", "template-microservice-key-2":"dummyvalue1"}
 print(f"Sending POST to {url} with payload {json.dumps(payload)}")
 response = requests.post(url, json = payload)
+print(response.status_code)
 print(response.text)
 
 # Send requests to test GET - should return with one object
@@ -100,6 +101,23 @@ url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage
 payload = {"template-microservice-key-1":"dummyvalue1"}
 print(f"Sending POST to {url} with payload {json.dumps(payload)}")
 response = requests.post(url, json = payload)
+print(response.status_code)
+print(response.text)
+
+# Send requests to test POST with invalid payload. Not string -> 400
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
+payload = {"template-microservice-key-1":"dummyvalue1", "template-microservice-key-2":42}
+print(f"Sending POST to {url} with payload {json.dumps(payload)}")
+response = requests.post(url, json = payload)
+print(response.status_code)
+print(response.text)
+
+# Send requests to test POST with invalid payload. Not number -> 400
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
+payload = {"template-microservice-key-1":"dummyvalue1", "template-microservice-key-2":"dummyvalue1", "template-microservice-key-numeric":"notanumber"}
+print(f"Sending POST to {url} with payload {json.dumps(payload)}")
+response = requests.post(url, json = payload)
+print(response.status_code)
 print(response.text)
 
 # Send requests to test POST with payload with additional field, valid -> 200, we have an entry with an additional field
@@ -107,13 +125,28 @@ url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage
 payload = {"template-microservice-key-1":"dummyvalue3", "template-microservice-key-2":"dummyvalue3", "additional field":"additionalvalue"}
 print(f"Sending POST to {url} with payload {json.dumps(payload)}")
 response = requests.post(url, json = payload)
+print(response.status_code)
 print(response.text)
+
 # Check with GET
 url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
 print(f"Sending GET to {url}")
 response = requests.get(url)
+pp.pprint(response.json())
+
+# Send POST to test the number attribute. Send valid POST
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
+payload = {"template-microservice-key-1":"dummyvalue3", "template-microservice-key-2":"dummyvalue3", "template-microservice-key-numeric":42}
+print(f"Sending POST to {url} with payload {json.dumps(payload)}")
+response = requests.post(url, json = payload)
+print(response.status_code)
 print(response.text)
 
+# Check with GET
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
+print(f"Sending GET to {url}")
+response = requests.get(url)
+pp.pprint(response.json())
 
 
 
@@ -132,7 +165,7 @@ key_1_not_to_match = "invalid_item"
 
 # Send GET without match, key_1_to_match does not yet exist
 url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
-url = url + f"/{key_1_to_match}" # Add our specific shopemail
+url = url + f"/{key_1_to_match}" # Add our specific id
 print(f"Sending GET to {url}")
 response = requests.get(url)
 print(response.text)
@@ -146,24 +179,23 @@ response = requests.post(url, json = payload)
 payload = item_two_to_write
 print(f"Sending POST to {url} with payload {json.dumps(payload)}")
 response = requests.post(url, json = payload)
-# print(response.text) # dont show POST response, not interesting
 
 # Send request to test GET all items
 url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
 print(f"Sending GET to {url}")
 response = requests.get(url)
-print(response.text)
+pp.pprint(response.json())
 
 # Send GET without match, key_1 does not exist
 url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
-url = url + f"/{key_1_not_to_match}" # Add our specific shopemail
+url = url + f"/{key_1_not_to_match}" # Add our specific id
 print(f"Sending GET to {url}")
 response = requests.get(url)
-print(response.text)
+pp.pprint(response.json())
 
-# Send GET with match, shopemail does exist
+# Send GET with match, id does exist
 url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
-url = url + f"/{key_1_to_match}" # Add our specific shopemail
+url = url + f"/{key_1_to_match}" # Add our specific id
 print(f"Sending GET to {url}")
 response = requests.get(url)
-print(response.text)
+pp.pprint(response.json())
