@@ -20,7 +20,7 @@ services:
       - "4510-4559:4510-4559" # external services port range
     environment:
       - SERVICES=lambda,s3,dynamodb,apigateway
-      - DEBUG=1
+      - DEBUG=0
       - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR-}
       - DOCKER_HOST=unix:///var/run/docker.sock
       - SKIP_SSL_CERT_DOWNLOAD=1
@@ -76,40 +76,40 @@ services:
     networks:
       - backend
 
-  django:
-    container_name: "djangoproject"
-    build: ./python/djangoproject
-    ports:
-      - "8000:8000"
-    depends_on:
-      - postgresdb_service
-    command: >
-      bash -c "python manage.py wait_for_db &&
-      python manage.py makemigrations  --noinput &&
-      python manage.py migrate --noinput &&
-      python manage.py initadmin &&
-      python manage.py runserver 0.0.0.0:8000"
-    environment:
-      POSTGRES_USER: "admin"
-      POSTGRES_PASSWORD: "admin"
-    volumes:
-      - ./python/djangoproject:/app
-    networks:
-      - backend
+  # django:
+  #   container_name: "djangoproject"
+  #   build: ./python/djangoproject
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     - postgresdb_service
+  #   command: >
+  #     bash -c "python manage.py wait_for_db &&
+  #     python manage.py makemigrations  --noinput &&
+  #     python manage.py migrate --noinput &&
+  #     python manage.py initadmin &&
+  #     python manage.py runserver 0.0.0.0:8000"
+  #   environment:
+  #     POSTGRES_USER: "admin"
+  #     POSTGRES_PASSWORD: "admin"
+  #   volumes:
+  #     - ./python/djangoproject:/app
+  #   networks:
+  #     - backend
 
-  postgresdb_service:
-    image: postgres:latest
-    container_name: "postgresdb_container"
-    ports:
-      - "5400:5432"
-    environment:
-      POSTGRES_DB: "postgresdb"
-      POSTGRES_USER: "admin"
-      POSTGRES_PASSWORD: "admin"
-    networks:
-      - backend
-    #volumes:
-    #  - dbvolume:/var/lib/postgresql/data
+  # postgresdb_service:
+  #   image: postgres:latest
+  #   container_name: "postgresdb_container"
+  #   ports:
+  #     - "5400:5432"
+  #   environment:
+  #     POSTGRES_DB: "postgresdb"
+  #     POSTGRES_USER: "admin"
+  #     POSTGRES_PASSWORD: "admin"
+  #   networks:
+  #     - backend
+  #   #volumes:
+  #   #  - dbvolume:/var/lib/postgresql/data
 
 #volumes:
 #  dbvolume:
