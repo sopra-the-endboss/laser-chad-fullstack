@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-03-21T13:34:53.234Z" agent="5.0 (Windows)" etag="Zpa7mmwNZKGBSn5iM3u8" version="21.0.6" type="github">
+<mxfile host="app.diagrams.net" modified="2024-03-21T13:36:15.752Z" agent="5.0 (Windows)" etag="BfnMAJdE_EPAfc-3aD8Y" version="21.0.6" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="2074" dy="1514" grid="1" gridSize="15" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -137,7 +137,7 @@
           <mxGeometry x="1" relative="1" as="geometry" />
         </mxCell>
         <mxCell id="sywLWxaGSmSzc85R-Umz-60" value="shop DB" style="swimlane;fontStyle=2;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="90" y="705.4" width="160" height="90" as="geometry">
+          <mxGeometry x="195" y="720" width="160" height="90" as="geometry">
             <mxRectangle x="220" y="120" width="160" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -147,7 +147,7 @@
         <mxCell id="sywLWxaGSmSzc85R-Umz-62" value="imageId : str" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="sywLWxaGSmSzc85R-Umz-60">
           <mxGeometry y="52" width="160" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="sywLWxaGSmSzc85R-Umz-63" value="is obtained from Amplify" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=0;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" target="sywLWxaGSmSzc85R-Umz-60" source="c2cddBrIJrTPe6UJx0Hl-6">
+        <mxCell id="sywLWxaGSmSzc85R-Umz-63" value="is obtained from Amplify" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=0;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" target="sywLWxaGSmSzc85R-Umz-61" source="c2cddBrIJrTPe6UJx0Hl-6">
           <mxGeometry x="-0.06" y="-15" relative="1" as="geometry">
             <mxPoint x="120" y="600" as="sourcePoint" />
             <mxPoint x="380" y="549" as="targetPoint" />
@@ -161,7 +161,7 @@
           <mxGeometry x="1" relative="1" as="geometry" />
         </mxCell>
         <mxCell id="sywLWxaGSmSzc85R-Umz-66" value="shop S3" style="swimlane;fontStyle=2;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="298" y="738.4" width="160" height="67" as="geometry">
+          <mxGeometry x="403" y="753" width="160" height="67" as="geometry">
             <mxRectangle x="220" y="120" width="160" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
