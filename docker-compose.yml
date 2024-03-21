@@ -66,7 +66,7 @@ services:
     environment:
       - AWS_DEFAULT_REGION=us-east-1
       - AWS_ENDPOINT_URL=http://localstack:4566 # host localstack must match the name of the service which runs localstack
-      - AWS_ACCESS_KEY_ID=fakecred # Sometimes boto3 needs credentials
+      - AWS_ACCESS_KEY_ID=fakecred # Sometimes boto3 needs credentials 
       - AWS_SECRET_ACCESS_KEY=fakecred
       - AM_I_IN_A_DOCKER_CONTAINER=True
     volumes:
@@ -76,6 +76,7 @@ services:
     networks:
       - backend
 
+<<<<<<< HEAD
   # django:
   #   container_name: "djangoproject"
   #   build: ./python/djangoproject
@@ -110,6 +111,82 @@ services:
   #     - backend
   #   #volumes:
   #   #  - dbvolume:/var/lib/postgresql/data
+=======
+  product:
+    container_name: "product"
+    build:
+      context: ./product-service
+      dockerfile: dockerfile
+      no_cache: true
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ENDPOINT_URL=http://localstack:4566 # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=fakecred # Sometimes boto3 needs credentials
+      - AWS_SECRET_ACCESS_KEY=fakecred # Sometimes boto3 needs credentials
+      - APIG_TAG_ID=API_TAG_ID
+      - APIG_TAG=apig_shopprofiles
+      - APIG_STAGE=PROD
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - localstack
+      - shopprofile
+    networks:
+      - backend
+  
+  product-debugger:
+    container_name: "product-debugger"
+    build:
+      context: ./product-service
+      dockerfile: dockerfile_debugger
+      no_cache: true
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ENDPOINT_URL=http://localstack:4566 # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=fakecred # Sometimes boto3 needs credentials 
+      - AWS_SECRET_ACCESS_KEY=fakecred
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - localstack
+    networks:
+      - backend
+
+#  django:
+#    container_name: "djangoproject"
+#    build: ./python/djangoproject
+#    ports:
+#      - "8000:8000"
+#    depends_on:
+#      - postgresdb_service
+#    command: >
+#      bash -c "python manage.py wait_for_db &&
+#      python manage.py makemigrations  --noinput &&
+#      python manage.py migrate --noinput &&
+#      python manage.py initadmin &&
+#      python manage.py runserver 0.0.0.0:8000"
+#    environment:
+#      POSTGRES_USER: "admin"
+#      POSTGRES_PASSWORD: "admin"
+#    volumes:
+#      - ./python/djangoproject:/app
+#    networks:
+#      - backend
+
+#  postgresdb_service:
+#    image: postgres:latest
+#    container_name: "postgresdb_container"
+#    ports:
+#      - "5400:5432"
+#    environment:
+#      POSTGRES_DB: "postgresdb"
+#      POSTGRES_USER: "admin"
+#      POSTGRES_PASSWORD: "admin"
+#    networks:
+#      - backend
+#    volumes:
+#      - dbvolume:/var/lib/postgresql/data
+>>>>>>> 65531e18f8b072b44751be15a86db093eca76544
 
 #volumes:
 #  dbvolume:

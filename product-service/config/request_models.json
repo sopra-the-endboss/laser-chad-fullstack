@@ -1,0 +1,21 @@
+{
+"writeProduct": {
+    "model_spec": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "writeProduct",
+        "type" : "object",
+        "required" : ["product_id", "product"],
+        
+
+        "properties" : {
+            "product_id" : {
+                "type" : "number"
+            },
+            "product" : {
+                "type" : "string"
+            }
+        }
+    },
+    "contentType" : "application/json"
+}
+}
