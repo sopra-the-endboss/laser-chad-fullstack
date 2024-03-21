@@ -158,24 +158,23 @@ response = requests.post(url, json = payload)
 payload = item_two_to_write
 print(f"Sending POST to {url} with payload {json.dumps(payload)}")
 response = requests.post(url, json = payload)
-# print(response.text) # dont show POST response, not interesting
 
 # Send request to test GET all items
 url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
 print(f"Sending GET to {url}")
 response = requests.get(url)
-print(response.text)
+pp.pprint(response.json())
 
 # Send GET without match, key_1 does not exist
 url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
 url = url + f"/{key_1_not_to_match}" # Add our specific id
 print(f"Sending GET to {url}")
 response = requests.get(url)
-print(response.text)
+pp.pprint(response.json())
 
 # Send GET with match, id does exist
 url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
 url = url + f"/{key_1_to_match}" # Add our specific id
 print(f"Sending GET to {url}")
 response = requests.get(url)
-print(response.text)
+pp.pprint(response.json())
