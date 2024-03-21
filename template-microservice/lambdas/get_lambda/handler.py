@@ -1,8 +1,5 @@
 """
 Handle call which lists all template items or a single template item with a path variable {id}
-Returns a HTTP Response object, otherwise cannot work with API Gateway
-Returns an empty body if no item which matches id is found
-
 The handler has the name of the table hardcoded, this is determined by the config file config/db_schema.json upon deployment
 """
 import os
@@ -19,6 +16,25 @@ HTTP_RESPONSE_DICT = {
 }
 
 def handler(event, context) -> list[dict]:
+    """
+    Arguments:
+        event : a dict which contains all data from the request to the API
+        context : a LambdaContext object
+    
+    Returns:
+        A valid HTTP Response dict which must contain the fields
+        - statusCode
+        - isBase64Encoded
+        - headers
+        - body
+        If headers are written, they must be a dict
+        The body must be a JSON serializable string, handeled by json.dumps()
+
+        statusCode : 200 if success, 4XX otherwise
+        isBase64Encoded : False by default
+        headers : Empty by default, dict otherwise
+        body : JSON serialized List object with all the items found. Each item is a dict
+    """
 
     PATH_PARAMETER_FILTER = "template-microservice-key-1" # Must match the name in resources_to_create.json in the path with {}
     
