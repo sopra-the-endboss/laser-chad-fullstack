@@ -102,6 +102,13 @@ print(f"Sending POST to {url} with payload {json.dumps(payload)}")
 response = requests.post(url, json = payload)
 print(response.text)
 
+# Send requests to test POST with invalid payload. Not string -> 400
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
+payload = {"template-microservice-key-1":"dummyvalue1", "template-microservice-key-2":42}
+print(f"Sending POST to {url} with payload {json.dumps(payload)}")
+response = requests.post(url, json = payload)
+print(response.text)
+
 # Send requests to test POST with payload with additional field, valid -> 200, we have an entry with an additional field
 url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
 payload = {"template-microservice-key-1":"dummyvalue3", "template-microservice-key-2":"dummyvalue3", "additional field":"additionalvalue"}
@@ -132,7 +139,7 @@ key_1_not_to_match = "invalid_item"
 
 # Send GET without match, key_1_to_match does not yet exist
 url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
-url = url + f"/{key_1_to_match}" # Add our specific shopemail
+url = url + f"/{key_1_to_match}" # Add our specific id
 print(f"Sending GET to {url}")
 response = requests.get(url)
 print(response.text)
@@ -156,14 +163,14 @@ print(response.text)
 
 # Send GET without match, key_1 does not exist
 url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
-url = url + f"/{key_1_not_to_match}" # Add our specific shopemail
+url = url + f"/{key_1_not_to_match}" # Add our specific id
 print(f"Sending GET to {url}")
 response = requests.get(url)
 print(response.text)
 
-# Send GET with match, shopemail does exist
+# Send GET with match, id does exist
 url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
-url = url + f"/{key_1_to_match}" # Add our specific shopemail
+url = url + f"/{key_1_to_match}" # Add our specific id
 print(f"Sending GET to {url}")
 response = requests.get(url)
 print(response.text)

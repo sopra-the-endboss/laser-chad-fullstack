@@ -1,7 +1,7 @@
 """
 Handle call which lists all template items or a single template item with a path variable {id}
 Returns a HTTP Response object, otherwise cannot work with API Gateway
-Returns an empty body if no item which matches shopemail is found
+Returns an empty body if no item which matches id is found
 
 The handler has the name of the table hardcoded, this is determined by the config file config/db_schema.json upon deployment
 """
@@ -29,6 +29,9 @@ def handler(event, context) -> list[dict]:
 
     print("DEBUG: This is the event")
     pp.pprint(event)
+    
+    print("DEBUG: This is the event raw")
+    print(event)
 
     try:
         TableName = os.environ["TableName"]
