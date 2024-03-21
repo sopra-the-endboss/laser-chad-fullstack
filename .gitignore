@@ -52,7 +52,7 @@ amplifytools.xcconfig
 lambda_test
 
 # Lambda .zip files
-**/lambda/**/*.zip
+**/lambdas/**/*.zip
 
 # Python venv and compiled files
 .venv/
