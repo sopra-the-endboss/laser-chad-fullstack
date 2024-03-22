@@ -1,16 +1,16 @@
 version: "3"
 services:
 
-  frontend:
-    container_name: "frontend"
-    build: ./frontend
-    ports:
-      - "3000:3000"
-    #environment:
-    #  - REACT_APP_API_URL=http://localhost:4566
-    volumes:
-      - "./frontend/public:/app/public"
-      - "./frontend/src:/app/src"
+  # frontend:
+  #   container_name: "frontend"
+  #   build: ./frontend
+  #   ports:
+  #     - "3000:3000"
+  #   #environment:
+  #   #  - REACT_APP_API_URL=http://localhost:4566
+  #   volumes:
+  #     - "./frontend/public:/app/public"
+  #     - "./frontend/src:/app/src"
 
   localstack:
     container_name: "localstack"
@@ -26,12 +26,34 @@ services:
       - SKIP_SSL_CERT_DOWNLOAD=1
       - SKIP_INFRA_DOWNLOADS=1
       - DISABLE_EVENTS=1
-      - AWS-REGION=us-east-1
-      - AWS_ACCESS_KEY_ID=localstack
-      - AWS_SECRET_ACCESS_KEY=localstack
+      - AWS-REGION=${AWS_DEFAULT_REGION}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
     volumes:
       - ".volume:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - backend
+
+  apig-main:
+    container_name: "apig-main"
+    build:
+      context: ./apig-main
+      dockerfile: dockerfile
+      no_cache: true
+    environment:
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} # Sometimes boto3 needs credentials
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} # Sometimes boto3 needs credentials
+      - APIG_TAG_ID=${APIG_TAG_ID}
+      - APIG_TAG=${APIG_TAG}
+      - APIG_STAGE=${APIG_STAGE}
+      - AM_I_IN_A_DOCKER_CONTAINER=${AM_I_IN_A_DOCKER_CONTAINER:-True}
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - localstack
     networks:
       - backend
   
@@ -42,18 +64,20 @@ services:
       dockerfile: dockerfile
       no_cache: true
     environment:
-      - AWS_DEFAULT_REGION=us-east-1
-      - AWS_ENDPOINT_URL=http://localstack:4566 # host localstack must match the name of the service which runs localstack
-      - AWS_ACCESS_KEY_ID=fakecred # Sometimes boto3 needs credentials
-      - AWS_SECRET_ACCESS_KEY=fakecred # Sometimes boto3 needs credentials
-      - APIG_TAG_ID=API_TAG_ID
-      - APIG_TAG=apig_template
-      - APIG_STAGE=PROD
-      - AM_I_IN_A_DOCKER_CONTAINER=True
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} # Sometimes boto3 needs credentials
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} # Sometimes boto3 needs credentials
+      - APIG_TAG_ID=${APIG_TAG_ID}
+      - APIG_TAG=${APIG_TAG}
+      - APIG_STAGE=${APIG_STAGE}
+      - AM_I_IN_A_DOCKER_CONTAINER=${AM_I_IN_A_DOCKER_CONTAINER:-True}
+      - APIG_WAIT=${APIG_WAIT}
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     depends_on:
       - localstack
+      - apig-main
     networks:
       - backend
   
@@ -64,15 +88,20 @@ services:
       dockerfile: dockerfile_debugger
       no_cache: true
     environment:
-      - AWS_DEFAULT_REGION=us-east-1
-      - AWS_ENDPOINT_URL=http://localstack:4566 # host localstack must match the name of the service which runs localstack
-      - AWS_ACCESS_KEY_ID=fakecred # Sometimes boto3 needs credentials
-      - AWS_SECRET_ACCESS_KEY=fakecred
-      - AM_I_IN_A_DOCKER_CONTAINER=True
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} # Sometimes boto3 needs credentials
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} # Sometimes boto3 needs credentials
+      - APIG_TAG_ID=${APIG_TAG_ID}
+      - APIG_TAG=${APIG_TAG}
+      - APIG_STAGE=${APIG_STAGE}
+      - AM_I_IN_A_DOCKER_CONTAINER=${AM_I_IN_A_DOCKER_CONTAINER:-True}
+      - APIG_WAIT=${APIG_WAIT}
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     depends_on:
       - localstack
+      - apig-main
     networks:
       - backend
 
