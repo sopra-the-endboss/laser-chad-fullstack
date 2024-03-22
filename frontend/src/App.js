@@ -1,11 +1,8 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProductOverview from "./views/ProductOverview";
 import Navigation from "./components/Navigation";
-import { Provider } from "react-redux";
-import store from "./reducers/store";
 import Account from "./views/Account";
-import { getCurrentUser } from "aws-amplify/auth";
 import { useEffect, useState } from "react";
 import AllProductsNameMock from "./data/AllProductsNameMock.json";
 import { ProductDetail } from "./views/ProductDetail";
@@ -16,7 +13,6 @@ function App() {
   const [data, setData] = useState([]);
   const [isSearchQuerySubmitted, searchQuerySubmitted] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState("");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     // filter data for category
@@ -28,10 +24,6 @@ function App() {
       );
     else setData(AllProductsNameMock);
   }, [categoryFilter]);
-
-  async function currentAuthenticatedUser() {
-    return await getCurrentUser();
-  }
 
   return (
     <div className="App">
