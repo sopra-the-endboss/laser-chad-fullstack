@@ -7,4 +7,11 @@ const store = configureStore({
   },
 });
 
+// To get user auth state from redux (boolean)
+// import { useSelector } from "react-redux";
+// const authState = useSelector((state) => state.auth);
+// useEffect(() => {
+//   console.log("Current auth state:", authState);
+// }, [authState]);
+
 export default store;

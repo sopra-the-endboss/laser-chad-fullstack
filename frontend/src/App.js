@@ -4,27 +4,20 @@ import ProductOverview from "./views/ProductOverview";
 import Navigation from "./components/Navigation";
 import { Provider } from "react-redux";
 import store from "./reducers/store";
+import useAuth from "./reducers/useAuth";
 import Account from "./views/Account";
 import { useEffect, useState } from "react";
 import AllProductsNameMock from "./data/AllProductsNameMock.json";
 import { ProductDetail } from "./views/ProductDetail";
 import { Container, Grid } from "@mui/material";
 import { Categories } from "./views/Categories";
-import { useSelector, useDispatch } from "react-redux";
-import { Hub } from "aws-amplify/utils";
-import { setUserLoggedIn, setUserLoggedOut } from "./reducers/slices/authSlice";
 
 function App() {
   const [data, setData] = useState([]);
   const [isSearchQuerySubmitted, searchQuerySubmitted] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState("");
-  const dispatch = useDispatch();
 
-  const authState = useSelector((state) => state.auth);
-  // test output of state
-  useEffect(() => {
-    console.log("Current auth state:", authState);
-  }, [authState]);
+  useAuth();
 
   useEffect(() => {
     // filter data for category
@@ -36,25 +29,6 @@ function App() {
       );
     else setData(AllProductsNameMock);
   }, [categoryFilter]);
-
-  useEffect(() => {
-    const removeListener = Hub.listen("auth", (data) => {
-      switch (data.payload.event) {
-        case "signedIn":
-          dispatch(setUserLoggedIn());
-          break;
-        case "signedOut":
-          dispatch(setUserLoggedOut());
-          break;
-        default:
-          break;
-      }
-      console.log(data);
-    });
-    return () => {
-      removeListener(); // Cleanup listener on component unmount
-    };
-  }, [dispatch]);
 
   return (
     <Provider store={store}>
