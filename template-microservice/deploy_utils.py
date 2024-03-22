@@ -2,10 +2,12 @@ import os
 import re
 import zipfile
 
-def deploy_lambda(lambda_client, fct_name: str, env: dict[str, str]):
+def deploy_lambda(lambda_client, fct_name: str, env: dict[str, str]) -> str:
     """
     Wrapper to create a lambda function, assume tmp_handler.py file in root dir, consisting of handler function called handler
     Error if lambda function already exists
+
+    Returns the ARN of the created lambda function
     """
     print(f"Deploying function {fct_name} ...")
     zip_name = f'lambdas/{fct_name}/handler.zip'
@@ -15,7 +17,7 @@ def deploy_lambda(lambda_client, fct_name: str, env: dict[str, str]):
 
     response_lambda_create = lambda_client.create_function(
         FunctionName = fct_name,
-        Role = "arn:aws:iam::000000000000:role/lambda-role", # given by localstack
+        Role = env['Role'],
         Handler = "handler.handler",
         Runtime = "python3.10",
         Code = {'ZipFile': open(zip_name, 'rb').read()},
@@ -28,22 +30,6 @@ def deploy_lambda(lambda_client, fct_name: str, env: dict[str, str]):
     lambda_client.get_waiter("function_active_v2").wait(FunctionName = fct_name)
 
     return response_lambda_create['FunctionArn']
-    
-def create_api(apig_client, api_name: str, api_tag: str, tag_id: str) -> str:
-    """
-    Wrapper to create API Gateway
-    Each API created must have a tag in the form of <tag_id>:<api_tag>
-
-    Returns:
-        string ID of the created API
-    """
-
-    # Create the REST API
-    apig_rest_api = apig_client.create_rest_api(
-        name = api_name,
-        tags={tag_id:api_tag}
-    )
-    return apig_rest_api['id']
 
 def create_resource(apig_client, api_id: str, parent_id: str, resource_path: str) -> str:
     """

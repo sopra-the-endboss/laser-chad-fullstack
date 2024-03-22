@@ -1,0 +1,15 @@
+# syntax=docker/dockerfile:1
+FROM python:3.10-alpine
+
+WORKDIR /app
+COPY ./deploy_apig_main.py /app/
+COPY ./requirements.txt /app/
+
+# Install python dependencies
+RUN pip install -r requirements.txt
+
+# Make deploy script executable
+RUN chmod +x deploy_apig_main.py
+
+# This line runs the deploy script upon running the container
+CMD ["python", "deploy_apig_main.py"]
