@@ -3,6 +3,7 @@ import { Amplify } from "aws-amplify";
 import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import config from "../config/amplifyconfiguration.json";
+import AccountDetails from "./AccountDetails";
 
 Amplify.configure(config);
 
@@ -12,8 +13,7 @@ const AmplifyLogin = () => {
       <Authenticator>
         {({ signOut, user }) => (
           <div>
-            <h1>Logged in</h1>
-            <p>Welcome {user.username}</p>
+            <AccountDetails />
             <button onClick={signOut}>Sign out</button>
           </div>
         )}
@@ -21,5 +21,4 @@ const AmplifyLogin = () => {
     </div>
   );
 };
-
 export default AmplifyLogin;

@@ -70,3 +70,75 @@ body {
   justify-content: center;
   width: 100%;
 }
+
+/* Account Styles */
+
+.account-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.profile-header h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+.profile-header h2 {
+  font-size: 20px;
+  color: #555;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-top: 1px solid #ccc;
+}
+
+.profile-image {
+  margin-right: 20px;
+  position: relative;
+}
+
+.profile-image img {
+  width: 100px; /* Adjust size as necessary */
+  height: 100px;
+  border-radius: 50%; /* Circular image */
+  border: 1px solid darkblue; /* Placeholder for profile border */
+}
+
+.edit-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 18px;
+  color: blue; /* Placeholder for edit icon color */
+}
+
+.profile-details {
+  flex-grow: 1;
+}
+
+.personal-info,
+.additional-info {
+  margin-bottom: 10px;
+}
+
+.personal-info h3,
+.additional-info h3 {
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: #333;
+}
+
+.personal-info p,
+.additional-info p {
+  margin: 2px 0;
+  font-size: 14px;
+  color: #666;
+}

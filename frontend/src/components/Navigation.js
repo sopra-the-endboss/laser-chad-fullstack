@@ -2,6 +2,7 @@ import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import AllProductsnameMock from "../data/AllProductsNameMock.json";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 const Navbar = ({ setData, searchQuerySubmitted, isAuthenticated }) => {
   const navigate = useNavigate();
 
@@ -24,6 +25,13 @@ const Navbar = ({ setData, searchQuerySubmitted, isAuthenticated }) => {
       setData(filtered);
     }
   };
+
+  const authState = useSelector((state) => state.auth);
+  let isSeller = false;
+  if (authState.groups) {
+    isSeller = authState.groups.includes("seller");
+    console.log(isSeller);
+  }
 
   const inactive =
     "text-gray-600 hover:bg-gray-200 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium";
@@ -52,6 +60,14 @@ const Navbar = ({ setData, searchQuerySubmitted, isAuthenticated }) => {
       route: "/account",
       location: "Account",
     },
+    ...(isSeller
+      ? [
+          {
+            route: "/my-shop",
+            location: "My Shop",
+          },
+        ]
+      : []),
   ];
 
   return (
