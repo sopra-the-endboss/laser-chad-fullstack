@@ -2,7 +2,7 @@
 Deploy one API Gateway service which is available to all other backend microservices
 Deploy no resources, only create the service and a deployment with a stage
 """
-
+import re
 import os
 import boto3
 from pprint import PrettyPrinter
@@ -44,3 +44,25 @@ apig_created = apig_client.create_rest_api(
 )
 
 print(f"API Gateway with id {apig_created['id']} created")
+
+def get_base_url(apig_client, api_id: str, stage_name:str, protocol: str = "http") -> str:
+    """
+    According to localstack documentation build the url in an alternative format
+    """
+
+    if not protocol:
+        protocol="http"
+    
+    url_base = "{protocol}://{endpoint}/restapis/{api_id}/{stage_name}/_user_request_"
+
+    endpoint = os.environ['AWS_ENDPOINT_URL']
+    # Strip protocol
+    endpoint = re.sub(r"^.*\/\/","",endpoint)
+    
+    # Check API ID
+    if not api_id in [x['id'] for x in apig_client.get_rest_apis()['items']]:
+        raise ValueError(f"api {api_id} not found")
+
+    url = url_base.format(protocol = protocol, endpoint = endpoint, api_id = api_id, stage_name = stage_name,)
+    
+    return url
