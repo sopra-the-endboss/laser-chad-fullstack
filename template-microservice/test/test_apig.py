@@ -24,10 +24,11 @@ if not IN_DOCKER:
     os.environ['AWS_ENDPOINT_URL']='https://localhost.localstack.cloud:4566' # For manual, use the default localstack url
     os.environ['AWS_ACCESS_KEY_ID']='fakecred' # Sometimes boto3 needs credentials
     os.environ['AWS_SECRET_ACCESS_KEY']='fakecred' # Sometimes boto3 needs credentials
-    os.environ['APIG_TAG'] = "apig_template"
+    os.environ['APIG_TAG'] = "apig-main"
     os.environ['APIG_TAG_ID'] = "API_TAG_ID"
     os.environ['APIG_STAGE'] = "PROD"
     os.environ['PROTOCOL'] = "https"
+    os.environ['APIG_WAIT'] = "300"
 # FOR MANUAL RUNING ONLY END
 ##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--
 
@@ -37,9 +38,9 @@ import deploy_utils
 lambda_client = boto3.client("lambda")
 apig_client = boto3.client("apigateway")
 
-api_stage_name = "PROD"
-api_tag_id = "API_TAG_ID"
-api_id_to_seach = "apig_template"
+api_stage_name = os.environ['APIG_STAGE']
+api_tag_id = os.environ['APIG_TAG_ID']
+api_id_to_seach = os.environ['APIG_TAG']
 
 api_id = deploy_utils.find_api_id_by_tag(
     apig_client,
