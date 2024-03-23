@@ -198,3 +198,74 @@ print(f"Sending POST to {url} with payload {payload}")
 response = requests.post(url, json = payload)
 print(response.status_code)
 print(response.text)
+
+
+###
+# Send POST with identical item -> 409
+payload = valid
+
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "cart/1", protocol=PROTOCOL_TO_USE)
+print(f"Sending POST to {url} with payload {payload}")
+response = requests.post(url, json = payload)
+print(response.status_code)
+print(response.text)
+
+
+###
+# Send POST with empty body, but valid -> 200
+empty_but_valid = {"products":[]}
+new_user = 2
+
+payload = empty_but_valid
+
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{new_user}", protocol=PROTOCOL_TO_USE)
+print(f"Sending POST to {url} with payload {payload}")
+response = requests.post(url, json = payload)
+print(response.status_code)
+print(response.text)
+
+
+###
+# Send PUT with invalid  -> 400
+invalid_payloads = []
+invalid_payloads.append({"wrong_key":"adsf"})
+invalid_payloads.append({"productId":1})
+
+user = 1
+
+for payload in invalid_payloads:
+    url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+    print(f"Sending PUT to {url} with payload {payload}")
+    response = requests.put(url, json = payload)
+    print(response.status_code)
+    print(response.text)
+
+
+###
+# Send PUT valid already existing -> 200
+# Should increase valid_prod to 2
+valid = {"productId":"valid_prod"}
+user = 1
+
+payload = valid
+
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+print(f"Sending PUT to {url} with payload {payload}")
+response = requests.put(url, json = payload)
+print(response.status_code)
+print(response.text)
+
+
+###
+# Send PUT valid new productId -> 200
+# Should increase new_prod to 1
+new_and_valid = {"productId":"new_prod"}
+user = 1
+
+payload = new_and_valid
+
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+print(f"Sending PUT to {url} with payload {payload}")
+response = requests.put(url, json = payload)
+print(response.status_code)
+print(response.text)
