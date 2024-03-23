@@ -1,4 +1,4 @@
-# This dockerfile starts an identical container as shopprofile, but runs indefinitely. Can be used to manually run the test_services.py script
+# This dockerfile starts an identical container as template-microservice, but runs indefinitely. Can be used to manually run the test/test_XXX.py scripts
 # This duplication is needed to ensure the boto3 clients can  use the deployed localstack instances
 
 # syntax=docker/dockerfile:1

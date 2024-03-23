@@ -1,12 +1,10 @@
 {
-"writeProduct": {
+"post_product": {
     "model_spec": {
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "title": "writeProduct",
+        "title": "post_product",
         "type" : "object",
-        "required" : ["product_id", "product"],
-        
-
+        "required" : ["product_id","product"],
         "properties" : {
             "product_id" : {
                 "type" : "number"
