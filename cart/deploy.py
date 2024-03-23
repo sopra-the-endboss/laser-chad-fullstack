@@ -37,10 +37,7 @@ if not IN_DOCKER:
 # FOR MANUAL RUNING ONLY END
 ##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--
 
-try:
-    import deploy_utils
-except ModuleNotFoundError:
-    pass
+import deploy_utils
 
 def get_db_config() -> dict[str]:
     """
