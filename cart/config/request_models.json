@@ -1,0 +1,33 @@
+{
+"post_cart": {
+    "model_spec": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "post_cart",
+        "type" : "object",
+        "required" : ["products"],
+        "properties" : {
+            "products" : {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "contentType" : "application/json"
+},
+"put_cart": {
+    "model_spec": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "put_cart",
+        "type" : "object",
+        "required" : ["productId"],
+        "properties" : {
+            "productId" : {
+                "type": "string"
+            }
+        }
+    },
+    "contentType" : "application/json"
+}
+}
