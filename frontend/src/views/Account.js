@@ -14,7 +14,13 @@ const AmplifyLogin = () => {
         {({ signOut, user }) => (
           <div>
             <AccountDetails />
-            <button onClick={signOut}>Sign out</button>
+            <button
+              class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              style={{ float: "right", marginTop: "10px" }}
+              onClick={signOut}
+            >
+              Sign out
+            </button>
           </div>
         )}
       </Authenticator>

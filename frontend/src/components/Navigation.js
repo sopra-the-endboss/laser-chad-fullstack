@@ -3,7 +3,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AllProductsnameMock from "../data/AllProductsNameMock.json";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-const Navbar = ({ setData, searchQuerySubmitted, isAuthenticated }) => {
+const Navbar = ({ setData, searchQuerySubmitted }) => {
   const navigate = useNavigate();
 
   const searchWithinProducts = (event) => {
