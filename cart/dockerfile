@@ -2,11 +2,11 @@
 FROM python:3.10-alpine
 
 WORKDIR /app
-COPY ./deploy.py /app/
-COPY ../template-microservice/deploy_utils.py /app/
-COPY ./lambdas /app/lambdas/
-COPY ./config /app/config/
-COPY ./requirements.txt /app/
+COPY ./cart/deploy.py /app/
+COPY ./template-microservice/deploy_utils.py /app/
+COPY ./cart/lambdas /app/lambdas/
+COPY ./cart/config /app/config/
+COPY ./cart/requirements.txt /app/
 
 # Remove all zip files from the lambdas folder
 WORKDIR /app/lambdas
