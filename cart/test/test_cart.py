@@ -174,6 +174,10 @@ invalid_payloads = []
 invalid_payloads.append({"wrong_key":["prod1"]})
 invalid_payloads.append({"products":"thisshouldbeanarray"})
 invalid_payloads.append({"products":[1,2,3]})
+invalid_payloads.append({"products":["1"]})
+invalid_payloads.append({"products":[{"asdf":"asdf"}]})
+invalid_payloads.append({"products":[{"productId":1}]})
+invalid_payloads.append({"products":[{"productId":"valid_prod", "qty":"notanumber"}]})
 
 for payload in invalid_payloads:
     url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "cart/1", protocol=PROTOCOL_TO_USE)
@@ -182,9 +186,10 @@ for payload in invalid_payloads:
     print(response.status_code)
     print(response.text)
 
+
 ###
 # Send POST valid -> 200
-valid = {"products":["prod1","prod2"]}
+valid = {"products":[{"productId":"valid_prod", "qty":1}]}
 
 payload = valid
 

@@ -1,4 +1,17 @@
 {
+"product" : {
+    "model_spec": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "product",
+        "type" : "object",
+        "required" : ["productId","qty"],
+        "properties" : {
+            "productId" : {"type":"string"},
+            "qty" : {"type":"number"}
+        }
+    },
+    "contentType" : "application/json"
+},
 "post_cart": {
     "model_spec": {
         "$schema": "http://json-schema.org/draft-04/schema#",
@@ -8,9 +21,7 @@
         "properties" : {
             "products" : {
                 "type": "array",
-                "items": {
-                    "type": "string"
-                }
+                "items": {"$ref": "#/definitions/product"}
             }
         }
     },
