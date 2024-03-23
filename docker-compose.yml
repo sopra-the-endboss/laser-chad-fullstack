@@ -41,6 +41,8 @@ services:
       context: ./apig-main
       dockerfile: dockerfile
       no_cache: true
+    ports:
+      - "5000:5000"
     environment:
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
       - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack

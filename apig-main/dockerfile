@@ -11,5 +11,8 @@ RUN pip install -r requirements.txt
 # Make deploy script executable
 RUN chmod +x deploy_apig_main.py
 
+# Expose port 5000 for Flask app
+EXPOSE 5000
+
 # This line runs the deploy script upon running the container
 CMD ["python", "deploy_apig_main.py"]
