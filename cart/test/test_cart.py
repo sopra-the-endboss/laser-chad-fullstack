@@ -30,6 +30,7 @@ def set_env():
     os.environ["AWS_SECRET_ACCESS_KEY"] = "testing"
     os.environ["AWS_SECURITY_TOKEN"] = "testing"
     os.environ["AWS_SESSION_TOKEN"] = "testing"
+    os.environ['AWS_ENDPOINT_URL']='https://localhost.localstack.cloud:4566'
     os.environ["AWS_DEFAULT_REGION"] = "us-east-1"
 
 @mock_aws
