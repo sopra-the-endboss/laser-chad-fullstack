@@ -78,7 +78,7 @@ def handler(event, context) -> list[dict]:
     print("Check body, should be a set or something serializable into a set")
     print(event['body'])
 
-    # serialize json string into dict
+    # serialize json body string into dict
     body = json.loads(event['body'])
 
     # Due to the check on the request, we can safely assume the key 'products' is in the body
