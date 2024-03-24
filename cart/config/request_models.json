@@ -1,32 +1,4 @@
 {
-"product" : {
-    "model_spec": {
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "title": "product",
-        "type" : "object",
-        "required" : ["productId","qty"],
-        "properties" : {
-            "productId" : {"type":"string"},
-            "qty" : {"type":"number"}
-        }
-    },
-    "contentType" : "application/json"
-},
-"post_cart": {
-    "model_spec": {
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "title": "post_cart",
-        "type" : "object",
-        "required" : ["products"],
-        "properties" : {
-            "products" : {
-                "type": "array",
-                "items": {"$ref": "#/definitions/product"}
-            }
-        }
-    },
-    "contentType" : "application/json"
-},
 "put_cart": {
     "model_spec": {
         "$schema": "http://json-schema.org/draft-04/schema#",

@@ -75,21 +75,13 @@ def handler(event, context) -> list[dict]:
     filter = event['pathParameters'][PATH_PARAMETER_FILTER]
     print(f"This is the filter: {filter}")
 
-    print("Check body, should be a set or something serializable into a set")
+    print("Check body, should be empty")
     print(event['body'])
 
-    # serialize json body string into dict
-    body = json.loads(event['body'])
-
-    # Due to the check on the request, we can safely assume the key 'products' is in the body
-    products = body['products']
-
-    print("This is the value extracted from the products field in the body")
-    print(products)
-
+    # POST creates an empty array for the userId
     item_to_put = {
         "userId" : filter,
-        "products" : products
+        "products" : []
     }
 
     # Try to put the item, but only if it not exists
@@ -115,7 +107,7 @@ def handler(event, context) -> list[dict]:
     print("Return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = '200'
     HTTP_RESPONSE_DICT['headers'] = {"Content-Type": "application/json"}
-    HTTP_RESPONSE_DICT['body'] = json.dumps("")
+    HTTP_RESPONSE_DICT['body'] = json.dumps(item_to_put)
 
     return HTTP_RESPONSE_DICT
 

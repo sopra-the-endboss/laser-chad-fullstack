@@ -108,27 +108,34 @@ def handler(event, context) -> list[dict]:
 
     ###
     # Now either productId_to_update is in the cart, then we increase qty by 1
-    # If productId_to_update not in cart, we add it with qty 1
+    # OR if productId_to_update not in cart, we add it with qty 1
     print("this is the cart_found")
     print(type(cart_found))
     print(cart_found)
 
     # Cart could be empty, then products is still a list
     products_found = cart_found['products']
+    productIds_found = [p['productId'] for p in products_found]
 
-    print("this is the products found")
+    print("this is the products found, and the productIds")
     print(products_found)
+    print(productIds_found)
+
+    # Assert that there are no duplicated productId in a cart
+    if len(productIds_found) != len(set(productIds_found)):
+        print("productIds_found contains duplicates, abort")
+        raise ValueError("productIds_found contains duplicates, abort")
     
     # Search for productId_to_update, check if it is present, if not create a new one
-    productId_to_update_found = productId_to_update in [p['productId'] for p in products_found]
-    # If it is not present, add it with qty 0
+    productId_to_update_found = productId_to_update in productIds_found
+    # If it is not present, create new product with qty 0
     if not productId_to_update_found:
         print(f"productId {productId_to_update} to put not found, create it")
         product_updated = {"productId":productId_to_update, "qty":0}
     else:
         print(f"prodcutId {productId_to_update} is already present in cart, pop it")
         # If it is present remove the old product from products_found, replace it with a new one
-        index_productId_to_update = [p['productId'] for p in products_found].index(productId_to_update)
+        index_productId_to_update = productIds_found.index(productId_to_update)
         product_updated = products_found.pop(index_productId_to_update)
     
     # increase qty
@@ -145,6 +152,9 @@ def handler(event, context) -> list[dict]:
 
     # Add the new updated product to the products found list
     products_found.append(product_updated)
+
+    print("this is the updated product list")
+    print(products_found)
 
     # Add the updated cart to the DB, overwrite with key filter
     response_put_item = dynamo_table.put_item(

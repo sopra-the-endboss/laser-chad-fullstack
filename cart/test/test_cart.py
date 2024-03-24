@@ -162,68 +162,29 @@ print(response.text)
 
 ###
 # Send GET - should return empty -> 404
-url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "cart/1", protocol=PROTOCOL_TO_USE)
+
+user = 1
+
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
 print(f"Sending GET to {url}")
 response = requests.get(url)
 print(response.status_code)
 print(response.text)
 
 ###
-# Send POST invalid -> 400
-invalid_payloads = []
-invalid_payloads.append({"wrong_key":["prod1"]})
-invalid_payloads.append({"products":"thisshouldbeanarray"})
-invalid_payloads.append({"products":[1,2,3]})
-invalid_payloads.append({"products":["1"]})
-invalid_payloads.append({"products":[{"asdf":"asdf"}]})
-invalid_payloads.append({"products":[{"productId":1}]})
-invalid_payloads.append({"products":[{"productId":"valid_prod", "qty":"notanumber"}]})
+# Send POST with arbitrary payload, should be ok, no model, but subsequent calls should be conflict
+# 200
+# then 409
+post_payloads = []
+post_payloads.append({"somearbitarypayload":["prod1"]})
+post_payloads.append({"someOtherarbitarypayload":123})
 
-for payload in invalid_payloads:
-    url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "cart/1", protocol=PROTOCOL_TO_USE)
+for payload in post_payloads:
+    url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
     print(f"Sending POST to {url} with payload {payload}")
     response = requests.post(url, json = payload)
     print(response.status_code)
     print(response.text)
-
-
-###
-# Send POST valid -> 200
-valid = {"products":[{"productId":"valid_prod", "qty":1}]}
-
-payload = valid
-
-url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "cart/1", protocol=PROTOCOL_TO_USE)
-print(f"Sending POST to {url} with payload {payload}")
-response = requests.post(url, json = payload)
-print(response.status_code)
-print(response.text)
-
-
-###
-# Send POST with identical item -> 409
-payload = valid
-
-url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "cart/1", protocol=PROTOCOL_TO_USE)
-print(f"Sending POST to {url} with payload {payload}")
-response = requests.post(url, json = payload)
-print(response.status_code)
-print(response.text)
-
-
-###
-# Send POST with empty body, but valid -> 200
-empty_but_valid = {"products":[]}
-new_user = 2
-
-payload = empty_but_valid
-
-url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{new_user}", protocol=PROTOCOL_TO_USE)
-print(f"Sending POST to {url} with payload {payload}")
-response = requests.post(url, json = payload)
-print(response.status_code)
-print(response.text)
-
 
 ###
 # Send PUT with invalid  -> 400
@@ -243,22 +204,24 @@ for payload in invalid_payloads:
 
 ###
 # Send PUT valid already existing -> 200
-# Should increase valid_prod to 2
-valid = {"productId":"valid_prod"}
+# First call should create prod
+# Second call should increase qty to 2
 user = 1
-
+valid = {"productId":"valid_prod"}
 payload = valid
 
-url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
-print(f"Sending PUT to {url} with payload {payload}")
-response = requests.put(url, json = payload)
-print(response.status_code)
-print(response.text)
+for i in range(2):
+    print(f"{i+1} call PUT")
+    url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+    print(f"Sending PUT to {url} with payload {payload}")
+    response = requests.put(url, json = payload)
+    print(response.status_code)
+    print(response.text)
 
 
 ###
 # Send PUT valid new productId -> 200
-# Should increase new_prod to 1
+# Should set  new_prod to qty 1
 new_and_valid = {"productId":"new_prod"}
 user = 1
 
