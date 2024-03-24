@@ -5,3 +5,4 @@ pyperclip
 requests
 simplejson
 pytest
+moto
