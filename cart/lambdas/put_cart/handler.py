@@ -34,7 +34,7 @@ def handler(event, context) -> list[dict]:
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default
         headers : Empty by default, dict otherwise
-        body : JSON serialized with productId, new_qty
+        body : JSON serialized new cart
 
         400 if the handler can not complete
         404 if there is no cart with userId
@@ -42,7 +42,7 @@ def handler(event, context) -> list[dict]:
 
     PATH_PARAMETER_FILTER = "userId" # Must match the name in resources_to_create.json in the path with {}
     
-    print("post_cart invoked")
+    print("put_cart invoked")
 
     print("DEBUG: This is the event")
     pp.pprint(event)
@@ -77,13 +77,13 @@ def handler(event, context) -> list[dict]:
 
     ###
     # Check the body item to update
-    print("Check body, should be a set or something serializable into a set")
+    print("Check body, should be a dict or something serializable into a dict")
     print(event['body'])
 
     # serialize json string into dict
     body = json.loads(event['body'])
 
-    # Due to the check on the request, we can safely assume the key 'product' is in the body and its only one
+    # Due to the check on the request, we can safely assume the key 'productId' is in the body and its only one
     productId_to_update = body['productId']
 
     print("This is the value extracted from the products field in the body")
@@ -116,15 +116,22 @@ def handler(event, context) -> list[dict]:
     # Cart could be empty, then products is still a list
     products_found = cart_found['products']
     productIds_found = [p['productId'] for p in products_found]
+    productQtys_found = [p['qty'] for p in products_found]
 
-    print("this is the products found, and the productIds")
+    print("this is the products found, and the productIds and the Qtys")
     print(products_found)
     print(productIds_found)
+    print(productQtys_found)
 
     # Assert that there are no duplicated productId in a cart
     if len(productIds_found) != len(set(productIds_found)):
         print("productIds_found contains duplicates, abort")
         raise ValueError("productIds_found contains duplicates, abort")
+    
+    # Assert that there are no non-positive qty in a cart
+    if any(qty <= 0 for qty in productQtys_found):
+        print("productQtys_found contains non-positive quantities, abort")
+        raise ValueError("productQtys_found contains non-positive quantities, abort")
     
     # Search for productId_to_update, check if it is present, if not create a new one
     productId_to_update_found = productId_to_update in productIds_found

@@ -232,3 +232,42 @@ print(f"Sending PUT to {url} with payload {payload}")
 response = requests.put(url, json = payload)
 print(response.status_code)
 print(response.text)
+
+
+
+###
+# Send DELETE product not in cart -> 200, do nothing
+valid_not_exisiting = {"productId":"not_in_cart"}
+user = 1
+payload = valid_not_exisiting
+
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+print(f"Sending DELETE to {url} with payload {payload}")
+response = requests.delete(url, json = payload)
+print(response.status_code)
+print(response.text)
+
+###
+# Send DELETE product from 1 to 0 -> 200. remove prod
+delete_1_to_0 = {"productId":"new_prod"}
+user = 1
+payload = delete_1_to_0
+
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+print(f"Sending DELETE to {url} with payload {payload}")
+response = requests.delete(url, json = payload)
+print(response.status_code)
+print(response.text)
+
+
+###
+# Send DELETE product from 2 to 1 -> 200. decrease qty
+delete_2_to_1 = {"productId":"valid_prod"}
+user = 1
+payload = delete_2_to_1
+
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+print(f"Sending DELETE to {url} with payload {payload}")
+response = requests.delete(url, json = payload)
+print(response.status_code)
+print(response.text)

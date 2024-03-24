@@ -17,10 +17,13 @@ IN_DOCKER = os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', False)
 
 if not IN_DOCKER:
 
-    os.getcwd()
-    os.chdir("./template-microservice")
+    # Import syspath because python is annoying
+    print(os.getcwd())
+    
+    import sys
+    print(sys.path)
+    sys.path.insert(0,f"{os.getcwd()}/template-microservice")
     import deploy_utils
-    os.chdir("../")
     
     # Also set all AWS env vars, point to running localstack container not in a docker-compose network
     os.environ['AWS_DEFAULT_REGION']='us-east-1'
