@@ -26,35 +26,45 @@ except FileNotFoundError:
 @mock_aws
 @pytest.fixture
 def set_env():
+    """
+    Make sure AWS environment variables are set/unset correctly.
+    If AWS_ENDPOINT_URL is set, this interferes with the moto framework!
+    """
     os.environ["AWS_ACCESS_KEY_ID"] = "testing"
     os.environ["AWS_SECRET_ACCESS_KEY"] = "testing"
     os.environ["AWS_SECURITY_TOKEN"] = "testing"
     os.environ["AWS_SESSION_TOKEN"] = "testing"
-    os.environ['AWS_ENDPOINT_URL']='https://localhost.localstack.cloud:4566'
     os.environ["AWS_DEFAULT_REGION"] = "us-east-1"
+    
+    if 'AWS_ENDPOINT_URL' in os.environ:
+        del os.environ['AWS_ENDPOINT_URL']
 
-@mock_aws
 @pytest.fixture
 def db_client(set_env):
-    db_client = boto3.client("dynamodb")
-    yield db_client
-
+    with mock_aws():
+        yield boto3.client("dynamodb")
+        
 @mock_aws
 @pytest.fixture
-def set_up_db(set_env, db_client):
+def set_up_db(db_client):
+
+    pp.pprint(dict(os.environ))
+
     print("set_up_db: this is db_schema:")
     pp.pprint(db_schema)
 
-    print(db_client)
-
     db_client.create_table(**db_schema)
+    print("Table created")
+
     db_resource = boto3.resource("dynamodb")
+    print("Resource created")
+    
     dynamo_table = db_resource.Table(db_schema['TableName'])
+    print("TableObject created")
+    
     yield dynamo_table
 
-@mock_aws
 def test_simple(set_up_db):
-    # with mock_aws():
-    #     item_count = set_up_db.item_count()
-    #     print(item_count)
+    item_count = set_up_db.item_count
+    print(item_count)
     assert True
