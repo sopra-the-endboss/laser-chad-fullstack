@@ -52,7 +52,7 @@ def handler(event, context) -> list[dict]:
         TableName = os.environ["TableName"]
     except KeyError:
         print("env var TableName not found! This is the env. Return 400")
-        print(os.environ)
+        pp.pprint(dict(os.environ))
         # Return 400
         HTTP_RESPONSE_DICT['statusCode'] = 400
         HTTP_RESPONSE_DICT['body'] = json.dumps("TableName not found in environment, cannot complete")

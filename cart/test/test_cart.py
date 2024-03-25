@@ -1,4 +1,5 @@
 import os
+import sys
 import simplejson as json
 import boto3
 from moto import mock_aws
@@ -6,13 +7,20 @@ import pytest
 from pprint import PrettyPrinter
 pp = PrettyPrinter(indent = 2)
 
+# Construct a sys path where laser-chad-fullstack is on the path
+ROOT_TO_MATCH = "laser-chad-fullstack"
+tmp_cwd = os.getcwd()
+tmp_cwd = tmp_cwd.split(os.path.sep)
+if not ROOT_TO_MATCH in tmp_cwd:
+    raise ValueError(f"Could not find root {ROOT_TO_MATCH} in CWD")
+path_to_append = os.path.sep.join(
+    tmp_cwd[:tmp_cwd.index(ROOT_TO_MATCH)+1]
+)
+sys.path.insert(0,path_to_append)
+
 ###
-# deploy_utils
-print(os.getcwd())
-import sys
-print(sys.path)
-sys.path.insert(0,f"{os.getcwd()}/template-microservice")
-import deploy_utils
+# Lambda handlers to test
+import cart.lambdas.get_cart.handler as get_handler
 
 ###
 # Load configs
@@ -30,6 +38,9 @@ def set_env():
     Make sure AWS environment variables are set/unset correctly.
     If AWS_ENDPOINT_URL is set, this interferes with the moto framework!
     """
+
+    os.environ['TableName'] = db_schema['TableName']
+
     os.environ["AWS_ACCESS_KEY_ID"] = "testing"
     os.environ["AWS_SECRET_ACCESS_KEY"] = "testing"
     os.environ["AWS_SECURITY_TOKEN"] = "testing"
@@ -44,7 +55,6 @@ def db_client(set_env):
     with mock_aws():
         yield boto3.client("dynamodb")
         
-@mock_aws
 @pytest.fixture
 def set_up_db(db_client):
 
@@ -64,7 +74,38 @@ def set_up_db(db_client):
     
     yield dynamo_table
 
-def test_simple(set_up_db):
+@pytest.fixture
+def empty_input() -> tuple[dict,dict]:
+    return ({},{})
+
+@pytest.fixture
+def events() -> dict[str,dict]:
+    
+    events_to_return = {}
+
+    events_to_return['put_valid_1'] = {"productId":"prod_1"}
+    events_to_return['put_valid_1_add'] = {"productId":"prod_1", "additionalString":"additionalString", "additionalNumber":42}
+
+def test_simple_count(set_up_db):
     item_count = set_up_db.item_count
     print(item_count)
     assert True
+
+def test_get_db_does_not_exist():
+    """
+    We do NOT test the API request model itself
+    The handler must assume valid data is passed from the API Gateway
+    We do however test statusCode in case of unexpected behavior
+    """
+
+    # Pass in empty arguments, we only want to test 400 if table does not exist
+    dummy_event = {}
+    dummy_context = {}
+
+    res = get_handler.handler(dummy_event, dummy_context)
+    assert res['statusCode'] == 400
+
+
+
+    
+
