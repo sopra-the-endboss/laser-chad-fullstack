@@ -4,4 +4,3 @@ awscli-local
 pyperclip
 requests
 simplejson
-flask

@@ -2,14 +2,17 @@
 FROM python:3.10-alpine
 
 WORKDIR /app
-COPY ./deploy_apig_main.py /app/
+COPY ./flask_app.py /app/
 COPY ./requirements.txt /app/
 
 # Install python dependencies
 RUN pip install -r requirements.txt
 
 # Make deploy script executable
-RUN chmod +x deploy_apig_main.py
+RUN chmod +x flask_app.py
+
+# Expose port 5000 for Flask app
+EXPOSE 5000
 
 # This line runs the deploy script upon running the container
-CMD ["python", "deploy_apig_main.py"]
+CMD ["python", "flask_app.py"]

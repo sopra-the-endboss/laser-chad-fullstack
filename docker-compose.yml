@@ -1,16 +1,18 @@
 version: "3"
 services:
 
-  # frontend:
-  #   container_name: "frontend"
-  #   build: ./frontend
-  #   ports:
-  #     - "3000:3000"
-  #   #environment:
-  #   #  - REACT_APP_API_URL=http://localhost:4566
-  #   volumes:
-  #     - "./frontend/public:/app/public"
-  #     - "./frontend/src:/app/src"
+  frontend:
+    container_name: "frontend"
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    #environment:
+    #  - REACT_APP_API_URL=http://localhost:4566
+    volumes:
+      - "./frontend/public:/app/public"
+      - "./frontend/src:/app/src"
+    depends_on:
+      - apig-id-share
 
   localstack:
     container_name: "localstack"
@@ -41,8 +43,6 @@ services:
       context: ./apig-main
       dockerfile: dockerfile
       no_cache: true
-    ports:
-      - "5000:5000"
     environment:
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
       - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
@@ -56,6 +56,30 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
     depends_on:
       - localstack
+    networks:
+      - backend
+
+  apig-id-share:
+    container_name: "apig-id-share"
+    build:
+      context: ./apig-id-share
+      dockerfile: dockerfile
+      no_cache: true
+    ports:
+      - "5000:5000"
+    environment:
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} # Sometimes boto3 needs credentials
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} # Sometimes boto3 needs credentials
+      - APIG_TAG_ID=${APIG_TAG_ID}
+      - APIG_TAG=${APIG_TAG}
+      - APIG_STAGE=${APIG_STAGE}
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - localstack
+      - apig-main
     networks:
       - backend
   
