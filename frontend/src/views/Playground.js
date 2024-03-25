@@ -1,27 +1,13 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
-
-const Playground = ({ apig_base_url }) => {
+export const Playground = () => {
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
     const [response, setResponse] = useState('');
 
-    const sendRequest = async () => {
-        console.log('Sending request to:', apig_base_url + '/product-microservice');
+    const handleClick = async () => {
         try {
-            const res = await fetch(apig_base_url + '/product-microservice');
-            const data = await res.json();
-            setResponse(data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const fetchJson = async () => {
-        console.log('Fetching JSON from:', 'data/shared_volume/apig_base_url.json');
-        try {
-            const res = await fetch('../data/shared_volume/apig_base_url.json');
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
+            const res = await fetch(apigBaseUrl + "/product-microservice");
             const data = await res.json();
             setResponse(data);
         } catch (error) {
@@ -31,15 +17,9 @@ const Playground = ({ apig_base_url }) => {
 
     return (
         <div>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={sendRequest}>
-                Send Request
-            </button>
-            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onClick={fetchJson}>
-                Fetch JSON
-            </button>
-            <p>{response}</p>
+            <p>API Gateway Base URL: {apigBaseUrl}</p>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleClick}>Send GET Request</button>
+            <p>Response: {response}</p>
         </div>
     );
 };
-
-export default Playground;

@@ -2,14 +2,10 @@
 Deploy one API Gateway service which is available to all other backend microservices
 Deploy no resources, only create the service and a deployment with a stage
 """
-from flask import Flask
-import re
 import os
 import boto3
 from pprint import PrettyPrinter
 pp = PrettyPrinter(indent=2)
-
-app = Flask(__name__)
 
 ##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--
 # FOR MANUAL RUNING ONLY - DO NOT RUN IF IN A DOCKER CONTAINER

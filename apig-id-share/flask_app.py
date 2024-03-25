@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 import re
 import boto3
 from datetime import datetime
@@ -43,6 +44,8 @@ def create_apig_base_url(apig_client, api_id: str, stage_name:str, protocol: str
     endpoint = os.environ['AWS_ENDPOINT_URL']
     # Strip protocol
     endpoint = re.sub(r"^.*\/\/","",endpoint)
+    # localhost, not localstack
+    endpoint = re.sub(r"localstack","localhost",endpoint)
     
     # Check API ID
     if not api_id in [x['id'] for x in apig_client.get_rest_apis()['items']]:
@@ -90,13 +93,28 @@ else:
     print("api_id found")
 print(f"Use api_id {api_id}")
 
-apig_base_url = create_apig_base_url(apig_client, api_id=api_id, APIG_STAGE=APIG_STAGE)
+apig_base_url = create_apig_base_url(apig_client, api_id=api_id, stage_name=APIG_STAGE)
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/apig_base_url')
 def get_apig_base_url():
     return apig_base_url
 
+def shutdown_server():
+    func = flask.request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+    
+@app.get('/shutdown')
+def shutdown():
+    shutdown_server()
+    return 'Server shutting down...'
+
 
 app.run(debug=True, host='0.0.0.0')
+
+print("Endpoint sharing apig base url started ...")
+

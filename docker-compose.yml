@@ -75,6 +75,7 @@ services:
       - APIG_TAG_ID=${APIG_TAG_ID}
       - APIG_TAG=${APIG_TAG}
       - APIG_STAGE=${APIG_STAGE}
+      - APIG_WAIT=${APIG_WAIT}
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     depends_on:
