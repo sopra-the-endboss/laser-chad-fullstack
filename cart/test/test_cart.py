@@ -35,7 +35,7 @@ except FileNotFoundError:
 @pytest.fixture
 def set_env():
     """
-    Make sure AWS environment variables are set/unset correctly.
+    Make sure AWS environment variables are set/unset correctly before and after each test
     If AWS_ENDPOINT_URL is set, this interferes with the moto framework!
     """
 
@@ -91,7 +91,7 @@ def test_simple_count(set_up_db):
     print(item_count)
     assert True
 
-def test_get_db_does_not_exist():
+def test_get_db_does_not_exist(set_env):
     """
     We do NOT test the API request model itself
     The handler must assume valid data is passed from the API Gateway
@@ -102,10 +102,8 @@ def test_get_db_does_not_exist():
     dummy_event = {}
     dummy_context = {}
 
+    # Remove TableName from environment
+    del os.environ['TableName']
+
     res = get_handler.handler(dummy_event, dummy_context)
     assert res['statusCode'] == 400
-
-
-
-    
-
