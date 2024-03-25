@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice";
-import { apigBaseUrlReducer } from "./apigBaseUrl";
+import apigBaseUrlReducer from "./apigBaseUrl";
 
 const store = configureStore({
   reducer: {
