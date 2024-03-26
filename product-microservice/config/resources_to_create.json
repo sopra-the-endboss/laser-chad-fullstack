@@ -3,14 +3,20 @@
         {
             "path":"product-microservice",
             "methods_for_that_path":[
-                {"method":"GET","lambda_fct":"get_product"}
-                ,{"method":"POST","lambda_fct":"post_product","requestModels":{"application/json":"post_product"}}
+                {"method":"GET","lambda_fct":"get_product"},
+                {"method":"POST","lambda_fct":"post_product","requestModels":{"application/json":"post_product"}}
             ]
         },
         {
             "path":"{product_id}",
             "methods_for_that_path":[
                 {"method":"GET","lambda_fct":"get_product"}
+            ]
+        },
+        {
+            "path":"batch",
+            "methods_for_that_path":[
+                {"method":"POST","lambda_fct":"post_product_batch","requestModels":{"application/json":"post_product_batch"}}
             ]
         }
     ]

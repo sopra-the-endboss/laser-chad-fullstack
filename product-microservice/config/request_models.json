@@ -1,19 +1,38 @@
 {
-"post_product": {
-    "model_spec": {
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "title": "post_product",
-        "type" : "object",
-        "required" : ["product_id","product"],
-        "properties" : {
-            "product_id" : {
-                "type" : "string"
-            },
-            "product" : {
-                "type" : "string"
+    "post_product": {
+        "model_spec": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "post_product",
+            "type": "object",
+            "required": ["product_id", "product"],
+            "properties": {
+                "product_id": {
+                    "type": "string"
+                },
+                "product": {
+                    "type": "string"
+                }
             }
-        }
+        },
+        "contentType": "application/json"
     },
-    "contentType" : "application/json"
-}
+    "post_product_batch": {
+        "model_spec": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "post_product_batch",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "product_id": {
+                        "type": "string"
+                    },
+                    "product": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "contentType": "application/json"
+    }
 }
