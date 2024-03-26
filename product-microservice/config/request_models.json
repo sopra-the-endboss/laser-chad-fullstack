@@ -7,7 +7,7 @@
         "required" : ["product_id","product"],
         "properties" : {
             "product_id" : {
-                "type" : "number"
+                "type" : "string"
             },
             "product" : {
                 "type" : "string"

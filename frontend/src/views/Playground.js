@@ -23,7 +23,7 @@ export const Playground = () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "product_id": 1,
+                    "product_id": "1",
                     "product": "Apple iPhone 15 Pro",
                     "highlighted": true,
                     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",

@@ -1,6 +1,6 @@
 [
   {
-    "product_id": 1,
+    "product_id": "1",
     "product": "Dell XPS 15",
     "highlighted": false,
     "images": [
@@ -36,7 +36,7 @@
     "availability": "In stock"
   },
   {
-    "product_id": 2,
+    "product_id": "2",
     "product": "Asus ROG Zephyrus G14",
     "highlighted": true,
     "images": [
@@ -71,7 +71,7 @@
     "availability": "In stock"
   },
   {
-    "product_id": 3,
+    "product_id": "3",
     "product": "Apple MacBook Pro 16",
     "highlighted": false,
     "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
@@ -112,7 +112,7 @@
     "availability": "In stock"
   },
   {
-    "product_id": 4,
+    "product_id": "4",
     "product": "HP Spectre x360",
     "highlighted": false,
     "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
@@ -144,7 +144,7 @@
     "availability": "In stock"
   },
   {
-    "product_id": 5,
+    "product_id": "5",
     "product": "Lenovo ThinkPad X1 Carbon",
     "highlighted": true,
     "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
@@ -177,7 +177,7 @@
     "availability": "Pre-order"
   },
   {
-    "product_id": 6,
+    "product_id": "6",
     "product": "Microsoft Surface Laptop 4",
     "highlighted": false,
     "images": [
@@ -211,7 +211,7 @@
     "availability": "In stock"
   },
   {
-    "product_id": 7,
+    "product_id": "7",
     "product": "Microsoft Surface Laptop 4",
     "highlighted": false,
     "images": [
@@ -244,7 +244,7 @@
     "availability": "In stock"
   },
   {
-    "product_id": 8,
+    "product_id": "8",
     "product": "Microsoft Surface Laptop 4",
     "highlighted": false,
     "images": [
@@ -277,7 +277,7 @@
     "availability": "In stock"
   },
   {
-    "product_id": 9,
+    "product_id": "9",
     "product": "Microsoft Surface Laptop 4",
     "highlighted": false,
     "images": [
@@ -310,7 +310,7 @@
     "availability": "In stock"
   },
   {
-    "product_id": 10,
+    "product_id": "10",
     "product": "Microsoft Surface Laptop 4",
     "highlighted": false,
     "images": [

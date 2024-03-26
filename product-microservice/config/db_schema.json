@@ -13,7 +13,7 @@
 "AttributeDefinitions": [
     {
         "AttributeName": "product_id",
-        "AttributeType": "N"
+        "AttributeType": "S"
     },
     {
         "AttributeName": "product",
