@@ -1,6 +1,6 @@
 """
 delete_cart
-Handle call to decrease/delete a cart with a productId and qty for a given userId
+Handle call to decrease/delete a cart with a product_id and qty for a given userId
 """
 
 import os
@@ -12,7 +12,15 @@ pp = PrettyPrinter(indent=2)
 HTTP_RESPONSE_DICT = {
     'statusCode' : '200', # Default is 200
     'isBase64Encoded' : False, # Default is False
-    'headers' : {}, # Default is no headers
+    # To allow CORS requests from the frontend, we have to set the appropirate headers
+    # https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors.html
+    # API Gateway Proxy Lambda integration
+    'headers': {
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
+            'Content-Type': 'application/json'
+        }
     # Here comes to body, as a JSON string
 }
 
@@ -33,7 +41,7 @@ def handler(event, context) -> list[dict]:
 
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default
-        headers : Empty by default, dict otherwise
+        headers : Default to allow CORS, otherwise not used
         body : JSON serialized new cart
 
         400 if the handler can not complete
@@ -84,11 +92,11 @@ def handler(event, context) -> list[dict]:
     # serialize json string into dict
     body = json.loads(event['body'])
 
-    # Due to the check on the request, we can safely assume the key 'productId' is in the body and its only one
-    productId_to_delete = body['productId']
+    # Due to the check on the request, we can safely assume the key 'product_id' is in the body and its only one
+    product_id_to_delete = body['product_id']
 
     print("This is the value extracted from the products field in the body")
-    print(productId_to_delete)
+    print(product_id_to_delete)
     
 
     ###
@@ -108,54 +116,53 @@ def handler(event, context) -> list[dict]:
 
 
     ###
-    # Now either productId_to_delete is in the cart, then we decrease qty by 1
-    # If decrease would lead to qty = 0, we remove the productId_to_delete from cart
-    # OR if productId_to_delete not in cart, we do nothing
+    # Now either product_id_to_delete is in the cart, then we decrease qty by 1
+    # If decrease would lead to qty = 0, we remove the product_id_to_delete from cart
+    # OR if product_id_to_delete not in cart, we do nothing
     print("this is the cart_found")
     print(type(cart_found))
     print(cart_found)
 
     # Cart could be empty, then products is still a list
     products_found = cart_found['products']
-    productIds_found = [p['productId'] for p in products_found]
-    productQtys_found = [p['qty'] for p in products_found]
+    product_ids_found = [p['product_id'] for p in products_found]
+    product_qtys_found = [p['qty'] for p in products_found]
 
-    print("this is the products found, and the productIds and the Qtys")
+    print("this is the products found, and the product_ids and the qtys")
     print(products_found)
-    print(productIds_found)
-    print(productQtys_found)
+    print(product_ids_found)
+    print(product_qtys_found)
 
-    # Assert that there are no duplicated productId in a cart
-    if len(productIds_found) != len(set(productIds_found)):
-        print("productIds_found contains duplicates, abort")
-        raise ValueError("productIds_found contains duplicates, abort")
+    # Assert that there are no duplicated product_id in a cart
+    if len(product_ids_found) != len(set(product_ids_found)):
+        print("product_ids_found contains duplicates, abort")
+        raise ValueError("product_ids_found contains duplicates, abort")
     
     # Assert that there are no non-positive qty in a cart
-    if any(qty <= 0 for qty in productQtys_found):
-        print("productQtys_found contains non-positive quantities, abort")
-        raise ValueError("productQtys_found contains non-positive quantities, abort")
+    if any(qty <= 0 for qty in product_qtys_found):
+        print("product_qtys_found contains non-positive quantities, abort")
+        raise ValueError("product_qtys_found contains non-positive quantities, abort")
     
-    # Search for productId_to_update, check if it is present, if not do nothing and return the cart
-    productId_to_delete_found = productId_to_delete in productIds_found
+    # Search for product_id_to_update, check if it is present, if not do nothing and return the cart
+    product_id_to_delete_found = product_id_to_delete in product_ids_found
     # If it is not present, create new product with qty 0
-    if not productId_to_delete_found:
-        print(f"productId {productId_to_delete} to put not found, nothing to delete")
+    if not product_id_to_delete_found:
+        print(f"product_id {product_id_to_delete} to put not found, nothing to delete")
         
         print("Return HTTP object")
         HTTP_RESPONSE_DICT['statusCode'] = '200'
-        HTTP_RESPONSE_DICT['headers'] = {"Content-Type": "application/json"}
         HTTP_RESPONSE_DICT['body'] = json.dumps(cart_found)
         return HTTP_RESPONSE_DICT
 
     else:
-        print(f"prodcutId {productId_to_delete} is already present in cart, pop it")
+        print(f"product_id {product_id_to_delete} is already present in cart, pop it")
         # If it is present remove the old product from products_found, replace it with a new one
-        index_productId_to_delete = productIds_found.index(productId_to_delete)
-        product_to_update = products_found.pop(index_productId_to_delete)
+        index_product_id_to_delete = product_ids_found.index(product_id_to_delete)
+        product_to_update = products_found.pop(index_product_id_to_delete)
 
         # If qty is 1, delete the product, otherwise decrease
         if product_to_update['qty'] == 1:
-            print(f"prodcutId {productId_to_delete} has only one qty, delete the product")
+            print(f"product_id {product_id_to_delete} has only one qty, delete the product")
             PRODUCT_DELETED = True
         else:
             # decrease qty
@@ -182,14 +189,13 @@ def handler(event, context) -> list[dict]:
         print(products_found)
 
     # Add the updated cart to the DB, overwrite with key filter
-    response_put_item = dynamo_table.put_item(
+    _ = dynamo_table.put_item(
         Item = cart_found,
         ReturnValues = "NONE"
     )
     
     print("Return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = '200'
-    HTTP_RESPONSE_DICT['headers'] = {"Content-Type": "application/json"}
     HTTP_RESPONSE_DICT['body'] = json.dumps(cart_found)
     return HTTP_RESPONSE_DICT
 

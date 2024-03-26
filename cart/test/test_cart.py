@@ -83,8 +83,8 @@ def events() -> dict[str,dict]:
     
     events_to_return = {}
 
-    events_to_return['put_valid_1'] = {"productId":"prod_1"}
-    events_to_return['put_valid_1_add'] = {"productId":"prod_1", "additionalString":"additionalString", "additionalNumber":42}
+    events_to_return['put_valid_1'] = {"product_id":"prod_1"}
+    events_to_return['put_valid_1_add'] = {"product_id":"prod_1", "additionalString":"additionalString", "additionalNumber":42}
 
 def test_simple_count(set_up_db):
     item_count = set_up_db.item_count
