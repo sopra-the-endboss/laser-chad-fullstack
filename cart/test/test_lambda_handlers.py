@@ -1,3 +1,9 @@
+"""
+We do NOT test the API request model itself
+The handler must assume valid data is passed from the API Gateway
+We do however test statusCode in case of unexpected behavior
+"""
+
 import os
 import sys
 import simplejson as json
@@ -88,16 +94,9 @@ def events() -> dict[str,dict]:
 
 def test_simple_count(set_up_db):
     item_count = set_up_db.item_count
-    print(item_count)
-    assert True
+    assert item_count == 0
 
 def test_get_db_does_not_exist(set_env):
-    """
-    We do NOT test the API request model itself
-    The handler must assume valid data is passed from the API Gateway
-    We do however test statusCode in case of unexpected behavior
-    """
-
     # Pass in empty arguments, we only want to test 400 if table does not exist
     dummy_event = {}
     dummy_context = {}
@@ -107,3 +106,7 @@ def test_get_db_does_not_exist(set_env):
 
     res = get_handler.handler(dummy_event, dummy_context)
     assert res['statusCode'] == 400
+
+
+
+
