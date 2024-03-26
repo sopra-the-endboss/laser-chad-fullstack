@@ -6,9 +6,7 @@ docker cp cart/test/manual_test_cart.py cart-debugger:/app && docker exec cart-d
 """
 
 import boto3
-import botocore
 import os
-import simplejson as json
 import requests
 from pprint import PrettyPrinter
 pp = PrettyPrinter(indent=2)
@@ -190,7 +188,7 @@ for payload in post_payloads:
 # Send PUT with invalid  -> 400
 invalid_payloads = []
 invalid_payloads.append({"wrong_key":"adsf"})
-invalid_payloads.append({"product_id":1})
+invalid_payloads.append({"product_id":"stringNotNumber"})
 
 user = 1
 
@@ -207,7 +205,7 @@ for payload in invalid_payloads:
 # First call should create prod
 # Second call should increase qty to 2
 user = 1
-valid = {"product_id":"valid_prod"}
+valid = {"product_id":1}
 payload = valid
 
 for i in range(2):
@@ -222,7 +220,7 @@ for i in range(2):
 ###
 # Send PUT valid new product_id -> 200
 # Should set  new_prod to qty 1
-new_and_valid = {"product_id":"new_prod"}
+new_and_valid = {"product_id":2}
 user = 1
 
 payload = new_and_valid
@@ -237,7 +235,7 @@ print(response.text)
 
 ###
 # Send DELETE product not in cart -> 200, do nothing
-valid_not_exisiting = {"product_id":"not_in_cart"}
+valid_not_exisiting = {"product_id":99}
 user = 1
 payload = valid_not_exisiting
 
@@ -249,7 +247,7 @@ print(response.text)
 
 ###
 # Send DELETE product from 1 to 0 -> 200. remove prod
-delete_1_to_0 = {"product_id":"new_prod"}
+delete_1_to_0 = {"product_id":2}
 user = 1
 payload = delete_1_to_0
 
@@ -262,7 +260,7 @@ print(response.text)
 
 ###
 # Send DELETE product from 2 to 1 -> 200. decrease qty
-delete_2_to_1 = {"product_id":"valid_prod"}
+delete_2_to_1 = {"product_id":1}
 user = 1
 payload = delete_2_to_1
 
