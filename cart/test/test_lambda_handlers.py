@@ -2,6 +2,11 @@
 We do NOT test the API request model itself
 The handler must assume valid data is passed from the API Gateway
 We do however test statusCode in case of unexpected behavior
+
+What we pass in the lambda handlers are event bodies
+An event body is a string, which is supposed to be serializable to json
+
+We do NOT TEST that the event contains all fields from the HTTP request from the API Gateway, we assume this is done by the API Gateway
 """
 
 import os
@@ -37,6 +42,13 @@ try:
 except FileNotFoundError:
     print("Did not find json file with db config")
 
+###
+# Parameters
+CONTEXT_DUMMY = None
+PATHPARAMETER_NAME = "userId" # corresponds to config, should match the resource definiton
+
+###
+# Fixtures
 @mock_aws
 @pytest.fixture
 def set_env():
@@ -62,41 +74,60 @@ def db_client(set_env):
         yield boto3.client("dynamodb")
         
 @pytest.fixture
-def set_up_db(db_client):
-
-    pp.pprint(dict(os.environ))
-
-    print("set_up_db: this is db_schema:")
-    pp.pprint(db_schema)
-
+def dynamo_table(db_client):
     db_client.create_table(**db_schema)
-    print("Table created")
-
     db_resource = boto3.resource("dynamodb")
-    print("Resource created")
-    
     dynamo_table = db_resource.Table(db_schema['TableName'])
-    print("TableObject created")
-    
     yield dynamo_table
 
 @pytest.fixture
-def empty_input() -> tuple[dict,dict]:
-    return ({},{})
-
-@pytest.fixture
-def events() -> dict[str,dict]:
+def generate_inputs() -> dict[str,dict]:
+    """
+    Return a dict with
+    body_description : The description of the body
+    event : A dict containing the neccesary fields to simulate the handlers
+        body : A JSON serialzed string passed by the API Gateway
+        pathParameters : A dict with pathParameters passed by the API Gateway
+    """
     
-    events_to_return = {}
+    inputs_to_return = {}
+    
+    # userId
+    user1 = 1
 
-    events_to_return['put_valid_1'] = {"product_id":"prod_1"}
-    events_to_return['put_valid_1_add'] = {"product_id":"prod_1", "additionalString":"additionalString", "additionalNumber":42}
+    # prdoduct_id
+    prod1 = 1
+    prod2 = 2
 
-def test_simple_count(set_up_db):
-    item_count = set_up_db.item_count
+    ###
+    # Create events
+    inputs_to_return['missing_pathParameter'] = {
+        "body" : ""
+        # missing pathParameter
+    }
+    
+    inputs_to_return['wrong_pathParameter'] = {
+        "body" : "",
+        "pathParameters" : "wrongPathParameters"
+    }
+    
+    inputs_to_return['valid_user1_prod1'] = {
+        "body" : json.dumps({"product_id":prod1}),
+        "pathParameters" : {"userId":user1}
+    }
+    
+    inputs_to_return['valid_user1_prod2'] = {
+        "body" : json.dumps({"product_id":prod2}),
+        "pathParameters" : {"userId":user1}
+    }
+
+    return inputs_to_return
+
+def test_simple_count(dynamo_table):
+    item_count = dynamo_table.item_count
     assert item_count == 0
 
-def test_get_db_does_not_exist(set_env):
+def test_db_does_not_exist(set_env):
     # Pass in empty arguments, we only want to test 400 if table does not exist
     dummy_event = {}
     dummy_context = {}
@@ -108,5 +139,20 @@ def test_get_db_does_not_exist(set_env):
     assert res['statusCode'] == 400
 
 
+###
+# GET
 
+def test_GET(dynamo_table, generate_inputs: dict[str,str]):
+    
+    pp.pprint(generate_inputs)
 
+    ###
+    # Assert GET with missing pathParameters -> 400
+    e = {}
+    event_to_add = "valid_1"
+    try:
+        e['body'] = generate_inputs[event_to_add]
+    except KeyError as ke:
+        print(f"{event_to_add} not found in event_bodies")
+        raise ke
+    get_handler.handler(e,CONTEXT_DUMMY)
