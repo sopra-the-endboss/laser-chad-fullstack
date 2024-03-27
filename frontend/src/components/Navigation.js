@@ -2,12 +2,24 @@ import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import AllProductsnameMock from "../data/AllProductsNameMock.json";
 import { Link, useNavigate } from "react-router-dom";
-import ShoppingCart from "./ShoppingCart";
 import { Button } from "@mui/material";
 import { useState } from "react";
+import CartDrawer from "./Cart/CartDrawer";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 const Navbar = ({ setData, searchQuerySubmitted }) => {
-  const navigate = useNavigate();
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const toggleCart = (open) => (event) => {
+    // Prevent the drawer from closing if the event is triggered by a keyboard event and the key is not Tab or Shift
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setIsCartOpen(open);
+  };
+  const navigate = useNavigate();
 
   const searchWithinProducts = (event) => {
     //TODO: insert search items in backend.
@@ -75,11 +87,13 @@ const Navbar = ({ setData, searchQuerySubmitted }) => {
                   </Link>
                 ))}
                 {/* TODO: style the same as the rest of the navbar */}
-                <button onClick={() => setIsCartOpen(true)}>
-                  Shopping Cart
-                </button>
+                <div>
+                  <Button onClick={toggleCart(true)}>
+                    <AddShoppingCartIcon />
+                  </Button>
+                  <CartDrawer isOpen={isCartOpen} toggleCart={toggleCart} />
+                </div>
               </div>
-              <ShoppingCart isOpen={isCartOpen} setOpen={setIsCartOpen} />
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
