@@ -38,11 +38,11 @@ export const ProductDetail = ({details}) => {
     }, [product_id, details]);
 
     return (
-        <>
+        <Grid container xs={12}>
             <Grid item xs={8} sx={{ borderRight: 1, borderColor: "divider" }} >
                 <CarouselComponent carouselData={productDetails} clickable={false}/>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={4} sx={{ paddingLeft: "16px"}}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Typography gutterBottom variant="h3" component="div" color="red" align="left">
@@ -102,6 +102,6 @@ export const ProductDetail = ({details}) => {
                     </TableContainer>
                 </Grid>
             </Grid>
-        </>
+        </Grid>
     )
 };

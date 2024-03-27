@@ -108,7 +108,6 @@ const ProductContent = ({setActiveStep, setCollectedData}) => {
             <Typography variant="h6" component="div">
                 Sell a Product
             </Typography>
-            {/* Add inputs for price, name, and producer similar to the above examples */}
 
             <TextField
                 value={name}
