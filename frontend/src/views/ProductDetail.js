@@ -18,67 +18,11 @@ import ProductComments from "../data/ProductComments.json"
 import {useParams} from "react-router-dom";
 import CarouselComponent from "../components/ProductOverview/CarouselComponent";
 import Typography from "@mui/material/Typography";
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import {ProductDetailRow} from "../components/ProductDetails/ProductRowDetails";
 
-function ProductDetailRow({ detailKey, detailValue }) {
-    const [open, setOpen] = useState(false);
-    const isPortsDetail = detailKey === 'ports';
 
-    return (
-        <React.Fragment>
-            <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-                <TableCell>
-                    {isPortsDetail && (
-                        <IconButton
-                            aria-label="expand row"
-                            size="small"
-                            onClick={() => setOpen(!open)}
-                        >
-                            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                        </IconButton>
-                    )}
-                </TableCell>
-                <TableCell component="th" scope="row">{detailKey}</TableCell>
-                <TableCell align="right">{!isPortsDetail && detailValue.toString()}</TableCell>
-            </TableRow>
-            {isPortsDetail && (
-                <TableRow>
-                    <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                        <Collapse in={open} timeout="auto" unmountOnExit>
-                            <Box sx={{ margin: 1 }}>
-                                <Typography variant="h6" gutterBottom component="div">
-                                    Ports Details
-                                </Typography>
-                                <Table size="small" aria-label="purchases">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>Port Type</TableCell>
-                                            <TableCell align="right">Count</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {Object.entries(detailValue).map(([port, count]) => (
-                                            <TableRow key={port}>
-                                                <TableCell component="th" scope="row">
-                                                    {port}
-                                                </TableCell>
-                                                <TableCell align="right">{count}</TableCell>
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </Box>
-                        </Collapse>
-                    </TableCell>
-                </TableRow>
-            )}
-        </React.Fragment>
-    );
-}
 
 export const ProductDetail = ({details}) => {
-    const [open, setOpen] = useState(false);
     const [productDetails, setProductDetails] = useState({...details, technical_details: {}});
     const [productComments, setProductComments] = useState([]);
     const {product_id} = useParams();
@@ -99,7 +43,7 @@ export const ProductDetail = ({details}) => {
 
     return (
         <>
-            <Grid item xs={8}>
+            <Grid item xs={8} sx={{ borderRight: 1, borderColor: "divider" }} >
                 <CarouselComponent carouselData={productDetails} clickable={false}/>
             </Grid>
             <Grid item xs={4}>
@@ -148,7 +92,7 @@ export const ProductDetail = ({details}) => {
                     ))}
                 </Grid>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sx={{ borderTop: 1, borderColor: "divider", padding: "16px"}}>
                 <Grid item xs={12}>
                     <Typography variant="h6" align="left">Specs</Typography>
                     <TableContainer component={Paper}>
