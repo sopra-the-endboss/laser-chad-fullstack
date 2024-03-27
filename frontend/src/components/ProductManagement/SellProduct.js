@@ -12,16 +12,24 @@ const SellProduct = () => {
 
     const [collectedData, setCollectedData] = useState({});
 
+    const handleNext = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    };
+
+    const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
+
     function getStepContent(stepIndex) {
         switch (stepIndex) {
             case 0:
                 return (
-                    <ProductContent setCollectedData={setCollectedData} setActiveStep={setActiveStep} />
+                    <ProductContent collectedData={collectedData} setCollectedData={setCollectedData} setActiveStep={setActiveStep} />
                 );
             case 1:
                 return (
                     // Render the preview of the entered data
-                    <ProductDetail details={collectedData} />
+                    <ProductDetail details={collectedData} nextStep={handleNext} previousStep={handleBack} />
                 );
             case 2:
                 return (

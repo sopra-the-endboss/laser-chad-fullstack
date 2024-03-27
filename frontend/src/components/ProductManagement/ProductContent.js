@@ -14,21 +14,33 @@ import React, {useEffect, useState} from "react";
 import CategoryMock from "../../data/CategoryMock.json";
 import AllCompaniesMock from "../../data/AllCompanyMock.json";
 
-const ProductContent = ({setActiveStep, setCollectedData}) => {
+const ProductContent = ({setActiveStep, setCollectedData, collectedData}) => {
 
-    const [selectedCategory, setSelectedCategory] = useState('');
-    const [selectedCompany, setSelectedCompany] = useState('');
+    // This function transforms the technical details object into the array format
+    const prepareInitialTechnicalData = (technicalDetails) => {
+        return Object.entries(technicalDetails || {}).map(([spec, value]) => ({
+            spec,
+            value
+        }));
+    };
+
+    // Preparing initial state before using it in useState
+    const initialTechnicalData = prepareInitialTechnicalData(collectedData.technical_details);
+
+
+    const [selectedCategory, setSelectedCategory] = useState(collectedData.category || '');
+    const [selectedCompany, setSelectedCompany] = useState(collectedData.brand || '');
     const [category, setCategory] = useState([]);
     const [companies, setCompanies] = useState([]);
-    const [technicalData, setTechnicalData] = useState([{'spec': '', 'value': ''}]);
-    const [description, setDescription] = useState('');
+    const [technicalData, setTechnicalData] = useState(initialTechnicalData);
+    const [description, setDescription] = useState(collectedData.description || '');
     const [images, setImages] = useState([]);
-    const [price, setPrice] = useState('');
-    const [name, setName] = useState('');
+    const [price, setPrice] = useState(collectedData.price || '');
+    const [name, setName] = useState(collectedData.product || '');
 
-    const [warranty, setWarranty] = useState('');
-    const [availability, setAvailability] = useState('');
-    const [subheader, setSubheader] = useState('');
+    const [warranty, setWarranty] = useState(collectedData.warranty || '');
+    const [availability, setAvailability] = useState(collectedData.availability || '');
+    const [subheader, setSubheader] = useState(collectedData.subheader || '');
 
 
     // Handlers for each input
@@ -147,6 +159,10 @@ const ProductContent = ({setActiveStep, setCollectedData}) => {
                 renderInput={(params) => (
                     <TextField
                         {...params}
+                        value={selectedCompany}
+                        onChange={(e) => {
+                            setSelectedCompany(e.target.value);
+                        }}
                         fullWidth
                         placeholder={"Producer"}
                     />
@@ -202,6 +218,10 @@ const ProductContent = ({setActiveStep, setCollectedData}) => {
                                         <TextField
                                             {...params}
                                             fullWidth
+                                            value={technicalData[index].spec}
+                                            onChange={(e) => {
+                                                handleTechnicalDataChange(index, 'spec', e.target.value)
+                                            }}
                                         />
                                     )}
                                 />
@@ -250,6 +270,10 @@ const ProductContent = ({setActiveStep, setCollectedData}) => {
                 renderInput={(params) => (
                     <TextField
                         {...params}
+                        value={warranty}
+                        onChange={(e) => {
+                            setWarranty(e.target.value)
+                        }}
                         fullWidth
                         placeholder={"Warranty for this product"}
                     />
@@ -268,6 +292,10 @@ const ProductContent = ({setActiveStep, setCollectedData}) => {
                 renderInput={(params) => (
                     <TextField
                         {...params}
+                        value={availability}
+                        onChange={(e) => {
+                            setAvailability(e.target.value)
+                        }}
                         fullWidth
                         placeholder={"Availability"}
                     />

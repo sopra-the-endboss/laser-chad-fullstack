@@ -6,7 +6,7 @@ import {
     TableBody,
     Table,
     Button,
-    TableContainer
+    TableContainer, Stack
 } from "@mui/material";
 import React, {useEffect, useState} from "react";
 import ProductDetails from "../data/ProductDetails.json"
@@ -18,7 +18,7 @@ import {ProductDetailRow} from "../components/ProductDetails/ProductRowDetails";
 
 
 
-export const ProductDetail = ({details}) => {
+export const ProductDetail = ({details, previousStep, nextStep}) => {
     console.log(details)
     const [productDetails, setProductDetails] = useState({technical_details: {}, ...details});
     const [productComments, setProductComments] = useState([]);
@@ -103,6 +103,14 @@ export const ProductDetail = ({details}) => {
                     </TableContainer>
                 </Grid>
             </Grid>
+            {
+                details && (
+                    <Stack spacing={2} direction="row">
+                        <Button variant="outlined" component="label" width={"50%"} onClick={previousStep}>Previous</Button>
+                        <Button variant="contained" component="label" fullWidth onClick={nextStep}>Post</Button>
+                    </Stack>
+                )
+            }
         </Grid>
     )
 };
