@@ -2,7 +2,7 @@
 
 This is the backendservice that implements the shopping cart logic.  
 A cart consists of a unique `userId` which identifies the "owner" of the cart and a set of products which are currently in the cart.  
-The products is an array of objects `product_id [number]` : `qty [number]`
+The products is an array of objects `product_id [str]` : `qty [number]`
 
 ## API
 The card offers the following API calls to interact with:

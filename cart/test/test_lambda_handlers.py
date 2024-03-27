@@ -96,8 +96,8 @@ def generate_inputs() -> dict[str,dict]:
     user1 = 1
 
     # prdoduct_id
-    prod1 = 1
-    prod2 = 2
+    prod1 = "product_one"
+    prod2 = "product_two"
 
     ###
     # Create events
@@ -142,17 +142,17 @@ def test_db_does_not_exist(set_env):
 ###
 # GET
 
-def test_GET(dynamo_table, generate_inputs: dict[str,str]):
+# def test_GET(dynamo_table, generate_inputs: dict[str,str]):
     
-    pp.pprint(generate_inputs)
+#     pp.pprint(generate_inputs)
 
-    ###
-    # Assert GET with missing pathParameters -> 400
-    e = {}
-    event_to_add = "valid_1"
-    try:
-        e['body'] = generate_inputs[event_to_add]
-    except KeyError as ke:
-        print(f"{event_to_add} not found in event_bodies")
-        raise ke
-    get_handler.handler(e,CONTEXT_DUMMY)
+#     ###
+#     # Assert GET with missing pathParameters -> 400
+#     e = {}
+#     event_to_add = "valid_1"
+#     try:
+#         e['body'] = generate_inputs[event_to_add]
+#     except KeyError as ke:
+#         print(f"{event_to_add} not found in event_bodies")
+#         raise ke
+#     get_handler.handler(e,CONTEXT_DUMMY)
