@@ -34,7 +34,7 @@ const ProductContent = ({setActiveStep, setCollectedData, collectedData}) => {
     const [companies, setCompanies] = useState([]);
     const [technicalData, setTechnicalData] = useState(initialTechnicalData);
     const [description, setDescription] = useState(collectedData.description || '');
-    const [images, setImages] = useState([]);
+    const [images, setImages] = useState(collectedData.images || []);
     const [price, setPrice] = useState(collectedData.price || '');
     const [name, setName] = useState(collectedData.product || '');
 
@@ -99,7 +99,7 @@ const ProductContent = ({setActiveStep, setCollectedData, collectedData}) => {
             return details;
         }, {});
 
-        const transformedImages = images.map(image => image.preview);
+        const transformedImages = images.map(image => image?.preview || image);
 
 
         // Construct the transformed object
@@ -256,7 +256,6 @@ const ProductContent = ({setActiveStep, setCollectedData, collectedData}) => {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
             />
-            {/* Image upload logic */}
 
             <Autocomplete
                 disablePortal
@@ -319,7 +318,7 @@ const ProductContent = ({setActiveStep, setCollectedData, collectedData}) => {
                         {images.map((image, index) => (
                             <TableRow key={index}>
                                 <TableCell>
-                                    {image.name}
+                                    {image.name || image}
                                 </TableCell>
                                 <TableCell>
                                     <IconButton aria-label="delete" size="large"
