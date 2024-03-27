@@ -60,10 +60,6 @@ const Navbar = ({ setData, searchQuerySubmitted }) => {
       route: "/account",
       location: "Account",
     },
-    {
-      route: "/sell-product",
-      location: "Prod",
-    },
     ...(isSeller
       ? [
           {
