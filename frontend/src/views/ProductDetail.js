@@ -89,7 +89,7 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                     ))}
                 </Grid>
             </Grid>
-            <Grid item xs={12} sx={{ borderTop: 1, borderColor: "divider", padding: "16px"}}>
+            <Grid item xs={12} sx={{ borderTop: 1, borderColor: "divider", paddingBottom: "16px", paddingTop: "16px"}}>
                 <Grid item xs={12}>
                     <Typography variant="h6" align="left">Specs</Typography>
                     <TableContainer component={Paper}>
@@ -105,8 +105,11 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
             </Grid>
             {
                 details && (
-                    <Stack spacing={2} direction="row">
-                        <Button variant="outlined" component="label" width={"50%"} onClick={previousStep}>Previous</Button>
+                    <Stack spacing={2} direction="row"       justifyContent="center" // Center the items horizontally
+                           alignItems="center" // Align items vertically in the center (if needed)
+                           sx={{ width: '100%', display: 'flex' }} // Ensure the Stack takes the full width and displays as flex
+                    >
+                        <Button variant="outlined" component="label" fullWidth onClick={previousStep}>Previous</Button>
                         <Button variant="contained" component="label" fullWidth onClick={nextStep}>Post</Button>
                     </Stack>
                 )
