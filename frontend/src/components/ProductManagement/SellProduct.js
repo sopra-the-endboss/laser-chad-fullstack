@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import { Stepper, Step, StepLabel, Button, Box } from '@mui/material';
+import {Stepper, Step, StepLabel, Button, Box, CircularProgress} from '@mui/material';
 import {ProductDetail} from "../../views/ProductDetail";
 import Typography from "@mui/material/Typography";
 import ProductContent from "./ProductContent";
+import {Link} from "react-router-dom";
 
 const SellProduct = () => {
 
@@ -11,9 +12,16 @@ const SellProduct = () => {
     const steps = ['Enter Product Details', 'Preview Product', 'Publish Product'];
 
     const [collectedData, setCollectedData] = useState({});
-
+    const [loading, setLoading] = useState(true);
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        // TODO: now publish
+        // let loader run
+        // show success post
+        setTimeout(() => {
+            // This code block simulates the completion of the upload process
+            setLoading(false);
+        }, 2000);
     };
 
     const handleBack = () => {
@@ -34,7 +42,10 @@ const SellProduct = () => {
             case 2:
                 return (
                     // Confirmation message or any additional information before publishing
-                    <Typography>Review and confirm your product details before publishing.</Typography>
+                    <>
+                        <Typography>Creating your product...</Typography>
+                        {loading ? <CircularProgress color="inherit" /> : <Link to={"/product/10"}>Check out your new product</Link>}
+                    </>
                 );
             default:
                 return 'Unknown step';
