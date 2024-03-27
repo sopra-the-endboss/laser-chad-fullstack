@@ -80,34 +80,34 @@ print("-----------------")
 # if in manual mode, get corresponding protocol, in dockermode is None, defaults to http
 PROTOCOL_TO_USE = os.getenv("PROTOCOL", None)
 
-# # Send request to test GET - should return empty
-# url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "product-microservice", protocol=PROTOCOL_TO_USE)
-# print(f"Sending GET to {url}")
-# response = requests.get(url)
-# print(response.text)
+# Send request to test GET - should return empty
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "product-microservice", protocol=PROTOCOL_TO_USE)
+print(f"Sending GET to {url}")
+response = requests.get(url)
+print(response.text)
 
-# # Send requests to test POST
-# url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "product-microservice", protocol=PROTOCOL_TO_USE)
-# payload =   {
-#     "product_id": "1",
-#     "product": "Apple iPhone 15 Pro",
-#     "highlighted": True,
-#     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
-#     "price": 57.46,
-#     "formatted_text": "",
-#     "category": "Smartphone",
-#     "brand": "Apple"
-#   }
-# print(f"Sending POST to {url} with payload {json.dumps(payload)}")
-# response = requests.post(url, json = payload)
-# print(response.status_code)
-# print(response.text)
+# Send requests to test POST
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "product-microservice", protocol=PROTOCOL_TO_USE)
+payload =   {
+    "product_id": "1",
+    "product": "Apple iPhone 15 Pro",
+    "highlighted": True,
+    "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
+    "price": 57.46,
+    "formatted_text": "",
+    "category": "Smartphone",
+    "brand": "Apple"
+  }
+print(f"Sending POST to {url} with payload {json.dumps(payload)}")
+response = requests.post(url, json = payload)
+print(response.status_code)
+print(response.text)
 
-# # Send requests to test GET - should return with one object
-# url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "product-microservice", protocol=PROTOCOL_TO_USE)
-# print(f"Sending GET to {url}")
-# response = requests.get(url)
-# print(response.text)
+# Send requests to test GET - should return with one object
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "product-microservice", protocol=PROTOCOL_TO_USE)
+print(f"Sending GET to {url}")
+response = requests.get(url)
+print(response.text)
 
 
 # Send POST batch
@@ -139,11 +139,11 @@ print(response.status_code)
 print(response.text)
 
 
-# # Send requests to test GET - should return with more objects
-# url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "product-microservice", protocol=PROTOCOL_TO_USE)
-# print(f"Sending GET to {url}")
-# response = requests.get(url)
-# print(response.text)
+# Send requests to test GET - should return with more objects
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "product-microservice", protocol=PROTOCOL_TO_USE)
+print(f"Sending GET to {url}")
+response = requests.get(url)
+print(response.text)
 
 
 
