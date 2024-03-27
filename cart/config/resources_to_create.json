@@ -2,15 +2,18 @@
     "cart" : [
         {
             "path":"cart",
-            "methods_for_that_path":[]
-        },
-        {
-            "path":"{userId}",
-            "methods_for_that_path":[
-                {"method":"GET","lambda_fct":"get_cart"},
-                {"method":"POST","lambda_fct":"post_cart"},
-                {"method":"PUT","lambda_fct":"put_cart","requestModels":{"application/json":"put_cart"}},
-                {"method":"DELETE","lambda_fct":"delete_cart","requestModels":{"application/json":"put_cart"}}
+            "methods_for_that_path":[],
+            "children_resources":[
+                {
+                    "path":"{userId}",
+                    "methods_for_that_path":[
+                        {"method":"GET","lambda_fct":"get_cart"},
+                        {"method":"POST","lambda_fct":"post_cart"},
+                        {"method":"PUT","lambda_fct":"put_cart","requestModels":{"application/json":"put_cart"}},
+                        {"method":"DELETE","lambda_fct":"delete_cart","requestModels":{"application/json":"put_cart"}}
+                    ],
+                    "children_resources":[]
+                }
             ]
         }
     ]
