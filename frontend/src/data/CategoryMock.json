@@ -1,34 +1,101 @@
 [
   {
     "id": 1,
-    "name": "Tech"
+    "name": "Tech",
+    "options": [
+      "connectivity",
+      "warranty period",
+      "brand",
+      "energy efficiency",
+      "compatibility"
+    ]
   },
   {
     "id": 2,
-    "name": "Smartphone"
+    "name": "Smartphone",
+    "options": [
+      "memory",
+      "storage",
+      "display size",
+      "display resolution",
+      "operating system",
+      "battery capacity",
+      "number of cameras",
+      "photo resolution",
+      "5G support",
+      "water resistance"
+    ]
   },
   {
     "id": 3,
-    "name": "Laptop"
+    "name": "Laptop",
+    "options": [
+      "processor type",
+      "RAM",
+      "storage",
+      "display size",
+      "display resolution",
+      "operating system",
+      "graphics card",
+      "weight",
+      "battery life",
+      "touchscreen support"
+    ]
   },
   {
     "id": 4,
-    "name": "Accessories"
+    "name": "Accessories",
+    "options": [
+      "compatibility",
+      "type",
+      "material",
+      "wireless capability",
+      "color"
+    ]
   },
   {
     "id": 5,
-    "name": "Gaming"
+    "name": "Gaming",
+    "options": [
+      "platform",
+      "genre",
+      "ESRB rating",
+      "multiplayer support",
+      "DLC availability"
+    ]
   },
   {
     "id": 6,
-    "name": "Anime"
+    "name": "Anime",
+    "options": [
+      "genre",
+      "format",
+      "audience age group",
+      "sub or dub",
+      "year of release"
+    ]
   },
   {
     "id": 7,
-    "name": "Photo"
+    "name": "Photo",
+    "options": [
+      "camera type",
+      "resolution",
+      "sensor size",
+      "lens compatibility",
+      "ISO range",
+      "video resolution"
+    ]
   },
   {
     "id": 8,
-    "name": "Sale"
+    "name": "Sale",
+    "options": [
+      "discount type",
+      "product category",
+      "timeframe",
+      "exclusive deals",
+      "bundle offers"
+    ]
   }
 ]

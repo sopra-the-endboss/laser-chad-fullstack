@@ -11,6 +11,7 @@ import AllProductsNameMock from "./data/AllProductsNameMock.json";
 import { ProductDetail } from "./views/ProductDetail";
 import { Container, Grid } from "@mui/material";
 import { Categories } from "./views/Categories";
+import SellProduct from "./components/ProductManagement/SellProduct";
 
 function App() {
   const [data, setData] = useState([]);
@@ -68,6 +69,7 @@ function App() {
                     element={<ProductDetail />}
                   />
                   <Route path="/account" element={<Account />} />
+                  <Route path="/sell-product" element={<SellProduct />} />
                 </Routes>
               </Grid>
             </Container>
