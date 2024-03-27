@@ -73,10 +73,10 @@ export const ProductDetail = ({details}) => {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Button variant="contained" color="primary">Buy Now</Button>
+                        <Button variant="contained" color="primary" disabled={details}>Buy Now</Button>
                     </Grid>
                     <Grid item xs={12}>
-                        <Button variant="outlined" color="primary">Pin Product</Button>
+                        <Button variant="outlined" color="primary" disabled={details}>Pin Product</Button>
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>

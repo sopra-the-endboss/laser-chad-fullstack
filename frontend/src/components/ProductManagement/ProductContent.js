@@ -26,6 +26,11 @@ const ProductContent = ({setActiveStep, setCollectedData}) => {
     const [price, setPrice] = useState('');
     const [name, setName] = useState('');
 
+    const [warranty, setWarranty] = useState('');
+    const [availability, setAvailability] = useState('');
+    const [subheader, setSubheader] = useState('');
+
+
     // Handlers for each input
     // Add similar handlers for other state variables as needed
 
@@ -89,14 +94,15 @@ const ProductContent = ({setActiveStep, setCollectedData}) => {
         const transformedData = {
             product_id: Math.random().toString(36).substr(2, 9), // Generating a pseudo-unique ID
             product: name,
+            subheader: subheader,
+            warranty: warranty,
             description,
             price: Number(price),
             category: selectedCategory,
             brand: selectedCompany,
             technical_details,
-            images: transformedImages, // Updated to use previews for carousel display
-            availability: "In stock", // Example static value
-            warranty: "1 year", // Example static value, adjust as necessary
+            images: transformedImages,
+            availability: availability,
         };
 
         return transformedData;
@@ -146,6 +152,14 @@ const ProductContent = ({setActiveStep, setCollectedData}) => {
                     />
                 )}
             />
+
+            <TextField
+                value={subheader}
+                placeholder={"Subheader"}
+                onChange={e => setSubheader(e.target.value)}
+                fullWidth
+            />
+
 
             <FormControl fullWidth margin="normal">
                 <InputLabel id="category-label">Category</InputLabel>
@@ -223,6 +237,43 @@ const ProductContent = ({setActiveStep, setCollectedData}) => {
                 onChange={(e) => setDescription(e.target.value)}
             />
             {/* Image upload logic */}
+
+            <Autocomplete
+                disablePortal
+                id={`company_warranty`} // Ensure unique IDs for each instance
+                options={['None', '1 year', '2 years', '5 years']}
+                freeSolo
+                value={warranty}
+                onChange={(event, newValue) => {
+                    setWarranty(newValue);
+                }}
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        fullWidth
+                        placeholder={"Warranty for this product"}
+                    />
+                )}
+            />
+
+            <Autocomplete
+                disablePortal
+                id={`company_instock`} // Ensure unique IDs for each instance
+                options={['In stock', 'Available within 1-3 weeks', 'Not available', 'Out of stock']}
+                freeSolo
+                value={availability}
+                onChange={(event, newValue) => {
+                    setAvailability(newValue);
+                }}
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        fullWidth
+                        placeholder={"Availability"}
+                    />
+                )}
+            />
+
             <Button variant="contained" component="label" sx={{mt: 2}}>
                 Upload Images
                 <input type="file" hidden multiple onChange={handleImageChange}/>
