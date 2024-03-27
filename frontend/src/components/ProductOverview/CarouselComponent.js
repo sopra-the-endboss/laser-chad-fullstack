@@ -8,7 +8,7 @@ import "react-multi-carousel/lib/styles.css";
 import CardMedia from "@mui/material/CardMedia";
 
 function CarouselComponent({carouselData, clickable = true, onCardInteract}) {
-
+    console.log(carouselData)
     if (carouselData) {
 
         // Normalize the carousel data to always have an 'images' array

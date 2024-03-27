@@ -19,6 +19,7 @@ import {ProductDetailRow} from "../components/ProductDetails/ProductRowDetails";
 
 
 export const ProductDetail = ({details}) => {
+    console.log(details)
     const [productDetails, setProductDetails] = useState({technical_details: {}, ...details});
     const [productComments, setProductComments] = useState([]);
     const {product_id} = useParams();

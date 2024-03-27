@@ -41,7 +41,6 @@ const ProductContent = ({setActiveStep, setCollectedData}) => {
         const newData = [...technicalData];
         newData[index][field] = value;
         setTechnicalData(newData);
-        console.log(technicalData)
     };
 
     const handleAddTechnicalDataRow = () => {
@@ -63,7 +62,14 @@ const ProductContent = ({setActiveStep, setCollectedData}) => {
 
     // Function to handle image file selection
     const handleImageChange = (event) => {
-        setImages([...event.target.files]);
+        const files = Array.from(event.target.files); // Convert FileList to Array
+        const imagePreviews = files.map(file => ({
+            name: file.name,
+            preview: URL.createObjectURL(file),
+            file: file, // Keep the File object for upload
+        }));
+        // Set images with previews for carousel display and file references for upload
+        setImages(imagePreviews);
     };
 
     const transformDataForProductDetail = () => {
@@ -76,8 +82,8 @@ const ProductContent = ({setActiveStep, setCollectedData}) => {
             return details;
         }, {});
 
-        // Assuming images are an array of objects with { name: 'url' }
-        const formattedImages = images.map(image => image.name);
+        const transformedImages = images.map(image => image.preview);
+
 
         // Construct the transformed object
         const transformedData = {
@@ -88,7 +94,7 @@ const ProductContent = ({setActiveStep, setCollectedData}) => {
             category: selectedCategory,
             brand: selectedCompany,
             technical_details,
-            images: formattedImages,
+            images: transformedImages, // Updated to use previews for carousel display
             availability: "In stock", // Example static value
             warranty: "1 year", // Example static value, adjust as necessary
         };
@@ -98,7 +104,6 @@ const ProductContent = ({setActiveStep, setCollectedData}) => {
 
     const handleStep = () => {
         const transformedData = transformDataForProductDetail();
-        console.log(transformedData)
         setCollectedData(transformedData);
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
