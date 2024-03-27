@@ -122,6 +122,7 @@ export const ProductDetail = ({details}) => {
                         </Typography>
                         {/* Availability */}
                         <Chip label={productDetails?.availability} color="success"/>
+                        <Chip label={"Warranty: " + productDetails?.warranty} color="primary"/>
                     </Grid>
                     <Grid item xs={12}>
                         <Rating
@@ -138,11 +139,16 @@ export const ProductDetail = ({details}) => {
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                    {/* Warranty as badge */}
-                    <Badge badgeContent={productDetails?.warranty} color="primary">
-                        <Typography variant="h6" align="left">Warranty</Typography>
-                    </Badge>
+                    <Typography variant="h6" align="left">Comments</Typography>
+                    {productComments?.reviews?.map((review, i) => (
+                        <Paper key={i} elevation={1} sx={{p: 2, mb: 2}}>
+                            <Typography variant="subtitle2">{review?.user}</Typography>
+                            <Typography variant="body2" color="text.secondary">{review?.comment}</Typography>
+                        </Paper>
+                    ))}
                 </Grid>
+            </Grid>
+            <Grid item xs={12}>
                 <Grid item xs={12}>
                     <Typography variant="h6" align="left">Specs</Typography>
                     <TableContainer component={Paper}>
@@ -154,15 +160,6 @@ export const ProductDetail = ({details}) => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                </Grid>
-                <Grid item xs={12}>
-                    <Typography variant="h6" align="left">Comments</Typography>
-                    {productComments?.reviews?.map((review, i) => (
-                        <Paper key={i} elevation={1} sx={{p: 2, mb: 2}}>
-                            <Typography variant="subtitle2">{review?.user}</Typography>
-                            <Typography variant="body2" color="text.secondary">{review?.comment}</Typography>
-                        </Paper>
-                    ))}
                 </Grid>
             </Grid>
         </>
