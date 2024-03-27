@@ -1,16 +1,12 @@
 import {
-    Badge,
     Chip,
     Grid,
     Paper,
     Rating,
     TableBody,
-    TableCell,
-    TableRow,
     Table,
-    Collapse,
     Button,
-    Box, TableHead, TableContainer, IconButton
+    TableContainer
 } from "@mui/material";
 import React, {useEffect, useState} from "react";
 import ProductDetails from "../data/ProductDetails.json"
@@ -23,7 +19,7 @@ import {ProductDetailRow} from "../components/ProductDetails/ProductRowDetails";
 
 
 export const ProductDetail = ({details}) => {
-    const [productDetails, setProductDetails] = useState({...details, technical_details: {}});
+    const [productDetails, setProductDetails] = useState({technical_details: {}, ...details});
     const [productComments, setProductComments] = useState([]);
     const {product_id} = useParams();
 
@@ -32,14 +28,14 @@ export const ProductDetail = ({details}) => {
         // I expect an object, that's why the [0]
         if (!details)
             setProductDetails(ProductDetails.filter(productDetail => productDetail.product_id === parseInt(product_id))[0]);
-    }, [product_id]);
+    }, [product_id, details]);
 
     useEffect(() => {
         //TODO: fetch Product deatails for this stuff from backend
         //ProductComments
         if (!details)
             setProductComments(ProductComments.filter(productComment => productComment.product_id === parseInt(product_id))[0]);
-    }, [product_id]);
+    }, [product_id, details]);
 
     return (
         <>

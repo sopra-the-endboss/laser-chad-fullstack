@@ -41,6 +41,7 @@ const ProductContent = ({setActiveStep, setCollectedData}) => {
         const newData = [...technicalData];
         newData[index][field] = value;
         setTechnicalData(newData);
+        console.log(technicalData)
     };
 
     const handleAddTechnicalDataRow = () => {
@@ -65,21 +66,40 @@ const ProductContent = ({setActiveStep, setCollectedData}) => {
         setImages([...event.target.files]);
     };
 
-    const handleStep = () => {
-        const dataToCollect = {
-            name,
-            price,
+    const transformDataForProductDetail = () => {
+
+        // Transforming technicalData array to an object expected by ProductDetail
+        const technical_details = technicalData.reduce((details, item) => {
+            if (item.spec && item.value) {
+                details[item.spec] = item.value;
+            }
+            return details;
+        }, {});
+
+        // Assuming images are an array of objects with { name: 'url' }
+        const formattedImages = images.map(image => image.name);
+
+        // Construct the transformed object
+        const transformedData = {
+            product_id: Math.random().toString(36).substr(2, 9), // Generating a pseudo-unique ID
+            product: name,
             description,
-            selectedCategory,
-            selectedCompany,
-            technicalData,
-            images: images.map((image) => ({
-                // Depending on how you want to handle images, this might be the file name, a preview URL, etc.
-                name: image.name,
-            })),
+            price: Number(price),
+            category: selectedCategory,
+            brand: selectedCompany,
+            technical_details,
+            images: formattedImages,
+            availability: "In stock", // Example static value
+            warranty: "1 year", // Example static value, adjust as necessary
         };
 
-        setCollectedData(dataToCollect);
+        return transformedData;
+    }
+
+    const handleStep = () => {
+        const transformedData = transformDataForProductDetail();
+        console.log(transformedData)
+        setCollectedData(transformedData);
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
 
@@ -107,16 +127,20 @@ const ProductContent = ({setActiveStep, setCollectedData}) => {
 
             <Autocomplete
                 disablePortal
-                id="company_autocomplete"
+                id={`company_autocomplete`} // Ensure unique IDs for each instance
                 options={companies.map(company => company.name) || []}
                 freeSolo
-                renderInput={(params) => <TextField
-                    {...params}
-                    value={selectedCompany}
-                    onChange={(e) => setSelectedCompany(e.target.value)}
-                    fullWidth
-                    placeholder={"Producer"}
-                />}
+                value={selectedCompany}
+                onChange={(event, newValue) => {
+                    setSelectedCompany(newValue);
+                }}
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        fullWidth
+                        placeholder={"Producer"}
+                    />
+                )}
             />
 
             <FormControl fullWidth margin="normal">
@@ -149,14 +173,19 @@ const ProductContent = ({setActiveStep, setCollectedData}) => {
                             <TableCell sx={{width: '45%'}}>
                                 <Autocomplete
                                     disablePortal
-                                    id="spec_autocomplete"
+                                    id={`spec_autocomplete_${index}`} // Ensure unique IDs for each instance
                                     options={category.find(cat => cat.name === selectedCategory)?.options || []}
                                     freeSolo
-                                    renderInput={(params) => <TextField
-                                        {...params}
-                                        onChange={(e) => handleTechnicalDataChange(index, 'spec', e.target.value)}
-                                        fullWidth
-                                    />}
+                                    value={technicalData[index].spec}
+                                    onChange={(event, newValue) => {
+                                        handleTechnicalDataChange(index, 'spec', newValue);
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            fullWidth
+                                        />
+                                    )}
                                 />
                             </TableCell>
                             <TableCell sx={{width: '45%'}}>
