@@ -15,7 +15,7 @@ const CustomModal = ({openModalText, children}) => {
     };
     return (
         <React.Fragment>
-            <Button onClick={handleOpen}>{openModalText}</Button>
+            <Button onClick={handleOpen} variant={"outlined"}>{openModalText}</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
