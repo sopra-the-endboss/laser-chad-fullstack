@@ -11,7 +11,15 @@ pp = PrettyPrinter(indent=2)
 HTTP_RESPONSE_DICT = {
     'statusCode' : '',
     'isBase64Encoded' : False,
-    'headers' : {},
+    # To allow CORS requests from the frontend, we have to set the appropirate headers
+    # https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors.html
+    # API Gateway Proxy Lambda integration
+    'headers': {
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
+            'Content-Type': 'application/json'
+        }
     # Here comes to body, as a JSON string
 }
 
@@ -90,7 +98,6 @@ def handler(event, context) -> list[dict]:
 
     print("Return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = '200'
-    HTTP_RESPONSE_DICT['headers'] = {"Content-Type": "application/json"}
     HTTP_RESPONSE_DICT['body'] = json.dumps(found_items_list)
 
     return HTTP_RESPONSE_DICT

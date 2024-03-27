@@ -5,13 +5,16 @@
             "methods_for_that_path":[
                 {"method":"GET","lambda_fct":"get_lambda"}
                 ,{"method":"POST","lambda_fct":"post_lambda","requestModels":{"application/json":"post_template"}}
+            ],
+            "children_resources":[
+                {
+                    "path":"{template-microservice-key-1}",
+                    "methods_for_that_path":[
+                        {"method":"GET","lambda_fct":"get_lambda"}
+                    ],
+                    "children_resources":[]
+                }
             ]
-        },
-        {
-            "path":"{template-microservice-key-1}",
-            "methods_for_that_path":[
-                {"method":"GET","lambda_fct":"get_lambda"}
-            ]
-        }
+        }        
     ]
 }
