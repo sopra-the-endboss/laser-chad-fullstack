@@ -2,8 +2,12 @@ import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import AllProductsnameMock from "../data/AllProductsNameMock.json";
 import { Link, useNavigate } from "react-router-dom";
-const Navbar = ({ setData, searchQuerySubmitted, isAuthenticated }) => {
+import ShoppingCart from "./ShoppingCart";
+import { Button } from "@mui/material";
+import { useState } from "react";
+const Navbar = ({ setData, searchQuerySubmitted }) => {
   const navigate = useNavigate();
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const searchWithinProducts = (event) => {
     //TODO: insert search items in backend.
@@ -40,11 +44,6 @@ const Navbar = ({ setData, searchQuerySubmitted, isAuthenticated }) => {
     },
 
     {
-      route: "/shopping-cart",
-      location: "Shopping Cart",
-    },
-
-    {
       route: "/pinned",
       location: "Pinned Products",
     },
@@ -75,7 +74,12 @@ const Navbar = ({ setData, searchQuerySubmitted, isAuthenticated }) => {
                     {route.location}
                   </Link>
                 ))}
+                {/* TODO: style the same as the rest of the navbar */}
+                <button onClick={() => setIsCartOpen(true)}>
+                  Shopping Cart
+                </button>
               </div>
+              <ShoppingCart isOpen={isCartOpen} setOpen={setIsCartOpen} />
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
