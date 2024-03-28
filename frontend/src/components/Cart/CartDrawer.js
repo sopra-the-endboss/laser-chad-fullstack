@@ -1,7 +1,7 @@
 import React from "react";
 import { Drawer } from "@mui/material";
-import Cart from "./Cart";
-import { addToCart, removeFromCart } from "../../reducers/slices/cartSlice";
+// import Cart from "./Cart";
+import { removeFromCart } from "../../reducers/slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Box } from "@mui/material";
 import { useEffect } from "react";
