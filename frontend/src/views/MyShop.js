@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
 import MyShopMock from '../data/MyShopMock.json'
-import {Badge, Chip, Divider, List, ListItem, ListItemAvatar, ListItemText, Stack} from "@mui/material";
+import {Button, Chip, Divider, List, ListItem, ListItemAvatar, ListItemText, Stack} from "@mui/material";
 import SellProduct from "../components/ProductManagement/SellProduct";
 import CustomModal from "../components/ui/CustomModal";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
+import EditIcon from '@mui/icons-material/Edit';
 const MyShop = () => {
 
     //verify that user is logged in has already been done by the routing guard
@@ -15,7 +16,9 @@ const MyShop = () => {
         setShopData(MyShopMock);
     }, []);
 
-    console.log(shopData)
+    const deleteProduct = async () => {
+       console.log("Delete Product clicked");
+    };
 
     return (
         <Stack spacing={2} sx={{width: "100%"}}>
@@ -32,13 +35,20 @@ const MyShop = () => {
                                 <Stack direction={"row"} sx={{alignItems: "center"}} spacing={2}>
                                     <Chip label={product?.brand} color="success"/>
                                     <Chip label={product?.category} color="success"/>
-                                    <DeleteIcon />
-                                    <DeleteIcon />
+                                    <CustomModal icon={<EditIcon />}>
+
+                                    </CustomModal>
+                                    <CustomModal icon={<DeleteIcon />}>
+                                        <Stack spacing={2}>
+                                            <span>Are are about to delete this product: "{product.product}"</span>
+                                            <Button onClick={deleteProduct} variant={"outlined"} >Delete</Button>
+                                        </Stack>
+                                    </CustomModal>
                                 </Stack>
                             }
                         >
                             <ListItemAvatar>
-                                <img src={product?.images[0]} alt={"product image"} width={"40px"} height={"40px"}/>
+                                <img src={product?.images[0]} alt={"product"} width={"40px"} height={"40px"}/>
                             </ListItemAvatar>
                             <ListItemText
                                 primary={

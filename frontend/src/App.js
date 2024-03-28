@@ -11,7 +11,6 @@ import AllProductsNameMock from "./data/AllProductsNameMock.json";
 import {ProductDetail} from "./views/ProductDetail";
 import {Container, Grid} from "@mui/material";
 import {Categories} from "./views/Categories";
-import SellProduct from "./components/ProductManagement/SellProduct";
 import MyShop from "./views/MyShop";
 import SellerGuard from "./components/Guards/SellerGuard";
 
