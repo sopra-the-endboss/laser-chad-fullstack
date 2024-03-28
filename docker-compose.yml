@@ -60,8 +60,7 @@ services:
   template-microservice:
     container_name: "template-microservice"
     build:
-      context: ./template-microservice
-      dockerfile: dockerfile
+      dockerfile: ./template-microservice/dockerfile
       no_cache: true
     environment:
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
@@ -84,8 +83,7 @@ services:
   template-microservice-debugger:
     container_name: "template-microservice-debugger"
     build:
-      context: ./template-microservice
-      dockerfile: dockerfile_debugger
+      dockerfile: ./template-microservice/dockerfile_debugger
       no_cache: true
     environment:
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
