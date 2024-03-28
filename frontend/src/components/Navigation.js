@@ -6,8 +6,13 @@ import { Button } from "@mui/material";
 import { useState } from "react";
 import CartDrawer from "./Cart/CartDrawer";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
+import Badge from "@mui/material/Badge";
+import { useSelector } from "react-redux";
+
 const Navbar = ({ setData, searchQuerySubmitted }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  var badgeCount = cartItems.length;
 
   const toggleCart = (open) => (event) => {
     // Prevent the drawer from closing if the event is triggered by a keyboard event and the key is not Tab or Shift
@@ -89,7 +94,9 @@ const Navbar = ({ setData, searchQuerySubmitted }) => {
                 {/* TODO: style the same as the rest of the navbar */}
                 <div>
                   <Button onClick={toggleCart(true)}>
-                    <ShoppingCartIcon />
+                    <Badge badgeContent={badgeCount}>
+                      <ShoppingCartIcon />
+                    </Badge>
                   </Button>
                   <CartDrawer isOpen={isCartOpen} toggleCart={toggleCart} />
                 </div>

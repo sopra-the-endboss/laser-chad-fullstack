@@ -1,28 +1,13 @@
 import React from "react";
 import { Drawer } from "@mui/material";
 // import Cart from "./Cart";
-import { removeFromCart } from "../../reducers/slices/cartSlice";
+import { addToCart, removeFromCart } from "../../reducers/slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Box } from "@mui/material";
-import { useEffect } from "react";
 
 const CartDrawer = ({ isOpen, toggleCart }) => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
-  useEffect(() => {
-    console.log("Current cartItems state:", cartItems);
-  }, [cartItems]);
-
-  // const cartContent = cart.map((item) => (
-  //   <Box key={item.id}>
-  //     <Box
-  //       display={"flex"}
-  //       sx={{ pt: 2, pb: 2 }}
-  //       alignItems={"start"}
-  //       justifyContent={"space-between"}
-  //     ></Box>
-  //   </Box>
-  // ));
 
   return (
     <Drawer
@@ -36,7 +21,7 @@ const CartDrawer = ({ isOpen, toggleCart }) => {
       }}
     >
       <div>
-        <h2>Your Cart</h2>
+        <Box sx={{ fontSize: "24px", marginLeft: 2 }}>Your Cart</Box>
         {cartItems.length === 0 ? (
           <p>No items in cart.</p>
         ) : (
@@ -50,14 +35,46 @@ const CartDrawer = ({ isOpen, toggleCart }) => {
               >
                 <h3>{item.brand}</h3>
                 <p>Price: ${item.price}</p>
+                <p>Subtotal: ${item.quantity * item.price}</p>
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  style={{
+                    maxWidth: "80px",
+                    maxHeight: "80px",
+                    objectFit: "contain",
+                    marginRight: 10,
+                  }}
+                />
               </Box>
-
-              <Button onClick={() => dispatch(removeFromCart(item.product_id))}>
-                Remove
-              </Button>
+              <div style={{ display: "flex", marginLeft: 5 }}>
+                <Button
+                  size="small"
+                  variant="contained"
+                  onClick={() => dispatch(removeFromCart(item.product_id))}
+                >
+                  -
+                </Button>
+                <Box sx={{ marginRight: 5, marginLeft: 5, display: "inline" }}>
+                  {item.quantity}
+                </Box>
+                <Button
+                  size="small"
+                  variant="contained"
+                  onClick={() => dispatch(addToCart(item))}
+                >
+                  +
+                </Button>
+              </div>
             </div>
           ))
         )}
+        <h2>
+          Total: $
+          {cartItems
+            .reduce((acc, item) => acc + item.quantity * item.price, 0)
+            .toFixed(2)}
+        </h2>
       </div>
     </Drawer>
   );

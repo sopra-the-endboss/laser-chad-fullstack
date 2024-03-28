@@ -53,7 +53,7 @@ export default function ProductComponent({
           color="primary"
           onClick={(event) => {
             event.stopPropagation();
-            dispatch(addToCart({ product_id, brand, title, price }));
+            dispatch(addToCart({ product_id, brand, title, price, img }));
           }}
         >
           <AddShoppingCartIcon fontSize="small" />

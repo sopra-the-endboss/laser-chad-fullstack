@@ -1,15 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  cartItems: [
-    // {
-    //   brand: "testBrand",
-    //   product_id: 1,
-    //   title: "Testing",
-    //   price: 29.99,
-    //   quantity: 1,
-    // },
-  ],
+  cartItems: [],
 };
 
 const cartSlice = createSlice({
@@ -18,7 +10,7 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       console.log("Adding to cart", action.payload);
-      const { brand, product_id, title, price } = action.payload;
+      const { brand, product_id, title, price, img } = action.payload;
       const existingIndex = state.cartItems.findIndex(
         (item) => item.product_id === action.payload.product_id
       );
@@ -32,18 +24,24 @@ const cartSlice = createSlice({
           product_id,
           title,
           price,
+          img,
           quantity: 1,
         });
       }
     },
     // Action to remove an item from the cart
     removeFromCart: (state, action) => {
-      //Implement correct remove function!
-      state.cartItems = state.cartItems.filter(
-        (item) => item.product_id !== action.payload
-      );
-    },
-  },
+      const productIndex = state.cartItems.findIndex(item => item.product_id === action.payload);
+      if (productIndex >= 0) {
+        if (state.cartItems[productIndex].quantity > 1) {
+          state.cartItems[productIndex].quantity -= 1
+        } else {
+          state.cartItems.splice(productIndex, 1);
+        }
+      }
+    }
+  }
+  
 });
 
 // Export actions
