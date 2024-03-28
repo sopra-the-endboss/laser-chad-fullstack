@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { useState } from "react";
 import CartDrawer from "./Cart/CartDrawer";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
 const Navbar = ({ setData, searchQuerySubmitted }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -89,7 +89,7 @@ const Navbar = ({ setData, searchQuerySubmitted }) => {
                 {/* TODO: style the same as the rest of the navbar */}
                 <div>
                   <Button onClick={toggleCart(true)}>
-                    <AddShoppingCartIcon />
+                    <ShoppingCartIcon />
                   </Button>
                   <CartDrawer isOpen={isCartOpen} toggleCart={toggleCart} />
                 </div>
