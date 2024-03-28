@@ -41,3 +41,24 @@ The API endpoint that is deployed and will be reachable for other services like 
 - The api_id is an ID which is assigned upon API creation. It is found via a tag with name `APIG_TAG_ID` and value `APIG_TAG` specified in the docker-compose.yml
 - stage_name is a constant PROD, specified in the docker-compose.yml. There is no sense in having different stages for our project.
 - resource_path is the path of the API that should be called and is linked to a Lambda function. In this example it is something like `template-microservice` or `template-microservice/{template-microservice-key-1}`and is specified in the `path` field of the [resources config file](config/resources_to_create.json)
+
+## Dockerfile
+The following utilities and defaults should be used directly from the template for a new microservice. Do not copy paste them to reduce errors. To do that, make sure the have to build context set to root in the `docker-compose.yml` like this
+```
+build:
+    dockerfile: ./NEW_MICROSERVICE
+    no_cache: true
+```
+and the dockerfile of the NEW_MICROSERVICE looks something like this
+```
+WORKDIR /app
+COPY ./cart/deploy.py /app/
+COPY ./template-microservice/deploy_utils.py /app/
+COPY ./cart/lambdas /app/lambdas/
+COPY ./cart/config /app/config/
+COPY ./cart/requirements.txt /app/
+```
+
+The following should be used from the template-microservice
+- deploy_utils.py
+- lambdas/options_default/handler.py
