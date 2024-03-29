@@ -14,6 +14,8 @@ import ProductComments from "../data/ProductComments.json"
 import {useParams} from "react-router-dom";
 import CarouselComponent from "../components/ProductOverview/CarouselComponent";
 import Typography from "@mui/material/Typography";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../reducers/slices/cartSlice";
 import {ProductDetailRow} from "../components/ProductDetails/ProductRowDetails";
 
 
@@ -23,7 +25,18 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
     const [productDetails, setProductDetails] = useState({technical_details: {}, ...details});
     const [productComments, setProductComments] = useState([]);
     const {product_id} = useParams();
+    const dispatch = useDispatch();
 
+  useEffect(() => {
+    //TODO: fetch Product deatails for this stuff from backend
+    // I expect an object, that's why the [0]
+    if (!details)
+        setProductDetails(
+          ProductDetails.filter(
+            (productDetail) => productDetail.product_id === parseInt(product_id)
+          )[0]
+        );
+  }, [product_id, details]);
     useEffect(() => {
         //TODO: fetch Product deatails for this stuff from backend
         // I expect an object, that's why the [0]
@@ -31,12 +44,16 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
             setProductDetails(ProductDetails.filter(productDetail => productDetail.product_id === parseInt(product_id))[0]);
     }, [product_id, details]);
 
-    useEffect(() => {
-        //TODO: fetch Product deatails for this stuff from backend
-        //ProductComments
-        if (!details)
-            setProductComments(ProductComments.filter(productComment => productComment.product_id === parseInt(product_id))[0]);
-    }, [product_id, details]);
+  useEffect(() => {
+    //TODO: fetch Product deatails for this stuff from backend
+    //ProductComments
+      if(!details)
+        setProductComments(
+          ProductComments.filter(
+            (productComment) => productComment.product_id === parseInt(product_id)
+          )[0]
+        );
+  }, [product_id, details]);
 
     return (
         <Grid container xs={12}>
@@ -73,7 +90,21 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Button variant="contained" color="primary" disabled={details}>Buy Now</Button>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() =>
+                                dispatch(
+                                    addToCart({
+                                        ...productDetails,
+                                        img: productDetails?.images[0],
+                                    })
+                                ) && console.log("Added to cart: ", productDetails)
+                            }
+                            disabled={details}
+                        >
+                            Add to Cart
+                        </Button>
                     </Grid>
                     <Grid item xs={12}>
                         <Button variant="outlined" color="primary" disabled={details}>Pin Product</Button>

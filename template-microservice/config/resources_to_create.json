@@ -5,13 +5,18 @@
             "methods_for_that_path":[
                 {"method":"GET","lambda_fct":"get_lambda"}
                 ,{"method":"POST","lambda_fct":"post_lambda","requestModels":{"application/json":"post_template"}}
+                ,{"method":"OPTIONS","lambda_fct":"options_default"}
+            ],
+            "children_resources":[
+                {
+                    "path":"{template-microservice-key-1}",
+                    "methods_for_that_path":[
+                        {"method":"GET","lambda_fct":"get_lambda"}
+                        ,{"method":"OPTIONS","lambda_fct":"options_default"}
+                    ],
+                    "children_resources":[]
+                }
             ]
-        },
-        {
-            "path":"{template-microservice-key-1}",
-            "methods_for_that_path":[
-                {"method":"GET","lambda_fct":"get_lambda"}
-            ]
-        }
+        }        
     ]
 }

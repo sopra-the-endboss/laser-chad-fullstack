@@ -1,0 +1,16 @@
+{
+"put_cart": {
+    "model_spec": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "put_cart",
+        "type" : "object",
+        "required" : ["product_id"],
+        "properties" : {
+            "product_id" : {
+                "type": "string"
+            }
+        }
+    },
+    "contentType" : "application/json"
+}
+}

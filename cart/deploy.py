@@ -1,23 +1,5 @@
 """
-Deploy one Dynamo DB
-- template-microservice-db with the following keys
-    - template-microservice-key-1
-    - template-microservice-key-1
-
-Deploy two lambda functions
-- get_lambda for listing all currently saved items in the DB or a specific one with a given {id} in the pathParameter
-- post_lambda for putting a new item to the DB
-
-Update a API Gateway which provides routes as specified in resources_to_create.json
-- xxx/template-microservice GET
-    Get all items in the dynamo DB via lambda get_lambda
-    Lambda fct: get_lambda
-- xxx/template-microservice POST
-    Write an item to the DB
-    Lambda fct: post_lambda
-- xxx/template-microservice/{template-microservice-key-1} GET
-    Get all items where template-microservice-key-1 equals the value supplied in path between {}
-    Lambda fct: get_lambda
+Deploy cart service
 """
 
 import os
@@ -34,7 +16,15 @@ pp = PrettyPrinter(indent=2)
 IN_DOCKER = os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', False)
 
 if not IN_DOCKER:
-    os.chdir("./template-microservice")
+
+    # Import syspath because python is annoying
+    print(os.getcwd())
+    
+    import sys
+    print(sys.path)
+    sys.path.insert(0,f"{os.getcwd()}/template-microservice")
+    import deploy_utils
+    
     # Also set all AWS env vars, point to running localstack container not in a docker-compose network
     os.environ['AWS_DEFAULT_REGION']='us-east-1'
     os.environ['AWS_ENDPOINT_URL']='https://localhost.localstack.cloud:4566' # For manual, use the default localstack url
@@ -44,6 +34,9 @@ if not IN_DOCKER:
     os.environ['APIG_TAG_ID'] = "API_TAG_ID"
     os.environ['APIG_STAGE'] = "PROD"
     os.environ['APIG_WAIT'] = "300"
+
+    os.chdir("./cart")
+
 # FOR MANUAL RUNING ONLY END
 ##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--
 
@@ -322,6 +315,7 @@ for resource_type, resource_list in resources_to_create.items():
             else:
                 depth -= 1
                 break
+
 
 ###
 # Deployment

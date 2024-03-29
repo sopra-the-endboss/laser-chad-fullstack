@@ -2,7 +2,7 @@
 Running the file when docker compose up is running:
 to copy the file to a running container to run and run it right away in the docker network
 run this from a terminal in the host machine, not a container
-docker cp template-microservice/test/test_apig.py template-microservice-debugger:/app && docker exec template-microservice-debugger /bin/sh -c "python test_apig.py"
+docker cp template-microservice/test/manual_test_template.py template-microservice-debugger:/app && docker exec template-microservice-debugger /bin/sh -c "python manual_test_template.py"
 """
 
 import boto3
@@ -76,6 +76,13 @@ print("-----------------")
 
 # if in manual mode, get corresponding protocol, in dockermode is None, defaults to http
 PROTOCOL_TO_USE = os.getenv("PROTOCOL", None)
+
+# Test OPTIONS for all resources
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
+print(f"Sending OPTIONS to {url}, verify 200")
+response = requests.options(url)
+print(response.text)
+
 
 # Send request to test GET - should return empty
 url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)

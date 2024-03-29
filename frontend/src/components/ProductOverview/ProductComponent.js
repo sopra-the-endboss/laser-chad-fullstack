@@ -1,20 +1,42 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
-import {CardActionArea} from "@mui/material";
-import {CardContentComponent} from "./CardContentComponent";
+import CardContent from "@mui/material/CardContent"; // Use CardContent for better control
+import { CardContentComponent } from "./CardContentComponent";
+import { Button, Box } from "@mui/material";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../reducers/slices/cartSlice";
 
-export default function ProductComponent({ product_id, brand, title, img, description, formatted_text, price, category, clickable = true, onCardInteract}) {
+export default function ProductComponent({
+  product_id,
+  brand,
+  title,
+  img,
+  description,
+  formatted_text,
+  price,
+  category,
+  onCardInteract,
+}) {
+  const dispatch = useDispatch();
 
   return (
-    <Card sx={{ height: 310}} onClick={() => onCardInteract(clickable, product_id)} data-testid="card-clickable">
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          image={img}
-          alt="green iguana"
-          sx={{height: 160}}
-        />
+    <Card
+      sx={{ maxWidth: 345, position: "relative" }}
+      data-testid="product-card"
+    >
+      {/* Separated the image into its own CardMedia component */}
+      <CardMedia
+        component="img"
+        image={img}
+        alt={title}
+        sx={{ height: 160, cursor: "pointer" }}
+        onClick={() => onCardInteract(true, product_id)}
+      />
+
+      <CardContent sx={{ paddingBottom: "16px !important" }}>
+        {" "}
         <CardContentComponent
           formatted_text={formatted_text}
           title={title}
@@ -22,9 +44,21 @@ export default function ProductComponent({ product_id, brand, title, img, descri
           price={price}
           category={category}
           brand={brand}
-          height={150}
-          />
-      </CardActionArea>
+        />
+      </CardContent>
+
+      <Box sx={{ position: "absolute", bottom: 8, right: 8, zIndex: 1 }}>
+        <Button
+          size="small"
+          color="primary"
+          onClick={(event) => {
+            event.stopPropagation();
+            dispatch(addToCart({ product_id, brand, title, price, img }));
+          }}
+        >
+          <AddShoppingCartIcon fontSize="small" />
+        </Button>
+      </Box>
     </Card>
   );
 }
