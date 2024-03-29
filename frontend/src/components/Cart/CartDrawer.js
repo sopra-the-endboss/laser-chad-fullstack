@@ -50,6 +50,7 @@ const CartDrawer = ({ isOpen, toggleCart }) => {
       <Button
         variant="contained"
         color="primary"
+        disabled={cartItems.length === 0}
         sx={{ maxWidth: 300, display: "table", margin: "0 auto" }}
       >
         Proceed to Checkout
