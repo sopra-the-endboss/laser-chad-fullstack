@@ -72,7 +72,7 @@ const ProductOverview = ({isSearchQuerySubmitted, data, setCategoryFilter}) => {
             }
             {productData?.map((product, index) => (
                 <Grid item xs={3} key={index}>
-                    <ProductComponent {...product} img={ product.image} onCardInteract={onCardInteract}/>
+                    <ProductComponent {...product} title={product.product} img={ product.image} onCardInteract={onCardInteract}/>
                 </Grid>
             ))}
         </>

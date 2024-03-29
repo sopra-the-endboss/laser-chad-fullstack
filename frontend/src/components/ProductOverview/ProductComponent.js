@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import {CardContentComponent} from "./CardContentComponent";
-import {IconButton} from "@mui/material";
+import {Chip, IconButton} from "@mui/material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import {useDispatch} from "react-redux";
 import {addToCart} from "../../reducers/slices/cartSlice";
@@ -21,11 +21,23 @@ export default function ProductComponent({
                                          }) {
     const dispatch = useDispatch();
 
-    return (
-        <Card
-            sx={{ height: 310}}
+    return (<Card
+            sx={{height: 310, position: "relative"}}
             data-testid="product-card"
         >
+            {formatted_text && (<span style={{
+                position: 'absolute',
+                top: 8,
+                left: 8,
+            }}
+                >
+          <Chip
+              label={formatted_text}
+              variant="filled"
+              color={"error"}
+              size={"small"}
+          />
+        </span>)}
             {/* Separated the image into its own CardMedia component */}
             <CardMedia
                 component="img"
@@ -48,9 +60,9 @@ export default function ProductComponent({
 
             <IconButton
                 sx={{
-                    position: "absolute",
-                    marginTop: "-70px",
-                    marginLeft: "100px"
+                    position: 'absolute',
+                    bottom: 8,
+                    right: 8,
                 }}
                 size="small"
                 color="primary"
@@ -61,6 +73,5 @@ export default function ProductComponent({
             >
                 <AddShoppingCartIcon fontSize="small"/>
             </IconButton>
-        </Card>
-    );
+        </Card>);
 }
