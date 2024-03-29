@@ -1,19 +1,27 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice";
 import cartReducer from "./slices/cartSlice";
+import storage from "redux-persist/lib/storage";
+import { persistReducer, persistStore } from "redux-persist";
+
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, cartReducer);
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
-    cart: cartReducer,
+    cart: persistedReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
-// To get user auth state from redux (boolean)
-// import { useSelector } from "react-redux";
-// const authState = useSelector((state) => state.auth);
-// useEffect(() => {
-//   console.log("Current auth state:", authState);
-// }, [authState]);
+export const persistor = persistStore(store);
 
 export default store;

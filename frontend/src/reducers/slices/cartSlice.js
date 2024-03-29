@@ -9,7 +9,6 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      console.log("Adding to cart", action.payload);
       const { brand, product_id, title, price, img } = action.payload;
       const existingIndex = state.cartItems.findIndex(
         (item) => item.product_id === action.payload.product_id
@@ -17,7 +16,6 @@ const cartSlice = createSlice({
 
       if (existingIndex >= 0) {
         state.cartItems[existingIndex].quantity += 1;
-        console.log("Existing Product +1"); // Assuming a quantity field for cart item
       } else {
         state.cartItems.push({
           brand,
