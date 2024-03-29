@@ -1,6 +1,5 @@
 import React from "react";
-import { Divider, Drawer } from "@mui/material";
-
+import { Divider, Drawer, Button } from "@mui/material";
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -48,6 +47,13 @@ const CartDrawer = ({ isOpen, toggleCart }) => {
           .reduce((acc, item) => acc + item.quantity * item.price, 0)
           .toFixed(2)}
       </Typography>
+      <Button
+        variant="contained"
+        color="primary"
+        sx={{ maxWidth: 300, display: "table", margin: "0 auto" }}
+      >
+        Proceed to Checkout
+      </Button>
     </Drawer>
   );
 };
