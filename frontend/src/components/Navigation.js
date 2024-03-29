@@ -88,7 +88,7 @@ const Navbar = ({ setData, searchQuerySubmitted }) => {
   ];
 
   return (
-    <nav className="bg-white shadow fixed top-0 left-0 w-full z-10">
+    <nav className="bg-white shadow fixed top-0 left-0 w-full z-10" style={{zIndex: 1001}}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4 mb-4">
         <div className="relative flex items-center justify-between h-16">
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
