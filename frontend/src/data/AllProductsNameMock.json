@@ -5,7 +5,7 @@
     "highlighted": true,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 57.46,
-    "formatted_text": "",
+    "formatted_text": "Sale male",
     "category": "Smartphone",
     "brand": "Apple"
   },
@@ -15,7 +15,7 @@
     "highlighted": true,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 775.82,
-    "formatted_text": "",
+    "formatted_text": "Sale",
     "category": "Laptop",
     "brand": "Apple"
   },
@@ -45,7 +45,7 @@
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 17.32,
-    "formatted_text": "",
+    "formatted_text": "Sale",
     "category": "Laptop",
     "brand": "Dell"
   },
@@ -505,7 +505,7 @@
     "highlighted": false,
     "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
     "price": 293.35,
-    "formatted_text": "",
+    "formatted_text": "Some other text",
     "category": "Tech",
     "brand": "Seagate"
   },

@@ -48,6 +48,13 @@ const Navbar = ({ setData, searchQuerySubmitted }) => {
     }
   };
 
+  const authState = useSelector((state) => state.auth);
+  let isSeller = false;
+  if (authState.groups) {
+    isSeller = authState.groups.includes("seller");
+    console.log(isSeller);
+  }
+
   const inactive =
     "text-gray-600 hover:bg-gray-200 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium";
   const active = "text-gray-800 px-3 py-2 rounded-md text-sm font-medium";
@@ -70,10 +77,18 @@ const Navbar = ({ setData, searchQuerySubmitted }) => {
       route: "/account",
       location: "Account",
     },
+    ...(isSeller
+      ? [
+          {
+            route: "/my-shop",
+            location: "My Shop",
+          },
+        ]
+      : []),
   ];
 
   return (
-    <nav className="bg-white shadow fixed top-0 left-0 w-full z-10">
+    <nav className="bg-white shadow fixed top-0 left-0 w-full z-10" style={{zIndex: 1001}}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4 mb-4">
         <div className="relative flex items-center justify-between h-16">
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
