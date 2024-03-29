@@ -37,7 +37,7 @@ const MyShop = () => {
                                     <Chip label={product?.brand} color="success"/>
                                     <Chip label={product?.category} color="success"/>
                                     <CustomModal icon={<EditIcon />}>
-
+                                        <SellProduct propData={product} />
                                     </CustomModal>
                                     <CustomModal icon={<DeleteIcon />}>
                                         <DeleteProductConfirmation itemToDelete={product.product} deleteFunction={deleteProduct} />

@@ -5,13 +5,13 @@ import Typography from "@mui/material/Typography";
 import ProductContent from "./ProductContent";
 import {Link} from "react-router-dom";
 
-const SellProduct = () => {
+const SellProduct = ({propData}) => {
 
     const [activeStep, setActiveStep] = useState(0);
 
     const steps = ['Enter Product Details', 'Preview Product', 'Publish Product'];
 
-    const [collectedData, setCollectedData] = useState({});
+    const [collectedData, setCollectedData] = useState(propData || {});
     const [loading, setLoading] = useState(true);
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
