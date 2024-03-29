@@ -1,9 +1,10 @@
 import React from "react";
-import { Drawer } from "@mui/material";
+import { Divider, Drawer } from "@mui/material";
 // import Cart from "./Cart";
 import { addToCart, removeFromCart } from "../../reducers/slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Box } from "@mui/material";
+import Typography from "@mui/material/Typography";
 
 const CartDrawer = ({ isOpen, toggleCart }) => {
   const dispatch = useDispatch();
@@ -20,10 +21,13 @@ const CartDrawer = ({ isOpen, toggleCart }) => {
         },
       }}
     >
-      <div>
+      <ul>
         <Box sx={{ fontSize: "24px", marginLeft: 2 }}>Your Cart</Box>
+        <Divider variant="middle" />
         {cartItems.length === 0 ? (
-          <p>No items in cart.</p>
+          <Typography variant="p" align="left" margin={2}>
+            No items in cart.
+          </Typography>
         ) : (
           cartItems.map((item) => (
             <div key={item.product_id}>
@@ -69,13 +73,13 @@ const CartDrawer = ({ isOpen, toggleCart }) => {
             </div>
           ))
         )}
-        <h2>
+        <Typography variant="h6" align="left" margin={2} display="table">
           Total: $
           {cartItems
             .reduce((acc, item) => acc + item.quantity * item.price, 0)
             .toFixed(2)}
-        </h2>
-      </div>
+        </Typography>
+      </ul>
     </Drawer>
   );
 };
