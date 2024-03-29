@@ -14,16 +14,18 @@ const Navbar = ({ setData, searchQuerySubmitted }) => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   var badgeCount = cartItems.length;
 
-  const toggleCart = (open) => (event) => {
-    // Prevent the drawer from closing if the event is triggered by a keyboard event and the key is not Tab or Shift
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-    setIsCartOpen(open);
-  };
+  const toggleCart =
+    (open) =>
+    (event = {}) => {
+      // Prevent the drawer from closing if the event is triggered by a keyboard event and the key is not Tab or Shift
+      if (
+        event.type === "keydown" &&
+        (event.key === "Tab" || event.key === "Shift")
+      ) {
+        return;
+      }
+      setIsCartOpen(open);
+    };
   const navigate = useNavigate();
 
   const searchWithinProducts = (event) => {

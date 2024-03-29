@@ -6,8 +6,11 @@ import { useParams } from "react-router-dom";
 import CarouselComponent from "../components/ProductOverview/CarouselComponent";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../reducers/slices/cartSlice";
 
 export const ProductDetail = () => {
+  const dispatch = useDispatch();
   const [productDetails, setProductDetails] = useState({
     technical_details: {},
   });
@@ -94,7 +97,12 @@ export const ProductDetail = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <Button variant="contained" color="primary">
+            <Button
+              variant="contained"
+              color="primary"
+              //TODO: include product image in productDetails or smh pass to cart
+              onClick={() => dispatch(addToCart(productDetails))}
+            >
               Add to Cart
             </Button>
           </Grid>
