@@ -1,5 +1,5 @@
 import React from "react";
-import { Drawer, Button } from "@mui/material";
+import { Drawer, Button, Divider } from "@mui/material";
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -26,7 +26,7 @@ const CartDrawer = ({ isOpen, toggleCart }) => {
         },
       }}
     >
-      <Box sx={{}}>
+      <Box sx={{ margin: 2 }}>
         <Box
           sx={{
             fontSize: "24px",
@@ -35,13 +35,22 @@ const CartDrawer = ({ isOpen, toggleCart }) => {
             height: "50px",
             backgroundColor: "White",
             width: "100%",
+            zIndex: 2,
           }}
         >
           <span>Your Shopping Cart</span>
         </Box>
+
         <Box
-          sx={{ overflowY: "auto", marginBottom: "100px", marginTop: "50px" }}
+          sx={{
+            overflowY: "auto",
+            marginBottom: "120px",
+            marginTop: "50px",
+            paddingTop: "2px",
+            zIndex: 1,
+          }}
         >
+          <Divider />
           {cartItems.length === 0 ? (
             <Typography variant="p" align="left" margin={2}>
               No items in cart.
@@ -61,9 +70,10 @@ const CartDrawer = ({ isOpen, toggleCart }) => {
             position: "fixed",
             bottom: "0px",
             paddingBottom: "20px",
-            height: "100px",
+            height: "120px",
             backgroundColor: "White",
             width: "100%",
+            zIndex: 2,
           }}
         >
           <Typography variant="h6" align="left" margin={2} display="table">
