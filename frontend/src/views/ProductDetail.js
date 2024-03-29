@@ -100,8 +100,14 @@ export const ProductDetail = () => {
             <Button
               variant="contained"
               color="primary"
-              //TODO: include product image in productDetails or smh pass to cart
-              onClick={() => dispatch(addToCart(productDetails))}
+              onClick={() =>
+                dispatch(
+                  addToCart({
+                    ...productDetails,
+                    img: productDetails?.images[0],
+                  })
+                ) && console.log("Added to cart: ", productDetails)
+              }
             >
               Add to Cart
             </Button>

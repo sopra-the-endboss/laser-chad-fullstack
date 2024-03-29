@@ -65,9 +65,11 @@ const CartItem = ({ item, onCardInteract }) => {
             <DeleteIcon />
           </IconButton>
         </div>
-        <Typography variant="body2">Price: ${item.price}</Typography>
         <Typography variant="body2">
-          Total: ${(item.quantity * item.price).toFixed(2)}
+          Price: ${item.price?.toFixed(2)}
+        </Typography>
+        <Typography variant="body2">
+          Total: ${(item?.quantity * item.price)?.toFixed(2)}
         </Typography>
       </CardContent>
     </Card>
