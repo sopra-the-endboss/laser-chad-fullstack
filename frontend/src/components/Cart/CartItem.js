@@ -25,6 +25,7 @@ const CartItem = ({ item, onCardInteract }) => {
           width: 100,
           height: 100,
           margin: 2,
+          cursor: "pointer",
         }}
         image={item.img}
         alt={item.title}

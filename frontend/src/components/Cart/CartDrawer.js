@@ -1,5 +1,5 @@
 import React from "react";
-import { Divider, Drawer, Button } from "@mui/material";
+import { Drawer, Button } from "@mui/material";
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -26,35 +26,62 @@ const CartDrawer = ({ isOpen, toggleCart }) => {
         },
       }}
     >
-      <Box sx={{ fontSize: "24px", marginLeft: 2 }}>Your Shopping Cart</Box>
-      <Divider variant="middle" />
-      {cartItems.length === 0 ? (
-        <Typography variant="p" align="left" margin={2}>
-          No items in cart.
-        </Typography>
-      ) : (
-        cartItems.map((item) => (
-          <CartItem
-            key={item.product_id}
-            item={item}
-            onCardInteract={onCardInteract}
-          />
-        ))
-      )}
-      <Typography variant="h6" align="left" margin={2} display="table">
-        Total: $
-        {cartItems
-          .reduce((acc, item) => acc + item.quantity * item.price, 0)
-          .toFixed(2)}
-      </Typography>
-      <Button
-        variant="contained"
-        color="primary"
-        disabled={cartItems.length === 0}
-        sx={{ maxWidth: 300, display: "table", margin: "0 auto" }}
-      >
-        Proceed to Checkout
-      </Button>
+      <Box sx={{}}>
+        <Box
+          sx={{
+            fontSize: "24px",
+            position: "fixed",
+            top: "0px",
+            height: "50px",
+            backgroundColor: "White",
+            width: "100%",
+          }}
+        >
+          <span>Your Shopping Cart</span>
+        </Box>
+        <Box
+          sx={{ overflowY: "auto", marginBottom: "100px", marginTop: "50px" }}
+        >
+          {cartItems.length === 0 ? (
+            <Typography variant="p" align="left" margin={2}>
+              No items in cart.
+            </Typography>
+          ) : (
+            cartItems.map((item) => (
+              <CartItem
+                key={item.product_id}
+                item={item}
+                onCardInteract={onCardInteract}
+              />
+            ))
+          )}
+        </Box>
+        <Box
+          sx={{
+            position: "fixed",
+            bottom: "0px",
+            paddingBottom: "20px",
+            height: "100px",
+            backgroundColor: "White",
+            width: "100%",
+          }}
+        >
+          <Typography variant="h6" align="left" margin={2} display="table">
+            Total: $
+            {cartItems
+              .reduce((acc, item) => acc + item.quantity * item.price, 0)
+              .toFixed(2)}
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            disabled={cartItems.length === 0}
+            onClick={() => navigate("/checkout")}
+          >
+            Proceed to Checkout
+          </Button>
+        </Box>
+      </Box>
     </Drawer>
   );
 };

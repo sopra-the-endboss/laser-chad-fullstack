@@ -31,7 +31,7 @@ export default function ProductComponent({
         component="img"
         image={img}
         alt={title}
-        sx={{ height: 160 }}
+        sx={{ height: 160, cursor: "pointer" }}
         onClick={() => onCardInteract(true, product_id)}
       />
 
