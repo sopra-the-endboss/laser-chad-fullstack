@@ -40,7 +40,7 @@ function App() {
                         setData={setData}
                         searchQuerySubmitted={searchQuerySubmitted}
                     />
-                    <div style={{marginTop: "100px"}}>
+                    <div style={{marginTop: "100px", marginBottom: "50px"}}>
                         <Container maxWidth="lg">
                             <Grid container spacing={2}>
                                 <Routes>

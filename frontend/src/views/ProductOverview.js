@@ -50,24 +50,28 @@ const ProductOverview = ({isSearchQuerySubmitted, data, setCategoryFilter}) => {
                             </Typography>
                         </Box>
                     </Grid>
-                    <Grid item xs={8}>
-                        <CarouselComponent carouselData={carouselData} onCardInteract={onCardInteract}/>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <ProductComponent title={"Comment Section"} img={"https://preview.redd.it/madoka-ayukawa-from-kimagure-orange-road-1987-v0-fx15w3vtkjz81.png?width=640&crop=smart&auto=webp&s=471f01d04aec447193f23c558de3746b8e61e25a"}
-                                                  description={"Show top comment of the day or something or different product highlight"}
-                                                  onCardInteract={onCardInteract}/>
+                    {carouselData.length > 0 && (
+                        <>
+                            <Grid item xs={8}>
+                                <CarouselComponent carouselData={carouselData} onCardInteract={onCardInteract}/>
                             </Grid>
+                            <Grid item xs={4}>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12}>
+                                        <ProductComponent title={"Comment Section"} img={"https://preview.redd.it/madoka-ayukawa-from-kimagure-orange-road-1987-v0-fx15w3vtkjz81.png?width=640&crop=smart&auto=webp&s=471f01d04aec447193f23c558de3746b8e61e25a"}
+                                                          description={"Show top comment of the day or something or different product highlight"}
+                                                          onCardInteract={onCardInteract}/>
+                                    </Grid>
 
-                            <Grid item xs={12}>
-                                <ProductComponent title={"News"} img={"https://preview.redd.it/madoka-ayukawa-from-kimagure-orange-road-1987-v0-fx15w3vtkjz81.png?width=640&crop=smart&auto=webp&s=471f01d04aec447193f23c558de3746b8e61e25a"}
-                                                  description={"Show some news related to products or a blog post or something"}
-                                                  onCardInteract={onCardInteract}/>
+                                    <Grid item xs={12}>
+                                        <ProductComponent title={"News"} img={"https://preview.redd.it/madoka-ayukawa-from-kimagure-orange-road-1987-v0-fx15w3vtkjz81.png?width=640&crop=smart&auto=webp&s=471f01d04aec447193f23c558de3746b8e61e25a"}
+                                                          description={"Show some news related to products or a blog post or something"}
+                                                          onCardInteract={onCardInteract}/>
+                                    </Grid>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </Grid>
+                        </>
+                    )}
                 </>
             }
             {productData?.map((product, index) => (

@@ -24,13 +24,14 @@ export function CardContentComponent({
   return (
     <CardContent
       sx={{
+        paddingTop: "0px",
         minHeight: height,
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
       }}
     >
-      <Typography gutterBottom variant="h6" component="span">
+      <Typography gutterBottom variant="h8" component="span">
         <span style={{ fontWeight: "bold" }}>{brand}</span> {title}
       </Typography>
       <Typography variant="body2" color="text.secondary" component="div">
