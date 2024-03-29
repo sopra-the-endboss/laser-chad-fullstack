@@ -1,0 +1,31 @@
+# This dockerfile starts an identical container as template-microservice, but runs indefinitely. Can be used to manually run the test/test_XXX.py scripts
+# This duplication is needed to ensure the boto3 clients can  use the deployed localstack instances
+
+# syntax=docker/dockerfile:1
+FROM python:3.10-alpine
+
+WORKDIR /app
+COPY ./cart/deploy.py /app/
+COPY ./template-microservice/deploy_utils.py /app/
+COPY ./cart/lambdas /app/lambdas/
+COPY ./cart/config /app/config/
+COPY ./cart/requirements.txt /app/
+COPY ./cart/test /app/test
+
+
+# Remove all zip files from the lambdas folder
+WORKDIR /app/lambdas
+RUN find . -type f -name "*.zip" -exec rm {} \;
+WORKDIR /app
+
+# # Install packages if needed
+RUN apk update && apk upgrade
+# RUN apk add zip
+RUN apk add curl
+# RUN apk add jq
+
+# Install python dependencies
+RUN pip install -r requirements.txt
+
+# Keep running forever
+ENTRYPOINT ["tail", "-f", "/dev/null"]

@@ -2,7 +2,30 @@ import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import AllProductsnameMock from "../data/AllProductsNameMock.json";
 import { Link, useNavigate } from "react-router-dom";
-const Navbar = ({ setData, searchQuerySubmitted, isAuthenticated }) => {
+import { Button } from "@mui/material";
+import { useState } from "react";
+import CartDrawer from "./Cart/CartDrawer";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
+import Badge from "@mui/material/Badge";
+import { useSelector } from "react-redux";
+
+const Navbar = ({ setData, searchQuerySubmitted }) => {
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  var badgeCount = cartItems.length;
+
+  const toggleCart =
+    (open) =>
+    (event = {}) => {
+      // Prevent the drawer from closing if the event is triggered by a keyboard event and the key is not Tab or Shift
+      if (
+        event.type === "keydown" &&
+        (event.key === "Tab" || event.key === "Shift")
+      ) {
+        return;
+      }
+      setIsCartOpen(open);
+    };
   const navigate = useNavigate();
 
   const searchWithinProducts = (event) => {
@@ -40,11 +63,6 @@ const Navbar = ({ setData, searchQuerySubmitted, isAuthenticated }) => {
     },
 
     {
-      route: "/shopping-cart",
-      location: "Shopping Cart",
-    },
-
-    {
       route: "/pinned",
       location: "Pinned Products",
     },
@@ -75,6 +93,15 @@ const Navbar = ({ setData, searchQuerySubmitted, isAuthenticated }) => {
                     {route.location}
                   </Link>
                 ))}
+                {/* TODO: style the same as the rest of the navbar */}
+                <div>
+                  <Button onClick={toggleCart(true)}>
+                    <Badge badgeContent={badgeCount}>
+                      <ShoppingCartIcon />
+                    </Badge>
+                  </Button>
+                  <CartDrawer isOpen={isCartOpen} toggleCart={toggleCart} />
+                </div>
               </div>
             </div>
           </div>
