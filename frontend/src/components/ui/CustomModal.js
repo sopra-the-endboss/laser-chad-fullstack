@@ -1,7 +1,8 @@
 import {Box, Button, IconButton, Modal} from "@mui/material";
-import React from "react";
+import React, {useState} from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import ModalContext from "../../context/ModalContext";
 
 
 /**
@@ -16,16 +17,12 @@ import CardContent from "@mui/material/CardContent";
 const CustomModal = ({openModalText, icon, children}) => {
 
 
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     return (
-        <React.Fragment>
+        <>
             {icon ? (
                 <IconButton onClick={handleOpen} variant={"outlined"}>
                     {icon}
@@ -52,11 +49,13 @@ const CustomModal = ({openModalText, icon, children}) => {
                 >
                     <Card sx={{ width: 700, maxHeight: '90vh', overflowY: 'auto' }} onClick={(e) => e.stopPropagation()}>
                         <CardContent>
-                            {children}
+                            <ModalContext.Provider value={{ handleClose }}>
+                                {children}
+                            </ModalContext.Provider>
                         </CardContent>
                     </Card>
                 </Box>
             </Modal>
-        </React.Fragment>
+        </>
     )
 }; export default CustomModal;

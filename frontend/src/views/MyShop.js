@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 import MyShopMock from '../data/MyShopMock.json'
-import {Button, Chip, Divider, List, ListItem, ListItemAvatar, ListItemText, Stack} from "@mui/material";
+import {Chip, Divider, List, ListItem, ListItemAvatar, ListItemText, Stack} from "@mui/material";
 import SellProduct from "../components/ProductManagement/SellProduct";
 import CustomModal from "../components/ui/CustomModal";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteProductConfirmation from "../components/ui/DeleteConfirmation";
 const MyShop = () => {
 
     //verify that user is logged in has already been done by the routing guard
@@ -39,10 +40,7 @@ const MyShop = () => {
 
                                     </CustomModal>
                                     <CustomModal icon={<DeleteIcon />}>
-                                        <Stack spacing={2}>
-                                            <span>Are are about to delete this product: "{product.product}"</span>
-                                            <Button onClick={deleteProduct} variant={"outlined"} >Delete</Button>
-                                        </Stack>
+                                        <DeleteProductConfirmation itemToDelete={product.product} deleteFunction={deleteProduct} />
                                     </CustomModal>
                                 </Stack>
                             }
