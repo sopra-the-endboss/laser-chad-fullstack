@@ -2,8 +2,6 @@ import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import AllProductsnameMock from "../data/AllProductsNameMock.json";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-const Navbar = ({ setData, searchQuerySubmitted }) => {
 import { Button } from "@mui/material";
 import { useState } from "react";
 import CartDrawer from "./Cart/CartDrawer";
