@@ -86,83 +86,16 @@ print("-----------------")
 # if in manual mode, get corresponding protocol, in dockermode is None, defaults to http
 PROTOCOL_TO_USE = os.getenv("PROTOCOL", None)
 
-# TODO: Write tests
+user = 1
 
-
-
-
-# ###
-# # Test Dynamo DB
-
-# # Play around with querying Dynamo DB
-# entry1 = {'userId' : "userA", 'products' : {"userA_prod1","userA_prod2"}}
-# entry2 = {'userId' : "userB", 'products' : {"userB_prod1","userB_prod2","userB_prod3"}}
-# dynamo_table.put_item(
-#     Item = entry1,
-#     ReturnValues = "NONE"
-# )
-# dynamo_table.put_item(
-#     Item = entry2,
-#     ReturnValues = "NONE"
-# )
-# dynamo_table.scan().get('Items', [])
-# response_match = dynamo_table.get_item(
-#     # Key = {"userId":"userA"}
-#     Key = {"userId":"asdf"}
-# )
-# response_match_items = response_match.get("Item",None)
-# response_match_products = response_match_items['products']
-
-# # Test put_item with condition that the key does not yet exist
-# entry3 = {'userId' : "userC", 'products' : {}}
-# condition_expression = "attribute_not_exists(userId)"
-# try:
-#     dynamo_table.put_item(Item = entry1, ConditionExpression=condition_expression)
-# except botocore.exceptions.ClientError as client_error:
-#     print(client_error.response)
-#     if client_error.response['Error']['Code'] == "ConditionalCheckFailedException":
-#         print(f"Condition failed")
-#         pass
-#     else:
-#         # If the error is not a conflict (already exists), raise the error
-#         print(f"Some other error occured")
-#         print(client_error.response['message'])
-#         raise client_error
-
-
-# dynamo_table.put_item(Item = entry3, ConditionExpression=condition_expression)
-
-# response_match = dynamo_table.get_item(
-#     # Key = {"userId":"userA"}
-#     Key = {"userId":"userC"}
-# )
-# response_match_items = response_match.get("Item",None)
-# response_match_products = response_match_items['products']
-
-
-"""
-EXAMPLE
-
-# Send request to test GET - should return empty
-url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
-print(f"Sending GET to {url}")
-response = requests.get(url)
+# Test OPTIONS for all resources
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+print(f"Sending OPTIONS to {url}, verify 200")
+response = requests.options(url)
 print(response.text)
-
-# Send requests to test POST
-url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = "template-microservice", protocol=PROTOCOL_TO_USE)
-payload = {"template-microservice-key-1":"dummyvalue1", "template-microservice-key-2":"dummyvalue1"}
-print(f"Sending POST to {url} with payload {json.dumps(payload)}")
-response = requests.post(url, json = payload)
-print(response.status_code)
-print(response.text)
-"""
 
 ###
 # Send GET - should return empty -> 404
-
-user = 1
-
 url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
 print(f"Sending GET to {url}")
 response = requests.get(url)
