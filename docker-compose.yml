@@ -1,15 +1,16 @@
 version: "3"
 services:
-  # frontend:
-  #   container_name: "frontend"
-  #   build: ./frontend
-  #   ports:
-  #     - "3000:3000"
-  #   #environment:
-  #   #  - REACT_APP_API_URL=http://localhost:4566
-  #   volumes:
-  #     - "./frontend/public:/app/public"
-  #     - "./frontend/src:/app/src"
+
+  frontend:
+    container_name: "frontend"
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    #environment:
+    #  - REACT_APP_API_URL=http://localhost:4566
+    volumes:
+      - "./frontend/public:/app/public"
+      - "./frontend/src:/app/src"
 
   localstack:
     container_name: "localstack"
