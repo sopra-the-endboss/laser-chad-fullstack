@@ -6,11 +6,16 @@ services:
     build: ./frontend
     ports:
       - "3000:3000"
-    #environment:
+    environment:
+      - WDS_SOCKET_HOST=127.0.0.1 
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
     #  - REACT_APP_API_URL=http://localhost:4566
     volumes:
       - "./frontend/public:/app/public"
       - "./frontend/src:/app/src"
+    depends_on:
+      - apig-id-share
 
   localstack:
     container_name: "localstack"
@@ -57,6 +62,31 @@ services:
     networks:
       - backend
 
+  apig-id-share:
+    container_name: "apig-id-share"
+    build:
+      context: ./apig-id-share
+      dockerfile: dockerfile
+      no_cache: true
+    ports:
+      - "5000:5000"
+    environment:
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} # Sometimes boto3 needs credentials
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} # Sometimes boto3 needs credentials
+      - APIG_TAG_ID=${APIG_TAG_ID}
+      - APIG_TAG=${APIG_TAG}
+      - APIG_STAGE=${APIG_STAGE}
+      - APIG_WAIT=${APIG_WAIT}
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - localstack
+      - apig-main
+    networks:
+      - backend
+
   cart:
     container_name: "cart"
     build:
@@ -77,13 +107,14 @@ services:
     depends_on:
       - localstack
       - apig-main
+      - apig-id-share
     networks:
       - backend
 
   cart-debugger:
     container_name: "cart-debugger"
     build:
-      dockerfile: cart/dockerfile_debugger
+      dockerfile: ./cart/dockerfile_debugger
       no_cache: true
     environment:
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
@@ -100,89 +131,59 @@ services:
     depends_on:
       - localstack
       - apig-main
+      - apig-id-share
     networks:
       - backend
 
-  # template-microservice:
-  #   container_name: "template-microservice"
-  #   build:
-  #     dockerfile: ./template-microservice/dockerfile
-  #     no_cache: true
-  #   environment:
-  #     - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
-  #     - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
-  #     - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} # Sometimes boto3 needs credentials
-  #     - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} # Sometimes boto3 needs credentials
-  #     - APIG_TAG_ID=${APIG_TAG_ID}
-  #     - APIG_TAG=${APIG_TAG}
-  #     - APIG_STAGE=${APIG_STAGE}
-  #     - AM_I_IN_A_DOCKER_CONTAINER=${AM_I_IN_A_DOCKER_CONTAINER:-True}
-  #     - APIG_WAIT=${APIG_WAIT}
-  #   volumes:
-  #     - "/var/run/docker.sock:/var/run/docker.sock"
-  #   depends_on:
-  #     - localstack
-  #     - apig-main
-  #   networks:
-  #     - backend
+  product-microservice:
+    container_name: "product-microservice"
+    build:
+      context: ./product-microservice
+      dockerfile: dockerfile
+      no_cache: true
+    environment:
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} # Sometimes boto3 needs credentials
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} # Sometimes boto3 needs credentials
+      - APIG_TAG_ID=${APIG_TAG_ID}
+      - APIG_TAG=${APIG_TAG}
+      - APIG_STAGE=${APIG_STAGE}
+      - AM_I_IN_A_DOCKER_CONTAINER=${AM_I_IN_A_DOCKER_CONTAINER:-True}
+      - APIG_WAIT=${APIG_WAIT}
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - localstack
+      - apig-main
+      - apig-id-share
+    networks:
+      - backend
 
-  # template-microservice-debugger:
-  #   container_name: "template-microservice-debugger"
-  #   build:
-  #     dockerfile: ./template-microservice/dockerfile_debugger
-  #     no_cache: true
-  #   environment:
-  #     - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
-  #     - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
-  #     - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} # Sometimes boto3 needs credentials
-  #     - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} # Sometimes boto3 needs credentials
-  #     - APIG_TAG_ID=${APIG_TAG_ID}
-  #     - APIG_TAG=${APIG_TAG}
-  #     - APIG_STAGE=${APIG_STAGE}
-  #     - AM_I_IN_A_DOCKER_CONTAINER=${AM_I_IN_A_DOCKER_CONTAINER:-True}
-  #     - APIG_WAIT=${APIG_WAIT}
-  #   volumes:
-  #     - "/var/run/docker.sock:/var/run/docker.sock"
-  #   depends_on:
-  #     - localstack
-  #     - apig-main
-  #   networks:
-  #     - backend
-
-  # django:
-  #   container_name: "djangoproject"
-  #   build: ./python/djangoproject
-  #   ports:
-  #     - "8000:8000"
-  #   depends_on:
-  #     - postgresdb_service
-  #   command: >
-  #     bash -c "python manage.py wait_for_db &&
-  #     python manage.py makemigrations  --noinput &&
-  #     python manage.py migrate --noinput &&
-  #     python manage.py initadmin &&
-  #     python manage.py runserver 0.0.0.0:8000"
-  #   environment:
-  #     POSTGRES_USER: "admin"
-  #     POSTGRES_PASSWORD: "admin"
-  #   volumes:
-  #     - ./python/djangoproject:/app
-  #   networks:
-  #     - backend
-
-  # postgresdb_service:
-  #   image: postgres:latest
-  #   container_name: "postgresdb_container"
-  #   ports:
-  #     - "5400:5432"
-  #   environment:
-  #     POSTGRES_DB: "postgresdb"
-  #     POSTGRES_USER: "admin"
-  #     POSTGRES_PASSWORD: "admin"
-  #   networks:
-  #     - backend
-  #   #volumes:
-  #   #  - dbvolume:/var/lib/postgresql/data
+  product-microservice-debugger:
+    container_name: "product-microservice-debugger"
+    build:
+      context: ./product-microservice
+      dockerfile: dockerfile_debugger
+      no_cache: true
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ENDPOINT_URL=http://localstack:4566 # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=fakecred # Sometimes boto3 needs credentials 
+      - AWS_SECRET_ACCESS_KEY=fakecred
+      - APIG_TAG_ID=${APIG_TAG_ID}
+      - APIG_TAG=${APIG_TAG}
+      - APIG_STAGE=${APIG_STAGE}
+      - AM_I_IN_A_DOCKER_CONTAINER=${AM_I_IN_A_DOCKER_CONTAINER:-True}
+      - APIG_WAIT=${APIG_WAIT}
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - localstack
+      - apig-main
+      - apig-id-share
+    networks:
+      - backend
 
 #volumes:
 #  dbvolume:

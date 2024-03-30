@@ -2,7 +2,6 @@
 Deploy one API Gateway service which is available to all other backend microservices
 Deploy no resources, only create the service and a deployment with a stage
 """
-
 import os
 import boto3
 from pprint import PrettyPrinter

@@ -1,6 +1,6 @@
 [
   {
-    "product_id": 1,
+    "product_id": "1",
     "product": "Dell XPS 15",
     "highlighted": false,
     "images": [
@@ -37,7 +37,7 @@
     "availability": "In stock"
   },
   {
-    "product_id": 2,
+    "product_id": "2",
     "product": "Asus ROG Zephyrus G14",
     "highlighted": true,
     "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
@@ -285,7 +285,7 @@
     "availability": "In stock"
   },
   {
-    "product_id": 9,
+    "product_id": "9",
     "product": "Microsoft Surface Laptop 4",
     "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
     "highlighted": false,
@@ -319,7 +319,7 @@
     "availability": "In stock"
   },
   {
-    "product_id": 10,
+    "product_id": "10",
     "product": "Microsoft Surface Laptop 4",
     "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
     "highlighted": false,
