@@ -34,7 +34,7 @@ pp = PrettyPrinter(indent=2)
 IN_DOCKER = os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', False)
 
 if not IN_DOCKER:
-    os.chdir("./template-microservice")
+    os.chdir("./product-microservice")
     # Also set all AWS env vars, point to running localstack container not in a docker-compose network
     os.environ['AWS_DEFAULT_REGION']='us-east-1'
     os.environ['AWS_ENDPOINT_URL']='https://localhost.localstack.cloud:4566' # For manual, use the default localstack url
@@ -101,7 +101,7 @@ print("Environment:\n")
 pp.pprint(dict(os.environ))
 
 # Parameters
-db_schema = get_db_config()
+DB_SCHEMA = get_db_config()
 request_models = get_request_models()
 request_validators = get_request_validators()
 resources_to_create = get_resources_to_create()
@@ -113,7 +113,6 @@ print(f"Found lambda functions to deploy: {', '.join(LAMBDA_FUNCTIONS_TO_DEPLOY)
 
 LAMBDA_ROLE = "arn:aws:iam::000000000000:role/lambda-role" # given by localstack
 
-DYNAMO_DB_NAME = db_schema['TableName']
 APIG_NAME = os.environ['APIG_TAG']
 APIG_TAG_ID = os.environ['APIG_TAG_ID']
 APIG_WAIT = int(os.environ['APIG_WAIT'])
@@ -155,18 +154,19 @@ print(f"Use api_id {api_id}")
 ###
 # Dynamo DB deployment  
 print("Dynamo DB deployment ...")
-try:
-    dynamo_client.create_table(**db_schema)
-except botocore.exceptions.ClientError as client_error:
-    if client_error.response['Error']['Code'] == "ResourceInUseException":
-        print(f"Dynamo DB {DYNAMO_DB_NAME} already exists, skip and use that one")
-        pass
-    else:
-        # If the error is not a conflict (already exists), raise the error
-        print(f"Dyanmo DB {DYNAMO_DB_NAME} some other error occured, abort")
-        print(client_error.response['message'])
-        raise client_error
-print("Dynamo DB created or already existing")
+for table in DB_SCHEMA:
+    try:
+        dynamo_client.create_table(**table)
+    except botocore.exceptions.ClientError as client_error:
+        if client_error.response['Error']['Code'] == "ResourceInUseException":
+            print(f"Dynamo DB {table['TableName']} already exists, skip and use that one")
+            pass
+        else:
+            # If the error is not a conflict (already exists), raise the error
+            print(f"Dyanmo DB {table['TableName']} some other error occured, abort")
+            print(client_error.response['message'])
+            raise client_error
+    print("Dynamo DB created or already existing")
 
 
 ###
@@ -188,33 +188,12 @@ for lambda_function_to_create in LAMBDA_FUNCTIONS_TO_DEPLOY:
         existing_lambda_arn = existing_lambdas[existing_lambdas_names.index(lambda_function_to_create)]['FunctionArn']
         lambdas[lambda_function_to_create] = existing_lambda_arn
         continue
-    try:
-        lambdas[lambda_function_to_create] = deploy_utils.deploy_lambda(
-            lambda_client = lambda_client,
-            fct_name = lambda_function_to_create,
-            env = {"TableName" : DYNAMO_DB_NAME, "Role" : LAMBDA_ROLE}
-        )
-    except botocore.exceptions.ClientError as client_error:
-        if client_error.response['Error']['Code'] == "ResourceConflictException":
-            print(f"Lambda function {lambda_function_to_create} ResourceConflictException, try to find it again and skip")
-            existing_lambdas = lambda_client.list_functions()['Functions']
-            existing_lambdas_names = [l['FunctionName'] for l in existing_lambdas]
-            print("Functions found already deployed:")
-            pp.pprint(existing_lambdas_names)
-            try:
-                existing_lambda_arn = existing_lambdas[existing_lambdas_names.index(lambda_function_to_create)]['FunctionArn']
-                lambdas[lambda_function_to_create] = existing_lambda_arn
-                print(f"Found function {lambda_function_to_create}, use that one and skip")
-            except ValueError as ve:
-                print(f"ResourceConflictError, but function {lambda_function_to_create} not found in existing lambda functions, abort")
-                raise ve
-            continue
-        else:
-            # If the error is not a conflict (already exists), raise the error
-            print(f"Error creating Lambda function {lambda_function_to_create}, not ResrouceConflict, abort")
-            print(client_error.response['message'])
-            raise client_error  
 
+    lambdas[lambda_function_to_create] = deploy_utils.deploy_lambda(
+        lambda_client = lambda_client,
+        fct_name = lambda_function_to_create,
+        env = {"Role" : LAMBDA_ROLE}
+    )
     print(f"Waiting over, function {lambda_function_to_create} is ready")
 print("Lambda deployment done")
 
@@ -277,6 +256,9 @@ for validator_name, validator in request_validators.items():
 ###
 # Methods and Integrations
 print("Create method and integration ...")
+
+# resource_type, resource_list = list(resources_to_create.items())[0]
+
 for resource_type, resource_list in resources_to_create.items():
     
     print(f"create {resource_type} ... ")

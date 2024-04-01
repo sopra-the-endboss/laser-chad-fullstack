@@ -59,11 +59,7 @@ def handler(event: dict, context) -> dict:
     print("DEBUG: This is the event raw")
     print(event)
     
-    try:
-        TableName = os.environ["TableName"]
-    except KeyError:
-        print("env var TableName not found!")
-        print(os.environ)
+    TableName = "product-table"
 
     print(f"Using table {TableName}")
 

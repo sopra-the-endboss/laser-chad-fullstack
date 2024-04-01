@@ -5,12 +5,18 @@
 FROM python:3.10-alpine
 
 WORKDIR /app
-COPY ./deploy.py /app/
-COPY ./deploy_utils.py /app/
-COPY ./lambdas /app/lambdas/
-COPY ./config /app/config/
-COPY ./test /app/test/
-COPY ./requirements.txt /app/
+
+COPY ./product-microservice/lambdas /app/lambdas/
+COPY ./product-microservice/config /app/config/
+COPY ./product-microservice/test /app/test/
+COPY ./product-microservice/requirements.txt /app/
+
+# Copy from the template
+COPY ./template-microservice/deploy_utils.py /app/
+COPY ./template-microservice/deploy.py /app/
+# Copy the OPTIONS default handler from the template
+#RUN mkdir lambdas/options_default
+COPY ./template-microservice/lambdas/options_default/handler.py /app/lambdas/options_default/
 
 # Remove all zip files from the lambdas folder
 WORKDIR /app/lambdas
