@@ -66,6 +66,16 @@ def handler(event, context) -> list[dict]:
 
     print(f"Using table {TableName}")
 
+    print("Check if table is available ...")
+    dynamo_client = boto3.client("dynamodb")
+    available_tables = dynamo_client.list_tables()
+    available_tables = available_tables['TableNames']
+    if not TableName in available_tables:
+        print(f"Table {TableName} not found in the available tables, abort")
+        HTTP_RESPONSE_DICT['statusCode'] = 400
+        HTTP_RESPONSE_DICT['body'] = json.dumps(f"Table {TableName} not found in the available tables, abort")
+        return HTTP_RESPONSE_DICT
+
     print("Creating dynamo table object ...")
     dynamo_resource = boto3.resource("dynamodb")
     dynamo_table = dynamo_resource.Table(TableName)
