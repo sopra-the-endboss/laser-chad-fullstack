@@ -29,7 +29,8 @@ sys.path.insert(0,path_to_append)
 db_config_path = "./template-microservice/config"
 try:
     with open(f"{db_config_path}/db_schema.json","r") as file:
-        db_schema = json.load(file)
+        db_schemas = json.load(file)
+        db_schema = db_schemas[0] # Get the first table schema
 except FileNotFoundError:
     print("Did not find json file with db config")
 
@@ -60,11 +61,13 @@ def set_env():
     if 'AWS_ENDPOINT_URL' in os.environ:
         del os.environ['AWS_ENDPOINT_URL']
 
+@mock_aws
 @pytest.fixture
 def db_client(set_env):
     with mock_aws():
         yield boto3.client("dynamodb")
-        
+
+@mock_aws
 @pytest.fixture
 def dynamo_table(db_client):
     db_client.create_table(**db_schema)
@@ -111,6 +114,7 @@ def generate_inputs() -> dict[str,dict]:
 
     return inputs_to_return
 
+@mock_aws
 def test_simple_count(dynamo_table):
     item_count = dynamo_table.item_count
     assert item_count == 0
