@@ -11,7 +11,7 @@
                         {"method":"POST","lambda_fct":"post_cart"},
                         {"method":"PUT","lambda_fct":"put_cart","requestModels":{"application/json":"put_cart"}},
                         {"method":"DELETE","lambda_fct":"delete_cart","requestModels":{"application/json":"put_cart"}},
-                        {"method":"OPTIONS","lambda_fct":"options_default"}
+                        {"method":"OPTIONS","lambda_fct":"options_lambda_function"}
                     ],
                     "children_resources":[]
                 }

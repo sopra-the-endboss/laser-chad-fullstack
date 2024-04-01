@@ -1,4 +1,4 @@
-{
+[{
 "TableName":"template-microservice-db",
 "KeySchema": [
     {
@@ -21,4 +21,4 @@
     }
 ],
 "BillingMode": "PAY_PER_REQUEST"
-}
+}]

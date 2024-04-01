@@ -1,0 +1,20 @@
+# syntax=docker/dockerfile:1
+FROM python:3.10-alpine
+
+WORKDIR /app
+
+COPY ./options_lambda_function/deploy_options_lambda_function.py /app/
+COPY ./options_lambda_function/lambdas /app/lambdas/
+COPY ./options_lambda_function/requirements.txt /app/
+
+# Copy from the template
+COPY ./template-microservice/deploy_utils.py /app/
+
+# Install python dependencies
+RUN pip install -r requirements.txt
+
+# Make deploy script executable
+RUN chmod +x deploy_options_lambda_function.py
+
+# This line runs the deploy script upon running the container
+CMD ["python", "deploy_options_lambda_function.py"]

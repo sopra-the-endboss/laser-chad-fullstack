@@ -126,6 +126,8 @@ LAMBDA_FUNCTIONS_TO_DEPLOY = [function_folder for function_folder in os.listdir(
 print(f"Found lambda functions to deploy: {', '.join(LAMBDA_FUNCTIONS_TO_DEPLOY)}")
 
 LAMBDA_ROLE = "arn:aws:iam::000000000000:role/lambda-role" # given by localstack
+OPTIONS_LAMBDA_FUNCTION = os.environ['OPTIONS_LAMBDA_FUNCTION'] # This is the OPTIONS handler that must be deployed and will be used for all integrations
+lambdas = {} # This will hold lambda function name : lambda_arn for all used lambda functions in the script
 
 APIG_NAME = os.environ['APIG_TAG']
 APIG_TAG_ID = os.environ['APIG_TAG_ID']
@@ -144,8 +146,8 @@ apig_client = boto3.client("apigateway")
 api_id = None
 
 print(f"Try to find API created by apig-main, waiting for max {APIG_WAIT} seconds ...")
-timestamp_start_finding_api_id = datetime.now()
-print(f"Trying to find api_id, start at {timestamp_start_finding_api_id}")
+timestamp_start = datetime.now()
+print(f"Trying to find api_id, start at {timestamp_start}")
 while True:
     try:
         api_id = deploy_utils.find_api_id_by_tag(apig_client = apig_client, tag_key = APIG_TAG_ID, tag_value = APIG_NAME)
@@ -154,7 +156,7 @@ while True:
         tmp_timestamp = datetime.now()
         print(f"Error trying to find api_id, current time {tmp_timestamp}, wait and try again ...")
         time.sleep(5)
-        if (tmp_timestamp - timestamp_start_finding_api_id).seconds > APIG_WAIT:
+        if (tmp_timestamp - timestamp_start).seconds > APIG_WAIT:
             print(f"Exceeded waiting time, stop trying to find the api")
             break
 
@@ -163,6 +165,36 @@ if not api_id:
 else:
     print("api_id found")
 print(f"Use api_id {api_id}")
+
+
+###
+# Second, make sure the OPTIONS lambda function is deployed and ready
+###
+
+options_lambda_function_found = False
+
+print(f"Try to find Lambda function {OPTIONS_LAMBDA_FUNCTION} created by service options_lambda_function, waiting for max {APIG_WAIT} seconds ...")
+timestamp_start = datetime.now()
+print(f"Trying to find lambda function, start at {timestamp_start}")
+while True:
+    existing_lambdas = lambda_client.list_functions()['Functions']
+    existing_lambdas_names = [l['FunctionName'] for l in existing_lambdas]
+    try:
+        options_lambda_function_arn = existing_lambdas[existing_lambdas_names.index(OPTIONS_LAMBDA_FUNCTION)]['FunctionArn']
+        lambdas[OPTIONS_LAMBDA_FUNCTION] = options_lambda_function_arn
+        print(f"Found Lambda function {OPTIONS_LAMBDA_FUNCTION} with ARN {options_lambda_function_arn}")
+        options_lambda_function_found = True
+        break
+    except ValueError as value_error: # index throws ValueError if OPTIONS_LAMBDA_FUNCTION not found      
+        tmp_timestamp = datetime.now()
+        print(f"Error trying to find lambda function, current time {tmp_timestamp}, wait and try again ...")
+        time.sleep(5)
+        if (tmp_timestamp - timestamp_start).seconds > APIG_WAIT:
+            print(f"Exceeded waiting time, stop trying to find the lambda function")
+            break
+
+if not options_lambda_function_found:
+    raise ValueError(f"Lambda function {OPTIONS_LAMBDA_FUNCTION} not found, abort")
 
 
 ###
@@ -186,7 +218,7 @@ for table in DB_SCHEMA:
 ###
 # Lambda deployment
 print("Lambda deployment, pass if function already exists ...")
-lambdas = {}
+
 # Get all existing lambda functions
 try:
     existing_lambdas = lambda_client.list_functions()['Functions']
