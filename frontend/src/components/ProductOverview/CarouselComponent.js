@@ -1,37 +1,47 @@
 import * as React from 'react';
-import {CardActionArea} from "@mui/material";
+import {CardActionArea, Chip, IconButton} from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import Card from "@mui/material/Card";
 import {CardContentComponent} from "./CardContentComponent";
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
 import CardMedia from "@mui/material/CardMedia";
+import {addToCart} from "../../reducers/slices/cartSlice";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import {useDispatch} from "react-redux";
 
 function CarouselComponent({carouselData, clickable = true, onCardInteract}) {
 
+    const dispatch = useDispatch();
     if (carouselData) {
-
         // Normalize the carousel data to always have an 'images' array
         const normalizedCarouselData = Array.isArray(carouselData) ? carouselData.map(item => {
             return {
-                ...item,
-                images: item.images || [item.image]
+                ...item, images: item.images || [item.image]
             };
         }) : [{
-            ...carouselData,
-            images: carouselData.images || [carouselData.image]
+            ...carouselData, images: carouselData.images || [carouselData.image]
         }];
 
         const carouselContent = (item, image) => {
-            return (
-                <Card sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: '100%', // Ensure the card takes up the full height
+
+            return (<Card sx={{
+                    display: 'flex', flexDirection: 'column', height: '100%', // Ensure the card takes up the full height
                 }} onClick={() => {
                     clickable && onCardInteract(clickable, item?.product_id)
                 }}>
-                    <CardActionArea sx={{flexGrow: 1}}> {/* flexGrow allows the card to grow */}
+                    <CardActionArea sx={{flexGrow: 1}}>
+                        {item?.formatted_text && (<span style={{
+                            position: 'absolute', top: 8, left: 8,
+                        }}
+                        >
+                          <Chip
+                              label={item.formatted_text}
+                              variant="filled"
+                              color={"error"}
+                              size={"small"}
+                          />
+                        </span>)}
                         <CardMedia
                             component="img"
                             image={image}
@@ -39,11 +49,10 @@ function CarouselComponent({carouselData, clickable = true, onCardInteract}) {
                             sx={{height: 'auto', maxWidth: '100%'}} // Set height to auto
                         />
                         {clickable && <CardContent sx={{
-                            flexGrow: 1, // Allows card content to take up remaining space
-                            padding: 0,
-                            display: 'flex', // Using flex layout
-                            flexDirection: 'column', // Stack children vertically
-                            justifyContent: 'end' // Align content to the bottom
+                            flexGrow: 1,
+                            padding: 0, display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'end'
                         }}>
                             <CardContentComponent
                                 title={item['product']}
@@ -54,10 +63,30 @@ function CarouselComponent({carouselData, clickable = true, onCardInteract}) {
                                 height={157}
                                 brand={item?.brand}
                             />
+                            <IconButton
+                                sx={{
+                                    position: 'absolute',
+                                    bottom: 8,
+                                    right: 8,
+                                }}
+                                size="small"
+                                color="primary"
+                                onClick={(event) => {
+                                    event.stopPropagation();
+                                    dispatch(addToCart({
+                                        product_id: item.product_id,
+                                        brand: item.brand,
+                                        title: item.product,
+                                        price: item.price,
+                                        img: item.image
+                                    }));
+                                }}
+                            >
+                                <AddShoppingCartIcon fontSize="small"/>
+                            </IconButton>
                         </CardContent>}
                     </CardActionArea>
-                </Card>
-            );
+                </Card>);
         }
 
         return (
@@ -82,37 +111,24 @@ function CarouselComponent({carouselData, clickable = true, onCardInteract}) {
                 responsive={{
                     desktop: {
                         breakpoint: {
-                            max: 3000,
-                            min: 1024
-                        },
-                        items: 1
-                    },
-                    mobile: {
+                            max: 3000, min: 1024
+                        }, items: 1
+                    }, mobile: {
                         breakpoint: {
-                            max: 464,
-                            min: 0
-                        },
-                        items: 1
-                    },
-                    tablet: {
+                            max: 464, min: 0
+                        }, items: 1
+                    }, tablet: {
                         breakpoint: {
-                            max: 1024,
-                            min: 464
-                        },
-                        items: 1
+                            max: 1024, min: 464
+                        }, items: 1
                     }
                 }}
                 sliderClass=""
                 slidesToSlide={1}
                 swipeable
             >
-                {normalizedCarouselData?.map((item) => (
-                    item.images.map((image, imgIndex) => (
-                        carouselContent(item, image, imgIndex)
-                    ))
-                ))}
-            </Carousel>
-        );
+                {normalizedCarouselData?.map((item) => (item.images.map((image, imgIndex) => (carouselContent(item, image, imgIndex)))))}
+            </Carousel>);
     }
 }
 

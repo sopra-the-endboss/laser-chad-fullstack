@@ -1,0 +1,72 @@
+[
+  {
+    "name": "TechNova",
+    "industry": "Technology",
+    "headquarters": "San Francisco, CA, USA",
+    "numberOfEmployees": 5000,
+    "foundationYear": 2001
+  },
+  {
+    "name": "GreenHarvest",
+    "industry": "Agriculture",
+    "headquarters": "Lincoln, NE, USA",
+    "numberOfEmployees": 200,
+    "foundationYear": 1998
+  },
+  {
+    "name": "MediSolutions",
+    "industry": "Healthcare",
+    "headquarters": "Boston, MA, USA",
+    "numberOfEmployees": 1500,
+    "foundationYear": 2010
+  },
+  {
+    "name": "EduFuture",
+    "industry": "Education",
+    "headquarters": "New York, NY, USA",
+    "numberOfEmployees": 300,
+    "foundationYear": 2015
+  },
+  {
+    "name": "InnovateSecure",
+    "industry": "Cybersecurity",
+    "headquarters": "Austin, TX, USA",
+    "numberOfEmployees": 800,
+    "foundationYear": 2005
+  },
+  {
+    "name": "EcoBuild",
+    "industry": "Construction",
+    "headquarters": "Denver, CO, USA",
+    "numberOfEmployees": 1000,
+    "foundationYear": 2000
+  },
+  {
+    "name": "ArtiCraft",
+    "industry": "Retail",
+    "headquarters": "Portland, OR, USA",
+    "numberOfEmployees": 50,
+    "foundationYear": 2012
+  },
+  {
+    "name": "GlobalLink",
+    "industry": "Telecommunications",
+    "headquarters": "Seattle, WA, USA",
+    "numberOfEmployees": 4500,
+    "foundationYear": 1996
+  },
+  {
+    "name": "NextGen Motors",
+    "industry": "Automotive",
+    "headquarters": "Detroit, MI, USA",
+    "numberOfEmployees": 3200,
+    "foundationYear": 1985
+  },
+  {
+    "name": "CleanEnergy Inc.",
+    "industry": "Renewable Energy",
+    "headquarters": "San Diego, CA, USA",
+    "numberOfEmployees": 2200,
+    "foundationYear": 2008
+  }
+]

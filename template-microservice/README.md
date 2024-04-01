@@ -43,7 +43,7 @@ The API endpoint that is deployed and will be reachable for other services like 
 - resource_path is the path of the API that should be called and is linked to a Lambda function. In this example it is something like `template-microservice` or `template-microservice/{template-microservice-key-1}`and is specified in the `path` field of the [resources config file](config/resources_to_create.json)
 
 ## Dockerfile
-The following utilities and defaults should be used directly from the template for a new microservice. Do not copy paste them to reduce errors. To do that, make sure the have to build context set to root in the `docker-compose.yml` like this
+The following utilities and defaults should be used directly from the template for a new microservice. Do not copy paste them to reduce copy paste errors and keep the code maintainable. To do that, make sure the have to build context set to root in the `docker-compose.yml` like this
 ```
 build:
     dockerfile: ./NEW_MICROSERVICE
@@ -52,13 +52,20 @@ build:
 and the dockerfile of the NEW_MICROSERVICE looks something like this
 ```
 WORKDIR /app
-COPY ./cart/deploy.py /app/
+
+COPY ./product-microservice/lambdas /app/lambdas/
+COPY ./product-microservice/config /app/config/
+COPY ./product-microservice/requirements.txt /app/
+
+# Copy from the template
 COPY ./template-microservice/deploy_utils.py /app/
-COPY ./cart/lambdas /app/lambdas/
-COPY ./cart/config /app/config/
-COPY ./cart/requirements.txt /app/
+COPY ./template-microservice/deploy.py /app/
+# Copy the OPTIONS default handler from the template
+RUN mkdir lambdas/options_default
+COPY ./template-microservice/lambdas/options_default/handler.py /app/lambdas/options_default/
 ```
 
 The following should be used from the template-microservice
+- deploy.py
 - deploy_utils.py
 - lambdas/options_default/handler.py

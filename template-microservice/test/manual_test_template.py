@@ -2,7 +2,7 @@
 Running the file when docker compose up is running:
 to copy the file to a running container to run and run it right away in the docker network
 run this from a terminal in the host machine, not a container
-docker cp template-microservice/test/test_apig.py template-microservice-debugger:/app && docker exec template-microservice-debugger /bin/sh -c "python test_apig.py"
+docker cp template-microservice/test/manual_test_template.py template-microservice-debugger:/app && docker exec template-microservice-debugger /bin/sh -c "python manual_test_template.py"
 """
 
 import boto3

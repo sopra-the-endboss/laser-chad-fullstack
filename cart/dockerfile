@@ -1,0 +1,35 @@
+# syntax=docker/dockerfile:1
+FROM python:3.10-alpine
+
+WORKDIR /app
+
+COPY ./cart/lambdas /app/lambdas/
+COPY ./cart/config /app/config/
+COPY ./cart/requirements.txt /app/
+
+# Copy from the template
+COPY ./template-microservice/deploy_utils.py /app/
+COPY ./template-microservice/deploy.py /app/
+# Copy the OPTIONS default handler from the template
+RUN mkdir lambdas/options_default
+COPY ./template-microservice/lambdas/options_default/handler.py /app/lambdas/options_default/
+
+# Remove all zip files from the lambdas folder
+WORKDIR /app/lambdas
+RUN find . -type f -name "*.zip" -exec rm {} \;
+WORKDIR /app
+
+# Add python compilers to install wheels, don't ask why, but it works
+RUN apk add python3-dev
+RUN apk add gcc
+RUN apk add libc-dev
+RUN apk add libffi-dev
+
+# Install python dependencies
+RUN pip install -r requirements.txt
+
+# Make deploy script executable
+RUN chmod +x deploy.py
+
+# This line runs the deploy script upon running the container
+CMD ["python", "deploy.py"]
