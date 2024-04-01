@@ -188,12 +188,33 @@ for lambda_function_to_create in LAMBDA_FUNCTIONS_TO_DEPLOY:
         existing_lambda_arn = existing_lambdas[existing_lambdas_names.index(lambda_function_to_create)]['FunctionArn']
         lambdas[lambda_function_to_create] = existing_lambda_arn
         continue
+    try:
+        lambdas[lambda_function_to_create] = deploy_utils.deploy_lambda(
+            lambda_client = lambda_client,
+            fct_name = lambda_function_to_create,
+            env = {"TableName" : DYNAMO_DB_NAME, "Role" : LAMBDA_ROLE}
+        )
+    except botocore.exceptions.ClientError as client_error:
+        if client_error.response['Error']['Code'] == "ResourceConflictException":
+            print(f"Lambda function {lambda_function_to_create} ResourceConflictException, try to find it again and skip")
+            existing_lambdas = lambda_client.list_functions()['Functions']
+            existing_lambdas_names = [l['FunctionName'] for l in existing_lambdas]
+            print("Functions found already deployed:")
+            pp.pprint(existing_lambdas_names)
+            try:
+                existing_lambda_arn = existing_lambdas[existing_lambdas_names.index(lambda_function_to_create)]['FunctionArn']
+                lambdas[lambda_function_to_create] = existing_lambda_arn
+                print(f"Found function {lambda_function_to_create}, use that one and skip")
+            except ValueError as ve:
+                print(f"ResourceConflictError, but function {lambda_function_to_create} not found in existing lambda functions, abort")
+                raise ve
+            continue
+        else:
+            # If the error is not a conflict (already exists), raise the error
+            print(f"Error creating Lambda function {lambda_function_to_create}, not ResrouceConflict, abort")
+            print(client_error.response['message'])
+            raise client_error  
 
-    lambdas[lambda_function_to_create] = deploy_utils.deploy_lambda(
-        lambda_client = lambda_client,
-        fct_name = lambda_function_to_create,
-        env = {"TableName" : DYNAMO_DB_NAME, "Role" : LAMBDA_ROLE}
-    )
     print(f"Waiting over, function {lambda_function_to_create} is ready")
 print("Lambda deployment done")
 
