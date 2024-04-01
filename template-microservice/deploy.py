@@ -194,7 +194,7 @@ try:
 except KeyError as key_error:
     print(f"No Functions found in list_functions, try to deploy lambdas anyways")
 for lambda_function_to_create in LAMBDA_FUNCTIONS_TO_DEPLOY:
-
+    print(f"Deploying lambda function {lambda_function_to_create} ...")
     # If lambda_function_to_create already exists, inform and skip
     if lambda_function_to_create in existing_lambdas_names:
         print(f"Lambda function {lambda_function_to_create} already exists, use that one and skip")

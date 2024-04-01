@@ -5,14 +5,14 @@
             "methods_for_that_path":[
                 {"method":"GET","lambda_fct":"get_product"},
                 {"method":"POST","lambda_fct":"post_product","requestModels":{"application/json":"post_product"}},
-                {"method":"OPTIONS","lambda_fct":"options_default"}
+                {"method":"OPTIONS","lambda_fct":"options_default_product"}
             ],
             "children_resources":[
                 {
                     "path":"{product_id}",
                     "methods_for_that_path":[
                         {"method":"GET","lambda_fct":"get_product"},
-                        {"method":"OPTIONS","lambda_fct":"options_default"}
+                        {"method":"OPTIONS","lambda_fct":"options_default_product"}
                     ],
                     "children_resources":[]
                 },
@@ -20,7 +20,7 @@
                     "path":"batch",
                     "methods_for_that_path":[
                         {"method":"POST","lambda_fct":"post_product_batch","requestModels":{"application/json":"post_product_batch"}},
-                        {"method":"OPTIONS","lambda_fct":"options_default"}
+                        {"method":"OPTIONS","lambda_fct":"options_default_product"}
                     ],
                     "children_resources":[]
                 }

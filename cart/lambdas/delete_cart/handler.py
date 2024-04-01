@@ -57,15 +57,7 @@ def handler(event, context) -> list[dict]:
     pp.pprint(event)
     
     # First fetch the name of the DB table to work with
-    try:
-        TableName = os.environ["TableName"]
-    except KeyError:
-        print("env var TableName not found! This is the env. Return 400")
-        print(os.environ)
-        # Return 400
-        HTTP_RESPONSE_DICT['statusCode'] = 400
-        HTTP_RESPONSE_DICT['body'] = json.dumps("TableName not found in environment, cannot complete")
-        return HTTP_RESPONSE_DICT
+    TableName = "cart-table"
 
     print(f"Using table {TableName}")
 

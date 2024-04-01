@@ -11,8 +11,8 @@ COPY ./product-microservice/requirements.txt /app/
 COPY ./template-microservice/deploy_utils.py /app/
 COPY ./template-microservice/deploy.py /app/
 # Copy the OPTIONS default handler from the template
-RUN mkdir lambdas/options_default
-COPY ./template-microservice/lambdas/options_default/handler.py /app/lambdas/options_default/
+RUN mkdir lambdas/options_default_product
+COPY ./template-microservice/lambdas/options_default/handler.py /app/lambdas/options_default_product/
 
 
 # Remove all zip files from the lambdas folder
