@@ -17,24 +17,24 @@ import SellerGuard from "./components/Guards/SellerGuard";
 import { Playground } from "./views/Playground";
 
 function App() {
-  const [data, setData] = useState([]);
-  const [isSearchQuerySubmitted, searchQuerySubmitted] = useState(false);
-  const [categoryFilter, setCategoryFilter] = useState("");
+    const [data, setData] = useState([]);
+    const [isSearchQuerySubmitted, searchQuerySubmitted] = useState(false);
+    const [categoryFilter, setCategoryFilter] = useState("");
 
   const dispatch = useDispatch();
 
     useAuth();
 
-  useEffect(() => {
-    // filter data for category
-    if (categoryFilter)
-      setData(
-        AllProductsNameMock.filter(
-          (element) => element.category === categoryFilter
-        )
-      );
-    else setData(AllProductsNameMock);
-  }, [categoryFilter]);
+    useEffect(() => {
+        // filter data for category
+        if (categoryFilter)
+            setData(
+                AllProductsNameMock.filter(
+                    (element) => element.category === categoryFilter
+                )
+            );
+        else setData(AllProductsNameMock);
+    }, [categoryFilter]);
 
   useEffect(() => {
     fetch('http://localhost:5000/apig_base_url')
