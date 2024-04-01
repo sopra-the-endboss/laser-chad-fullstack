@@ -1,4 +1,7 @@
 """
+This script is the template for all backend microservices which deploys the actual services specified in the config json files and the lambdas.
+It is copied into each docker container for each microservice and run there upon starting the container
+
 Deploy one Dynamo DB
 - template-microservice-db with the following keys
     - template-microservice-key-1
@@ -34,7 +37,15 @@ pp = PrettyPrinter(indent=2)
 IN_DOCKER = os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', False)
 
 if not IN_DOCKER:
-    os.chdir("./template-microservice")
+
+    # Import syspath because python is annoying
+    print(os.getcwd())
+    
+    import sys
+    print(sys.path)
+    sys.path.insert(0,f"{os.getcwd()}/template-microservice")
+    import deploy_utils
+    
     # Also set all AWS env vars, point to running localstack container not in a docker-compose network
     os.environ['AWS_DEFAULT_REGION']='us-east-1'
     os.environ['AWS_ENDPOINT_URL']='https://localhost.localstack.cloud:4566' # For manual, use the default localstack url
@@ -44,6 +55,9 @@ if not IN_DOCKER:
     os.environ['APIG_TAG_ID'] = "API_TAG_ID"
     os.environ['APIG_STAGE'] = "PROD"
     os.environ['APIG_WAIT'] = "300"
+
+    # os.chdir("./cart")
+
 # FOR MANUAL RUNING ONLY END
 ##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--
 
@@ -188,13 +202,36 @@ for lambda_function_to_create in LAMBDA_FUNCTIONS_TO_DEPLOY:
         existing_lambda_arn = existing_lambdas[existing_lambdas_names.index(lambda_function_to_create)]['FunctionArn']
         lambdas[lambda_function_to_create] = existing_lambda_arn
         continue
-
-    lambdas[lambda_function_to_create] = deploy_utils.deploy_lambda(
-        lambda_client = lambda_client,
-        fct_name = lambda_function_to_create,
-        env = {"TableName" : DYNAMO_DB_NAME, "Role" : LAMBDA_ROLE}
-    )
+    
+    try:
+        lambdas[lambda_function_to_create] = deploy_utils.deploy_lambda(
+            lambda_client = lambda_client,
+            fct_name = lambda_function_to_create,
+            env = {"TableName" : DYNAMO_DB_NAME, "Role" : LAMBDA_ROLE}
+        )
+    except botocore.exceptions.ClientError as client_error:
+        if client_error.response['Error']['Code'] == "ResourceConflictException":
+            print(f"Lambda function {lambda_function_to_create} ResourceConflictException, try to find it again and skip")
+            existing_lambdas = lambda_client.list_functions()['Functions']
+            existing_lambdas_names = [l['FunctionName'] for l in existing_lambdas]
+            print("Functions found already deployed:")
+            pp.pprint(existing_lambdas_names)
+            try:
+                existing_lambda_arn = existing_lambdas[existing_lambdas_names.index(lambda_function_to_create)]['FunctionArn']
+                lambdas[lambda_function_to_create] = existing_lambda_arn
+                print(f"Found function {lambda_function_to_create}, use that one and skip")
+            except ValueError as ve:
+                print(f"ResourceConflictError, but function {lambda_function_to_create} not found in existing lambda functions, abort")
+                raise ve
+            continue
+        else:
+            # If the error is not a conflict (already exists), raise the error
+            print(f"Error creating Lambda function {lambda_function_to_create}, not ResrouceConflict, abort")
+            print(client_error.response['message'])
+            raise client_error
+        
     print(f"Waiting over, function {lambda_function_to_create} is ready")
+    
 print("Lambda deployment done")
 
 

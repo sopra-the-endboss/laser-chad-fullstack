@@ -138,8 +138,7 @@ services:
   product-microservice:
     container_name: "product-microservice"
     build:
-      context: ./product-microservice
-      dockerfile: dockerfile
+      dockerfile: ./product-microservice/dockerfile
       no_cache: true
     environment:
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
@@ -163,8 +162,7 @@ services:
   product-microservice-debugger:
     container_name: "product-microservice-debugger"
     build:
-      context: ./product-microservice
-      dockerfile: dockerfile_debugger
+      dockerfile: ./product-microservice/dockerfile_debugger
       no_cache: true
     environment:
       - AWS_DEFAULT_REGION=us-east-1
