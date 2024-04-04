@@ -13,6 +13,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    defaults: 
+      run:
+        working-directory: frontend
 
     strategy:
       matrix:
@@ -31,7 +34,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         
     - name: Install dependencies
-      run: npm i
+      run: npm ci
       
     - name: Run tests
       run: npm test
