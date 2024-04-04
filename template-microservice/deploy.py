@@ -401,18 +401,35 @@ print("API Gateway done")
 
 # Add mock data to the dynamo db
 dynamo_resource = boto3.resource("dynamodb")
-
 from decimal import Decimal
+def convert_float_to_decimal(item):
+    """
+    Convert all float values in the item to decimal
+    """
+    def convert_floats_to_decimals(item):
+        if isinstance(item, float):
+            return Decimal(str(item))
+        elif isinstance(item, dict):
+            for key, value in item.items():
+                item[key] = convert_floats_to_decimals(value)
+        elif isinstance(item, list):
+            for i in range(len(item)):
+                item[i] = convert_floats_to_decimals(item[i])
+        return item
+
+    # Usage example:
+    converted_item = convert_floats_to_decimals(item)
+    return item
+
+
 print("Add mock data to the dynamo db ...")
 for table_name, items in mock_data.items():
     table = dynamo_resource.Table(table_name)
     print(f"Add mock data to table {table_name}")
     for item in items:
         print("Adding object to table")
-        #convert float to decimal
-        for key, value in item.items():
-            if isinstance(value, float):
-                item[key] = Decimal(str(value))
+        # Convert float to decimal
+        item = convert_float_to_decimal(item)
         table.put_item(
             TableName=table_name,
             ReturnValues="NONE",
