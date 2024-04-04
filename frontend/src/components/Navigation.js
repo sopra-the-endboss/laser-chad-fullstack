@@ -12,7 +12,6 @@ import { useSelector } from "react-redux";
 const Navbar = ({ setData, searchQuerySubmitted, AllProductsName }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const apigBaseUrl = useSelector(state => state.apigBaseUrl);
   var badgeCount = cartItems.length;
 
   const toggleCart =
