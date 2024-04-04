@@ -86,7 +86,7 @@ print("-----------------")
 # if in manual mode, get corresponding protocol, in dockermode is None, defaults to http
 PROTOCOL_TO_USE = os.getenv("PROTOCOL", None)
 
-user = 1
+user = "1"
 
 # Test OPTIONS for all resources
 url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)

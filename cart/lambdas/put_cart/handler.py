@@ -3,14 +3,13 @@ put_cart
 Handle call to update a cart with a product_id and qty for a given userId
 """
 
-import os
 import boto3
 import simplejson as json
 from pprint import PrettyPrinter
 pp = PrettyPrinter(indent=2)
 
 HTTP_RESPONSE_DICT = {
-    'statusCode' : '200', # Default is 200
+    'statusCode' : 200, # Default is 200
     'isBase64Encoded' : False, # Default is False
     # To allow CORS requests from the frontend, we have to set the appropirate headers
     # https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors.html
@@ -23,6 +22,13 @@ HTTP_RESPONSE_DICT = {
         }
     # Here comes to body, as a JSON string
 }
+
+def return_error(msg:str, code:int = 400) -> dict:
+    print(msg)
+    error_return_dict = HTTP_RESPONSE_DICT.copy()
+    error_return_dict['statusCode']=code
+    error_return_dict['body']=json.dumps(msg)
+    return error_return_dict
 
 def handler(event, context) -> list[dict]:
     """
@@ -65,22 +71,16 @@ def handler(event, context) -> list[dict]:
     available_tables = dynamo_client.list_tables()
     available_tables = available_tables['TableNames']
     if not TableName in available_tables:
-        print(f"Table {TableName} not found in the available tables, abort")
-        HTTP_RESPONSE_DICT['statusCode'] = 400
-        HTTP_RESPONSE_DICT['body'] = json.dumps(f"Table {TableName} not found in the available tables, abort")
-        return HTTP_RESPONSE_DICT
-
+        return return_error(f"Table {TableName} not found in the available tables, abort")
+        
     print("Creating dynamo table object ...")
     dynamo_resource = boto3.resource("dynamodb")
     dynamo_table = dynamo_resource.Table(TableName)
 
     print(f"Assure pathParameter {PATH_PARAMETER_FILTER} is present in event")
-    if not event['pathParameters'][PATH_PARAMETER_FILTER]:
-        print(f"pathParameter {PATH_PARAMETER_FILTER} not found in event, abort")
-        HTTP_RESPONSE_DICT['statusCode'] = 400
-        HTTP_RESPONSE_DICT['body'] = json.dumps(f"pathParameter {PATH_PARAMETER_FILTER} not found, cannot complete")
-        return HTTP_RESPONSE_DICT
-
+    if not PATH_PARAMETER_FILTER in event['pathParameters']:
+        return return_error(f"pathParameter {PATH_PARAMETER_FILTER} not found in event, abort")
+        
     filter = event['pathParameters'][PATH_PARAMETER_FILTER]
     print(f"This is the filter: {filter}")
 
@@ -110,11 +110,7 @@ def handler(event, context) -> list[dict]:
 
     # If None we did not found anything, return 404
     if not cart_found:
-        print(f"No cart with userId {filter} found, return 404")
-        HTTP_RESPONSE_DICT['statusCode'] = 404
-        HTTP_RESPONSE_DICT['body'] = json.dumps(f"No cart with userId {filter} found")
-        return HTTP_RESPONSE_DICT
-
+        return return_error(f"No cart with userId {filter} found, return 404", 404)
 
     ###
     # Now either product_id_to_update is in the cart, then we increase qty by 1
@@ -179,8 +175,8 @@ def handler(event, context) -> list[dict]:
         ReturnValues = "NONE"
     )
     
-    print("Return HTTP object")
-    HTTP_RESPONSE_DICT['statusCode'] = '200'
+    print("Success, return HTTP object")
+    HTTP_RESPONSE_DICT['statusCode'] = 200
     HTTP_RESPONSE_DICT['body'] = json.dumps(cart_found)
 
     return HTTP_RESPONSE_DICT
