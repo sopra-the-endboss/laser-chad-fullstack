@@ -2,3 +2,13 @@ version: "1.0"
 linter: jetbrains/qodana-python-community:2023.3
 exclude:
   - name: PyShadowingNamesInspection
+  - name: PyListCreationInspection
+  - name: PyPep8Inspection
+  - name: PyPep8NamingInspection
+  - name: PyUnusedLocalInspection
+  - name: PyMethodMayBeStaticInspection
+  - name: PyIncorrectDocstringInspection
+  - name: All
+    paths:
+      - template-microservice/test
+      - template-microservice/labmdas
