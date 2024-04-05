@@ -110,4 +110,3 @@ def handler(event: dict, context) -> dict:
     
 if __name__ == "__main__":
     print(handler(None, None))
-1
