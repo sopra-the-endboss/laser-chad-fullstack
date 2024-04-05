@@ -31,14 +31,14 @@ sys.path.insert(0,path_to_append)
 
 ###
 # Lambda handlers to test
-import cart.lambdas.get_cart.handler as get_handler
-import cart.lambdas.post_cart.handler as post_handler
-import cart.lambdas.put_cart.handler as put_handler
-import cart.lambdas.delete_cart.handler as delete_handler
+import backend.cart.lambdas.get_cart.handler as get_handler
+import backend.cart.lambdas.post_cart.handler as post_handler
+import backend.cart.lambdas.put_cart.handler as put_handler
+import backend.cart.lambdas.delete_cart.handler as delete_handler
 
 ###
 # Load configs
-db_config_path = "./cart/config"
+db_config_path = "./backend/cart/config"
 try:
     with open(f"{db_config_path}/db_schema.json","r") as file:
         db_schemas = json.load(file)

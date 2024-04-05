@@ -10,5 +10,5 @@ exclude:
   - name: PyIncorrectDocstringInspection
   - name: All
     paths:
-      - template-microservice/test
-      - template-microservice/labmdas
+      - backend/template-microservice/test
+      - backend/template-microservice/labmdas
