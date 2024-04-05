@@ -48,7 +48,7 @@ def handler(event: dict, context) -> dict:
         body : Empty, this function does not return anything except the statusCode
     """
     
-    print("post_batch_lambda invoked")
+    print("post_lambda invoked")
 
     print("DEBUG: This is the context")
     pp.pprint(context)
@@ -59,19 +59,7 @@ def handler(event: dict, context) -> dict:
     print("DEBUG: This is the event raw")
     print(event)
     
-    TableName = "product-table"
-
-    print(f"Using table {TableName}")
-
-    print("Check if table is available ...")
-    dynamo_client = boto3.client("dynamodb")
-    available_tables = dynamo_client.list_tables()
-    available_tables = available_tables['TableNames']
-    if not TableName in available_tables:
-        print(f"Table {TableName} not found in the available tables, abort")
-        HTTP_RESPONSE_DICT['statusCode'] = 400
-        HTTP_RESPONSE_DICT['body'] = json.dumps(f"Table {TableName} not found in the available tables, abort")
-        return HTTP_RESPONSE_DICT
+    TableName = "product-comment-table"
 
     print("Creating dynamo table object ...")
     dynamo_resource = boto3.resource("dynamodb")
@@ -79,20 +67,19 @@ def handler(event: dict, context) -> dict:
 
     print("Parse body")
     try:
-        items = json.loads(event['body'], parse_float=Decimal)
-        print("DEBUG: These are the items")
-        print(items)
+        item = json.loads(event['body'], parse_float=Decimal)
+        print("DEBUG: This is the item")
+        print(item)
     except json.decoder.JSONDecodeError as e:
         print("JSONDecodeError IN PARSING BODY")
         raise e
 
-    print("Try writing items")
-    for item in items:
-        response_put = dynamo_table.put_item(
-            TableName = TableName,
-            ReturnValues = "NONE",
-            Item = item
-        )
+    print("Try writing item")
+    response_put = dynamo_table.put_item(
+        TableName = TableName,
+        ReturnValues = "NONE",
+        Item = item
+    )
 
     print("This is the response_put object from the put_item call")
     print(response_put)

@@ -8,19 +8,21 @@ import useAuth from "./reducers/useAuth";
 import Account from "./views/Account";
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from "react";
-import AllProductsNameMock from "./data/AllProductsNameMock.json";
+//import AllProductsNameMock from "./data/AllProductsNameMock.json";
 import {ProductDetail} from "./views/ProductDetail";
 import {Container, Grid} from "@mui/material";
 import {Categories} from "./views/Categories";
 import MyShop from "./views/MyShop";
 import SellerGuard from "./components/Guards/SellerGuard";
 import { Playground } from "./views/Playground";
+import { useSelector } from 'react-redux';
 
 function App() {
     const [data, setData] = useState([]);
     const [isSearchQuerySubmitted, searchQuerySubmitted] = useState(false);
     const [categoryFilter, setCategoryFilter] = useState("");
-
+    const [AllProductsName, setAllProductsName] = useState([]);
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
   const dispatch = useDispatch();
 
     useAuth();
@@ -29,12 +31,12 @@ function App() {
         // filter data for category
         if (categoryFilter)
             setData(
-                AllProductsNameMock.filter(
+                AllProductsName.filter(
                     (element) => element.category === categoryFilter
                 )
             );
-        else setData(AllProductsNameMock);
-    }, [categoryFilter]);
+        else setData(AllProductsName);
+    }, [categoryFilter, AllProductsName]);
 
   useEffect(() => {
     fetch('http://localhost:5000/apig_base_url')
@@ -44,6 +46,19 @@ function App() {
       });
   }, [dispatch]);
 
+  
+
+    useEffect(() => {
+        if (apigBaseUrl) {
+            fetch(`${apigBaseUrl}/product-microservice/product`)
+            .then(response => response.json())
+            .then(data => {
+                setAllProductsName(data);
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    }, [apigBaseUrl]);
+
     return (
         <Provider store={store}>
             <div className="App">
@@ -51,6 +66,7 @@ function App() {
                     <Navigation
                         setData={setData}
                         searchQuerySubmitted={searchQuerySubmitted}
+                        AllProductsName={AllProductsName}
                     />
                     <div style={{marginTop: "100px", marginBottom: "50px"}}>
                         <Container maxWidth="lg">

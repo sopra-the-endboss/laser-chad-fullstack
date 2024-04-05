@@ -1,6 +1,6 @@
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import AllProductsnameMock from "../data/AllProductsNameMock.json";
+// import AllProductsnameMock from "../data/AllProductsNameMock.json";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { useState } from "react";
@@ -9,7 +9,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Badge from "@mui/material/Badge";
 import { useSelector } from "react-redux";
 
-const Navbar = ({ setData, searchQuerySubmitted }) => {
+const Navbar = ({ setData, searchQuerySubmitted, AllProductsName }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const cartItems = useSelector((state) => state.cart.cartItems);
   var badgeCount = cartItems.length;
@@ -32,7 +32,7 @@ const Navbar = ({ setData, searchQuerySubmitted }) => {
     //TODO: insert search items in backend.
     // returned products will be set and content will be generated accordingly
     // currently filtering is extremely strict, use levenstein distance or fuse.js to also account for misspells.
-    const filtered = AllProductsnameMock.filter((product) =>
+    const filtered = AllProductsName.filter((product) =>
       product["product"]
         .toLowerCase()
         .includes(event.target.value.toLowerCase())

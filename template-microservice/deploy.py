@@ -111,6 +111,18 @@ def get_resources_to_create() -> dict:
         print("Did not find json file with resources to create config")
     return res
 
+def get_mock_data() -> dict[str]:
+    """
+    Retreive mock data for the dynamo db
+    """
+    print("Try to load the Mock Data ...")
+    try:
+        with open("config/mock_data.json","r") as file:
+            mock_data = json.load(file)
+    except FileNotFoundError:
+        print("Did not find json file with mock data")
+    return mock_data
+
 print("Environment:\n")
 pp.pprint(dict(os.environ))
 
@@ -119,6 +131,7 @@ DB_SCHEMA = get_db_config()
 request_models = get_request_models()
 request_validators = get_request_validators()
 resources_to_create = get_resources_to_create()
+mock_data = get_mock_data()
 
 # Get all lambda functions which are found in the subfolders of the folder /lambdas
 print("Locate all lambda functions to deploy in folder /lambdas ...")
@@ -384,3 +397,44 @@ deploy_utils.deploy_api(
 print("API Gateway deployment update done")
 
 print("API Gateway done")
+
+
+# Add mock data to the dynamo db
+dynamo_resource = boto3.resource("dynamodb")
+from decimal import Decimal
+def convert_float_to_decimal(item):
+    """
+    Convert all float values in the item to decimal
+    """
+    def convert_floats_to_decimals(item):
+        if isinstance(item, float):
+            return Decimal(str(item))
+        elif isinstance(item, dict):
+            for key, value in item.items():
+                item[key] = convert_floats_to_decimals(value)
+        elif isinstance(item, list):
+            for i in range(len(item)):
+                item[i] = convert_floats_to_decimals(item[i])
+        return item
+
+    # Usage example:
+    converted_item = convert_floats_to_decimals(item)
+    return item
+
+
+print("Add mock data to the dynamo db ...")
+for table_name, items in mock_data.items():
+    table = dynamo_resource.Table(table_name)
+    print(f"Add mock data to table {table_name}")
+    for item in items:
+        print("Adding object to table")
+        # Convert float to decimal
+        item = convert_float_to_decimal(item)
+        table.put_item(
+            TableName=table_name,
+            ReturnValues="NONE",
+            Item=item
+        )
+
+print("Mock data added to the dynamo db")
+    
