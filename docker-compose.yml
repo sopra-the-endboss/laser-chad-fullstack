@@ -43,7 +43,7 @@ services:
   apig-main:
     container_name: "apig-main"
     build:
-      context: ./apig-main
+      context: ./backend/apig-main
       dockerfile: dockerfile
       no_cache: true
     environment:
@@ -65,7 +65,7 @@ services:
   apig-id-share:
     container_name: "apig-id-share"
     build:
-      context: ./apig-id-share
+      context: ./backend/apig-id-share
       dockerfile: dockerfile
       no_cache: true
     ports:
@@ -90,7 +90,7 @@ services:
   options_lambda_function:
     container_name: "options_lambda_function"
     build:
-      dockerfile: ./options_lambda_function/dockerfile
+      dockerfile: ./backend/options_lambda_function/dockerfile
       no_cache: true
     environment:
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
@@ -109,7 +109,7 @@ services:
   cart:
     container_name: "cart"
     build:
-      dockerfile: ./cart/dockerfile
+      dockerfile: ./backend/cart/dockerfile
       no_cache: true
     environment:
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
@@ -135,7 +135,7 @@ services:
   cart-debugger:
     container_name: "cart-debugger"
     build:
-      dockerfile: ./cart/dockerfile_debugger
+      dockerfile: ./backend/cart/dockerfile_debugger
       no_cache: true
     environment:
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
@@ -161,7 +161,7 @@ services:
   product-microservice:
     container_name: "product-microservice"
     build:
-      dockerfile: ./product-microservice/dockerfile
+      dockerfile: ./backend/product-microservice/dockerfile
       no_cache: true
     environment:
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
@@ -187,7 +187,7 @@ services:
   product-microservice-debugger:
     container_name: "product-microservice-debugger"
     build:
-      dockerfile: ./product-microservice/dockerfile_debugger
+      dockerfile: ./backend/product-microservice/dockerfile_debugger
       no_cache: true
     environment:
       - AWS_DEFAULT_REGION=us-east-1
