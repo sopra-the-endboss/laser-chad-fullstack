@@ -3,7 +3,6 @@ post_cart
 Handle call to get a post cart with a given userId
 """
 
-import os
 import boto3
 import botocore
 import simplejson as json
@@ -11,7 +10,7 @@ from pprint import PrettyPrinter
 pp = PrettyPrinter(indent=2)
 
 HTTP_RESPONSE_DICT = {
-    'statusCode' : '200', # Default is 200
+    'statusCode' : 200, # Default is 200
     'isBase64Encoded' : False, # Default is False
     # To allow CORS requests from the frontend, we have to set the appropirate headers
     # https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors.html
@@ -24,6 +23,13 @@ HTTP_RESPONSE_DICT = {
         }
     # Here comes to body, as a JSON string
 }
+
+def return_error(msg:str, code:int = 400) -> dict:
+    print(msg)
+    error_return_dict = HTTP_RESPONSE_DICT.copy()
+    error_return_dict['statusCode']=code
+    error_return_dict['body']=json.dumps(msg)
+    return error_return_dict
 
 def handler(event, context) -> list[dict]:
     """
@@ -43,8 +49,8 @@ def handler(event, context) -> list[dict]:
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default
         headers : Default to allow CORS, otherwise not used
-        body : Empty if success
-
+        body : The object written
+    
         400 if the handler can not complete
         409 if there is already a cart with userId
     """
@@ -66,22 +72,16 @@ def handler(event, context) -> list[dict]:
     available_tables = dynamo_client.list_tables()
     available_tables = available_tables['TableNames']
     if not TableName in available_tables:
-        print(f"Table {TableName} not found in the available tables, abort")
-        HTTP_RESPONSE_DICT['statusCode'] = 400
-        HTTP_RESPONSE_DICT['body'] = json.dumps(f"Table {TableName} not found in the available tables, abort")
-        return HTTP_RESPONSE_DICT
-
+        return return_error(f"Table {TableName} not found in the available tables, abort")
+        
     print("Creating dynamo table object ...")
     dynamo_resource = boto3.resource("dynamodb")
     dynamo_table = dynamo_resource.Table(TableName)
 
     print(f"Assure pathParameter {PATH_PARAMETER_FILTER} is present in event")
-    if not event['pathParameters'][PATH_PARAMETER_FILTER]:
-        print(f"pathParameter {PATH_PARAMETER_FILTER} not found in event, abort")
-        HTTP_RESPONSE_DICT['statusCode'] = 400
-        HTTP_RESPONSE_DICT['body'] = json.dumps(f"pathParameter {PATH_PARAMETER_FILTER} not found, cannot complete")
-        return HTTP_RESPONSE_DICT
-
+    if not PATH_PARAMETER_FILTER in event['pathParameters']:
+        return return_error(f"pathParameter {PATH_PARAMETER_FILTER} not found in event, abort")
+        
     filter = event['pathParameters'][PATH_PARAMETER_FILTER]
     print(f"This is the filter: {filter}")
 
@@ -104,18 +104,12 @@ def handler(event, context) -> list[dict]:
         )
     except botocore.exceptions.ClientError as client_error:
         if client_error.response['Error']['Code'] == "ConditionalCheckFailedException":
-            print(f"There is already an existing cart with userId {filter}, return 409")
-            HTTP_RESPONSE_DICT['statusCode'] = 409
-            HTTP_RESPONSE_DICT['body'] = json.dumps(f"There is already an existing cart with userId {filter}")
-            return HTTP_RESPONSE_DICT
+            return return_error(f"There is already an existing cart with userId {filter}, return 409", 409)
         else:
-            print("Error occured during put_item operation that is not conflict")
-            HTTP_RESPONSE_DICT['statusCode'] = 400
-            HTTP_RESPONSE_DICT['body'] = json.dumps(client_error.response['message'])
-            return HTTP_RESPONSE_DICT
+            return return_error("Error occured during put_item operation that is not conflict")
     
-    print("Return HTTP object")
-    HTTP_RESPONSE_DICT['statusCode'] = '200'
+    print("Success, return HTTP object")
+    HTTP_RESPONSE_DICT['statusCode'] = 200
     HTTP_RESPONSE_DICT['body'] = json.dumps(item_to_put)
 
     return HTTP_RESPONSE_DICT
