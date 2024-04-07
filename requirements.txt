@@ -4,3 +4,6 @@ awscli-local
 pyperclip
 requests
 simplejson
+pytest
+pytest-cov
+moto

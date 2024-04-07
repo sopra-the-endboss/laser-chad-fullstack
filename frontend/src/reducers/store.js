@@ -3,6 +3,7 @@ import authReducer from "./slices/authSlice";
 import cartReducer from "./slices/cartSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
+import apigBaseUrlReducer from "./apigBaseUrl";
 
 const persistConfig = {
   key: "root",
@@ -15,6 +16,7 @@ const store = configureStore({
   reducer: {
     auth: authReducer,
     cart: persistedReducer,
+    apigBaseUrl: apigBaseUrlReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

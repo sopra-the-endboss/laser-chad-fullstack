@@ -1,6 +1,6 @@
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import AllProductsnameMock from "../data/AllProductsNameMock.json";
+// import AllProductsnameMock from "../data/AllProductsNameMock.json";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { useState } from "react";
@@ -9,7 +9,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Badge from "@mui/material/Badge";
 import { useSelector } from "react-redux";
 
-const Navbar = ({ setData, searchQuerySubmitted }) => {
+const Navbar = ({ setData, searchQuerySubmitted, AllProductsName }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const cartItems = useSelector((state) => state.cart.cartItems);
   var badgeCount = cartItems.length;
@@ -32,7 +32,7 @@ const Navbar = ({ setData, searchQuerySubmitted }) => {
     //TODO: insert search items in backend.
     // returned products will be set and content will be generated accordingly
     // currently filtering is extremely strict, use levenstein distance or fuse.js to also account for misspells.
-    const filtered = AllProductsnameMock.filter((product) =>
+    const filtered = AllProductsName.filter((product) =>
       product["product"]
         .toLowerCase()
         .includes(event.target.value.toLowerCase())
@@ -52,7 +52,6 @@ const Navbar = ({ setData, searchQuerySubmitted }) => {
   let isSeller = false;
   if (authState.groups) {
     isSeller = authState.groups.includes("seller");
-    console.log(isSeller);
   }
 
   const inactive =
@@ -88,7 +87,10 @@ const Navbar = ({ setData, searchQuerySubmitted }) => {
   ];
 
   return (
-    <nav className="bg-white shadow fixed top-0 left-0 w-full z-10" style={{zIndex: 1001}}>
+    <nav
+      className="bg-white shadow fixed top-0 left-0 w-full z-10"
+      style={{ zIndex: 1001 }}
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4 mb-4">
         <div className="relative flex items-center justify-between h-16">
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">

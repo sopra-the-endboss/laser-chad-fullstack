@@ -1,0 +1,211 @@
+version: "3"
+services:
+
+  frontend:
+    container_name: "frontend"
+    image: darnol/laser-chad-frontend:deliverable2.0
+    ports:
+      - "3000:3000"
+    environment:
+      - WDS_SOCKET_HOST=127.0.0.1 
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    #  - REACT_APP_API_URL=http://localhost:4566
+    volumes:
+      - "./frontend/public:/app/public"
+      - "./frontend/src:/app/src"
+    depends_on:
+      - apig-id-share
+    platform: linux/amd64
+
+  localstack:
+    container_name: "localstack"
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566" # localstack gateway
+      - "4510-4559:4510-4559" # external services port range
+    environment:
+      - SERVICES=lambda,s3,dynamodb,apigateway
+      - DEBUG=0
+      - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR-}
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - SKIP_SSL_CERT_DOWNLOAD=1
+      - SKIP_INFRA_DOWNLOADS=1
+      - DISABLE_EVENTS=1
+      - AWS-REGION=${AWS_DEFAULT_REGION}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+    volumes:
+      - ".volume:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - backend
+    platform: linux/amd64
+
+  apig-main:
+    container_name: "apig-main"
+    image: darnol/laser-chad-apig-main:deliverable2.0
+    environment:
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} # Sometimes boto3 needs credentials
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} # Sometimes boto3 needs credentials
+      - APIG_TAG_ID=${APIG_TAG_ID}
+      - APIG_TAG=${APIG_TAG}
+      - APIG_STAGE=${APIG_STAGE}
+      - AM_I_IN_A_DOCKER_CONTAINER=${AM_I_IN_A_DOCKER_CONTAINER:-True}
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - localstack
+    networks:
+      - backend
+    platform: linux/amd64
+
+  apig-id-share:
+    container_name: "apig-id-share"
+    image: darnol/laser-chad-apig-id-share:deliverable2.0
+    ports:
+      - "5000:5000"
+    environment:
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} # Sometimes boto3 needs credentials
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} # Sometimes boto3 needs credentials
+      - APIG_TAG_ID=${APIG_TAG_ID}
+      - APIG_TAG=${APIG_TAG}
+      - APIG_STAGE=${APIG_STAGE}
+      - APIG_WAIT=${APIG_WAIT}
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - localstack
+      - apig-main
+    networks:
+      - backend
+    platform: linux/amd64
+
+  options_lambda_function:
+    container_name: "options_lambda_function"
+    image: darnol/laser-chad-options_lambda_function:deliverable2.0
+    environment:
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} # Sometimes boto3 needs credentials
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} # Sometimes boto3 needs credentials
+      - APIG_WAIT=${APIG_WAIT}
+      - OPTIONS_LAMBDA_FUNCTION=${OPTIONS_LAMBDA_FUNCTION}
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - localstack
+    networks:
+      - backend
+    platform: linux/amd64
+
+  cart:
+    container_name: "cart"
+    image: darnol/laser-chad-cart:deliverable2.0
+    environment:
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} # Sometimes boto3 needs credentials
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} # Sometimes boto3 needs credentials
+      - APIG_TAG_ID=${APIG_TAG_ID}
+      - APIG_TAG=${APIG_TAG}
+      - APIG_STAGE=${APIG_STAGE}
+      - AM_I_IN_A_DOCKER_CONTAINER=${AM_I_IN_A_DOCKER_CONTAINER:-True}
+      - APIG_WAIT=${APIG_WAIT}
+      - OPTIONS_LAMBDA_FUNCTION=${OPTIONS_LAMBDA_FUNCTION}
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - localstack
+      - apig-main
+      - apig-id-share
+      - options_lambda_function
+    networks:
+      - backend
+    platform: linux/amd64
+
+  cart-debugger:
+    container_name: "cart-debugger"
+    image: darnol/laser-chad-cart-debugger:deliverable2.0
+    environment:
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} # Sometimes boto3 needs credentials
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} # Sometimes boto3 needs credentials
+      - APIG_TAG_ID=${APIG_TAG_ID}
+      - APIG_TAG=${APIG_TAG}
+      - APIG_STAGE=${APIG_STAGE}
+      - AM_I_IN_A_DOCKER_CONTAINER=${AM_I_IN_A_DOCKER_CONTAINER:-True}
+      - APIG_WAIT=${APIG_WAIT}
+      - OPTIONS_LAMBDA_FUNCTION=${OPTIONS_LAMBDA_FUNCTION}
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - localstack
+      - apig-main
+      - apig-id-share
+      - options_lambda_function
+    networks:
+      - backend
+    platform: linux/amd64
+
+  product-microservice:
+    container_name: "product-microservice"
+    image: darnol/laser-chad-product-microservice:deliverable2.0
+    environment:
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} # Sometimes boto3 needs credentials
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} # Sometimes boto3 needs credentials
+      - APIG_TAG_ID=${APIG_TAG_ID}
+      - APIG_TAG=${APIG_TAG}
+      - APIG_STAGE=${APIG_STAGE}
+      - AM_I_IN_A_DOCKER_CONTAINER=${AM_I_IN_A_DOCKER_CONTAINER:-True}
+      - APIG_WAIT=${APIG_WAIT}
+      - OPTIONS_LAMBDA_FUNCTION=${OPTIONS_LAMBDA_FUNCTION}
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - localstack
+      - apig-main
+      - apig-id-share
+      - options_lambda_function
+    networks:
+      - backend
+    platform: linux/amd64
+
+  product-microservice-debugger:
+    container_name: "product-microservice-debugger"
+    image: darnol/laser-chad-product-microservice-debugger:deliverable2.0
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ENDPOINT_URL=http://localstack:4566 # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=fakecred # Sometimes boto3 needs credentials 
+      - AWS_SECRET_ACCESS_KEY=fakecred
+      - APIG_TAG_ID=${APIG_TAG_ID}
+      - APIG_TAG=${APIG_TAG}
+      - APIG_STAGE=${APIG_STAGE}
+      - AM_I_IN_A_DOCKER_CONTAINER=${AM_I_IN_A_DOCKER_CONTAINER:-True}
+      - APIG_WAIT=${APIG_WAIT}
+      - OPTIONS_LAMBDA_FUNCTION=${OPTIONS_LAMBDA_FUNCTION}
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - localstack
+      - apig-main
+      - apig-id-share
+      - options_lambda_function
+    networks:
+      - backend
+    platform: linux/amd64
+
+#volumes:
+#  dbvolume:
+
+networks:
+  backend:
+    external: false

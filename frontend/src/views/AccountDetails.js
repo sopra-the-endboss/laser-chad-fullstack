@@ -1,44 +1,182 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import "../App.css";
+import EditIcon from "@mui/icons-material/Edit";
+import { useState } from "react";
+import { updateUserAttributes } from "aws-amplify/auth";
+import { useDispatch } from "react-redux";
+import { setUserLoggedIn } from "../reducers/slices/authSlice";
+import {
+  Button,
+  Grid,
+  TextField,
+  Typography,
+  Box,
+  IconButton,
+  Divider,
+} from "@mui/material";
 
 const AccountDetails = () => {
   const authState = useSelector((state) => state.auth);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editState, setEditState] = useState(authState);
+  const dispatch = useDispatch();
+
+  const handleEditToggle = () => {
+    setIsEditing(!isEditing);
+    if (isEditing) {
+      setEditState(authState);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleUpdate = async () => {
+    const { givenname, familyname, email, birthdate } = editState;
+
+    try {
+      updateUserAttributes({
+        userAttributes: {
+          given_name: givenname,
+          family_name: familyname,
+          email: email,
+          birthdate: birthdate,
+        },
+      });
+      dispatch(setUserLoggedIn(editState));
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error updating user attributes", error);
+    }
+  };
 
   return (
-    // TODO: Add user image
-    <div class="bg-white overflow-hidden shadow rounded-lg border">
-      <div class="px-4 py-5 sm:px-6">
-        <h3 class="text-lg leading-6 font-medium text-gray-900">
-          User Account
-        </h3>
-        <p class="mt-1 max-w-2xl text-sm text-gray-500">
-          Account Type: {authState.groups}
-        </p>
-      </div>
-      <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-        <dl class="sm:divide-y sm:divide-gray-200">
-          <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Full name</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {authState.givenname + " " + authState.familyname}
-            </dd>
-          </div>
-          <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Email address</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {authState.email}
-            </dd>
-          </div>
-          <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Birthdate</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {authState.birthdate}
-            </dd>
-          </div>
-        </dl>
-      </div>
-    </div>
+    <Box
+      sx={{
+        bgcolor: "white",
+        overflow: "hidden",
+        boxShadow: 1,
+        borderRadius: "12px",
+        border: 1,
+        borderColor: "grey.300",
+        p: 2,
+        maxWidth: "600px",
+      }}
+    >
+      <Typography variant="h6" color="textPrimary" gutterBottom>
+        User Account
+      </Typography>
+      <Typography variant="body2" color="textSecondary">
+        Account Type: {authState.groups}
+      </Typography>
+      <Divider sx={{ my: 2 }} />
+
+      {isEditing ? (
+        <React.Fragment>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={6}>
+              <Typography>Givenname</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                name="givenname"
+                variant="outlined"
+                value={editState.givenname || ""}
+                onChange={handleInputChange}
+              />
+            </Grid>
+
+            <Grid item xs={6}>
+              <Typography>Familyname</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                name="familyname"
+                variant="outlined"
+                value={editState.familyname || ""}
+                onChange={handleInputChange}
+              />
+            </Grid>
+
+            <Grid item xs={6}>
+              <Typography>Birthdate</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                name="birthdate"
+                type="date"
+                variant="outlined"
+                value={editState.birthdate || ""}
+                onChange={handleInputChange}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={6}>
+              <Typography>Email</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                name="email"
+                variant="outlined"
+                value={editState.email || ""}
+                onChange={handleInputChange}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleUpdate}
+              >
+                Save
+              </Button>
+            </Grid>
+          </Grid>
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Typography>Full name:</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>
+                {authState.givenname + " " + authState.familyname}{" "}
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>Email address: </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>{authState.email}</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>Birthdate:</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>{authState.birthdate}</Typography>
+            </Grid>
+          </Grid>
+          <IconButton onClick={handleEditToggle} size="large">
+            <EditIcon />
+          </IconButton>
+        </React.Fragment>
+      )}
+    </Box>
   );
 };
 

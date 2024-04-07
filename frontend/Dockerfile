@@ -16,22 +16,25 @@ RUN npm install --silent
 COPY . .
 
 # Build the app which will create the production build in the /app/build directory
-RUN npm run build
+#RUN npm run build
 
 # Start a new stage to create a lightweight production image
-FROM node:21.7.1-slim
+#FROM node:21.7.1-slim
 
 # Set the working directory in the container for the production image
-WORKDIR /app
+#WORKDIR /app
 
 # Install 'serve' - a static server that will serve our React app
-RUN npm install -g serve
+#RUN npm install -g serve
 
 # Copy the built application from the build-stage to the current stage's working directory
-COPY --from=build-stage /app/build /app
+#COPY --from=build-stage /app/build /app
 
 # Expose port 3000 for the container
 EXPOSE 3000
 
 # Start the serve command to serve the static files on port 3000
-CMD ["serve", "-s", ".", "-l", "3000"]
+#CMD ["serve", "-s", ".", "-l", "3000"]
+
+# Start the application in dev mode
+CMD ["npm", "start"]
