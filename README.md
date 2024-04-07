@@ -2,7 +2,9 @@ This is the main project repository. It consists of a React frontend with multip
 
 # Deployment
 
-**After starting the containers, wait for 2 minutes to allow all containers to run and exit. This time is needed to start localstack and deploy all the backend services that need to be active in order to run properly.**
+**NOTE**  
+- The deployment was not tested with all new Macbook M1 and M2 chip architectures. If the deployment via pulled images fails, refer to [section](#general-deployment) and build and run the containers from the dockerfiles yourself.    
+- Also, after starting the containers, wait for 2 minutes to allow all containers to run and exit. This time is needed to start localstack and deploy all the backend services that need to be active in order to run properly.**
 
 
 ## Deployment for Deliverable 2

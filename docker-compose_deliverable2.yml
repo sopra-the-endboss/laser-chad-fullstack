@@ -16,6 +16,7 @@ services:
       - "./frontend/src:/app/src"
     depends_on:
       - apig-id-share
+    platform: linux/amd64
 
   localstack:
     container_name: "localstack"
@@ -39,6 +40,7 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
     networks:
       - backend
+    platform: linux/amd64
 
   apig-main:
     container_name: "apig-main"
@@ -58,6 +60,7 @@ services:
       - localstack
     networks:
       - backend
+    platform: linux/amd64
 
   apig-id-share:
     container_name: "apig-id-share"
@@ -80,6 +83,7 @@ services:
       - apig-main
     networks:
       - backend
+    platform: linux/amd64
 
   options_lambda_function:
     container_name: "options_lambda_function"
@@ -97,6 +101,7 @@ services:
       - localstack
     networks:
       - backend
+    platform: linux/amd64
 
   cart:
     container_name: "cart"
@@ -121,6 +126,7 @@ services:
       - options_lambda_function
     networks:
       - backend
+    platform: linux/amd64
 
   cart-debugger:
     container_name: "cart-debugger"
@@ -145,6 +151,7 @@ services:
       - options_lambda_function
     networks:
       - backend
+    platform: linux/amd64
 
   product-microservice:
     container_name: "product-microservice"
@@ -169,6 +176,7 @@ services:
       - options_lambda_function
     networks:
       - backend
+    platform: linux/amd64
 
   product-microservice-debugger:
     container_name: "product-microservice-debugger"
@@ -193,6 +201,7 @@ services:
       - options_lambda_function
     networks:
       - backend
+    platform: linux/amd64
 
 #volumes:
 #  dbvolume:
