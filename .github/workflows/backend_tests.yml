@@ -1,4 +1,4 @@
-name: Python - py coverage test
+name: Python pytest coverage
 
 on:
   workflow_dispatch:
@@ -26,7 +26,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install coverage
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       working-directory: PYTHON/py
   
     - name: Run tests with coverage
