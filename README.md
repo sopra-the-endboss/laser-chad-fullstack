@@ -45,18 +45,10 @@ The order of deployment works as follows and can be inferred from the different 
 ![Alt text](./ASE%20Architecture%20Diagram.drawio.svg?raw=true "Title")
 
 # Frontend
-TODO: Descripe Amplify setup better
-
 Authentication setup:
 AWS Cognito and Amplify are used for Authentication.
 
-To setup Amplify Cli run this in command line (Windows)
-curl -sL https://aws-amplify.github.io/amplify-cli/install-win -o install.cmd && install.cmd
-
-To pull amplify project:
-amplify pull --appId d47a6guqh1kks --envName staging
-
-Docker compose up to runs
+Refer to the frontend README for further information.
 
 # Backend
 The backend uses a microservice approach where each isolated component provides a certain part of the functionality which in its sum composes all neccesary backend services. All services provide their functionality through HTTP API endpoints. All planned and implemented services and its endpoints are described in the [API specification](api_specification.xlsx).   
