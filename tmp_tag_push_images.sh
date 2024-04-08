@@ -3,11 +3,11 @@
 # This script can be used to tag and push images built locally
 # You have to be logged in with docker login
 # In order to work, the images must first be built locally, from a directory called "laser-chad-fullstack"
-# If have to adjust USER= to the currently logged in user
+# If have to adjust USER to the currently logged in user
 
 # Define the tag you want to use for all images
 USER="darnol"
-TAG="deliverable2.0"
+TAG="deliverable2.1"
 
 # List of your Docker images
 IMAGES=(
@@ -24,7 +24,7 @@ IMAGES=(
 # Loop through each image, tag it, and push it
 for image in "${IMAGES[@]}"; do
     image_new="${image/"-fullstack"}"
-    echo $image_new
-    # docker tag $image $USER/$image_new:$TAG
-    # docker push $USER/$image_new:$TAG
+    # echo $image_new
+    docker tag $image $USER/$image_new:$TAG
+    docker push $USER/$image_new:$TAG
 done

@@ -3,7 +3,7 @@ services:
 
   frontend:
     container_name: "frontend"
-    image: darnol/laser-chad-frontend:deliverable2.0
+    image: darnol/laser-chad-frontend:deliverable2.1
     ports:
       - "3000:3000"
     environment:
@@ -44,7 +44,7 @@ services:
 
   apig-main:
     container_name: "apig-main"
-    image: darnol/laser-chad-apig-main:deliverable2.0
+    image: darnol/laser-chad-apig-main:deliverable2.1
     environment:
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
       - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
@@ -64,7 +64,7 @@ services:
 
   apig-id-share:
     container_name: "apig-id-share"
-    image: darnol/laser-chad-apig-id-share:deliverable2.0
+    image: darnol/laser-chad-apig-id-share:deliverable2.1
     ports:
       - "5000:5000"
     environment:
@@ -87,7 +87,7 @@ services:
 
   options_lambda_function:
     container_name: "options_lambda_function"
-    image: darnol/laser-chad-options_lambda_function:deliverable2.0
+    image: darnol/laser-chad-options_lambda_function:deliverable2.1
     environment:
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
       - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
@@ -105,7 +105,7 @@ services:
 
   cart:
     container_name: "cart"
-    image: darnol/laser-chad-cart:deliverable2.0
+    image: darnol/laser-chad-cart:deliverable2.1
     environment:
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
       - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
@@ -130,7 +130,7 @@ services:
 
   cart-debugger:
     container_name: "cart-debugger"
-    image: darnol/laser-chad-cart-debugger:deliverable2.0
+    image: darnol/laser-chad-cart-debugger:deliverable2.1
     environment:
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
       - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
@@ -155,7 +155,7 @@ services:
 
   product-microservice:
     container_name: "product-microservice"
-    image: darnol/laser-chad-product-microservice:deliverable2.0
+    image: darnol/laser-chad-product-microservice:deliverable2.1
     environment:
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
       - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
@@ -180,7 +180,7 @@ services:
 
   product-microservice-debugger:
     container_name: "product-microservice-debugger"
-    image: darnol/laser-chad-product-microservice-debugger:deliverable2.0
+    image: darnol/laser-chad-product-microservice-debugger:deliverable2.1
     environment:
       - AWS_DEFAULT_REGION=us-east-1
       - AWS_ENDPOINT_URL=http://localstack:4566 # host localstack must match the name of the service which runs localstack
