@@ -50,7 +50,7 @@ function App() {
 
     useEffect(() => {
         if (apigBaseUrl) {
-            fetch(`${apigBaseUrl}/product-microservice/product`)
+            fetch(`${apigBaseUrl}/product`)
             .then(response => response.json())
             .then(data => {
                 setAllProductsName(data);

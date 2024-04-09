@@ -9,7 +9,7 @@ export const Playground = () => {
 
     const handleClick = async () => {
         try {
-            const res = await fetch(apigBaseUrl + "/product-microservice/product");
+            const res = await fetch(apigBaseUrl + "/product-comment");
             const data = await res.json();
             setGetResponse(data);
         } catch (error) {
@@ -19,7 +19,7 @@ export const Playground = () => {
 
     const handlePostClick = async () => {
         try {
-            const res = await fetch(apigBaseUrl + "/product-microservice/product", {
+            const res = await fetch(apigBaseUrl + "/product", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -54,7 +54,7 @@ export const Playground = () => {
 
     const handlePostBatchClick = async () => {
         try {
-            const res = await fetch(apigBaseUrl + "/product-microservice/product/batch", {
+            const res = await fetch(apigBaseUrl + "/product/batch", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
