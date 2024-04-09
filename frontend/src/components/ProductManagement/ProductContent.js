@@ -318,7 +318,7 @@ const ProductContent = ({setActiveStep, setCollectedData, collectedData}) => {
                         {images.map((image, index) => (
                             <TableRow key={index}>
                                 <TableCell>
-                                    {image.name || image}
+                                    <span style={{lineBreak: "anywhere"}}>{image.name || image}</span>
                                 </TableCell>
                                 <TableCell>
                                     <IconButton aria-label="delete" size="large"
