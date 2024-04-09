@@ -9,7 +9,7 @@ import {
     TableContainer, Stack
 } from "@mui/material";
 import React, {useEffect, useState} from "react";
-import ProductDetails from "../data/ProductDetails.json"
+//import ProductDetails from "../data/ProductDetails.json"
 import ProductComments from "../data/ProductComments.json"
 import {useParams} from "react-router-dom";
 import CarouselComponent from "../components/ProductOverview/CarouselComponent";
@@ -40,10 +40,9 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
             );
 
     }, [product_id, details]);
-     */
+
 
     useEffect(() => {
-        //TODO: fetch Product deatails for this stuff from backend
         //ProductComments
         if (!details)
             setProductComments(
@@ -52,11 +51,24 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                 )[0]
             );
     }, [product_id, details]);
+     */
 
 
     useEffect(() => {
         if (apigBaseUrl) {
-            fetch(`${apigBaseUrl}/product-microservice/product/${product_id}`)
+            fetch(`${apigBaseUrl}/product-microservice/product-comment/${product_id}`)
+                .then(response => response.json())
+                .then(data => {
+                    setProductDetails(data)
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    }, [apigBaseUrl, product_id, details]);
+
+
+    useEffect(() => {
+        if (apigBaseUrl) {
+            fetch(`${apigBaseUrl}/product-microservice/product-detail/${product_id}`)
                 .then(response => response.json())
                 .then(data => {
                     setProductDetails(data[0])
