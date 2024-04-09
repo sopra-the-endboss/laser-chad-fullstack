@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Stepper, Step, StepLabel, Button, Box, CircularProgress} from '@mui/material';
+import {Stepper, Step, StepLabel, Button, Box, CircularProgress, Stack} from '@mui/material';
 import {ProductDetail} from "../../views/ProductDetail";
 import Typography from "@mui/material/Typography";
 import ProductContent from "./ProductContent";
@@ -42,10 +42,10 @@ const SellProduct = ({propData}) => {
             case 2:
                 return (
                     // Confirmation message or any additional information before publishing
-                    <>
+                    <Stack style={{alignItems: "center", display: "flex"}} gap={2}>
                         <Typography>Creating your product...</Typography>
                         {loading ? <CircularProgress color="inherit" /> : <Link to={"/product/10"}>Check out your new product</Link>}
-                    </>
+                    </Stack>
                 );
             default:
                 return 'Unknown step';
