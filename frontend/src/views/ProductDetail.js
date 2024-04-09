@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import React, {useEffect, useState} from "react";
 //import ProductDetails from "../data/ProductDetails.json"
-import ProductComments from "../data/ProductComments.json"
+//import ProductComments from "../data/ProductComments.json"
 import {useParams} from "react-router-dom";
 import CarouselComponent from "../components/ProductOverview/CarouselComponent";
 import Typography from "@mui/material/Typography";
@@ -59,7 +59,7 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
             fetch(`${apigBaseUrl}/product-microservice/product-comment/${product_id}`)
                 .then(response => response.json())
                 .then(data => {
-                    setProductDetails(data)
+                    setProductComments(data)
                 })
                 .catch(error => console.error('Error:', error));
         }
