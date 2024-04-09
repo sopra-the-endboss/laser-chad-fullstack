@@ -22,7 +22,7 @@ import {ProductDetailRow} from "../components/ProductDetails/ProductRowDetails";
 
 export const ProductDetail = ({details, previousStep, nextStep}) => {
     console.log(details)
-    const [productDetails, setProductDetails] = useState({technical_details: {}, ...details});
+    const [productDetails, setProductDetails] = useState({technical_details: {}, product: "", ...details});
     const [productComments, setProductComments] = useState([]);
     const {product_id} = useParams();
     const dispatch = useDispatch();
@@ -32,16 +32,19 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
     // I expect an object, that's why the [0]
     if (!details)
         setProductDetails(
-          ProductDetails.filter(
-            (productDetail) => productDetail.product_id === parseInt(product_id)
-          )[0]
+            ProductDetails.filter(
+                (productDetail) => productDetail.product_id === parseInt(product_id)
+            )[0]
         );
+
   }, [product_id, details]);
     useEffect(() => {
         //TODO: fetch Product deatails for this stuff from backend
         // I expect an object, that's why the [0]
-        if (!details)
+        if (!details){
+            console.log(details);
             setProductDetails(ProductDetails.filter(productDetail => productDetail.product_id === parseInt(product_id))[0]);
+        }
     }, [product_id, details]);
 
   useEffect(() => {
@@ -56,7 +59,7 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
   }, [product_id, details]);
 
     return (
-        <Grid container xs={12}>
+        <Grid container>
             <Grid item xs={8} sx={{ borderRight: 1, borderColor: "divider" }} >
                 <CarouselComponent carouselData={productDetails} clickable={false}/>
             </Grid>
@@ -69,7 +72,7 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                         <Typography gutterBottom variant="h5" component="div" color="black" style={{fontWeight: 'bold'}}
                                     align="left">
                             {productDetails?.brand} <Typography gutterBottom variant="h5" component="span" color="black"
-                                                                align="left">{productDetails['product']}</Typography>
+                                                                align="left">{productDetails?.product}</Typography>
                         </Typography>
                         <Typography gutterBottom variant="body2" color="text.secondary" align="left">
                             {productDetails?.subheader}
@@ -126,7 +129,7 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                     <TableContainer component={Paper}>
                         <Table aria-label="collapsible table">
                             <TableBody>
-                                {Object.entries(productDetails.technical_details).map(([key, value], index) => (
+                                {Object.entries(productDetails?.technical_details || {}).map(([key, value], index) => (
                                     <ProductDetailRow key={index} detailKey={key} detailValue={value} />
                                 ))}
                             </TableBody>
