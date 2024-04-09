@@ -16,6 +16,7 @@ import MyShop from "./views/MyShop";
 import SellerGuard from "./components/Guards/SellerGuard";
 import { Playground } from "./views/Playground";
 import { useSelector } from 'react-redux';
+import {PRODUCT_ENDPOINT} from "./utils/constants";
 
 function App() {
     const [data, setData] = useState([]);
@@ -23,7 +24,7 @@ function App() {
     const [categoryFilter, setCategoryFilter] = useState("");
     const [AllProductsName, setAllProductsName] = useState([]);
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     useAuth();
 
@@ -38,19 +39,19 @@ function App() {
         else setData(AllProductsName);
     }, [categoryFilter, AllProductsName]);
 
-  useEffect(() => {
-    fetch('http://localhost:5000/apig_base_url')
-      .then(response => response.text())
-      .then(data => {
-        dispatch({ type: 'SET_APIG_BASE_URL', payload: data });
-      });
-  }, [dispatch]);
+    useEffect(() => {
+        fetch('http://localhost:5000/apig_base_url')
+            .then(response => response.text())
+            .then(data => {
+                dispatch({type: 'SET_APIG_BASE_URL', payload: data});
+            });
+    }, [dispatch]);
 
-  
+
 
     useEffect(() => {
         if (apigBaseUrl) {
-            fetch(`${apigBaseUrl}/product`)
+            fetch(`${apigBaseUrl}/${PRODUCT_ENDPOINT}`)
             .then(response => response.json())
             .then(data => {
                 setAllProductsName(data);
@@ -98,12 +99,12 @@ function App() {
                                         element={<ProductDetail/>}
                                     />
                                     <Route path="/account" element={<Account/>}/>
-                                    <Route path="/playground" element={<Playground />} />
+                                    <Route path="/playground" element={<Playground/>}/>
                                     <Route path="/my-shop" element={
                                         <SellerGuard>
                                             <MyShop/>
                                         </SellerGuard>
-                                    } />
+                                    }/>
                                 </Routes>
                             </Grid>
                         </Container>
