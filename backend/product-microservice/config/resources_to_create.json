@@ -1,20 +1,47 @@
 {
-    "product-microservice": [
+    "product": [
         {
-            "path": "product-microservice",
+            "path": "product",
+            "methods_for_that_path": [
+                {
+                    "method": "GET",
+                    "lambda_fct": "get_product"
+                },
+                {
+                    "method": "POST",
+                    "lambda_fct": "post_product",
+                    "requestModels": {
+                        "application/json": "post_product"
+                    }
+                },
+                {
+                    "method": "OPTIONS",
+                    "lambda_fct": "options_lambda_function"
+                }
+            ],
             "children_resources": [
                 {
-                    "path": "product",
+                    "path": "{product_id}",
                     "methods_for_that_path": [
                         {
                             "method": "GET",
                             "lambda_fct": "get_product"
                         },
                         {
+                            "method": "OPTIONS",
+                            "lambda_fct": "options_lambda_function"
+                        }
+                    ],
+                    "children_resources": []
+                },
+                {
+                    "path": "batch",
+                    "methods_for_that_path": [
+                        {
                             "method": "POST",
-                            "lambda_fct": "post_product",
+                            "lambda_fct": "post_product_batch",
                             "requestModels": {
-                                "application/json": "post_product"
+                                "application/json": "post_product_batch"
                             }
                         },
                         {
@@ -22,114 +49,85 @@
                             "lambda_fct": "options_lambda_function"
                         }
                     ],
-                    "children_resources":[
-                        {
-                            "path": "{product_id}",
-                            "methods_for_that_path": [
-                                {
-                                    "method": "GET",
-                                    "lambda_fct": "get_product"
-                                },
-                                {
-                                    "method": "OPTIONS",
-                                    "lambda_fct": "options_lambda_function"
-                                }
-                            ],
-                            "children_resources": []
-                        },
-                        {
-                            "path": "batch",
-                            "methods_for_that_path": [
-                                {
-                                    "method": "POST",
-                                    "lambda_fct": "post_product_batch",
-                                    "requestModels": {
-                                        "application/json": "post_product_batch"
-                                    }
-                                },
-                                {
-                                    "method": "OPTIONS",
-                                    "lambda_fct": "options_lambda_function"
-                                }
-                            ],
-                            "children_resources": []
-                        }
-                    ]
+                    "children_resources": []
+                }
+            ]
+        }
+    ],
+    "product-detail": [
+        {
+            "path": "product-detail",
+            "methods_for_that_path": [
+                {
+                    "method": "GET",
+                    "lambda_fct": "get_product_detail"
                 },
                 {
-                    "path": "product-detail",
+                    "method": "POST",
+                    "lambda_fct": "post_product_detail",
+                    "requestModels": {
+                        "application/json": "post_product_detail"
+                    }
+                },
+                {
+                    "method": "OPTIONS",
+                    "lambda_fct": "options_lambda_function"
+                }
+            ],
+            "children_resources": [
+                {
+                    "path": "{product_id}",
                     "methods_for_that_path": [
                         {
                             "method": "GET",
                             "lambda_fct": "get_product_detail"
                         },
                         {
-                            "method": "POST",
-                            "lambda_fct": "post_product_detail",
-                            "requestModels": {
-                                "application/json": "post_product_detail"
-                            }
-                        },
-                        {
                             "method": "OPTIONS",
                             "lambda_fct": "options_lambda_function"
                         }
                     ],
-                    "children_resources":[
-                        {
-                            "path": "{product_id}",
-                            "methods_for_that_path": [
-                                {
-                                    "method": "GET",
-                                    "lambda_fct": "get_product_detail"
-                                },
-                                {
-                                    "method": "OPTIONS",
-                                    "lambda_fct": "options_lambda_function"
-                                }
-                            ],
-                            "children_resources": []
-                        }
-                    ]
+                    "children_resources": []
+                }
+            ]
+        }
+    ],
+    "product-comment": [
+        {
+            "path": "product-comment",
+            "methods_for_that_path": [
+                {
+                    "method": "GET",
+                    "lambda_fct": "get_product_comment"
                 },
                 {
-                    "path": "product-comment",
+                    "method": "POST",
+                    "lambda_fct": "post_product_comment",
+                    "requestModels": {
+                        "application/json": "post_product_comment"
+                    }
+                },
+                {
+                    "method": "OPTIONS",
+                    "lambda_fct": "options_lambda_function"
+                }
+            ],
+            "children_resources": [
+                {
+                    "path": "{product_id}",
                     "methods_for_that_path": [
                         {
                             "method": "GET",
                             "lambda_fct": "get_product_comment"
                         },
                         {
-                            "method": "POST",
-                            "lambda_fct": "post_product_comment",
-                            "requestModels": {
-                                "application/json": "post_product_comment"
-                            }
-                        },
-                        {
                             "method": "OPTIONS",
                             "lambda_fct": "options_lambda_function"
                         }
                     ],
-                    "children_resources":[
-                        {
-                            "path": "{product_id}",
-                            "methods_for_that_path": [
-                                {
-                                    "method": "GET",
-                                    "lambda_fct": "get_product_comment"
-                                },
-                                {
-                                    "method": "OPTIONS",
-                                    "lambda_fct": "options_lambda_function"
-                                }
-                            ],
-                            "children_resources": []
-                        }
-                    ]
+                    "children_resources": []
                 }
-            ],
-            "methods_for_that_path": []
+            ]
         }
     ]
 }
