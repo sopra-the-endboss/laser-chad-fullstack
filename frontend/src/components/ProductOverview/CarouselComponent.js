@@ -26,15 +26,15 @@ function CarouselComponent({carouselData, clickable = true, onCardInteract}) {
         const carouselContent = (item, image) => {
 
             return (<Card sx={{
-                    display: 'flex', flexDirection: 'column', height: '100%', // Ensure the card takes up the full height
-                }} onClick={() => {
-                    clickable && onCardInteract(clickable, item?.product_id)
-                }}>
-                    <CardActionArea sx={{flexGrow: 1}}>
-                        {item?.formatted_text && (<span style={{
-                            position: 'absolute', top: 8, left: 8,
-                        }}
-                        >
+                display: 'flex', flexDirection: 'column', height: '100%', // Ensure the card takes up the full height
+            }} onClick={() => {
+                clickable && onCardInteract(clickable, item?.product_id)
+            }}>
+                <CardActionArea sx={{flexGrow: 1}}>
+                    {item?.formatted_text && (<span style={{
+                        position: 'absolute', top: 8, left: 8,
+                    }}
+                    >
                           <Chip
                               label={item.formatted_text}
                               variant="filled"
@@ -42,51 +42,51 @@ function CarouselComponent({carouselData, clickable = true, onCardInteract}) {
                               size={"small"}
                           />
                         </span>)}
-                        <CardMedia
-                            component="img"
-                            image={image}
-                            alt={"Product description"}
-                            sx={{height: 'auto', maxWidth: '100%'}} // Set height to auto
+                    <CardMedia
+                        component="img"
+                        image={image}
+                        alt={"Product description"}
+                        sx={{height: 'auto', maxWidth: '100%'}} // Set height to auto
+                    />
+                    {clickable && <CardContent sx={{
+                        flexGrow: 1,
+                        padding: 0, display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'end'
+                    }}>
+                        <CardContentComponent
+                            title={item['product']}
+                            formatted_text={item?.formatted_text}
+                            category={item?.category}
+                            price={item?.price}
+                            description={item?.description}
+                            height={157}
+                            brand={item?.brand}
                         />
-                        {clickable && <CardContent sx={{
-                            flexGrow: 1,
-                            padding: 0, display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'end'
-                        }}>
-                            <CardContentComponent
-                                title={item['product']}
-                                formatted_text={item?.formatted_text}
-                                category={item?.category}
-                                price={item?.price}
-                                description={item?.description}
-                                height={157}
-                                brand={item?.brand}
-                            />
-                            <IconButton
-                                sx={{
-                                    position: 'absolute',
-                                    bottom: 8,
-                                    right: 8,
-                                }}
-                                size="small"
-                                color="primary"
-                                onClick={(event) => {
-                                    event.stopPropagation();
-                                    dispatch(addToCart({
-                                        product_id: item.product_id,
-                                        brand: item.brand,
-                                        title: item.product,
-                                        price: item.price,
-                                        img: item.image
-                                    }));
-                                }}
-                            >
-                                <AddShoppingCartIcon fontSize="small"/>
-                            </IconButton>
-                        </CardContent>}
-                    </CardActionArea>
-                </Card>);
+                    </CardContent>}
+                </CardActionArea>
+                {clickable && <IconButton
+                    sx={{
+                        position: 'absolute',
+                        bottom: 8,
+                        right: 8,
+                    }}
+                    size="small"
+                    color="primary"
+                    onClick={(event) => {
+                        event.stopPropagation();
+                        dispatch(addToCart({
+                            product_id: item.product_id,
+                            brand: item.brand,
+                            title: item.product,
+                            price: item.price,
+                            img: item.image
+                        }));
+                    }}
+                >
+                    <AddShoppingCartIcon fontSize="small"/>
+                </IconButton>}
+            </Card>);
         }
 
         return (
