@@ -16,6 +16,7 @@ import MyShop from "./views/MyShop";
 import SellerGuard from "./components/Guards/SellerGuard";
 import { Playground } from "./views/Playground";
 import { useSelector } from 'react-redux';
+import {PRODUCT_ENDPOINT} from "./utils/constants";
 
 function App() {
     const [data, setData] = useState([]);
@@ -50,7 +51,7 @@ function App() {
 
     useEffect(() => {
         if (apigBaseUrl) {
-            fetch(`${apigBaseUrl}/product`)
+            fetch(`${apigBaseUrl}/${PRODUCT_ENDPOINT}`)
             .then(response => response.json())
             .then(data => {
                 setAllProductsName(data);

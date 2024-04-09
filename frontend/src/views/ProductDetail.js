@@ -17,58 +17,32 @@ import Typography from "@mui/material/Typography";
 import {useDispatch, useSelector} from "react-redux";
 import {addToCart} from "../reducers/slices/cartSlice";
 import {ProductDetailRow} from "../components/ProductDetails/ProductRowDetails";
+import {PRODUCT_COMMENT_ENDPOINT, PRODUCT_DETAIL_ENDPOINT} from "../utils/constants";
 
 
 export const ProductDetail = ({details, previousStep, nextStep}) => {
-    console.log(details)
     const [productDetails, setProductDetails] = useState({technical_details: {}, product: "", ...details});
     const [productComments, setProductComments] = useState([]);
     const {product_id} = useParams();
     const dispatch = useDispatch();
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
 
-    /**
-     * @deprecated
-     *
-    useEffect(() => {
-        // I expect an object, that's why the [0]
-        if (!details)
-            setProductDetails(
-                ProductDetails.filter(
-                    (productDetail) => productDetail.product_id === parseInt(product_id)
-                )[0]
-            );
-
-    }, [product_id, details]);
-
-
-    useEffect(() => {
-        //ProductComments
-        if (!details)
-            setProductComments(
-                ProductComments.filter(
-                    (productComment) => productComment.product_id === parseInt(product_id)
-                )[0]
-            );
-    }, [product_id, details]);
-     */
-
-
     useEffect(() => {
         if (apigBaseUrl) {
-            fetch(`${apigBaseUrl}/product-microservice/product-comment/${product_id}`)
+            fetch(`${apigBaseUrl}/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`)
                 .then(response => response.json())
                 .then(data => {
-                    setProductComments(data)
+                    setProductComments(data[0]);
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => console.error('Error:', error))
+                .finally(e => console.log(productComments));
         }
     }, [apigBaseUrl, product_id, details]);
 
 
     useEffect(() => {
         if (apigBaseUrl) {
-            fetch(`${apigBaseUrl}/product-microservice/product-detail/${product_id}`)
+            fetch(`${apigBaseUrl}/${PRODUCT_DETAIL_ENDPOINT}/${product_id}`)
                 .then(response => response.json())
                 .then(data => {
                     setProductDetails(data[0])
