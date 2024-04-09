@@ -31,7 +31,7 @@ const MyShop = () => {
             {/* add list with all shop items */}
             <List sx={{width: '100%'}}>
                 {shopData?.map(product => (
-                    <>
+                    <div key={product.product}>
                         <ListItem
                             secondaryAction={
                                 <Stack direction={"row"} sx={{alignItems: "center"}} spacing={2}>
@@ -86,7 +86,7 @@ const MyShop = () => {
 
                         </ListItem>
                         <Divider/>
-                    </>
+                    </div>
 
                 ))}
             </List>
