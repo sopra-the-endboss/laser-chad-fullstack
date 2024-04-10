@@ -6,7 +6,7 @@ import {
     TableBody,
     Table,
     Button,
-    TableContainer, Stack
+    TableContainer, Stack, Skeleton, Box
 } from "@mui/material";
 import React, {useEffect, useState} from "react";
 //import ProductDetails from "../data/ProductDetails.json"
@@ -18,7 +18,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {addToCart} from "../reducers/slices/cartSlice";
 import {ProductDetailRow} from "../components/ProductDetails/ProductRowDetails";
 import {PRODUCT_COMMENT_ENDPOINT, PRODUCT_DETAIL_ENDPOINT} from "../utils/constants";
-
+import { useSnackbar } from "notistack";
 
 export const ProductDetail = ({details, previousStep, nextStep}) => {
     const [productDetails, setProductDetails] = useState({technical_details: {}, product: "", ...details});
@@ -27,16 +27,32 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
     const dispatch = useDispatch();
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
 
+    const { enqueueSnackbar } = useSnackbar();
+
+    const [loadingDetails, setLoadingDetails] = useState(true);
+    const [loadingComments, setLoadingComments] = useState(true);
+
     useEffect(() => {
         if (apigBaseUrl) {
             fetch(`${apigBaseUrl}/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`)
                 .then(response => response.json())
                 .then(data => {
                     setProductComments(data[0]);
+                    setLoadingComments(false);
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    console.error('Error:', error)
+                    enqueueSnackbar(
+                        {
+                            message: "Failed to load comments!",
+                            variant: 'error',
+                            style: { width: '900px' },
+                            anchorOrigin: {vertical: 'top', horizontal: 'center'}
+                        }
+                    );
+                });
         }
-    }, [apigBaseUrl, product_id, details]);
+    }, [apigBaseUrl, product_id, details, enqueueSnackbar]);
 
 
     useEffect(() => {
@@ -44,46 +60,119 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
             fetch(`${apigBaseUrl}/${PRODUCT_DETAIL_ENDPOINT}/${product_id}`)
                 .then(response => response.json())
                 .then(data => {
-                    setProductDetails(data[0])
+                    setProductDetails(data[0]);
+                    setLoadingDetails(false);
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    console.error('Error:', error)
+                    enqueueSnackbar(
+                        {
+                            message: "Failed to load product!",
+                            variant: 'error',
+                            style: { width: '900px' },
+                            anchorOrigin: {vertical: 'top', horizontal: 'center'}
+                        }
+                    );
+                });
         }
-    }, [apigBaseUrl, product_id, details]);
+    }, [apigBaseUrl, product_id, details, enqueueSnackbar]);
 
 
     return (
         <Grid container>
             <Grid item xs={8} sx={{borderRight: 1, borderColor: "divider"}}>
-                <CarouselComponent carouselData={productDetails} clickable={false}/>
+                <CarouselComponent carouselData={productDetails} clickable={false} loading={loadingDetails}/>
             </Grid>
             <Grid item xs={4} sx={{paddingLeft: "16px"}}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Typography gutterBottom variant="h3" component="div" color="red" align="left">
-                            ${productDetails?.price}
+                            {loadingDetails ? (
+                                <Skeleton />
+                            ) : (
+                                <>${productDetails?.price}</>
+                            )}
                         </Typography>
                         <Typography gutterBottom variant="h5" component="div" color="black" style={{fontWeight: 'bold'}}
                                     align="left">
-                            {productDetails?.brand} <Typography gutterBottom variant="h5" component="span" color="black"
-                                                                align="left">{productDetails?.product}</Typography>
+                            {loadingDetails ? (
+                                <Box display="flex" alignItems="center">
+                                    {/* Skeleton for the first element */}
+                                    <Skeleton variant="text" width={100} height={18} />
+
+                                    {/* Add some space between the two skeletons */}
+                                    <Box mx={2} /> {/* mx is margin horizontal */}
+
+                                    {/* Skeleton for the second element */}
+                                    <Skeleton variant="text" width={180} height={18} />
+                                </Box>
+                            ) : (
+                                <>
+                                    {productDetails?.brand} <Typography gutterBottom variant="h5" component="span" color="black"
+                                                                        align="left">{productDetails?.product}</Typography>
+                                </>
+                            )}
+
                         </Typography>
                         <Typography gutterBottom variant="body2" color="text.secondary" align="left">
-                            {productDetails?.subheader}
+
+                            {loadingDetails ? (
+                                <>
+                                    <Skeleton variant="text" height={18}/>
+                                    <Skeleton variant="text" width="40%" height={18}/>
+                                </>
+                            ) : (
+                                productDetails?.subheader
+                            )}
                         </Typography>
+
                         {/* Description */}
                         <Typography gutterBottom variant="body1" align="left">
-                            {productDetails?.description}
+
+                            {loadingDetails ? (
+                                <>
+                                    <Skeleton variant="text" width="80%" height={18} />
+                                    <Skeleton variant="text" width="90%" height={18} />
+                                </>
+                            ) : (
+                                productDetails?.description
+                            )}
                         </Typography>
+
                         {/* Availability */}
-                        <Chip label={productDetails?.availability} color="success"/>
-                        <Chip label={"Warranty: " + productDetails?.warranty} color="primary"/>
+                        {loadingDetails ? (
+                                <Box display="flex" alignItems="center">
+                                    <Skeleton
+                                        variant="rectangular"
+                                        width={70}
+                                        height={20}
+                                        style={{ borderRadius: '20px' }} // Adjust borderRadius for more or less curvature
+                                    />
+                                    <Box mx={2} />
+                                    <Skeleton
+                                        variant="rectangular"
+                                        width={70}
+                                        height={20}
+                                        style={{ borderRadius: '20px' }} // Adjust borderRadius for more or less curvature
+                                    />
+                                </Box>
+                            ) :
+                            (<>
+                                <Chip label={productDetails?.availability} color="success"/>
+                                <Chip label={"Warranty: " + productDetails?.warranty} color="primary"/>
+                            </>)
+                        }
                     </Grid>
                     <Grid item xs={12}>
-                        <Rating
-                            name="user-rating"
-                            value={productComments?.reviews?.reduce((acc, review) => acc + review.rating, 0) / productComments?.reviews?.length}
-                            readOnly
-                        />
+                        {loadingDetails ? (
+                            <Skeleton variant="text" width="70%" height={18} />
+                        ) : (
+                            <Rating
+                                name="user-rating"
+                                value={productComments?.reviews?.reduce((acc, review) => acc + review.rating, 0) / productComments?.reviews?.length}
+                                readOnly
+                            />
+                        )}
                     </Grid>
                     <Grid item xs={12}>
                         <Button
@@ -97,23 +186,31 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                                     })
                                 ) && console.log("Added to cart: ", productDetails)
                             }
-                            disabled={details}
+                            disabled={details || loadingDetails}
                         >
                             Add to Cart
                         </Button>
                     </Grid>
                     <Grid item xs={12}>
-                        <Button variant="outlined" color="primary" disabled={details}>Pin Product</Button>
+                        <Button variant="outlined" color="primary" disabled={loadingDetails}>Pin Product</Button>
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
                     <Typography variant="h6" align="left">Comments</Typography>
-                    {productComments?.reviews?.map((review, i) => (
-                        <Paper key={i} elevation={1} sx={{p: 2, mb: 2}}>
-                            <Typography variant="subtitle2">{review?.user}</Typography>
-                            <Typography variant="body2" color="text.secondary">{review?.comment}</Typography>
-                        </Paper>
-                    ))}
+                    {loadingComments ? (
+                        <>
+                            <Skeleton variant="text" width="40%" height={18} />
+                            <Skeleton variant={"rectangle"} height={80} />
+                        </>
+
+                    ) : (
+                        productComments?.reviews?.map((review, i) => (
+                            <Paper key={i} elevation={1} sx={{p: 2, mb: 2}}>
+                                <Typography variant="subtitle2">{loadingDetails ? <Skeleton width={30}/> : review?.user}</Typography>
+                                <Typography variant="body2" color="text.secondary">{loadingDetails ? <Skeleton /> : review?.comment}</Typography>
+                            </Paper>
+                        ))
+                    )}
                 </Grid>
             </Grid>
             <Grid item xs={12} sx={{borderTop: 1, borderColor: "divider", paddingBottom: "16px", paddingTop: "16px"}}>
@@ -122,9 +219,10 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                     <TableContainer component={Paper}>
                         <Table aria-label="collapsible table">
                             <TableBody>
-                                {Object.entries(productDetails?.technical_details || {}).map(([key, value], index) => (
-                                    <ProductDetailRow key={index} detailKey={key} detailValue={value}/>
-                                ))}
+                                {loadingDetails ? <Skeleton variant={"rectangle"} height={300} /> :
+                                    Object.entries(productDetails?.technical_details || {}).map(([key, value], index) => (
+                                        <ProductDetailRow key={index} detailKey={key} detailValue={value}/>
+                                    ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
@@ -139,8 +237,8 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                                display: 'flex'
                            }} // Ensure the Stack takes the full width and displays as flex
                     >
-                        <Button variant="outlined" component="label" fullWidth onClick={previousStep}>Previous</Button>
-                        <Button variant="contained" component="label" fullWidth onClick={nextStep}>Post</Button>
+                        <Button disabled={loadingDetails} variant="outlined" component="label" fullWidth onClick={previousStep}>Previous</Button>
+                        <Button disabled={loadingDetails} variant="contained" component="label" fullWidth onClick={nextStep}>Post</Button>
                     </Stack>
                 )
             }
