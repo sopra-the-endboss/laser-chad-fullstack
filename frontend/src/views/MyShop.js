@@ -18,6 +18,7 @@ const MyShop = () => {
     useEffect(() => {
         //myshop is similar to allProductDetailsMock without the technical details.
         setShopData(MyShopMock);
+        setLoading(false);
     }, []);
 
     const deleteProduct = async () => {
