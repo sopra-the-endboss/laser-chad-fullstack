@@ -16,6 +16,7 @@ import MyShop from "./views/MyShop";
 import SellerGuard from "./components/Guards/SellerGuard";
 import { Playground } from "./views/Playground";
 import { useSelector } from 'react-redux';
+import {PRODUCT_ENDPOINT} from "./utils/constants";
 
 function App() {
     const [data, setData] = useState([]);
@@ -49,9 +50,10 @@ function App() {
     }, [dispatch]);
 
 
+
     useEffect(() => {
         if (apigBaseUrl) {
-            fetch(`${apigBaseUrl}/product`)
+            fetch(`${apigBaseUrl}/${PRODUCT_ENDPOINT}`)
             .then(response => response.json())
             .then(data => {
                 setAllProductsName(data);
@@ -102,12 +104,12 @@ function App() {
                                         element={<ProductDetail/>}
                                     />
                                     <Route path="/account" element={<Account/>}/>
-                                    <Route path="/playground" element={<Playground />} />
+                                    <Route path="/playground" element={<Playground/>}/>
                                     <Route path="/my-shop" element={
                                         <SellerGuard>
                                             <MyShop/>
                                         </SellerGuard>
-                                    } />
+                                    }/>
                                 </Routes>
                             </Grid>
                         </Container>
