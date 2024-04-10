@@ -18,7 +18,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {addToCart} from "../reducers/slices/cartSlice";
 import {ProductDetailRow} from "../components/ProductDetails/ProductRowDetails";
 import {PRODUCT_COMMENT_ENDPOINT, PRODUCT_DETAIL_ENDPOINT} from "../utils/constants";
-
+import { useSnackbar } from "notistack";
 
 export const ProductDetail = ({details, previousStep, nextStep}) => {
     const [productDetails, setProductDetails] = useState({technical_details: {}, product: "", ...details});
@@ -26,6 +26,8 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
     const {product_id} = useParams();
     const dispatch = useDispatch();
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    const { enqueueSnackbar } = useSnackbar();
 
     const [loadingDetails, setLoadingDetails] = useState(true);
     const [loadingComments, setLoadingComments] = useState(true);
@@ -38,9 +40,19 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                     setProductComments(data[0]);
                     setLoadingComments(false);
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    console.error('Error:', error)
+                    enqueueSnackbar(
+                        {
+                            message: "Failed to load comments!",
+                            variant: 'error',
+                            style: { width: '900px' },
+                            anchorOrigin: {vertical: 'top', horizontal: 'center'}
+                        }
+                    );
+                });
         }
-    }, [apigBaseUrl, product_id, details]);
+    }, [apigBaseUrl, product_id, details, enqueueSnackbar]);
 
 
     useEffect(() => {
@@ -51,9 +63,19 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                     setProductDetails(data[0]);
                     setLoadingDetails(false);
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    console.error('Error:', error)
+                    enqueueSnackbar(
+                        {
+                            message: "Failed to load product!",
+                            variant: 'error',
+                            style: { width: '900px' },
+                            anchorOrigin: {vertical: 'top', horizontal: 'center'}
+                        }
+                    );
+                });
         }
-    }, [apigBaseUrl, product_id, details]);
+    }, [apigBaseUrl, product_id, details, enqueueSnackbar]);
 
 
     return (
