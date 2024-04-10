@@ -5,7 +5,7 @@ import CarouselComponent from "../components/ProductOverview/CarouselComponent";
 import {useNavigate, useParams} from 'react-router-dom';
 
 
-const ProductOverview = ({isSearchQuerySubmitted, data, setCategoryFilter}) => {
+const ProductOverview = ({isSearchQuerySubmitted, data, setCategoryFilter, loading}) => {
     const [carouselData, setCarouselData] = useState([]);
     const [productData, setProductData] = useState([]);
     const navigate = useNavigate();
@@ -17,7 +17,7 @@ const ProductOverview = ({isSearchQuerySubmitted, data, setCategoryFilter}) => {
     }, [data]);
 
     useEffect(() => {
-        if(categoryFilter)
+        if (categoryFilter)
             setCategoryFilter(categoryFilter);
     }, [categoryFilter, setCategoryFilter])
 
@@ -46,27 +46,31 @@ const ProductOverview = ({isSearchQuerySubmitted, data, setCategoryFilter}) => {
                         </Typography>
                         <Box py={2} sx={{textAlign: "center", width: "70%", margin: "auto"}}>
                             <Typography variant="body1" sx={{color: "grey"}}>
-                                HPLaserChads E-Commerce Solution is a platform where you can buy and sell products. We have a wide range of products from different merchants. You can buy and sell products of your choice.
+                                HPLaserChads E-Commerce Solution is a platform where you can buy and sell products. We
+                                have a wide range of products from different merchants. You can buy and sell products of
+                                your choice.
                             </Typography>
                         </Box>
                     </Grid>
-                    {carouselData.length > 0 && (
+                    {((!loading && carouselData.length > 0) || loading) && (
                         <>
                             <Grid item xs={8}>
-                                <CarouselComponent carouselData={carouselData} onCardInteract={onCardInteract}/>
+                                <CarouselComponent carouselData={carouselData} onCardInteract={onCardInteract} loading={loading}/>
                             </Grid>
                             <Grid item xs={4}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12}>
-                                        <ProductComponent title={"Comment Section"} img={"https://preview.redd.it/madoka-ayukawa-from-kimagure-orange-road-1987-v0-fx15w3vtkjz81.png?width=640&crop=smart&auto=webp&s=471f01d04aec447193f23c558de3746b8e61e25a"}
+                                        <ProductComponent title={"Comment Section"}
+                                                          img={"https://preview.redd.it/madoka-ayukawa-from-kimagure-orange-road-1987-v0-fx15w3vtkjz81.png?width=640&crop=smart&auto=webp&s=471f01d04aec447193f23c558de3746b8e61e25a"}
                                                           description={"Show top comment of the day or something or different product highlight"}
-                                                          onCardInteract={onCardInteract}/>
+                                                          onCardInteract={onCardInteract} loading={loading} />
                                     </Grid>
 
                                     <Grid item xs={12}>
-                                        <ProductComponent title={"News"} img={"https://preview.redd.it/madoka-ayukawa-from-kimagure-orange-road-1987-v0-fx15w3vtkjz81.png?width=640&crop=smart&auto=webp&s=471f01d04aec447193f23c558de3746b8e61e25a"}
+                                        <ProductComponent title={"News"}
+                                                          img={"https://preview.redd.it/madoka-ayukawa-from-kimagure-orange-road-1987-v0-fx15w3vtkjz81.png?width=640&crop=smart&auto=webp&s=471f01d04aec447193f23c558de3746b8e61e25a"}
                                                           description={"Show some news related to products or a blog post or something"}
-                                                          onCardInteract={onCardInteract}/>
+                                                          onCardInteract={onCardInteract} loading={loading} />
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -74,9 +78,10 @@ const ProductOverview = ({isSearchQuerySubmitted, data, setCategoryFilter}) => {
                     )}
                 </>
             }
-            {productData?.map((product, index) => (
+            {(loading ? Array.from(new Array(12)) : productData).map((product, index) => (
                 <Grid item xs={3} key={index}>
-                    <ProductComponent {...product} title={product.product} img={ product.image} onCardInteract={onCardInteract}/>
+                    <ProductComponent {...product} title={product?.product} img={product?.image}
+                                      onCardInteract={onCardInteract} loading={loading}/>
                 </Grid>
             ))}
         </>

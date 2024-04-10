@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {CardActionArea, Chip, IconButton} from "@mui/material";
+import {CardActionArea, Chip, IconButton, Skeleton} from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import Card from "@mui/material/Card";
 import {CardContentComponent} from "./CardContentComponent";
@@ -10,7 +10,7 @@ import {addToCart} from "../../reducers/slices/cartSlice";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import {useDispatch} from "react-redux";
 
-function CarouselComponent({carouselData, clickable = true, onCardInteract}) {
+function CarouselComponent({carouselData, clickable = true, onCardInteract, loading}) {
 
     const dispatch = useDispatch();
     if (carouselData) {
@@ -42,12 +42,16 @@ function CarouselComponent({carouselData, clickable = true, onCardInteract}) {
                               size={"small"}
                           />
                         </span>)}
-                        <CardMedia
-                            component="img"
-                            image={image}
-                            alt={"Product description"}
-                            sx={{height: 'auto', maxWidth: '100%'}} // Set height to auto
-                        />
+                        {loading ? (
+                            <Skeleton height={474} variant="rectangular" />
+                        ) : (
+                            <CardMedia
+                                component="img"
+                                image={image}
+                                alt={"Product description"}
+                                sx={{height: 'auto', maxWidth: '100%'}} // Set height to auto
+                            />
+                        )}
                         {clickable && <CardContent sx={{
                             flexGrow: 1,
                             padding: 0, display: 'flex',
@@ -62,6 +66,7 @@ function CarouselComponent({carouselData, clickable = true, onCardInteract}) {
                                 description={item?.description}
                                 height={157}
                                 brand={item?.brand}
+                                loading={loading}
                             />
                             <IconButton
                                 sx={{
@@ -71,6 +76,7 @@ function CarouselComponent({carouselData, clickable = true, onCardInteract}) {
                                 }}
                                 size="small"
                                 color="primary"
+                                disabled={loading}
                                 onClick={(event) => {
                                     event.stopPropagation();
                                     dispatch(addToCart({
@@ -127,7 +133,16 @@ function CarouselComponent({carouselData, clickable = true, onCardInteract}) {
                 slidesToSlide={1}
                 swipeable
             >
-                {normalizedCarouselData?.map((item) => (item.images.map((image, imgIndex) => (carouselContent(item, image, imgIndex)))))}
+
+                {
+                    // check if loading, if so, create new array with 3 entires else take the carousel data
+                    (loading ? [{images: ['sampleString']}, {images: ['sampleString']}, {images: ['sampleString']}] : normalizedCarouselData).map((item) => (
+                        // use the items images array and map them.
+                        item.images.map((image, imgIndex) => (
+                            carouselContent(item, image, imgIndex)
+                        ))
+                    ))
+                }
             </Carousel>);
     }
 }

@@ -24,6 +24,7 @@ function App() {
     const [AllProductsName, setAllProductsName] = useState([]);
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState(true);
 
     useAuth();
 
@@ -35,7 +36,8 @@ function App() {
                     (element) => element.category === categoryFilter
                 )
             );
-        else setData(AllProductsName);
+        else
+            setData(AllProductsName);
     }, [categoryFilter, AllProductsName]);
 
     useEffect(() => {
@@ -53,6 +55,7 @@ function App() {
             .then(response => response.json())
             .then(data => {
                 setAllProductsName(data);
+                setLoading(false);
             })
             .catch(error => console.error('Error:', error));
         }
@@ -78,6 +81,7 @@ function App() {
                                                 isSearchQuerySubmitted={isSearchQuerySubmitted}
                                                 data={data}
                                                 setCategoryFilter={setCategoryFilter}
+                                                loading={loading}
                                             />
                                         }
                                     />
@@ -89,6 +93,7 @@ function App() {
                                                 isSearchQuerySubmitted={isSearchQuerySubmitted}
                                                 data={data}
                                                 setCategoryFilter={setCategoryFilter}
+                                                loading={loading}
                                             />
                                         }
                                     />
