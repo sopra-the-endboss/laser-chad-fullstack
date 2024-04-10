@@ -33,7 +33,7 @@ const MyShop = () => {
             </CustomModal>
             {/* add list with all shop items */}
             <List sx={{width: '100%'}}>
-                {loading ? (Array.from(new Array(5)).map(e => (
+                {loading ? (Array.from(new Array(5)).map(() => (
                     <div>
                         <ListItem
                             secondaryAction={
