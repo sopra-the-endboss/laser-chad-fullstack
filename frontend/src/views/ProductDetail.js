@@ -34,8 +34,7 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                 .then(data => {
                     setProductComments(data[0]);
                 })
-                .catch(error => console.error('Error:', error))
-                .finally(e => console.log(productComments));
+                .catch(error => console.error('Error:', error));
         }
     }, [apigBaseUrl, product_id, details]);
 
