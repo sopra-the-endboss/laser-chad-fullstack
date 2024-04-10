@@ -7,6 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteProductConfirmation from "../components/ui/DeleteConfirmation";
+
 const MyShop = () => {
 
     //verify that user is logged in has already been done by the routing guard
@@ -18,29 +19,30 @@ const MyShop = () => {
     }, []);
 
     const deleteProduct = async () => {
-       console.log("Delete Product clicked");
+        console.log("Delete Product clicked");
     };
 
     return (
         <Stack spacing={2} sx={{width: "100%"}}>
             {/* move this to top right */}
             <CustomModal openModalText={"Add new Product"}>
-                <SellProduct />
+                <SellProduct/>
             </CustomModal>
             {/* add list with all shop items */}
-            <List sx={{ width: '100%' }}>
+            <List sx={{width: '100%'}}>
                 {shopData?.map(product => (
-                    <>
+                    <div key={product.product}>
                         <ListItem
                             secondaryAction={
                                 <Stack direction={"row"} sx={{alignItems: "center"}} spacing={2}>
                                     <Chip label={product?.brand} color="success"/>
                                     <Chip label={product?.category} color="success"/>
-                                    <CustomModal icon={<EditIcon />}>
-                                        <SellProduct propData={product} />
+                                    <CustomModal icon={<EditIcon/>}>
+                                        <SellProduct propData={product}/>
                                     </CustomModal>
-                                    <CustomModal icon={<DeleteIcon />}>
-                                        <DeleteProductConfirmation itemToDelete={product.product} deleteFunction={deleteProduct} />
+                                    <CustomModal icon={<DeleteIcon/>}>
+                                        <DeleteProductConfirmation itemToDelete={product.product}
+                                                                   deleteFunction={deleteProduct}/>
                                     </CustomModal>
                                 </Stack>
                             }
@@ -55,33 +57,40 @@ const MyShop = () => {
                                     </>
                                 }
                                 secondary={
-                                    <Stack direction={"row"} spacing={2}>
-                                        <Typography
-                                            sx={{ display: 'inline' }}
-                                            component="span"
-                                            variant="body2"
-                                            color="red"
-                                        >
-                                            {"$ " + product.price}
+                                    <>
+                                      <span style={{
+                                          display: 'flex',
+                                          flexDirection: 'row',
+                                          gap: '16px'
+                                      }}>
+                                          <Typography
+                                              sx={{display: 'inline'}}
+                                              component="span"
+                                              variant="body2"
+                                              color="red"
+                                          >
+                                          {"$ " + product.price}
                                         </Typography>
                                         <Typography
-                                            sx={{ display: 'inline' }}
+                                            sx={{display: 'inline'}}
                                             component="span"
                                             variant="body2"
                                             color="text.primary"
                                         >
-                                            {product.subheader}
+                                          {product.subheader}
                                         </Typography>
-                                    </Stack>
+                                      </span>
+                                    </>
                                 }
                             />
 
                         </ListItem>
-                        <Divider />
-                    </>
+                        <Divider/>
+                    </div>
 
                 ))}
             </List>
         </Stack>
     );
-}; export default MyShop;
+};
+export default MyShop;

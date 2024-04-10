@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice";
 import cartReducer from "./slices/cartSlice";
 import storage from "redux-persist/lib/storage";
@@ -10,18 +10,22 @@ const persistConfig = {
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, cartReducer);
+//const persistedReducer = persistReducer(persistConfig, cartReducer);
+
+const rootReducer = combineReducers({
+  auth: authReducer,
+  cart: cartReducer,
+  apigBaseUrl: apigBaseUrlReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
-  reducer: {
-    auth: authReducer,
-    cart: persistedReducer,
-    apigBaseUrl: apigBaseUrlReducer
-  },
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
+      getDefaultMiddleware({
+        serializableCheck: false,
+      }),
 });
 
 export const persistor = persistStore(store);
