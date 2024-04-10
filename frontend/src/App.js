@@ -23,7 +23,9 @@ function App() {
     const [categoryFilter, setCategoryFilter] = useState("");
     const [AllProductsName, setAllProductsName] = useState([]);
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
+
+    const [] = useState();
 
     useAuth();
 
@@ -38,15 +40,14 @@ function App() {
         else setData(AllProductsName);
     }, [categoryFilter, AllProductsName]);
 
-  useEffect(() => {
-    fetch('http://localhost:5000/apig_base_url')
-      .then(response => response.text())
-      .then(data => {
-        dispatch({ type: 'SET_APIG_BASE_URL', payload: data });
-      });
-  }, [dispatch]);
+    useEffect(() => {
+        fetch('http://localhost:5000/apig_base_url')
+            .then(response => response.text())
+            .then(data => {
+                dispatch({type: 'SET_APIG_BASE_URL', payload: data});
+            });
+    }, [dispatch]);
 
-  
 
     useEffect(() => {
         if (apigBaseUrl) {
