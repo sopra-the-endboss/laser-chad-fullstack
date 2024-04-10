@@ -25,8 +25,6 @@ function App() {
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
     const dispatch = useDispatch();
 
-    const [] = useState();
-
     useAuth();
 
     useEffect(() => {
