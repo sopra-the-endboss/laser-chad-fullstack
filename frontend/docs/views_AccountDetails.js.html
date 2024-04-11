@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: views/AccountDetails.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: views/AccountDetails.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
+import { useSelector } from "react-redux";
+import "../App.css";
+import EditIcon from "@mui/icons-material/Edit";
+import { useState } from "react";
+import { updateUserAttributes } from "aws-amplify/auth";
+import { useDispatch } from "react-redux";
+import { setUserLoggedIn } from "../reducers/slices/authSlice";
+import {
+  Button,
+  Grid,
+  TextField,
+  Typography,
+  Box,
+  IconButton,
+  Divider,
+} from "@mui/material";
+
+/**
+ * Displays and allows editing of the current user's account details.
+ *
+ * This component fetches and displays the user's account information such as full name, email, and birthdate
+ * from the Redux store's auth state. Users can toggle edit mode to update their information, which is then
+ * saved using AWS Amplify's `updateUserAttributes` function and updated in the Redux store.
+ *
+ * The editing state is managed locally within the component, allowing the user to modify their information
+ * in a form. Upon saving, the updated information is dispatched to the Redux store to update the global state,
+ * and the local editing state is turned off.
+ *
+ * @component
+ * @example
+ * return &lt;AccountDetails />;
+ *
+ * @requires react-redux - To fetch and update the authentication state from the Redux store.
+ * @requires aws-amplify/auth - To update user attributes in the backend.
+ * @requires @mui/material - For the UI components.
+ * @requires ../reducers/slices/authSlice - To dispatch user information updates to the Redux store.
+ */
+
+const AccountDetails = () => {
+  const authState = useSelector((state) => state.auth);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editState, setEditState] = useState(authState);
+  const dispatch = useDispatch();
+
+  const handleEditToggle = () => {
+    setIsEditing(!isEditing);
+    if (isEditing) {
+      setEditState(authState);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleUpdate = async () => {
+    const { givenname, familyname, email, birthdate } = editState;
+
+    try {
+      updateUserAttributes({
+        userAttributes: {
+          given_name: givenname,
+          family_name: familyname,
+          email: email,
+          birthdate: birthdate,
+        },
+      });
+      dispatch(setUserLoggedIn(editState));
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error updating user attributes", error);
+    }
+  };
+
+  return (
+    &lt;Box
+      sx={{
+        bgcolor: "white",
+        overflow: "hidden",
+        boxShadow: 1,
+        borderRadius: "12px",
+        border: 1,
+        borderColor: "grey.300",
+        p: 2,
+        maxWidth: "600px",
+      }}
+    >
+      &lt;Typography variant="h6" color="textPrimary" gutterBottom>
+        User Account
+      &lt;/Typography>
+      &lt;Typography variant="body2" color="textSecondary">
+        Account Type: {authState.groups}
+      &lt;/Typography>
+      &lt;Divider sx={{ my: 2 }} />
+
+      {isEditing ? (
+        &lt;React.Fragment>
+          &lt;Grid container spacing={2} alignItems="center">
+            &lt;Grid item xs={6}>
+              &lt;Typography>Givenname&lt;/Typography>
+            &lt;/Grid>
+            &lt;Grid item xs={6}>
+              &lt;TextField
+                fullWidth
+                name="givenname"
+                variant="outlined"
+                value={editState.givenname || ""}
+                onChange={handleInputChange}
+              />
+            &lt;/Grid>
+
+            &lt;Grid item xs={6}>
+              &lt;Typography>Familyname&lt;/Typography>
+            &lt;/Grid>
+            &lt;Grid item xs={6}>
+              &lt;TextField
+                fullWidth
+                name="familyname"
+                variant="outlined"
+                value={editState.familyname || ""}
+                onChange={handleInputChange}
+              />
+            &lt;/Grid>
+
+            &lt;Grid item xs={6}>
+              &lt;Typography>Birthdate&lt;/Typography>
+            &lt;/Grid>
+            &lt;Grid item xs={6}>
+              &lt;TextField
+                fullWidth
+                name="birthdate"
+                type="date"
+                variant="outlined"
+                value={editState.birthdate || ""}
+                onChange={handleInputChange}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            &lt;/Grid>
+
+            &lt;Grid item xs={6}>
+              &lt;Typography>Email&lt;/Typography>
+            &lt;/Grid>
+            &lt;Grid item xs={6}>
+              &lt;TextField
+                fullWidth
+                name="email"
+                variant="outlined"
+                value={editState.email || ""}
+                onChange={handleInputChange}
+              />
+            &lt;/Grid>
+
+            &lt;Grid item xs={12}>
+              &lt;Button
+                variant="contained"
+                color="primary"
+                onClick={handleUpdate}
+              >
+                Save
+              &lt;/Button>
+            &lt;/Grid>
+          &lt;/Grid>
+        &lt;/React.Fragment>
+      ) : (
+        &lt;React.Fragment>
+          &lt;Grid container spacing={2}>
+            &lt;Grid item xs={6}>
+              &lt;Typography>Full name:&lt;/Typography>
+            &lt;/Grid>
+            &lt;Grid item xs={6}>
+              &lt;Typography>
+                {authState.givenname + " " + authState.familyname}{" "}
+              &lt;/Typography>
+            &lt;/Grid>
+            &lt;Grid item xs={6}>
+              &lt;Typography>Email address: &lt;/Typography>
+            &lt;/Grid>
+            &lt;Grid item xs={6}>
+              &lt;Typography>{authState.email}&lt;/Typography>
+            &lt;/Grid>
+            &lt;Grid item xs={6}>
+              &lt;Typography>Birthdate:&lt;/Typography>
+            &lt;/Grid>
+            &lt;Grid item xs={6}>
+              &lt;Typography>{authState.birthdate}&lt;/Typography>
+            &lt;/Grid>
+          &lt;/Grid>
+          &lt;IconButton onClick={handleEditToggle} size="large">
+            &lt;EditIcon />
+          &lt;/IconButton>
+        &lt;/React.Fragment>
+      )}
+    &lt;/Box>
+  );
+};
+
+export default AccountDetails;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#AccountDetails">AccountDetails</a></li><li><a href="global.html#CartDrawer">CartDrawer</a></li><li><a href="global.html#CartItem">CartItem</a></li><li><a href="global.html#CustomModal">CustomModal</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#SellerGuard">SellerGuard</a></li><li><a href="global.html#cartSlice">cartSlice</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#persistConfig">persistConfig</a></li><li><a href="global.html#persistedReducer">persistedReducer</a></li><li><a href="global.html#persistor">persistor</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#useAuth">useAuth</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Apr 11 2024 15:53:51 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
