@@ -6,9 +6,19 @@ import Typography from "@mui/material/Typography";
 import CartItem from "./CartItem";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Component to render the shopping cart as a drawer
+ * @component
+ * @returns {React} A React element that renders a drawer on the right side of the page
+ */
 const CartDrawer = ({ isOpen, toggleCart }) => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const navigate = useNavigate();
+  /**
+   * A function to check if a cart item is clickable and navigate the user to the clicked product if true
+   * @param {boolean} clickable
+   * @param {int} id
+   */
   const onCardInteract = (clickable, id) => {
     if (clickable) {
       navigate("/product/" + id);

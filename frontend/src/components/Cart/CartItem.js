@@ -15,6 +15,11 @@ import {
   removeFromCart,
 } from "../../reducers/slices/cartSlice";
 
+/**
+ * Component to render individual cart items.
+ * @component
+ * @returns {React} A React element that renders an individual cart item
+ */
 const CartItem = ({ item, onCardInteract }) => {
   const dispatch = useDispatch();
   return (

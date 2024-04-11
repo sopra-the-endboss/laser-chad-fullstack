@@ -16,7 +16,7 @@ const store = configureStore({
   reducer: {
     auth: authReducer,
     cart: persistedReducer,
-    apigBaseUrl: apigBaseUrlReducer
+    apigBaseUrl: apigBaseUrlReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
