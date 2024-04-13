@@ -8,10 +8,11 @@ export const Playground = () => {
     const [PostBatchResponse, setPostBatchResponse] = useState('');
     const [PostCommentResponse, setPostCommentResponse] = useState('');
     const [GetCommentResponse, setGetCommentResponse] = useState('');
+    const [DeleteResponse, setDeleteResponse] = useState('');
 
     const handleClick = async () => {
         try {
-            const res = await fetch(apigBaseUrl + "/product-comment");
+            const res = await fetch(apigBaseUrl + "/product/1");
             const data = await res.json();
             setGetResponse(data);
         } catch (error) {
@@ -45,6 +46,28 @@ export const Playground = () => {
             try {
                 const data = JSON.parse(text);
                 setPostResponse(data);
+            } catch (err) {
+                console.error('This does not look like a valid JSON: ', text);
+                throw err;
+            }
+        } catch (error) {
+            console.error('There was a problem with the fetch operation: ', error);
+        }
+    };
+
+    const handleDeleteClick = async () => {
+        try {
+            const res = await fetch(apigBaseUrl + "/product/2", {
+                method: 'DELETE'
+            });
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+
+            const text = await res.text();
+            try {
+                const data = JSON.parse(text);
+                setDeleteResponse(data);
             } catch (err) {
                 console.error('This does not look like a valid JSON: ', text);
                 throw err;
@@ -165,6 +188,9 @@ export const Playground = () => {
 
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handlePostClick}>Send POST Request</button>
             <p>PostResponse: {JSON.stringify(PostResponse)}</p>
+
+            <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={handleDeleteClick}>Send DELETE Request</button>
+            <p>DeleteResponse: {JSON.stringify(DeleteResponse)}</p>
 
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handlePostBatchClick}>Send POST Batch Request</button>
             <p>PostBatchResponse: {JSON.stringify(PostBatchResponse)}</p>

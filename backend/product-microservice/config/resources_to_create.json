@@ -30,6 +30,10 @@
                         {
                             "method": "OPTIONS",
                             "lambda_fct": "options_lambda_function"
+                        },
+                        {   
+                            "method":"DELETE",
+                            "lambda_fct":"delete_product"
                         }
                     ],
                     "children_resources": []
