@@ -1093,5 +1093,188 @@
             }
           ]
         }
-      ]
+    ],
+    "distributor-table": [
+      {
+        "distributor_id": "1",
+        "name": "TechNova",
+        "industry": "Technology",
+        "headquarters": "San Francisco, CA, USA",
+        "numberOfEmployees": 5000,
+        "foundationYear": 2001
+      },
+      {
+        "distributor_id": "2",
+        "name": "GreenHarvest",
+        "industry": "Agriculture",
+        "headquarters": "Lincoln, NE, USA",
+        "numberOfEmployees": 200,
+        "foundationYear": 1998
+      },
+      {
+        "distributor_id": "3",
+        "name": "MediSolutions",
+        "industry": "Healthcare",
+        "headquarters": "Boston, MA, USA",
+        "numberOfEmployees": 1500,
+        "foundationYear": 2010
+      },
+      {
+        "distributor_id": "4",
+        "name": "EduFuture",
+        "industry": "Education",
+        "headquarters": "New York, NY, USA",
+        "numberOfEmployees": 300,
+        "foundationYear": 2015
+      },
+      {
+        "distributor_id": "5",
+        "name": "InnovateSecure",
+        "industry": "Cybersecurity",
+        "headquarters": "Austin, TX, USA",
+        "numberOfEmployees": 800,
+        "foundationYear": 2005
+      },
+      {
+        "distributor_id": "6",
+        "name": "EcoBuild",
+        "industry": "Construction",
+        "headquarters": "Denver, CO, USA",
+        "numberOfEmployees": 1000,
+        "foundationYear": 2000
+      },
+      {
+        "distributor_id": "7",
+        "name": "ArtiCraft",
+        "industry": "Retail",
+        "headquarters": "Portland, OR, USA",
+        "numberOfEmployees": 50,
+        "foundationYear": 2012
+      },
+      {
+        "distributor_id": "8",
+        "name": "GlobalLink",
+        "industry": "Telecommunications",
+        "headquarters": "Seattle, WA, USA",
+        "numberOfEmployees": 4500,
+        "foundationYear": 1996
+      },
+      {
+        "distributor_id": "9",
+        "name": "NextGen Motors",
+        "industry": "Automotive",
+        "headquarters": "Detroit, MI, USA",
+        "numberOfEmployees": 3200,
+        "foundationYear": 1985
+      },
+      {
+        "distributor_id": "10",
+        "name": "CleanEnergy Inc.",
+        "industry": "Renewable Energy",
+        "headquarters": "San Diego, CA, USA",
+        "numberOfEmployees": 2200,
+        "foundationYear": 2008
+      }
+    ],
+    "category-table": [
+      {
+        "category_id": "1",
+        "name": "Tech",
+        "options": [
+          "connectivity",
+          "warranty period",
+          "brand",
+          "energy efficiency",
+          "compatibility"
+        ]
+      },
+      {
+        "category_id": "2",
+        "name": "Smartphone",
+        "options": [
+          "memory",
+          "storage",
+          "display size",
+          "display resolution",
+          "operating system",
+          "battery capacity",
+          "number of cameras",
+          "photo resolution",
+          "5G support",
+          "water resistance"
+        ]
+      },
+      {
+        "category_id": "3",
+        "name": "Laptop",
+        "options": [
+          "processor type",
+          "RAM",
+          "storage",
+          "display size",
+          "display resolution",
+          "operating system",
+          "graphics card",
+          "weight",
+          "battery life",
+          "touchscreen support"
+        ]
+      },
+      {
+        "category_id": "4",
+        "name": "Accessories",
+        "options": [
+          "compatibility",
+          "type",
+          "material",
+          "wireless capability",
+          "color"
+        ]
+      },
+      {
+        "category_id": "5",
+        "name": "Gaming",
+        "options": [
+          "platform",
+          "genre",
+          "ESRB rating",
+          "multiplayer support",
+          "DLC availability"
+        ]
+      },
+      {
+        "category_id": "6",
+        "name": "Anime",
+        "options": [
+          "genre",
+          "format",
+          "audience age group",
+          "sub or dub",
+          "year of release"
+        ]
+      },
+      {
+        "category_id": "7",
+        "name": "Photo",
+        "options": [
+          "camera type",
+          "resolution",
+          "sensor size",
+          "lens compatibility",
+          "ISO range",
+          "video resolution"
+        ]
+      },
+      {
+        "category_id": "8",
+        "name": "Sale",
+        "options": [
+          "discount type",
+          "product category",
+          "timeframe",
+          "exclusive deals",
+          "bundle offers"
+        ]
+      }
+    ]    
 }

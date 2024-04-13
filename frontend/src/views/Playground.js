@@ -9,6 +9,8 @@ export const Playground = () => {
     const [PostCommentResponse, setPostCommentResponse] = useState('');
     const [GetCommentResponse, setGetCommentResponse] = useState('');
     const [DeleteResponse, setDeleteResponse] = useState('');
+    const [GetDistributorResponse, setGetDistributorResponse] = useState('');
+    const [GetCategoryResponse, setGetCategoryResponse] = useState('');
 
     const handleClick = async () => {
         try {
@@ -180,6 +182,28 @@ export const Playground = () => {
         }
     };
 
+    const handleGetDistributorClick = async () => {
+        try {
+            const res = await fetch(apigBaseUrl + "/distributor");
+            const data = await res.json();
+            setGetDistributorResponse(data);
+        } catch (error) {
+            console.error(error);
+        }
+
+    };
+
+    const handleGetCategoryClick = async () => {
+        try {
+            const res = await fetch(apigBaseUrl + "/category");
+            const data = await res.json();
+            setGetCategoryResponse(data);
+        } catch (error) {
+            console.error(error);
+        }
+
+    };
+
     return (
         <div>
             <p>API Gateway Base URL: {apigBaseUrl}</p>
@@ -200,6 +224,12 @@ export const Playground = () => {
 
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleGetComment}>Send GET Comment Request</button>
             <p>GetCommentResponse: {JSON.stringify(GetCommentResponse)}</p>
+
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleGetDistributorClick}>Send GET Distributor Request</button>
+            <p>GetDistributorResponse: {JSON.stringify(GetDistributorResponse)}</p>
+
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleGetCategoryClick}>Send GET Category Request</button>
+            <p>GetCategoryResponse: {JSON.stringify(GetCategoryResponse)}</p>
 
         </div>
     );

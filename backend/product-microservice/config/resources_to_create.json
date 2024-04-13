@@ -133,5 +133,29 @@
                 }
             ]
         }
+    ],
+    "distributor": [
+        {
+            "path": "distributor",
+            "methods_for_that_path": [
+                {
+                    "method": "GET",
+                    "lambda_fct": "get_distributor"
+                }
+            ],
+            "children_resources": []
+        }
+    ],
+    "category": [
+        {
+            "path": "category",
+            "methods_for_that_path": [
+                {
+                    "method": "GET",
+                    "lambda_fct": "get_category"
+                }
+            ],
+            "children_resources": []
+        }
     ]
 }

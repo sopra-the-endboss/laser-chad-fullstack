@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "id": "1",
     "name": "Tech",
     "options": [
       "connectivity",
@@ -11,7 +11,7 @@
     ]
   },
   {
-    "id": 2,
+    "id": "2",
     "name": "Smartphone",
     "options": [
       "memory",
@@ -27,7 +27,7 @@
     ]
   },
   {
-    "id": 3,
+    "id": "3",
     "name": "Laptop",
     "options": [
       "processor type",
@@ -43,7 +43,7 @@
     ]
   },
   {
-    "id": 4,
+    "id": "4",
     "name": "Accessories",
     "options": [
       "compatibility",
@@ -54,7 +54,7 @@
     ]
   },
   {
-    "id": 5,
+    "id": "5",
     "name": "Gaming",
     "options": [
       "platform",
@@ -65,7 +65,7 @@
     ]
   },
   {
-    "id": 6,
+    "id": "6",
     "name": "Anime",
     "options": [
       "genre",
@@ -76,7 +76,7 @@
     ]
   },
   {
-    "id": 7,
+    "id": "7",
     "name": "Photo",
     "options": [
       "camera type",
@@ -88,7 +88,7 @@
     ]
   },
   {
-    "id": 8,
+    "id": "8",
     "name": "Sale",
     "options": [
       "discount type",
