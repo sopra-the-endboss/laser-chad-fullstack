@@ -67,19 +67,47 @@ def handler(event: dict, context) -> dict:
 
     print("Parse body")
     try:
-        item = json.loads(event['body'], parse_float=Decimal)
+        new_item = json.loads(event['body'], parse_float=Decimal)
         print("DEBUG: This is the item")
-        print(item)
+        print(new_item)
     except json.decoder.JSONDecodeError as e:
         print("JSONDecodeError IN PARSING BODY")
         raise e
-
-    print("Try writing item")
-    response_put = dynamo_table.put_item(
-        TableName = TableName,
-        ReturnValues = "NONE",
-        Item = item
+    
+    # Check if an item with the same product_id already exists
+    response_get = dynamo_table.get_item(
+        Key = {
+            'product_id': new_item['product_id']
+        }
     )
+
+    if 'Item' in response_get:
+        print("Item with the same product_id already exists")
+        # Handle the case when an item with the same product_id already exists
+        # You can raise an exception, return an error response, or handle it in any other way you prefer
+
+        existing_item = response_get['Item']
+        existing_reviews = existing_item.get('reviews', [])
+        new_reviews = new_item.get('reviews', [])
+        existing_reviews.extend(new_reviews)
+        existing_item['reviews'] = existing_reviews
+        response_put = dynamo_table.put_item(
+            TableName=TableName,
+            ReturnValues="NONE",
+            Item=existing_item
+        )
+    else:
+        print("Item does not exist, proceed with writing")
+        # Proceed with writing the item to the table
+        
+        print("Try writing item")
+        response_put = dynamo_table.put_item(
+            TableName = TableName,
+            ReturnValues = "NONE",
+            Item = new_item
+        )
+
+    
 
     print("This is the response_put object from the put_item call")
     print(response_put)
