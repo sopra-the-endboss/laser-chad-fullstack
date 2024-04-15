@@ -1,5 +1,6 @@
 version: "1.0"
-linter: jetbrains/qodana-python-community:2023.3
+# linter: jetbrains/qodana-python-community:2023.3 # community version
+linter: jetbrains/qodana-python:2023.3 # pro version
 exclude:
   - name: PyShadowingNamesInspection
   - name: PyListCreationInspection
