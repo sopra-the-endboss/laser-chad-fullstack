@@ -4,16 +4,6 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import ModalContext from "../../context/ModalContext";
 
-
-/**
- * TODO: merge from branch #20
- * - endpoints url will get specific id, called in App js
- * - playground consists of database calls
- * - endpoints are defeind in teams / excel
- *
- */
-
-
 const CustomModal = ({openModalText, icon, children}) => {
 
 

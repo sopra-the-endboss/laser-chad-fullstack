@@ -33,7 +33,7 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
     const [loadingComments, setLoadingComments] = useState(true);
 
     useEffect(() => {
-        if (apigBaseUrl) {
+        if (apigBaseUrl && !details) {
             fetch(`${apigBaseUrl}/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`)
                 .then(response => response.json())
                 .then(data => {
@@ -51,12 +51,14 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                         }
                     );
                 });
+        } else if(details) {
+            setLoadingComments(false);
         }
     }, [apigBaseUrl, product_id, details, enqueueSnackbar]);
 
 
     useEffect(() => {
-        if (apigBaseUrl) {
+        if (apigBaseUrl && !details) {
             fetch(`${apigBaseUrl}/${PRODUCT_DETAIL_ENDPOINT}/${product_id}`)
                 .then(response => response.json())
                 .then(data => {
@@ -74,6 +76,8 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                         }
                     );
                 });
+        } else if(details) {
+            setLoadingDetails(false);
         }
     }, [apigBaseUrl, product_id, details, enqueueSnackbar]);
 
