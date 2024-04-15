@@ -15,6 +15,7 @@ const SellProduct = ({propData}) => {
     const [loading, setLoading] = useState(true);
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        console.log("wake up  in the moring")
         // TODO: now publish
         // let loader run
         // show success post
