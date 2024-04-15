@@ -88,7 +88,7 @@ def handler(event: dict, context) -> dict:
 
     print("Return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = '200'
-    HTTP_RESPONSE_DICT['body'] = '' # We return the full dict from the dynamo.put_item method
+    HTTP_RESPONSE_DICT['body'] =  {'product_id': item['product_id']}
 
     print(f"DEBUG: This is the HTTP response we are sending back")
     pp.pprint(HTTP_RESPONSE_DICT)

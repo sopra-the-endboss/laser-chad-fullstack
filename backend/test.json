@@ -1,0 +1,39 @@
+[
+    {
+      "product_id": 1,
+      "product": "Dell XPS 15",
+      "highlighted": false,
+      "images": [
+        "https://www.digitec.ch/im/Files/2/0/3/5/9/6/0/8/UBVBa-7VUE-i5Djte0yBlA.r.jpg?impolicy=ProductTileImage&resizeWidth=648&resizeHeight=486&cropWidth=648&cropHeight=486&resizeType=downsize&quality=high",
+        "https://www.digitec.ch/im/Files/2/0/3/5/9/6/1/0/RDBxIBAIbU6m34Onj9Vk3Q.r.jpg?impolicy=ProductTileImage&resizeWidth=648&resizeHeight=486&cropWidth=648&cropHeight=486&resizeType=downsize&quality=high",
+        "https://www.digitec.ch/im/Files/2/0/3/5/9/6/0/3/kcEBwORP00e9EB0fn8fu-g.r.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+        "https://www.digitec.ch/im/Files/2/0/3/5/9/6/0/5/VXCQVm1wgE-HmVUOAo7giQ.r.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+        "https://www.digitec.ch/im/Files/2/0/3/5/9/6/0/6/OZ3zMe835UW2qF2zH-VWxQ.r.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
+      ],
+      "price": 17.32,
+      "formatted_text": "",
+      "category": "Tech",
+      "brand": "Dell",
+      "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
+      "technical_details": {
+        "processor": "Intel Core i7",
+        "ram": "16GB",
+        "storage": "512GB SSD",
+        "screen": "15.6-inch 4K UHD",
+        "battery": "86Wh",
+        "operating_system": "Windows 10 Home",
+        "graphics": "NVproduct_idIA GeForce GTX 1650 Ti",
+        "ports": {
+          "usb_c": 2,
+          "hdmi": 1,
+          "headphone_jack": 1,
+          "sd_card_reader": 1
+        },
+        "weight": "1.83kg"
+      },
+      "warranty": "1 year",
+      "color": "Silver",
+      "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
+      "availability": "In stock",
+      "seller": "nicolas.meyer2@outlook.com"
+    },... more like this]
