@@ -20,19 +20,22 @@ const persistConfig = {
 };
 
 /**
- * A persisted reducer for the cart slice.
- *
- * Using redux-persist, the cart slice's state is persisted across browser sessions.
- * This allows the cart's state to be rehydrated on app restarts, maintaining the cart contents.
- *
- * @type {Reducer}
+ * The auth, cart, and API base URL slices are combined here.
  */
-
 const rootReducer = combineReducers({
   auth: authReducer,
   cart: cartReducer,
   apigBaseUrl: apigBaseUrlReducer,
 });
+
+/**
+ * A persisted reducer for the slices.
+ *
+ * Using redux-persist, all states are persisted across browser sessions.
+ * This allows for example the cart's state to be rehydrated on app restarts, maintaining the cart contents.
+ *
+ * @type {Reducer}
+ */
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
@@ -40,9 +43,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
  * Configures and creates the Redux store.
  *
  * The store integrates different slices of the application state, applying middleware for side effects,
- * and sets up persistence for the cart slice. The auth, cart, and API base URL slices are combined here.
- *
- * The middleware is customized to disable serializable checks, which is useful for certain types of middleware/actions.
+ * and sets up persistence.
  *
  * @returns {Store} A Redux store configured with reducers, middleware, and persistence capabilities.
  */
