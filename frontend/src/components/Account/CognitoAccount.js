@@ -1,49 +1,61 @@
-import Pool from "../../config/UserPool";
+import poolData from "../../config/UserPool";
+
+const userPool = poolData;
 
 const CognitoAccount = async () => {
-  return new Promise((resolve, reject) => {
-    const user = Pool.getCurrentUser();
-    if (user) {
-      user.getSession(async (err, session) => {
+  try {
+    const currentUser = userPool.getCurrentUser();
+
+    if (!currentUser) {
+      throw new Error("No current user");
+    }
+
+    return new Promise((resolve, reject) => {
+      currentUser.getSession((err, session) => {
         if (err) {
-          reject(err);
+          reject(new Error("Failed to retrieve session: " + err.message));
         } else {
-          try {
-            const attributes = await new Promise((resolve, reject) => {
-              user.getUserAttributes((err, attributes) => {
-                if (err) {
-                  reject(err);
-                } else {
-                  const results = {};
-
-                  for (let attribute of attributes) {
-                    const { Name, Value } = attribute;
-                    results[Name] = Value;
-                  }
-
-                  resolve(results);
-                }
-              });
-            });
-
-            resolve({
-              user: user.getUsername(),
-              session: {
-                idToken: session.getIdToken().getJwtToken(),
-                accessToken: session.getAccessToken().getJwtToken(),
-                refreshToken: session.getRefreshToken().getToken(),
-              },
-              attributes,
-            });
-          } catch (error) {
-            reject(error);
-          }
+          handleAttributes(currentUser, session, resolve, reject);
         }
       });
-    } else {
-      reject(new Error("User not found"));
-    }
-  });
+    });
+  } catch (error) {
+    console.error("Error fetching user session:", error);
+  }
 };
+async function handleAttributes(user, session, resolve, reject) {
+  try {
+    const attributes = await new Promise((resolve, reject) => {
+      user.getUserAttributes((err, attributes) => {
+        if (err) {
+          reject(
+            new Error("Failed to retrieve user attributes: " + err.message)
+          );
+        } else {
+          const results = {};
+
+          for (let attribute of attributes) {
+            const { Name, Value } = attribute;
+            results[Name] = Value;
+          }
+
+          resolve(results);
+        }
+      });
+    });
+
+    resolve({
+      user: user,
+      session: {
+        idToken: session.getIdToken().getJwtToken(),
+        accessToken: session.getAccessToken().getJwtToken(),
+        refreshToken: session.getRefreshToken().getToken(),
+      },
+      attributes,
+    });
+  } catch (error) {
+    reject(error);
+  }
+}
 
 export default CognitoAccount;

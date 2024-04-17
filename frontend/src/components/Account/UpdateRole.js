@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { CognitoUserAttribute } from "amazon-cognito-identity-js";
 import CognitoAccount from "./CognitoAccount";
-import { updateUserAttributes } from "aws-amplify/auth";
 
 import {
   Dialog,
@@ -28,8 +27,9 @@ const Attributes = (open, onClose) => {
       });
   }, []);
 
-  const handleSelectRole = (event) => {
-    dispatch(updateUserDetail({ attribute: "role", value: event }));
+  const handleSelectRole = (selectedRole) => {
+    setRole(selectedRole);
+    dispatch(updateUserDetail({ attribute: "role", value: selectedRole }));
 
     CognitoAccount()
       .then(({ user }) => {
@@ -51,7 +51,7 @@ const Attributes = (open, onClose) => {
   };
 
   return (
-    <Dialog open={open} onClose={() => onClose()}>
+    <Dialog open={open} onClose={onClose}>
       <DialogTitle>Choose Your Role</DialogTitle>
       <List>
         <ListItem button onClick={() => handleSelectRole("Buyer")}>

@@ -18,7 +18,7 @@ import { Playground } from "./views/Playground";
 import { useSelector } from "react-redux";
 import { PRODUCT_ENDPOINT } from "./utils/constants";
 import { enqueueSnackbar, SnackbarProvider } from "notistack";
-import Attributes from "./components/Account/Attributes";
+import UpdateRole from "./components/Account/UpdateRole";
 import CognitoAccount from "./components/Account/CognitoAccount";
 
 function App() {
@@ -30,10 +30,10 @@ function App() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
-  const [roleModalOpen, setRoleModalOpen] = useState(false);
+  const [roleSelectionOpen, setRoleSelectionOpen] = useState(false);
 
-  const toggleModal = () => {
-    setRoleModalOpen(!roleModalOpen);
+  const toggleSelection = () => {
+    setRoleSelectionOpen(!roleSelectionOpen);
   };
 
   useAuth();
@@ -42,14 +42,8 @@ function App() {
     const checkRole = async () => {
       try {
         const { attributes } = await CognitoAccount();
-
-        console.log(
-          "%c App.js: attributes",
-          "color: orange;",
-          !attributes["custom:role"]
-        );
         if (!attributes || !attributes["custom:role"]) {
-          setRoleModalOpen(true);
+          setRoleSelectionOpen(true);
         }
       } catch (error) {
         console.error("Failed to fetch attributes from Cognito:", error);
@@ -159,8 +153,8 @@ function App() {
                 </Grid>
               </Container>
             </div>
-            {roleModalOpen && (
-              <Attributes open={roleModalOpen} onClose={toggleModal} />
+            {roleSelectionOpen && (
+              <UpdateRole open={roleSelectionOpen} onClose={toggleSelection} />
             )}
           </BrowserRouter>
         </SnackbarProvider>

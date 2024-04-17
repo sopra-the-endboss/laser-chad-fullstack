@@ -94,7 +94,7 @@ const AccountDetails = () => {
         User Account
       </Typography>
       <Typography variant="body2" color="textSecondary">
-        Account Type: {authState.groups}
+        Account Type: {authState.role}
       </Typography>
       <Divider sx={{ my: 2 }} />
 
