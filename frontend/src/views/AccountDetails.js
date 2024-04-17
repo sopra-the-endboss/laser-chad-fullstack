@@ -16,6 +16,27 @@ import {
   Divider,
 } from "@mui/material";
 
+/**
+ * Displays and allows editing of the current user's account details.
+ *
+ * This component fetches and displays the user's account information such as full name, email, and birthdate
+ * from the Redux store's auth state. Users can toggle edit mode to update their information, which is then
+ * saved using AWS Amplify's `updateUserAttributes` function and updated in the Redux store.
+ *
+ * The editing state is managed locally within the component, allowing the user to modify their information
+ * in a form. Upon saving, the updated information is dispatched to the Redux store to update the global state,
+ * and the local editing state is turned off.
+ *
+ * @component
+ * @example
+ * return <AccountDetails />;
+ *
+ * @requires react-redux - To fetch and update the authentication state from the Redux store.
+ * @requires aws-amplify/auth - To update user attributes in the backend.
+ * @requires @mui/material - For the UI components.
+ * @requires ../reducers/slices/authSlice - To dispatch user information updates to the Redux store.
+ */
+
 const AccountDetails = () => {
   const authState = useSelector((state) => state.auth);
   const [isEditing, setIsEditing] = useState(false);
