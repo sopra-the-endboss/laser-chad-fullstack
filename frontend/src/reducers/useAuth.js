@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Hub } from "aws-amplify/utils";
-import { fetchAuthSession } from "aws-amplify/auth";
 import { setUserLoggedIn, setUserLoggedOut } from "./slices/authSlice";
-
+import CognitoAccount from "../components/Account/CognitoAccount";
 /**
  * A custom hook that manages the authentication state of the user using AWS Amplify's Hub for listening to authentication events.
  *
@@ -27,19 +26,22 @@ const useAuth = () => {
     // Function to check current user's authentication status
     const checkCurrentUser = async () => {
       try {
-        const session = await fetchAuthSession();
-        const idToken = session.tokens.idToken.payload;
+        const { attributes } = await CognitoAccount();
+
         // if there is an idToken, dispatch the user data to the state store
-        if (idToken) {
+        if (attributes) {
           const userData = {
-            userId: idToken.sub,
-            email: idToken.email,
-            groups: idToken["cognito:groups"],
-            birthdate: idToken.birthdate,
-            givenname: idToken.given_name,
-            familyname: idToken.family_name,
+            user: {
+              userId: attributes.sub,
+              email: attributes.email,
+              birthdate: attributes.birthdate,
+              givenname: attributes.given_name,
+              familyname: attributes.family_name,
+              role: attributes["custom:role"],
+            },
           };
-          dispatch(setUserLoggedIn(userData));
+
+          dispatch(setUserLoggedIn(userData.user));
         }
       } catch (error) {
         console.log("Error fetching current user", error);
@@ -58,7 +60,6 @@ const useAuth = () => {
       } else if (event === "signedOut") {
         dispatch(setUserLoggedOut());
       } else if (event === "signedUp") {
-        // Implement selection of buyer or seller and integration to user group in cognito
       }
     });
     // Cleanup listener on component unmount

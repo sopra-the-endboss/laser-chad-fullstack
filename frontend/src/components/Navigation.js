@@ -72,7 +72,7 @@ const Navbar = ({ setData, searchQuerySubmitted, AllProductsName }) => {
     }
   };
 
-  const authState = useSelector((state) => state.auth);
+  const authState = useSelector((state) => state.auth.user);
   let isSeller = false;
   if (authState.groups) {
     isSeller = authState.groups.includes("seller");

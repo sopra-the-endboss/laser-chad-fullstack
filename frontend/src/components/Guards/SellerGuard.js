@@ -24,7 +24,7 @@ import { Navigate } from "react-router-dom";
  */
 
 const SellerGuard = ({ children }) => {
-  const userGroups = useSelector((state) => state.auth.groups);
+  const userGroups = useSelector((state) => state.auth.user.groups);
 
   const isSeller = userGroups?.includes("seller");
 

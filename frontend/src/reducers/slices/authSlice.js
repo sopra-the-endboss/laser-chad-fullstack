@@ -10,7 +10,15 @@ const authSlice = createSlice({
   name: "auth",
   initialState: {
     isLoggedIn: false,
-    user: null,
+    user: {
+      userId: null,
+      email: null,
+      groups: [],
+      birthdate: null,
+      givenname: null,
+      familyname: null,
+      role: null,
+    },
   },
   reducers: {
     /**
@@ -24,16 +32,13 @@ const authSlice = createSlice({
      * @param {string} action.payload.birthdate - The user's birth date.
      * @param {string} action.payload.givenname - The user's given name.
      * @param {string} action.payload.familyname - The user's family name.
+     * @param {string} action.payload.role - The user's role (Buyer or Seller).
      */
 
     setUserLoggedIn: (state, action) => {
       state.isLoggedIn = true;
-      state.user = action.payload.userId;
-      state.email = action.payload.email;
-      state.groups = action.payload.groups;
-      state.birthdate = action.payload.birthdate;
-      state.givenname = action.payload.givenname;
-      state.familyname = action.payload.familyname;
+      state.user = { ...state.user, ...action.payload }; // Update all properties in user object
+      console.log("User logged in:", state.user);
     },
     /**
      * Resets the authentication state, effectively logging the user out.
@@ -42,13 +47,25 @@ const authSlice = createSlice({
      */
     setUserLoggedOut: (state) => {
       state.isLoggedIn = false;
-      state.user = null;
-      state.email = null;
-      state.groups = null;
-      state.birthdate = null;
+      state.user = {
+        userId: null,
+        email: null,
+        groups: [],
+        birthdate: null,
+        givenname: null,
+        familyname: null,
+        role: null,
+      };
+    },
+    updateUserDetail: (state, action) => {
+      const { attribute, value } = action.payload;
+      if (state.user.hasOwnProperty(attribute)) {
+        state.user[attribute] = value;
+      }
     },
   },
 });
 
-export const { setUserLoggedIn, setUserLoggedOut } = authSlice.actions;
+export const { setUserLoggedIn, setUserLoggedOut, updateUserDetail } =
+  authSlice.actions;
 export default authSlice.reducer;

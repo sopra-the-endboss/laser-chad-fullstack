@@ -38,7 +38,7 @@ import {
  */
 
 const AccountDetails = () => {
-  const authState = useSelector((state) => state.auth);
+  const authState = useSelector((state) => state.auth.user);
   const [isEditing, setIsEditing] = useState(false);
   const [editState, setEditState] = useState(authState);
   const dispatch = useDispatch();
