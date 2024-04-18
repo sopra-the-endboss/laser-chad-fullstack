@@ -46,6 +46,7 @@ The order of deployment works as follows and can be inferred from the different 
 
 
 # Frontend
+The frontend follows the react-js framework. Material ui is used for styling.
 **Authentication:**
 AWS Cognito and Amplify are used for user registration and user authentication. After sign-up, Cognito sends a verification challenge to the provided user email.
 
