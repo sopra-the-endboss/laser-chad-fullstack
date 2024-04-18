@@ -42,7 +42,8 @@ The order of deployment works as follows and can be inferred from the different 
 
 
 # Architecture
-![Alt text](./ASE%20Architecture%20Diagram.drawio.svg?raw=true "Title")
+![Alt text](./ASE%20Architecture%20Diagram-Architecture%20Overview_1.drawio.svg?raw=true "Title")
+
 
 # Frontend
 Authentication setup:
