@@ -44,7 +44,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./backend
-          dockerfile: ./backend/options_lambda_function/dockerfile
+          dockerfile: options_lambda_function/dockerfile
           push: true
           tags: laserchads/options_lambda_function:latest
 
