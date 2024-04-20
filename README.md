@@ -72,4 +72,4 @@ TBD: Coverage Report upload
 
 # Continuous Integration
 
-With every push on main, Github Actions builds and pushes the docker images to our public Docker Hub Container registry. The can be accessed [here](https://hub.docker.com/u/laserchads).
+With every push on main, Github Actions builds and pushes the docker images to our public Docker Hub Container registry. They can be accessed [here](https://hub.docker.com/u/laserchads).
