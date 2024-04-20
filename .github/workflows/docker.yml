@@ -62,5 +62,5 @@ jobs:
           context: ./backend/product-microservice
           dockerfile: ./backend/product-microservice/dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/product-microservice:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/product-microservice:latest #
       
