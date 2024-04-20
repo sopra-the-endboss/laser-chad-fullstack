@@ -43,21 +43,21 @@ jobs:
       - name: Build and push options_lambda_function Docker image
         uses: docker/build-push-action@v2
         with:
-          dockerfile: ./backend/options_lambda_function/dockerfile
+          context: ./backend/options_lambda_function
           push: true
           tags: laserchads/options_lambda_function:latest
 
       - name: Build and push cart Docker image
         uses: docker/build-push-action@v2
         with:
-          dockerfile: ./backend/cart/dockerfile
+          context: ./backend/cart
           push: true
           tags: laserchads/cart:latest
 
       - name: Build and push product-microservice Docker image
         uses: docker/build-push-action@v2
         with:
-          dockerfile: ./backend/product-microservice/dockerfile
+          context: ./backend/product-microservice
           push: true
           tags: laserchads/product-microservice:latest #
       
