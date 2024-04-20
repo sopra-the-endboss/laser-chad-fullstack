@@ -19,32 +19,32 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
-      - name: Build and push frontend Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: ./frontend
-          push: true
-          tags: laserchads/frontend:latest
+      # - name: Build and push frontend Docker image
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     context: ./frontend
+      #     push: true
+      #     tags: laserchads/frontend:latest
 
-      - name: Build and push apig-main Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: ./backend/apig-main
-          push: true
-          tags: laserchads/apig-main:latest
+      # - name: Build and push apig-main Docker image
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     context: ./backend/apig-main
+      #     push: true
+      #     tags: laserchads/apig-main:latest
 
-      - name: Build and push apig-id-share Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: ./backend/apig-id-share
-          push: true
-          tags: laserchads/apig-id-share:latest
+      # - name: Build and push apig-id-share Docker image
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     context: ./backend/apig-id-share
+      #     push: true
+      #     tags: laserchads/apig-id-share:latest
 
       - name: Build and push options_lambda_function Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
-          dockerfile: ./backend/options_lambda_function/dockerfile
+          dockerfile: /backend/options_lambda_function/dockerfile
           push: true
           tags: laserchads/options_lambda_function:latest
 
@@ -52,7 +52,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          dockerfile: ./backend/cart/dockerfile
+          dockerfile: /backend/cart/dockerfile
           push: true
           tags: laserchads/cart:latest
 
@@ -60,7 +60,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          dockerfile: ./backend/product-microservice/dockerfile
+          dockerfile: /backend/product-microservice/dockerfile
           push: true
           tags: laserchads/product-microservice:latest #
       
