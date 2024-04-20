@@ -40,12 +40,12 @@ jobs:
           push: true
           tags: laserchads/apig-id-share:latest
 
-      - name: Build and push options_lambda_function Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: ./backend/options_lambda_function
-          push: true
-          tags: laserchads/options_lambda_function:latest
+      # - name: Build and push options_lambda_function Docker image
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     context: ./backend/options_lambda_function
+      #     push: true
+      #     tags: laserchads/options_lambda_function:latest
 
       - name: Build and push cart Docker image
         uses: docker/build-push-action@v2
