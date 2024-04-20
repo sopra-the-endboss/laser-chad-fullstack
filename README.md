@@ -69,3 +69,7 @@ For the description of a general microservice architecture and the speicific ser
 For code quality, we use Qodana and Github Actions. Each push on main os run through the static code quality analyzer.
 For testing, all backend tests are located in the [tests folder](./tests/), mirroring the frontend/backend layout of the main repository. For the backend, pytest is used, for the frontent we use Jest. As with code quality, all tests are run via Github Actions and test reports are generated and can be view within Qodana Cloud.
 TBD: Coverage Report upload
+
+# Continuous Integration
+
+With every push on main, Github Actions builds and pushes the docker images to our public Docker Hub Container registry. The can be accessed [here](https://hub.docker.com/u/laserchads).
