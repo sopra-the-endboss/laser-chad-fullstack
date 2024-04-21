@@ -32,8 +32,8 @@ function App() {
 
   const [roleSelectionOpen, setRoleSelectionOpen] = useState(false);
 
-  const toggleSelection = () => {
-    setRoleSelectionOpen(!roleSelectionOpen);
+  const handleClose = () => {
+    setRoleSelectionOpen(false);
   };
 
   useAuth();
@@ -154,7 +154,7 @@ function App() {
               </Container>
             </div>
             {roleSelectionOpen && (
-              <UpdateRole open={roleSelectionOpen} onClose={toggleSelection} />
+              <UpdateRole open={roleSelectionOpen} onClose={handleClose} />
             )}
           </BrowserRouter>
         </SnackbarProvider>

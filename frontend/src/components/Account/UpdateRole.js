@@ -12,7 +12,7 @@ import {
 import { useDispatch } from "react-redux";
 import { updateUserDetail } from "../../reducers/slices/authSlice";
 
-const Attributes = (open, onClose) => {
+const UpdateRole = ({ open, onClose }) => {
   const dispatch = useDispatch();
   const [role, setRole] = useState("");
 
@@ -41,8 +41,9 @@ const Attributes = (open, onClose) => {
           if (err) {
             console.error(err);
           } else {
-            console.log(result);
+            console.log("Role update result:", result);
           }
+          onClose();
         });
       })
       .catch((err) => {
@@ -51,7 +52,7 @@ const Attributes = (open, onClose) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open}>
       <DialogTitle>Choose Your Role</DialogTitle>
       <List>
         <ListItem button onClick={() => handleSelectRole("Buyer")}>
@@ -65,4 +66,4 @@ const Attributes = (open, onClose) => {
   );
 };
 
-export default Attributes;
+export default UpdateRole;
