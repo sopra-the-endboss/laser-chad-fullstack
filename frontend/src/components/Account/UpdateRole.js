@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { CognitoUserAttribute } from "amazon-cognito-identity-js";
 import CognitoAccount from "./CognitoAccount";
 
@@ -14,30 +14,20 @@ import { updateUserDetail } from "../../reducers/slices/authSlice";
 
 const UpdateRole = ({ open, onClose }) => {
   const dispatch = useDispatch();
-  const [role, setRole] = useState("");
-
-  useEffect(() => {
-    CognitoAccount()
-      .then((attributes) => {
-        const userRole = attributes["custom:role"] || "";
-        setRole(userRole);
-      })
-      .catch((err) => {
-        console.error("Error retrieving user session:", err);
-      });
-  }, []);
 
   const handleSelectRole = (selectedRole) => {
-    setRole(selectedRole);
     dispatch(updateUserDetail({ attribute: "role", value: selectedRole }));
 
     CognitoAccount()
       .then(({ user }) => {
-        const attributes = [
-          new CognitoUserAttribute({ Name: "custom:role", Value: role }),
+        const update = [
+          new CognitoUserAttribute({
+            Name: "custom:role",
+            Value: selectedRole,
+          }),
         ];
-
-        user.updateAttributes(attributes, (err, result) => {
+        console.log("Updating user attributes:", update);
+        user.updateAttributes(update, (err, result) => {
           if (err) {
             console.error(err);
           } else {
