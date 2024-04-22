@@ -87,12 +87,12 @@ def handler(event, context) -> list[dict]:
 
     ###
     # Check the body item to update
-    print("Check body, should be a dict or something serializable into a dict")
+    print("Check body, should be a list of json serializable objects")
     print(event['body'])
 
     # serialize json string into dict
     body = json.loads(event['body'])
-    
+
     print("TODO, return body")
     HTTP_RESPONSE_DICT['statusCode'] = 200
     HTTP_RESPONSE_DICT['body'] = json.dumps(body)
