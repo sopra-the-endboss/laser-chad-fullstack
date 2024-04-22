@@ -58,76 +58,86 @@ api_id = deploy_utils.find_api_id_by_tag(
     tag_value = api_id_to_seach
 )
 
-print(f"Table count: {dynamo_table.item_count}")
-scan_response = dynamo_client.scan(TableName = "cart-table")
-scan_items = scan_response['Items']
-while 'LastEvaluatedKey' in scan_response:
-    response = dynamo_client.scan(
-        TableName='cart-table',
-        ExclusiveStartKey=response['LastEvaluatedKey']
-    )
-    scan_items.extend(response['Items'])
-pp.pprint(scan_items)
+# print(f"Table count: {dynamo_table.item_count}")
+# scan_response = dynamo_client.scan(TableName = "cart-table")
+# scan_items = scan_response['Items']
+# while 'LastEvaluatedKey' in scan_response:
+#     response = dynamo_client.scan(
+#         TableName='cart-table',
+#         ExclusiveStartKey=response['LastEvaluatedKey']
+#     )
+#     scan_items.extend(response['Items'])
+# pp.pprint(scan_items)
 
-# print("ALL APIS FOUND:\n")
-# print(apig_client.get_rest_apis()['items'])
-# print("-----------------")
+print("ALL APIS FOUND:\n")
+print(apig_client.get_rest_apis()['items'])
+print("-----------------")
 
-# print(f"ALL DEPLOYMENTS TO {api_id} FOUND:\n")
-# print(apig_client.get_deployments(restApiId=api_id)['items'])
-# deployment_id = apig_client.get_deployments(restApiId=api_id)['items'][0]['id']
-# print("-----------------")
+print(f"ALL DEPLOYMENTS TO {api_id} FOUND:\n")
+print(apig_client.get_deployments(restApiId=api_id)['items'])
+deployment_id = apig_client.get_deployments(restApiId=api_id)['items'][0]['id']
+print("-----------------")
 
-# print(f"ALL STAGES TO {api_id} AND DEPLOYMENT {deployment_id} FOUND:\n")
-# print(apig_client.get_stages(restApiId=api_id, deploymentId = deployment_id))
-# print("-----------------")
+print(f"ALL STAGES TO {api_id} AND DEPLOYMENT {deployment_id} FOUND:\n")
+print(apig_client.get_stages(restApiId=api_id, deploymentId = deployment_id))
+print("-----------------")
 
-# print(f"ALL RESOURCES TO {api_id} FOUND:\n")
-# pp.pprint(apig_client.get_resources(restApiId = api_id)['items'])
-# resources_id = [res['id'] for res in apig_client.get_resources(restApiId = api_id)['items']]
-# print("-----------------")
+print(f"ALL RESOURCES TO {api_id} FOUND:\n")
+pp.pprint(apig_client.get_resources(restApiId = api_id)['items'])
+resources_id = [res['id'] for res in apig_client.get_resources(restApiId = api_id)['items']]
+print("-----------------")
 
-# print(f"ALL LAMBDA FUNCTION TO {api_id} FOUND:\n")
-# pp.pprint(lambda_client.list_functions())
-# print("-----------------")
+print(f"ALL LAMBDA FUNCTION TO {api_id} FOUND:\n")
+pp.pprint(lambda_client.list_functions())
+print("-----------------")
 
 
 # ###
 # # Send requests to test routes
 
-# # if in manual mode, get corresponding protocol, in dockermode is None, defaults to http
-# PROTOCOL_TO_USE = os.getenv("PROTOCOL", None)
+# if in manual mode, get corresponding protocol, in dockermode is None, defaults to http
+PROTOCOL_TO_USE = os.getenv("PROTOCOL", None)
 
-# user = "1"
+user = "1"
 
-# # Test OPTIONS for all resources
-# url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
-# print(f"Sending OPTIONS to {url}, verify 200")
-# response = requests.options(url)
-# print(response.text)
+# Test OPTIONS for all resources
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+print(f"Sending OPTIONS to {url}, verify 200")
+response = requests.options(url)
+print(response.text)
 
-# ###
-# # Send GET - should return empty -> 404
-# url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
-# print(f"Sending GET to {url}")
-# response = requests.get(url)
-# print(response.status_code)
-# print(response.text)
+###
+# Send GET - should return empty -> 404
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+print(f"Sending GET to {url}")
+response = requests.get(url)
+print(response.status_code)
+print(response.text)
 
-# ###
-# # Send POST with arbitrary payload, should be ok, no model, but subsequent calls should be conflict
-# # 200
-# # then 409
-# post_payloads = []
-# post_payloads.append({"somearbitarypayload":["prod1"]})
-# post_payloads.append({"someOtherarbitarypayload":123})
+###
+# Send POST with arbitrary payload, should be ok, no model, but subsequent calls should be conflict
+# 200
+# then 409
+post_payloads = []
+post_payloads.append({"somearbitarypayload":["prod1"]})
+post_payloads.append({"someOtherarbitarypayload":123})
 
-# for payload in post_payloads:
-#     url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
-#     print(f"Sending POST to {url} with payload {payload}")
-#     response = requests.post(url, json = payload)
-#     print(response.status_code)
-#     print(response.text)
+for payload in post_payloads:
+    url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+    print(f"Sending POST to {url} with payload {payload}")
+    response = requests.post(url, json = payload)
+    print(response.status_code)
+    print(response.text)
+
+# Send PUT BATCH with arbitrary payload, must contain product_id and qty
+put_payload = []
+put_payload.append({"product_id":1, "brand":"Apple", "qty":2})
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}/batch", protocol=PROTOCOL_TO_USE)
+print(f"Sending PUT to {url} with payload {payload}")
+response = requests.put(url, json = payload)
+print(response.status_code)
+print(response.text)
+
 
 # ###
 # # Send PUT with invalid  -> 400
