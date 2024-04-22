@@ -80,11 +80,20 @@ const cartSlice = createSlice({
       );
       state.cartItems.splice(productIndex, 1);
     },
+    /**
+     * Removes everything from the cart.
+     *
+     * @param {Object} state - The current state of the cart.
+     * @param {Object} action - An action object which is empty/not used
+     */
+    clearCart : (state, action) => {
+      state.cartItems = [];
+    },
   },
 });
 
 /**
  * Exported actions from the cartSlice for use in dispatching changes to the cart state.
  */
-export const { addToCart, reduceQuantity, removeFromCart } = cartSlice.actions;
+export const { addToCart, reduceQuantity, removeFromCart, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;
