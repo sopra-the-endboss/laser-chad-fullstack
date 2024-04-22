@@ -40,12 +40,13 @@ if not IN_DOCKER:
 import deploy_utils
 
 # Create clients
-TableName = "cart-db"
+TableName = "cart-table"
 dynamo_resource = boto3.resource("dynamodb")
 dynamo_table = dynamo_resource.Table(TableName)
 
 lambda_client = boto3.client("lambda")
 apig_client = boto3.client("apigateway")
+dynamo_client = boto3.client("dynamodb")
 
 api_stage_name = os.environ['APIG_STAGE']
 api_tag_id = os.environ['APIG_TAG_ID']
@@ -57,148 +58,159 @@ api_id = deploy_utils.find_api_id_by_tag(
     tag_value = api_id_to_seach
 )
 
-print("ALL APIS FOUND:\n")
-print(apig_client.get_rest_apis()['items'])
-print("-----------------")
+print(f"Table count: {dynamo_table.item_count}")
+scan_response = dynamo_client.scan(TableName = "cart-table")
+scan_items = scan_response['Items']
+while 'LastEvaluatedKey' in scan_response:
+    response = dynamo_client.scan(
+        TableName='cart-table',
+        ExclusiveStartKey=response['LastEvaluatedKey']
+    )
+    scan_items.extend(response['Items'])
+pp.pprint(scan_items)
 
-print(f"ALL DEPLOYMENTS TO {api_id} FOUND:\n")
-print(apig_client.get_deployments(restApiId=api_id)['items'])
-deployment_id = apig_client.get_deployments(restApiId=api_id)['items'][0]['id']
-print("-----------------")
+# print("ALL APIS FOUND:\n")
+# print(apig_client.get_rest_apis()['items'])
+# print("-----------------")
 
-print(f"ALL STAGES TO {api_id} AND DEPLOYMENT {deployment_id} FOUND:\n")
-print(apig_client.get_stages(restApiId=api_id, deploymentId = deployment_id))
-print("-----------------")
+# print(f"ALL DEPLOYMENTS TO {api_id} FOUND:\n")
+# print(apig_client.get_deployments(restApiId=api_id)['items'])
+# deployment_id = apig_client.get_deployments(restApiId=api_id)['items'][0]['id']
+# print("-----------------")
 
-print(f"ALL RESOURCES TO {api_id} FOUND:\n")
-pp.pprint(apig_client.get_resources(restApiId = api_id)['items'])
-resources_id = [res['id'] for res in apig_client.get_resources(restApiId = api_id)['items']]
-print("-----------------")
+# print(f"ALL STAGES TO {api_id} AND DEPLOYMENT {deployment_id} FOUND:\n")
+# print(apig_client.get_stages(restApiId=api_id, deploymentId = deployment_id))
+# print("-----------------")
 
-print(f"ALL LAMBDA FUNCTION TO {api_id} FOUND:\n")
-pp.pprint(lambda_client.list_functions())
-print("-----------------")
+# print(f"ALL RESOURCES TO {api_id} FOUND:\n")
+# pp.pprint(apig_client.get_resources(restApiId = api_id)['items'])
+# resources_id = [res['id'] for res in apig_client.get_resources(restApiId = api_id)['items']]
+# print("-----------------")
 
-
-###
-# Send requests to test routes
-
-# if in manual mode, get corresponding protocol, in dockermode is None, defaults to http
-PROTOCOL_TO_USE = os.getenv("PROTOCOL", None)
-
-user = "1"
-
-# Test OPTIONS for all resources
-url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
-print(f"Sending OPTIONS to {url}, verify 200")
-response = requests.options(url)
-print(response.text)
-
-###
-# Send GET - should return empty -> 404
-url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
-print(f"Sending GET to {url}")
-response = requests.get(url)
-print(response.status_code)
-print(response.text)
-
-###
-# Send POST with arbitrary payload, should be ok, no model, but subsequent calls should be conflict
-# 200
-# then 409
-post_payloads = []
-post_payloads.append({"somearbitarypayload":["prod1"]})
-post_payloads.append({"someOtherarbitarypayload":123})
-
-for payload in post_payloads:
-    url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
-    print(f"Sending POST to {url} with payload {payload}")
-    response = requests.post(url, json = payload)
-    print(response.status_code)
-    print(response.text)
-
-###
-# Send PUT with invalid  -> 400
-invalid_payloads = []
-invalid_payloads.append({"wrong_key":"adsf"})
-invalid_payloads.append({"product_id":99})
-
-user = 1
-
-for payload in invalid_payloads:
-    url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
-    print(f"Sending PUT to {url} with payload {payload}")
-    response = requests.put(url, json = payload)
-    print(response.status_code)
-    print(response.text)
+# print(f"ALL LAMBDA FUNCTION TO {api_id} FOUND:\n")
+# pp.pprint(lambda_client.list_functions())
+# print("-----------------")
 
 
-###
-# Send PUT valid already existing -> 200
-# First call should create prod
-# Second call should increase qty to 2
-user = 1
-valid = {"product_id":"product_one"}
-payload = valid
+# ###
+# # Send requests to test routes
 
-for i in range(2):
-    print(f"{i+1} call PUT")
-    url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
-    print(f"Sending PUT to {url} with payload {payload}")
-    response = requests.put(url, json = payload)
-    print(response.status_code)
-    print(response.text)
+# # if in manual mode, get corresponding protocol, in dockermode is None, defaults to http
+# PROTOCOL_TO_USE = os.getenv("PROTOCOL", None)
 
+# user = "1"
 
-###
-# Send PUT valid new product_id -> 200
-# Should set  new_prod to qty 1
-new_and_valid = {"product_id":"product_two"}
-user = 1
+# # Test OPTIONS for all resources
+# url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+# print(f"Sending OPTIONS to {url}, verify 200")
+# response = requests.options(url)
+# print(response.text)
 
-payload = new_and_valid
+# ###
+# # Send GET - should return empty -> 404
+# url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+# print(f"Sending GET to {url}")
+# response = requests.get(url)
+# print(response.status_code)
+# print(response.text)
 
-url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
-print(f"Sending PUT to {url} with payload {payload}")
-response = requests.put(url, json = payload)
-print(response.status_code)
-print(response.text)
+# ###
+# # Send POST with arbitrary payload, should be ok, no model, but subsequent calls should be conflict
+# # 200
+# # then 409
+# post_payloads = []
+# post_payloads.append({"somearbitarypayload":["prod1"]})
+# post_payloads.append({"someOtherarbitarypayload":123})
 
+# for payload in post_payloads:
+#     url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+#     print(f"Sending POST to {url} with payload {payload}")
+#     response = requests.post(url, json = payload)
+#     print(response.status_code)
+#     print(response.text)
 
+# ###
+# # Send PUT with invalid  -> 400
+# invalid_payloads = []
+# invalid_payloads.append({"wrong_key":"adsf"})
+# invalid_payloads.append({"product_id":99})
 
-###
-# Send DELETE product not in cart -> 200, do nothing
-valid_not_exisiting = {"product_id":"product_not_in_cart"}
-user = 1
-payload = valid_not_exisiting
+# user = 1
 
-url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
-print(f"Sending DELETE to {url} with payload {payload}")
-response = requests.delete(url, json = payload)
-print(response.status_code)
-print(response.text)
-
-###
-# Send DELETE product from 1 to 0 -> 200. remove prod
-delete_1_to_0 = {"product_id":"product_two"}
-user = 1
-payload = delete_1_to_0
-
-url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
-print(f"Sending DELETE to {url} with payload {payload}")
-response = requests.delete(url, json = payload)
-print(response.status_code)
-print(response.text)
+# for payload in invalid_payloads:
+#     url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+#     print(f"Sending PUT to {url} with payload {payload}")
+#     response = requests.put(url, json = payload)
+#     print(response.status_code)
+#     print(response.text)
 
 
-###
-# Send DELETE product from 2 to 1 -> 200. decrease qty
-delete_2_to_1 = {"product_id":"product_one"}
-user = 1
-payload = delete_2_to_1
+# ###
+# # Send PUT valid already existing -> 200
+# # First call should create prod
+# # Second call should increase qty to 2
+# user = 1
+# valid = {"product_id":"product_one"}
+# payload = valid
 
-url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
-print(f"Sending DELETE to {url} with payload {payload}")
-response = requests.delete(url, json = payload)
-print(response.status_code)
-print(response.text)
+# for i in range(2):
+#     print(f"{i+1} call PUT")
+#     url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+#     print(f"Sending PUT to {url} with payload {payload}")
+#     response = requests.put(url, json = payload)
+#     print(response.status_code)
+#     print(response.text)
+
+
+# ###
+# # Send PUT valid new product_id -> 200
+# # Should set  new_prod to qty 1
+# new_and_valid = {"product_id":"product_two"}
+# user = 1
+
+# payload = new_and_valid
+
+# url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+# print(f"Sending PUT to {url} with payload {payload}")
+# response = requests.put(url, json = payload)
+# print(response.status_code)
+# print(response.text)
+
+
+
+# ###
+# # Send DELETE product not in cart -> 200, do nothing
+# valid_not_exisiting = {"product_id":"product_not_in_cart"}
+# user = 1
+# payload = valid_not_exisiting
+
+# url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+# print(f"Sending DELETE to {url} with payload {payload}")
+# response = requests.delete(url, json = payload)
+# print(response.status_code)
+# print(response.text)
+
+# ###
+# # Send DELETE product from 1 to 0 -> 200. remove prod
+# delete_1_to_0 = {"product_id":"product_two"}
+# user = 1
+# payload = delete_1_to_0
+
+# url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+# print(f"Sending DELETE to {url} with payload {payload}")
+# response = requests.delete(url, json = payload)
+# print(response.status_code)
+# print(response.text)
+
+
+# ###
+# # Send DELETE product from 2 to 1 -> 200. decrease qty
+# delete_2_to_1 = {"product_id":"product_one"}
+# user = 1
+# payload = delete_2_to_1
+
+# url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+# print(f"Sending DELETE to {url} with payload {payload}")
+# response = requests.delete(url, json = payload)
+# print(response.status_code)
+# print(response.text)
