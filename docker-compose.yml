@@ -132,31 +132,31 @@ services:
     networks:
       - backend
 
-  # cart-debugger:
-  #   container_name: "cart-debugger"
-  #   build:
-  #     dockerfile: ./backend/cart/dockerfile_debugger
-  #     no_cache: true
-  #   environment:
-  #     - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
-  #     - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
-  #     - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} # Sometimes boto3 needs credentials
-  #     - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} # Sometimes boto3 needs credentials
-  #     - APIG_TAG_ID=${APIG_TAG_ID}
-  #     - APIG_TAG=${APIG_TAG}
-  #     - APIG_STAGE=${APIG_STAGE}
-  #     - AM_I_IN_A_DOCKER_CONTAINER=${AM_I_IN_A_DOCKER_CONTAINER:-True}
-  #     - APIG_WAIT=${APIG_WAIT}
-  #     - OPTIONS_LAMBDA_FUNCTION=${OPTIONS_LAMBDA_FUNCTION}
-  #   volumes:
-  #     - "/var/run/docker.sock:/var/run/docker.sock"
-  #   depends_on:
-  #     - localstack
-  #     - apig-main
-  #     - apig-id-share
-  #     - options_lambda_function
-  #   networks:
-  #     - backend
+  cart-debugger:
+    container_name: "cart-debugger"
+    build:
+      dockerfile: ./backend/cart/dockerfile_debugger
+      no_cache: true
+    environment:
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL} # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} # Sometimes boto3 needs credentials
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} # Sometimes boto3 needs credentials
+      - APIG_TAG_ID=${APIG_TAG_ID}
+      - APIG_TAG=${APIG_TAG}
+      - APIG_STAGE=${APIG_STAGE}
+      - AM_I_IN_A_DOCKER_CONTAINER=${AM_I_IN_A_DOCKER_CONTAINER:-True}
+      - APIG_WAIT=${APIG_WAIT}
+      - OPTIONS_LAMBDA_FUNCTION=${OPTIONS_LAMBDA_FUNCTION}
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - localstack
+      - apig-main
+      - apig-id-share
+      - options_lambda_function
+    networks:
+      - backend
 
   product-microservice:
     container_name: "product-microservice"
@@ -184,31 +184,31 @@ services:
     networks:
       - backend
 
-  # product-microservice-debugger:
-  #   container_name: "product-microservice-debugger"
-  #   build:
-  #     dockerfile: ./backend/product-microservice/dockerfile_debugger
-  #     no_cache: true
-  #   environment:
-  #     - AWS_DEFAULT_REGION=us-east-1
-  #     - AWS_ENDPOINT_URL=http://localstack:4566 # host localstack must match the name of the service which runs localstack
-  #     - AWS_ACCESS_KEY_ID=fakecred # Sometimes boto3 needs credentials 
-  #     - AWS_SECRET_ACCESS_KEY=fakecred
-  #     - APIG_TAG_ID=${APIG_TAG_ID}
-  #     - APIG_TAG=${APIG_TAG}
-  #     - APIG_STAGE=${APIG_STAGE}
-  #     - AM_I_IN_A_DOCKER_CONTAINER=${AM_I_IN_A_DOCKER_CONTAINER:-True}
-  #     - APIG_WAIT=${APIG_WAIT}
-  #     - OPTIONS_LAMBDA_FUNCTION=${OPTIONS_LAMBDA_FUNCTION}
-  #   volumes:
-  #     - "/var/run/docker.sock:/var/run/docker.sock"
-  #   depends_on:
-  #     - localstack
-  #     - apig-main
-  #     - apig-id-share
-  #     - options_lambda_function
-  #   networks:
-  #     - backend
+  product-microservice-debugger:
+    container_name: "product-microservice-debugger"
+    build:
+      dockerfile: ./backend/product-microservice/dockerfile_debugger
+      no_cache: true
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ENDPOINT_URL=http://localstack:4566 # host localstack must match the name of the service which runs localstack
+      - AWS_ACCESS_KEY_ID=fakecred # Sometimes boto3 needs credentials 
+      - AWS_SECRET_ACCESS_KEY=fakecred
+      - APIG_TAG_ID=${APIG_TAG_ID}
+      - APIG_TAG=${APIG_TAG}
+      - APIG_STAGE=${APIG_STAGE}
+      - AM_I_IN_A_DOCKER_CONTAINER=${AM_I_IN_A_DOCKER_CONTAINER:-True}
+      - APIG_WAIT=${APIG_WAIT}
+      - OPTIONS_LAMBDA_FUNCTION=${OPTIONS_LAMBDA_FUNCTION}
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - localstack
+      - apig-main
+      - apig-id-share
+      - options_lambda_function
+    networks:
+      - backend
 
 #volumes:
 #  dbvolume:
