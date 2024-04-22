@@ -1,6 +1,7 @@
 """
 put_cart
 Handle call to update a cart with a product_id and qty for a given userId
+TODO: Allow for arbitrary additional fields with product_id
 """
 
 import boto3
