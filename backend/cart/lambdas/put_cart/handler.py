@@ -108,7 +108,7 @@ def handler(event, context) -> list[dict]:
     # Check if we found a result, otherwise retrieve empty list
     cart_found = response_get_item.get("Item", None)
 
-    # If None we did not found anything, return 404
+    # If None we did not find anything, return 404
     if not cart_found:
         return return_error(f"No cart with userId {filter} found, return 404", 404)
 
