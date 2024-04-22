@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Hub } from "aws-amplify/utils";
 import { setUserLoggedIn, setUserLoggedOut } from "./slices/authSlice";
 import CognitoAccount from "../components/Account/CognitoAccount";
+import { addToCart, clearCart } from "./slices/cartSlice";
 /**
  * A custom hook that manages the authentication state of the user using AWS Amplify's Hub for listening to authentication events.
  *
@@ -21,6 +22,128 @@ import CognitoAccount from "../components/Account/CognitoAccount";
  */
 const useAuth = () => {
   const dispatch = useDispatch();
+  const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  
+  const getCart = async (userId) => {
+    // Send GET to get the cart
+    // Return: Array with the fetched cart items
+    try {
+      const settings = {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        }
+      };
+      const res = await fetch(apigBaseUrl + `/cart/${userId}`, settings);
+      const data = await res.json();
+
+      if (res.ok) {
+        console.log(`DEBUG getCart : res.ok`);
+      }
+      console.log(`DEBUG getCart : res.statusCode ${res.status}`);
+      console.log(`DEBUG getCart : This is the data: ${JSON.stringify(data)}`);
+      return(data);
+
+    } catch (error) {
+      console.error(error);
+      return([]);
+    }
+  }
+
+  const postCart = async (userId) => {
+    // Send POST to create a cart if not exists
+    try {
+      const settings = {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        }
+      };
+      const res = await fetch(apigBaseUrl + `/cart/${userId}`, settings);
+      const data = await res.json();
+
+      if (res.ok || res.status === 409) {
+        console.log(`DEBUG postCart : res.ok or duplicated, also fine`);
+      } else {
+        console.log(`ERROR Post cart for userId ${userId}, returned ${res.status}`);
+        console.log(`ERROR Post cart with data ${data}`);
+      }
+      console.log(`DEBUG getCart : res.statusCode ${res.status}`);
+      console.log(`DEBUG getCart : This is the data: ${JSON.stringify(data)}`);
+      return(data);
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const fillCart = (cartToFill) => {
+    // Given a fetched cart, fill the state
+    console.log(`This is the cart to fill: ${cartToFill}`);
+  }
+
+  const loginCart = async () => {
+    
+    let currentUserId = null;
+
+    // Get the user data
+    console.log(`loginCart: Get user data via CognitoAccount`)
+    const { attributes } = await CognitoAccount();
+    console.log(`loginCart: This is the userId: ${attributes.sub}`);
+
+    // Catch missing userId
+    currentUserId = attributes.sub;
+    if (currentUserId === null || typeof currentUserId === "undefined") {
+      console.log("loginCart: currentUserId is null or undefined, return empty cart");
+      fillCart([]);
+    } else {
+      // clear the current cartItems
+      console.log(`loginCart: This is the current cartItems ${JSON.stringify(cartItems)}`);
+      console.log("Clear the cart");
+      dispatch(clearCart());
+      console.log(`loginCart: This is the cartItems after clearing ${JSON.stringify(cartItems)}`);
+
+      // use userId to make HTTP request, set the state GetResponse with the result
+      console.log(`loginCart: Fetch cart for user ${currentUserId}`);
+      const getResult = await getCart(currentUserId);
+      fillCart(getResult);
+    }
+  }
+
+  const logoutCart = async () => {
+    
+    let currentUserId = null;
+
+    // Get the user data
+    // console.log(`logoutCart: Get user data via localStorage`)
+    // console.log(`This is the persis:root in localStorage: ${JSON.stringify(localStorage.getItem("persist:root"))}`);
+    
+    
+    // const { attributes } = await CognitoAccount();
+    // console.log(`logoutCart: This is the userId: ${attributes.sub}`);
+
+    // // Catch missing userId
+    // currentUserId = attributes.sub;
+    // if (currentUserId === null || typeof currentUserId === "undefined") {
+    //   console.log("logoutCart: currentUserId is null or undefined, do not write anything");
+    // } else {
+    //   // clear the current cartItems
+    //   console.log(`logoutCart: This is the current cartItems ${JSON.stringify(cartItems)}`);
+      
+    //   // use userId to make HTTP request, POST cart and then PUT cart items
+    //   console.log(`logoutCart: POST cart for user ${currentUserId}`);
+    //   postCart(currentUserId);
+      
+    //   // Loop through cartItems, put every item to backend
+    //   for (const item of cartItems) {
+    //     console.log(`item ${item.product_id} with quantity ${item.quantity}`);
+    //   }
+
+    // }
+  }
 
   useEffect(() => {
     // Function to check current user's authentication status
@@ -45,7 +168,7 @@ const useAuth = () => {
         }
       } catch (error) {
         console.log("Error fetching current user", error);
-        dispatch(setUserLoggedOut());
+        // dispatch(setUserLoggedOut());
       }
     };
 
@@ -57,8 +180,10 @@ const useAuth = () => {
       console.log(event);
       if (event === "signedIn") {
         checkCurrentUser();
+        loginCart();
       } else if (event === "signedOut") {
-        dispatch(setUserLoggedOut());
+        logoutCart();
+        // dispatch(setUserLoggedOut());
       } else if (event === "signedUp") {
       }
     });
