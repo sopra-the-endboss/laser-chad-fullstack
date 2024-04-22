@@ -42,11 +42,13 @@ const useAuth = () => {
 
       if (res.ok) {
         console.log(`DEBUG getCart : res.ok`);
+        return(data.products);
+      } else {
+        console.log(`DEBUG getCart : res.statusCode ${res.status}`);
+        console.log(`DEBUG getCart : This is the data: ${JSON.stringify(data)}`);
+        return([]);
       }
-      console.log(`DEBUG getCart : res.statusCode ${res.status}`);
-      console.log(`DEBUG getCart : This is the data: ${JSON.stringify(data)}`);
-      return(data);
-
+      
     } catch (error) {
       console.error(error);
       return([]);
@@ -55,7 +57,21 @@ const useAuth = () => {
 
   const fillCart = (cartToFill) => {
     // Given a fetched cart, fill the state
-    console.log(`This is the cart to fill: ${cartToFill}`);
+    console.log(`fillCart : This is the cartToFill to fill: ${JSON.stringify(cartToFill)}`);
+    
+    if (cartToFill.length === 0) {
+      console.log("fillCart : cartToFill is empty, do nothing");
+    } else {
+      for (const item of cartToFill) {
+        const item_to_add = {};
+        item_to_add['product_id'] = item.product_id;
+        const item_qty = item.qty;
+        for (let q_counter=0; q_counter < item_qty; q_counter++) {
+          console.log(`fillCart: Send quantity_counter ${q_counter} for product_id ${item.product_id}`);
+          dispatch(addToCart(item_to_add));
+        }
+      }
+    }
   }
 
   const loginCart = async () => {
@@ -106,10 +122,35 @@ const useAuth = () => {
         console.log(`ERROR Post cart for userId ${userId}, returned ${res.status}`);
         console.log(`ERROR Post cart with data ${data}`);
       }
-      console.log(`DEBUG getCart : res.statusCode ${res.status}`);
-      console.log(`DEBUG getCart : This is the data: ${JSON.stringify(data)}`);
-      return(data);
+      
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
+  const putCart = async (userId, putBody) => {
+    // Send PUT to place product_id or increase qty by 1
+    console.log(`DEBUG putCart : This is the putBody ${JSON.stringify(putBody)}`);
+
+    try {
+      const settings = {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(putBody)
+      };
+      const res = await fetch(apigBaseUrl + `/cart/${userId}`, settings);
+      const data = await res.json();
+
+      if (res.ok) {
+        console.log(`DEBUG putCart : res.ok`);
+      } else {
+        console.log(`ERROR putCart : for userId ${userId}, returned ${res.status}`);
+        console.log(`ERROR putCart : with data ${data}`);
+      }
+      
     } catch (error) {
       console.error(error);
     }
@@ -120,57 +161,46 @@ const useAuth = () => {
     // Get the user data from localStorage
     console.log(`logoutCart: Get user data via localStorage`)
     let localStorageRaw = localStorage.getItem("persist:root");
-    console.log(`logoutCart: This is the raw persist:root ${localStorageRaw}`);
-    
-    // // Remove extra escape characters
-    // const localStorageClean = localStorageRaw.replace(/\\"/g, '"');
-    // console.log(`logoutCart: This is the localStorageClean ${localStorageClean}`);
+    // console.log(`logoutCart: This is the raw persist:root ${localStorageRaw}`);
     
     // Parse the string into JSON object
     const localStorageParsed = JSON.parse(localStorageRaw);
-    console.log(`logoutCart: This is the localStorageParsed: ${JSON.stringify(localStorageParsed)}`);
-    
+    // console.log(`logoutCart: This is the localStorageParsed: ${JSON.stringify(localStorageParsed)}`);
     const auth = localStorageParsed.auth;
-    console.log(`logoutCart: This is the auth: ${JSON.stringify(auth)}`);
-
+    // console.log(`logoutCart: This is the auth: ${JSON.stringify(auth)}`);
     // Remove extra escape characters
     const authClean = auth.replace(/\\"/g, '"');
-    console.log(`logoutCart: This is the authClean ${authClean}`);
-    
+    // console.log(`logoutCart: This is the authClean ${authClean}`);
     const authParsed = JSON.parse(authClean);
-    console.log(`logoutCart: This is the authParsed ${JSON.stringify(authParsed)}`);
-    
+    // console.log(`logoutCart: This is the authParsed ${JSON.stringify(authParsed)}`);
     const user = authParsed.user;
-    console.log(`logoutCart: This is the user ${JSON.stringify(user)}`);
-    
+    // console.log(`logoutCart: This is the user ${JSON.stringify(user)}`);
     const userId = user.userId;
-    console.log(`logoutCart: This is the userId ${userId}`);
+    // console.log(`logoutCart: This is the userId ${userId}`);
     
-    postCart(userId);
-    
-    // const { attributes } = await CognitoAccount();
-    // console.log(`logoutCart: This is the userId: ${attributes.sub}`);
+    // First post a cart with userId. If the userId does not have a cart yet, it will be created
+    await postCart(userId);
 
-    // // Catch missing userId
-    // currentUserId = attributes.sub;
-    // if (currentUserId === null || typeof currentUserId === "undefined") {
-    //   console.log("logoutCart: currentUserId is null or undefined, do not write anything");
-    // } else {
-    //   // clear the current cartItems
-    //   console.log(`logoutCart: This is the current cartItems ${JSON.stringify(cartItems)}`);
+    console.log(`logoutCart: This is the current cartItems ${JSON.stringify(cartItems)}`)
       
-    //   // use userId to make HTTP request, POST cart and then PUT cart items
-    //   console.log(`logoutCart: POST cart for user ${currentUserId}`);
-    //   postCart(currentUserId);
-      
-    //   // Loop through cartItems, put every item to backend
-    //   for (const item of cartItems) {
-    //     console.log(`item ${item.product_id} with quantity ${item.quantity}`);
-    //   }
+    // Loop through cartItems, put every item to backend, qty by qty
+    for (const item of cartItems) {
+      const item_qty = item.quantity;
+      console.log(`logoutCart: item ${item.product_id} with quantity ${item.quantity}`);
+      for (let q_counter=0; q_counter < item_qty; q_counter++) {
+        console.log(`logoutCart: Send quantity_counter ${q_counter}`);
+        await putCart(userId, item);
+      }
+    }
 
-    // }
+    // // Clear the cartItems
+    // console.log(`logoutCart : This is the current cartItems before clearing ${JSON.stringify(cartItems)}`);
+    // console.log("logoutCart : Clear the cart");
+    // dispatch(clearCart());
+    // console.log(`logoutCart : This is the cartItems after clearing ${JSON.stringify(cartItems)}`);
+
   }
-
+  
   useEffect(() => {
     // Function to check current user's authentication status
     const checkCurrentUser = async () => {
