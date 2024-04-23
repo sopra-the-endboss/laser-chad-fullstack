@@ -25,7 +25,7 @@ import { useEffect, useState } from "react";
 Amplify.configure(config);
 
 const AmplifyLogin = () => {
-  const authState = useSelector((state) => state.auth.user);
+  const authState = useSelector((state) => state.auth);
   const cartState = useSelector((state) => state.cart.cartItems);
 
   const [roleSelectionOpen, setRoleSelectionOpen] = useState(false);
@@ -36,10 +36,8 @@ const AmplifyLogin = () => {
 
   useEffect(() => {
     const checkRole = () => {
-      if (!authState || !authState.role) {
+      if (authState.isLoggedIn && !authState.user.role) {
         setRoleSelectionOpen(true);
-      } else {
-        console.error("Failed:");
       }
     };
     checkRole();
@@ -47,7 +45,7 @@ const AmplifyLogin = () => {
 
   const SaveCartData = async () => {
     console.log("sending cart to backend...");
-    console.log("Data: ", authState.userId, cartState);
+    console.log("Data: ", authState.user.userId, cartState);
     signOut();
   };
   return (

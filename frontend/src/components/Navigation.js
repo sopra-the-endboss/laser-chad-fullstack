@@ -76,7 +76,7 @@ const Navbar = ({ setData, searchQuerySubmitted, AllProductsName }) => {
   const authState = useSelector((state) => state.auth.user);
   let isSeller = false;
   if (authState.groups) {
-    isSeller = authState.role.includes("Seller");
+    isSeller = authState.role === "Seller";
   }
 
   const inactive =

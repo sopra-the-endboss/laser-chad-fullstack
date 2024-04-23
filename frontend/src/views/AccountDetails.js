@@ -62,17 +62,20 @@ const AccountDetails = () => {
     const { givenname, familyname, email, birthdate, address, county, zip } =
       editState;
 
+    let userAttributes = {
+      given_name: givenname,
+      family_name: familyname,
+      email: email,
+      birthdate: birthdate,
+    };
+
+    if (address) userAttributes["address"] = address;
+    if (county) userAttributes["custom:county"] = county;
+    if (zip) userAttributes["custom:zip"] = zip;
+
     try {
       updateUserAttributes({
-        userAttributes: {
-          given_name: givenname,
-          family_name: familyname,
-          email: email,
-          birthdate: birthdate,
-          address: address,
-          "custom:county": county,
-          "custom:zip": zip,
-        },
+        userAttributes: userAttributes,
       });
       dispatch(setUserLoggedIn(editState));
       setIsEditing(false);
@@ -184,6 +187,16 @@ const AccountDetails = () => {
                 variant="outlined"
                 value={editState.zip || ""}
                 onChange={handleInputChange}
+                error={
+                  editState.zip &&
+                  (editState.zip < 1000 || editState.zip > 10000)
+                }
+                helperText={
+                  editState.zip &&
+                  (editState.zip < 1000 || editState.zip > 10000)
+                    ? "No valid Zipcode"
+                    : ""
+                }
               />
             </Grid>
             <Grid item xs={6}>
