@@ -35,6 +35,7 @@ import backend.cart.lambdas.get_cart.handler as get_handler
 import backend.cart.lambdas.post_cart.handler as post_handler
 import backend.cart.lambdas.put_cart.handler as put_handler
 import backend.cart.lambdas.delete_cart.handler as delete_handler
+import backend.cart.lambdas.put_cart_batch.handler as put_batch_handler
 
 ###
 # Load configs
@@ -695,3 +696,162 @@ def test_PUT_addfield_ignore_quantity(dynamo_table, generate_inputs: dict[str,st
     assert res_get['statusCode'] == 200
     res_body = json.loads(res_get['body'])
     assert res_body == BODY_EXPECT
+
+
+
+###
+# Test PUT_BATCH
+def test_PUT_BATCH_once(dynamo_table, generate_inputs: dict[str,str]):
+    """
+    PUT BATCH on empty cart should return 404, no userId found
+    PUT BATCH once should update the database
+    PUT BATCH again with identical body should yield same entry
+    """
+
+    EVENT_NAME = 'valid_user1_prod1_addfield1'
+    event_raw = generate_inputs[EVENT_NAME]
+    # For the PUT_BATCH, the body looks different
+    EVENT = {}
+    EVENT['pathParameters'] = event_raw['pathParameters']
+    EVENT['body'] = json.dumps({
+        "products" : [json.loads(event_raw['body'])]
+    })
+
+    ###
+    # Assert PUT on empty table returns 404, userId not found
+    assert put_batch_handler.handler(EVENT, CONTEXT_DUMMY)['statusCode'] == 404
+
+    # FIRST
+    # POST valid, this creates for userId a cart entry
+    post_handler.handler(EVENT, CONTEXT_DUMMY)
+
+    # PUT BATCH valid, this creates an entry for the userId
+    res_put = put_batch_handler.handler(EVENT, CONTEXT_DUMMY)
+    assert res_put['statusCode'] == 200
+    res_body = json.loads(res_put['body'])
+    
+    # Assert that the upadted entry is exactly the body
+    BODY_EXPECT = {
+        "userId" : EVENT['pathParameters']['userId'],
+        "products" : json.loads(EVENT['body'])['products']
+    }
+    assert res_body == BODY_EXPECT
+
+    # Verify that GET returns the same information
+    res_get = get_handler.handler(EVENT, CONTEXT_DUMMY)
+    res_get_body = json.loads(res_get['body'])
+    assert res_get_body == BODY_EXPECT
+
+    # SECOND
+    # PUT BATCH valid again, should yield identical result
+    res_put = put_batch_handler.handler(EVENT, CONTEXT_DUMMY)
+    assert res_put['statusCode'] == 200
+    res_body = json.loads(res_put['body'])
+    assert res_body == BODY_EXPECT
+
+    # Verify that GET returns the same information
+    res_get = get_handler.handler(EVENT, CONTEXT_DUMMY)
+    res_get_body = json.loads(res_get['body'])
+    assert res_get_body == BODY_EXPECT
+
+def test_PUT_BATCH_multi(dynamo_table, generate_inputs: dict[str,str]):
+    """
+    PUT BATCH once should update the database
+    PUT BATCH again with new body should yield same result
+    """
+
+    # Use arbitrary fields inside items of products
+    EVENT_NAME = 'valid_user1_prod1_addfield1'
+    event_raw = generate_inputs[EVENT_NAME]
+    # For the PUT_BATCH, the body looks different
+
+    EVENT1 = {}
+    EVENT1['pathParameters'] = event_raw['pathParameters']
+    EVENT1['body'] = json.dumps({
+        "products":[{"field1":"value1", "field2":2}]
+    })
+    
+    EVENT2 = {}
+    EVENT2['pathParameters'] = event_raw['pathParameters']
+    EVENT2['body'] = json.dumps({
+        "products":[{"newfield1":"newvalue1", "newfield2":2222}]
+    })
+    
+    # POST valid, this creates for userId a cart entry
+    post_handler.handler(EVENT1, CONTEXT_DUMMY)
+
+    # FIRST
+    # PUT BATCH valid, this creates an entry for the userId
+    res_put = put_batch_handler.handler(EVENT1, CONTEXT_DUMMY)
+    assert res_put['statusCode'] == 200
+    res_body = json.loads(res_put['body'])
+    
+    # Assert that the quantity is 1 in the returned object
+    BODY_EXPECT = {
+        "userId" : EVENT1['pathParameters']['userId'],
+        "products" : json.loads(EVENT1['body'])['products']
+    }
+    assert res_body == BODY_EXPECT
+
+    # Verify that GET returns the same information
+    res_get = get_handler.handler(EVENT1, CONTEXT_DUMMY)
+    res_get_body = json.loads(res_get['body'])
+    assert res_get_body == BODY_EXPECT
+
+    # SECOND
+    # PUT BATCH valid, this creates an new entry for the userId
+    res_put = put_batch_handler.handler(EVENT2, CONTEXT_DUMMY)
+    assert res_put['statusCode'] == 200
+    res_body = json.loads(res_put['body'])
+    
+    # Assert that the quantity is 1 in the returned object
+    BODY_EXPECT = {
+        "userId" : EVENT2['pathParameters']['userId'],
+        "products" : json.loads(EVENT2['body'])['products']
+    }
+    assert res_body == BODY_EXPECT
+
+    # Verify that GET returns the same information
+    res_get = get_handler.handler(EVENT2, CONTEXT_DUMMY)
+    res_get_body = json.loads(res_get['body'])
+    assert res_get_body == BODY_EXPECT
+
+def test_PUT_BATCH_addfield(dynamo_table, generate_inputs: dict[str,str]):
+    """
+    Test that additional fields apart from products in the body are ignored
+    PUT BATCH one valid item with additional fields
+    Assert that result in database does not contain those fields
+    """
+
+    EVENT_NAME = 'valid_user1_prod1_addfield1'
+    event_raw = generate_inputs[EVENT_NAME]
+    # For the PUT_BATCH, the body looks different
+    EVENT = {}
+    EVENT['pathParameters'] = event_raw['pathParameters']
+    EVENT['body'] = json.dumps({
+        "products" : [json.loads(event_raw['body'])],
+        "additionalString" : "someString",
+        "additionalNumber" : 1234,
+        "additionalList" : ["a",2,{"foo":42}]
+    })
+    
+    # POST valid, this creates for userId a cart entry
+    post_handler.handler(EVENT, CONTEXT_DUMMY)
+
+    # FIRST
+    # PUT BATCH valid, this creates an entry for the userId
+    res_put = put_batch_handler.handler(EVENT, CONTEXT_DUMMY)
+    assert res_put['statusCode'] == 200
+    res_body = json.loads(res_put['body'])
+    
+    # Assert that the quantity is 1 in the returned object
+    BODY_EXPECT = {
+        "userId" : EVENT['pathParameters']['userId'],
+        "products" : json.loads(EVENT['body'])['products']
+    }
+    assert res_body == BODY_EXPECT
+
+    # Verify that GET returns the same information
+    res_get = get_handler.handler(EVENT, CONTEXT_DUMMY)
+    res_get_body = json.loads(res_get['body'])
+    assert res_get_body == BODY_EXPECT
