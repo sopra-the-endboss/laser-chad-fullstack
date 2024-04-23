@@ -39,6 +39,9 @@ const useAuth = () => {
               givenname: attributes.given_name,
               familyname: attributes.family_name,
               role: attributes["custom:role"],
+              address: attributes.address,
+              county: attributes["custom:county"],
+              zip: attributes["custom:zip"],
             },
           };
 

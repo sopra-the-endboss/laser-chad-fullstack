@@ -59,7 +59,8 @@ const AccountDetails = () => {
   };
 
   const handleUpdate = async () => {
-    const { givenname, familyname, email, birthdate } = editState;
+    const { givenname, familyname, email, birthdate, address, county, zip } =
+      editState;
 
     try {
       updateUserAttributes({
@@ -68,6 +69,9 @@ const AccountDetails = () => {
           family_name: familyname,
           email: email,
           birthdate: birthdate,
+          address: address,
+          "custom:county": county,
+          "custom:zip": zip,
         },
       });
       dispatch(setUserLoggedIn(editState));
@@ -97,7 +101,7 @@ const AccountDetails = () => {
         Account Type: {authState.role}
       </Typography>
       <Divider sx={{ my: 2 }} />
-
+      {/* TODO: Loop over elements */}
       {isEditing ? (
         <React.Fragment>
           <Grid container spacing={2} alignItems="center">
@@ -157,6 +161,44 @@ const AccountDetails = () => {
               />
             </Grid>
 
+            <Grid item xs={6}>
+              <Typography>Address</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                name="address"
+                variant="outlined"
+                value={editState.address || ""}
+                onChange={handleInputChange}
+              />
+            </Grid>
+
+            <Grid item xs={6}>
+              <Typography>Zipcode</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                name="zip"
+                variant="outlined"
+                value={editState.zip || ""}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>County</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                name="county"
+                variant="outlined"
+                value={editState.county || ""}
+                onChange={handleInputChange}
+              />
+            </Grid>
+
             <Grid item xs={12}>
               <Button
                 variant="contained"
@@ -172,7 +214,7 @@ const AccountDetails = () => {
         <React.Fragment>
           <Grid container spacing={2}>
             <Grid item xs={6}>
-              <Typography>Full name:</Typography>
+              <Typography>Name:</Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography>
@@ -190,6 +232,24 @@ const AccountDetails = () => {
             </Grid>
             <Grid item xs={6}>
               <Typography>{authState.birthdate}</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>Address:</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>{authState.address} </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>Zipcode:</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>{authState.zip}</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>County:</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>{authState.county}</Typography>
             </Grid>
           </Grid>
           <IconButton onClick={handleEditToggle} size="large">

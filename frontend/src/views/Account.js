@@ -6,6 +6,8 @@ import config from "../config/amplifyconfiguration.json";
 import AccountDetails from "./AccountDetails";
 import { useSelector } from "react-redux";
 import { signOut } from "aws-amplify/auth";
+import UpdateRole from "../components/Account/UpdateRole";
+import { useEffect, useState } from "react";
 
 /**
  * A component that uses AWS Amplify's Authenticator to manage user authentication.
@@ -26,6 +28,23 @@ const AmplifyLogin = () => {
   const authState = useSelector((state) => state.auth.user);
   const cartState = useSelector((state) => state.cart.cartItems);
 
+  const [roleSelectionOpen, setRoleSelectionOpen] = useState(false);
+
+  const handleClose = () => {
+    setRoleSelectionOpen(false);
+  };
+
+  useEffect(() => {
+    const checkRole = () => {
+      if (!authState || !authState.role) {
+        setRoleSelectionOpen(true);
+      } else {
+        console.error("Failed:");
+      }
+    };
+    checkRole();
+  }, [authState]);
+
   const SaveCartData = async () => {
     console.log("sending cart to backend...");
     console.log("Data: ", authState.userId, cartState);
@@ -34,7 +53,7 @@ const AmplifyLogin = () => {
   return (
     <div className="authenticator">
       <Authenticator>
-        {({ signOut, user }) => (
+        {() => (
           <div>
             <AccountDetails />
             {/** TODO: Change to Material UI Button*/}
@@ -48,6 +67,9 @@ const AmplifyLogin = () => {
           </div>
         )}
       </Authenticator>
+      {roleSelectionOpen && (
+        <UpdateRole open={roleSelectionOpen} onClose={handleClose} />
+      )}
     </div>
   );
 };
