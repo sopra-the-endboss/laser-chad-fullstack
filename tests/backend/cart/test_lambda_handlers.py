@@ -270,10 +270,10 @@ def test_PUT_once(dynamo_table, generate_inputs: dict[str,str]):
 
     res_body = json.loads(res_put['body'])
     
-    # Assert that the qty is 1 in the returned object
+    # Assert that the quantity is 1 in the returned object
     BODY_EXPECT = {
         "userId" : EVENT['pathParameters']['userId'],
-        "products" : [{"product_id" : json.loads(EVENT['body'])['product_id'], "qty":1}]
+        "products" : [{"product_id" : json.loads(EVENT['body'])['product_id'], "quantity":1}]
     }
     assert res_body == BODY_EXPECT
 
@@ -292,30 +292,30 @@ def test_PUT_multi_same_prod(dynamo_table, generate_inputs: dict[str,str]):
     # POST valid, this creates for userId a cart entry
     post_handler.handler(EVENT, CONTEXT_DUMMY)
 
-    # PUT valid, this creates an entry for the product_id with qty 1
+    # PUT valid, this creates an entry for the product_id with quantity 1
     res_put = put_handler.handler(EVENT, CONTEXT_DUMMY)
     assert res_put['statusCode'] == 200
     res_body = json.loads(res_put['body'])
     
-    # Assert that the qty is 1 in the returned object
+    # Assert that the quantity is 1 in the returned object
     BODY_EXPECT = {
         "userId" : EVENT['pathParameters']['userId'],
-        "products" : [{"product_id" : json.loads(EVENT['body'])['product_id'], "qty":1}]
+        "products" : [{"product_id" : json.loads(EVENT['body'])['product_id'], "quantity":1}]
     }
     assert res_body == BODY_EXPECT
 
     # Also assert that the result has exactly one product for the userId
     assert len(res_body['products']) == 1
 
-    # PUT valid the same item, should increase qty to 2
+    # PUT valid the same item, should increase quantity to 2
     res_put = put_handler.handler(EVENT, CONTEXT_DUMMY)
     assert res_put['statusCode'] == 200
     res_body = json.loads(res_put['body'])
     
-    # Assert that the qty is 1 in the returned object
+    # Assert that the quantity is 1 in the returned object
     BODY_EXPECT = {
         "userId" : EVENT['pathParameters']['userId'],
-        "products" : [{"product_id" : json.loads(EVENT['body'])['product_id'], "qty":2}]
+        "products" : [{"product_id" : json.loads(EVENT['body'])['product_id'], "quantity":2}]
     }
     assert res_body == BODY_EXPECT
 
@@ -335,27 +335,27 @@ def test_PUT_multi_prod(dynamo_table, generate_inputs: dict[str,str]):
     # POST valid, this creates for userId a cart entry for two users
     post_handler.handler(EVENT_1, CONTEXT_DUMMY)
 
-    # PUT valid, this creates an entry for user1 for the product_id prod1 with qty 1
+    # PUT valid, this creates an entry for user1 for the product_id prod1 with quantity 1
     res_put = put_handler.handler(EVENT_1, CONTEXT_DUMMY)
     assert res_put['statusCode'] == 200
     res_body = json.loads(res_put['body'])
     
-    # PUT valid the same item, should increase prod1 qty to 2
+    # PUT valid the same item, should increase prod1 quantity to 2
     res_put = put_handler.handler(EVENT_1, CONTEXT_DUMMY)
     assert res_put['statusCode'] == 200
     res_body = json.loads(res_put['body'])
     
-    # PUT valid for user1, but different product, should increase qty for prod2 to 1
+    # PUT valid for user1, but different product, should increase quantity for prod2 to 1
     res_put = put_handler.handler(EVENT_2, CONTEXT_DUMMY)
     assert res_put['statusCode'] == 200
     res_body = json.loads(res_put['body'])
 
-    # Assert that user1 has two products, prod1 with qty 2 and prod2 with qty 1
+    # Assert that user1 has two products, prod1 with quantity 2 and prod2 with quantity 1
     BODY_EXPECT = {
         "userId" : EVENT_1['pathParameters']['userId'],
         "products" : [
-            {"product_id" : json.loads(EVENT_1['body'])['product_id'], "qty":2},
-            {"product_id" : json.loads(EVENT_2['body'])['product_id'], "qty":1}
+            {"product_id" : json.loads(EVENT_1['body'])['product_id'], "quantity":2},
+            {"product_id" : json.loads(EVENT_2['body'])['product_id'], "quantity":1}
         ]
     }
     assert res_body == BODY_EXPECT
@@ -443,9 +443,9 @@ def test_DELETE_multi(dynamo_table, generate_inputs: dict[str,str]):
     post_handler.handler(EVENT_3, CONTEXT_DUMMY)
 
     # PUT valid, this creates multiple entries
-    # user1 prod1 - qty 2
-    # user1 prod2 - qty 1
-    # user2 prod1 - qty 3
+    # user1 prod1 - quantity 2
+    # user1 prod2 - quantity 1
+    # user2 prod1 - quantity 3
     put_handler.handler(EVENT_1, CONTEXT_DUMMY)
     put_handler.handler(EVENT_1, CONTEXT_DUMMY)
     put_handler.handler(EVENT_2, CONTEXT_DUMMY)
@@ -454,8 +454,8 @@ def test_DELETE_multi(dynamo_table, generate_inputs: dict[str,str]):
     put_handler.handler(EVENT_3, CONTEXT_DUMMY)
     
     # DELETE, should result in
-    # user1 prod1 - qty 1
-    # user2 prod1 - qty 2
+    # user1 prod1 - quantity 1
+    # user2 prod1 - quantity 2
     delete_handler.handler(EVENT_1, CONTEXT_DUMMY)
     delete_handler.handler(EVENT_2, CONTEXT_DUMMY)
     delete_handler.handler(EVENT_3, CONTEXT_DUMMY)
@@ -463,14 +463,14 @@ def test_DELETE_multi(dynamo_table, generate_inputs: dict[str,str]):
     USER1_EXPECT = {
         "userId" : EVENT_1['pathParameters']['userId'],
         "products" : [
-            {"product_id" : "product_one", "qty" : 1}
+            {"product_id" : "product_one", "quantity" : 1}
         ]
     }
     
     USER2_EXPECT = {
         "userId" : EVENT_3['pathParameters']['userId'],
         "products" : [
-            {"product_id" : "product_one", "qty" : 2}
+            {"product_id" : "product_one", "quantity" : 2}
         ]
     }
     

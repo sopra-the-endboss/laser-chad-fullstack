@@ -172,7 +172,7 @@ pp.pprint(scan_items)
 # ###
 # # Send PUT valid already existing -> 200
 # # First call should create prod
-# # Second call should increase qty to 2
+# # Second call should increase quantity to 2
 # user = 1
 # valid = {"product_id":"product_one"}
 # payload = valid
@@ -188,7 +188,7 @@ pp.pprint(scan_items)
 
 # ###
 # # Send PUT valid new product_id -> 200
-# # Should set  new_prod to qty 1
+# # Should set  new_prod to quantity 1
 # new_and_valid = {"product_id":"product_two"}
 # user = 1
 
@@ -228,7 +228,7 @@ pp.pprint(scan_items)
 
 
 # ###
-# # Send DELETE product from 2 to 1 -> 200. decrease qty
+# # Send DELETE product from 2 to 1 -> 200. decrease quantity
 # delete_2_to_1 = {"product_id":"product_one"}
 # user = 1
 # payload = delete_2_to_1

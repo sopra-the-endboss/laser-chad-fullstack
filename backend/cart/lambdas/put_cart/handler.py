@@ -1,6 +1,6 @@
 """
 put_cart
-Handle call to update a cart with a product_id and qty for a given userId
+Handle call to update a cart with a product_id and quantity for a given userId
 TODO: Allow for arbitrary additional fields with product_id
 """
 
@@ -114,8 +114,8 @@ def handler(event, context) -> list[dict]:
         return return_error(f"No cart with userId {filter} found, return 404", 404)
 
     ###
-    # Now either product_id_to_update is in the cart, then we increase qty by 1
-    # OR if product_id_to_update not in cart, we add it with qty 1
+    # Now either product_id_to_update is in the cart, then we increase quantity by 1
+    # OR if product_id_to_update not in cart, we add it with quantity 1
     print("this is the cart_found")
     print(type(cart_found))
     print(cart_found)
@@ -123,37 +123,37 @@ def handler(event, context) -> list[dict]:
     # Cart could be empty, then products is still a list
     products_found = cart_found['products']
     product_ids_found = [p['product_id'] for p in products_found]
-    product_qtys_found = [p['qty'] for p in products_found]
+    product_quantitys_found = [p['quantity'] for p in products_found]
 
-    print("this is the products found, and the product_ids and the qtys")
+    print("this is the products found, and the product_ids and the quantitys")
     print(products_found)
     print(product_ids_found)
-    print(product_qtys_found)
+    print(product_quantitys_found)
 
     # Assert that there are no duplicated product_id in a cart
     if len(product_ids_found) != len(set(product_ids_found)):
         print("product_ids_found contains duplicates, abort")
         raise ValueError("product_ids_found contains duplicates, abort")
     
-    # Assert that there are no non-positive qty in a cart
-    if any(qty <= 0 for qty in product_qtys_found):
-        print("product_qtys_found contains non-positive quantities, abort")
-        raise ValueError("product_qtys_found contains non-positive quantities, abort")
+    # Assert that there are no non-positive quantity in a cart
+    if any(quantity <= 0 for quantity in product_quantitys_found):
+        print("product_quantitys_found contains non-positive quantities, abort")
+        raise ValueError("product_quantitys_found contains non-positive quantities, abort")
     
     # Search for product_id_to_update, check if it is present, if not create a new one
     product_id_to_update_found = product_id_to_update in product_ids_found
-    # If it is not present, create new product with qty 0
+    # If it is not present, create new product with quantity 0
     if not product_id_to_update_found:
         print(f"product_id {product_id_to_update} to put not found, create it")
-        product_updated = {"product_id":product_id_to_update, "qty":0}
+        product_updated = {"product_id":product_id_to_update, "quantity":0}
     else:
         print(f"product_id {product_id_to_update} is already present in cart, pop it")
         # If it is present remove the old product from products_found, replace it with a new one
         index_product_id_to_update = product_ids_found.index(product_id_to_update)
         product_updated = products_found.pop(index_product_id_to_update)
     
-    # increase qty
-    product_updated['qty'] += 1
+    # increase quantity
+    product_updated['quantity'] += 1
 
     print("This is the product_updated after increasing")
     print(product_updated)
