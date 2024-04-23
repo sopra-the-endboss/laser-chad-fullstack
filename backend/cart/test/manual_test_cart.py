@@ -70,27 +70,27 @@ api_id = deploy_utils.find_api_id_by_tag(
 #     scan_items.extend(response['Items'])
 # pp.pprint(scan_items)
 
-print("ALL APIS FOUND:\n")
-print(apig_client.get_rest_apis()['items'])
-print("-----------------")
+# print("ALL APIS FOUND:\n")
+# print(apig_client.get_rest_apis()['items'])
+# print("-----------------")
 
-print(f"ALL DEPLOYMENTS TO {api_id} FOUND:\n")
-print(apig_client.get_deployments(restApiId=api_id)['items'])
-deployment_id = apig_client.get_deployments(restApiId=api_id)['items'][0]['id']
-print("-----------------")
+# print(f"ALL DEPLOYMENTS TO {api_id} FOUND:\n")
+# print(apig_client.get_deployments(restApiId=api_id)['items'])
+# deployment_id = apig_client.get_deployments(restApiId=api_id)['items'][0]['id']
+# print("-----------------")
 
-print(f"ALL STAGES TO {api_id} AND DEPLOYMENT {deployment_id} FOUND:\n")
-print(apig_client.get_stages(restApiId=api_id, deploymentId = deployment_id))
-print("-----------------")
+# print(f"ALL STAGES TO {api_id} AND DEPLOYMENT {deployment_id} FOUND:\n")
+# print(apig_client.get_stages(restApiId=api_id, deploymentId = deployment_id))
+# print("-----------------")
 
-print(f"ALL RESOURCES TO {api_id} FOUND:\n")
-pp.pprint(apig_client.get_resources(restApiId = api_id)['items'])
-resources_id = [res['id'] for res in apig_client.get_resources(restApiId = api_id)['items']]
-print("-----------------")
+# print(f"ALL RESOURCES TO {api_id} FOUND:\n")
+# pp.pprint(apig_client.get_resources(restApiId = api_id)['items'])
+# resources_id = [res['id'] for res in apig_client.get_resources(restApiId = api_id)['items']]
+# print("-----------------")
 
-print(f"ALL LAMBDA FUNCTION TO {api_id} FOUND:\n")
-pp.pprint(lambda_client.list_functions())
-print("-----------------")
+# print(f"ALL LAMBDA FUNCTION TO {api_id} FOUND:\n")
+# pp.pprint(lambda_client.list_functions())
+# print("-----------------")
 
 
 # ###
