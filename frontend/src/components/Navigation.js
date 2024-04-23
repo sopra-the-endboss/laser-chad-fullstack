@@ -72,10 +72,11 @@ const Navbar = ({ setData, searchQuerySubmitted, AllProductsName }) => {
     }
   };
 
+  // Is this still needed with the Seller Guard?
   const authState = useSelector((state) => state.auth.user);
   let isSeller = false;
   if (authState.groups) {
-    isSeller = authState.groups.includes("seller");
+    isSeller = authState.role === "Seller";
   }
 
   const inactive =
@@ -100,6 +101,7 @@ const Navbar = ({ setData, searchQuerySubmitted, AllProductsName }) => {
       route: "/account",
       location: "Account",
     },
+    // Still needed with Seller Guard?
     ...(isSeller
       ? [
           {

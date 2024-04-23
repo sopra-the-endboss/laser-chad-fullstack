@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Hub } from "aws-amplify/utils";
 import { setUserLoggedIn, setUserLoggedOut } from "./slices/authSlice";
 import CognitoAccount from "../components/Account/CognitoAccount";
-import { addToCart, clearCart } from "./slices/cartSlice";
 /**
  * A custom hook that manages the authentication state of the user using AWS Amplify's Hub for listening to authentication events.
  *
@@ -217,6 +216,9 @@ const useAuth = () => {
               givenname: attributes.given_name,
               familyname: attributes.family_name,
               role: attributes["custom:role"],
+              address: attributes.address,
+              county: attributes["custom:county"],
+              zip: attributes["custom:zip"],
             },
           };
 

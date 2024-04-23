@@ -55,6 +55,9 @@ const authSlice = createSlice({
         givenname: null,
         familyname: null,
         role: null,
+        address: null,
+        county: null,
+        zip: null,
       };
     },
     updateUserDetail: (state, action) => {

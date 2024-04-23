@@ -18,8 +18,6 @@ import { Playground } from "./views/Playground";
 import { useSelector } from "react-redux";
 import { PRODUCT_ENDPOINT } from "./utils/constants";
 import { enqueueSnackbar, SnackbarProvider } from "notistack";
-import UpdateRole from "./components/Account/UpdateRole";
-import CognitoAccount from "./components/Account/CognitoAccount";
 
 function App() {
   const [data, setData] = useState([]);
@@ -30,27 +28,7 @@ function App() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
-  const [roleSelectionOpen, setRoleSelectionOpen] = useState(false);
-
-  const handleClose = () => {
-    setRoleSelectionOpen(false);
-  };
-
   useAuth();
-
-  useEffect(() => {
-    const checkRole = async () => {
-      try {
-        const { attributes } = await CognitoAccount();
-        if (!attributes || !attributes["custom:role"]) {
-          setRoleSelectionOpen(true);
-        }
-      } catch (error) {
-        console.error("Failed to fetch attributes from Cognito:", error);
-      }
-    };
-    checkRole();
-  }, []);
 
   useEffect(() => {
     // filter data for category
@@ -153,9 +131,6 @@ function App() {
                 </Grid>
               </Container>
             </div>
-            {roleSelectionOpen && (
-              <UpdateRole open={roleSelectionOpen} onClose={handleClose} />
-            )}
           </BrowserRouter>
         </SnackbarProvider>
       </div>
