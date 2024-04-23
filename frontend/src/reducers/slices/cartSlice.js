@@ -80,11 +80,14 @@ const cartSlice = createSlice({
       );
       state.cartItems.splice(productIndex, 1);
     },
+
+    sendCart: (state) => {},
   },
 });
 
 /**
  * Exported actions from the cartSlice for use in dispatching changes to the cart state.
  */
-export const { addToCart, reduceQuantity, removeFromCart } = cartSlice.actions;
+export const { addToCart, reduceQuantity, removeFromCart, sendCart } =
+  cartSlice.actions;
 export default cartSlice.reducer;

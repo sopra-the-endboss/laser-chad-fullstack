@@ -4,6 +4,8 @@ import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import config from "../config/amplifyconfiguration.json";
 import AccountDetails from "./AccountDetails";
+import { useSelector } from "react-redux";
+import { signOut } from "aws-amplify/auth";
 
 /**
  * A component that uses AWS Amplify's Authenticator to manage user authentication.
@@ -21,6 +23,14 @@ import AccountDetails from "./AccountDetails";
 Amplify.configure(config);
 
 const AmplifyLogin = () => {
+  const authState = useSelector((state) => state.auth.user);
+  const cartState = useSelector((state) => state.cart.cartItems);
+
+  const SaveCartData = async () => {
+    console.log("sending cart to backend...");
+    console.log("Data: ", authState.userId, cartState);
+    signOut();
+  };
   return (
     <div className="authenticator">
       <Authenticator>
@@ -31,7 +41,7 @@ const AmplifyLogin = () => {
             <button
               class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
               style={{ float: "right", marginTop: "10px" }}
-              onClick={signOut}
+              onClick={SaveCartData}
             >
               Sign out
             </button>
