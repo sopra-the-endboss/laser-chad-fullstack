@@ -295,6 +295,7 @@ def test_GET_empty(dynamo_table, generate_inputs: dict[str,str]):
 
 ###
 # Test PUT and DELETE with only minimal fields product_id
+# For DELETE, use additional fields, those should not alter the functionality
 def test_PUT_once(dynamo_table, generate_inputs: dict[str,str]):
 
     ###
@@ -414,7 +415,7 @@ def test_DELETE_once(dynamo_table, generate_inputs: dict[str,str]):
 
     ###
     # Assert 404 if userId does not have a cart
-    EVENT_NAME = 'valid_user1_prod1'
+    EVENT_NAME = 'valid_user1_prod1_addfield1'
     EVENT = generate_inputs[EVENT_NAME]
     
     ###
@@ -447,7 +448,7 @@ def test_DELETE_empty(dynamo_table, generate_inputs: dict[str,str]):
     ###
     # Assert that deleting a nonexistent product_id is a success
     
-    EVENT_NAME = 'valid_user1_prod1'
+    EVENT_NAME = 'valid_user1_prod1_addfield1'
     EVENT = generate_inputs[EVENT_NAME]
     
     ###
@@ -475,7 +476,7 @@ def test_DELETE_empty(dynamo_table, generate_inputs: dict[str,str]):
 
 def test_DELETE_multi(dynamo_table, generate_inputs: dict[str,str]):
 
-    EVENT_NAME_1 = 'valid_user1_prod1'
+    EVENT_NAME_1 = 'valid_user1_prod1_addfield1'
     EVENT_NAME_2 = 'valid_user1_prod2'
     EVENT_NAME_3 = 'valid_user2_prod1'
     
@@ -508,14 +509,22 @@ def test_DELETE_multi(dynamo_table, generate_inputs: dict[str,str]):
     USER1_EXPECT = {
         "userId" : EVENT_1['pathParameters']['userId'],
         "products" : [
-            {"product_id" : "product_one", "quantity" : 1}
+            {
+                "product_id" : "product_one",
+                "quantity" : 1,
+                "brand":json.loads(EVENT_1['body'])['brand'],
+                "image":json.loads(EVENT_1['body'])['image']
+            }
         ]
     }
     
     USER2_EXPECT = {
         "userId" : EVENT_3['pathParameters']['userId'],
         "products" : [
-            {"product_id" : "product_one", "quantity" : 2}
+            {
+                "product_id" : "product_one",
+                "quantity" : 2
+            }
         ]
     }
     
@@ -611,7 +620,7 @@ def test_PUT_addfield(dynamo_table, generate_inputs: dict[str,str]):
 
 def test_PUT_addfield_ignore_quantity(dynamo_table, generate_inputs: dict[str,str]):
     """
-    Asser that additionalfield quantity is ignored in PUT
+    Assert that additionalfield quantity is ignored in PUT
     """
 
     EVENT_BASIS = generate_inputs['valid_user1_prod1']
@@ -629,7 +638,10 @@ def test_PUT_addfield_ignore_quantity(dynamo_table, generate_inputs: dict[str,st
     # Assert that the quantity is 1 in the returned object
     BODY_EXPECT = {
         "userId" : EVENT_BASIS['pathParameters']['userId'],
-        "products" : [{"product_id" : json.loads(EVENT_BASIS['body'])['product_id'], "quantity":1}]
+        "products" : [{
+            "product_id" : json.loads(EVENT_BASIS['body'])['product_id'],
+            "quantity":1
+        }]
     }
     assert res_body == BODY_EXPECT
     # Also assert with GET
