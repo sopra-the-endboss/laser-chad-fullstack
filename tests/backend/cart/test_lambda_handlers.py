@@ -104,6 +104,12 @@ def generate_inputs() -> dict[str,dict]:
     prod1 = "product_one"
     prod2 = "product_two"
 
+    # additional fields
+    brand1 = "apple"
+    brand2 = "intel"
+    image1 = "image_one"
+    title1 = "title_two"
+
     ###
     # Create events
     inputs_to_return['empty_pathParameter'] = {
@@ -118,6 +124,33 @@ def generate_inputs() -> dict[str,dict]:
     
     inputs_to_return['valid_user1_prod1'] = {
         "body" : json.dumps({"product_id":prod1}),
+        "pathParameters" : {"userId":user1_str}
+    }
+    
+    inputs_to_return['valid_user1_prod1_addfield1'] = {
+        "body" : json.dumps({
+            "product_id":prod1,
+            "brand":brand1,
+            "image":image1}
+            ),
+        "pathParameters" : {"userId":user1_str}
+    }
+    
+    inputs_to_return['valid_user1_prod1_addfield2'] = {
+        "body" : json.dumps({
+            "product_id":prod1,
+            "brand":brand2,
+            "title":title1}
+            ),
+        "pathParameters" : {"userId":user1_str}
+    }
+    
+    inputs_to_return['valid_user1_prod1_addfield_quantity'] = {
+        "body" : json.dumps({
+            "product_id":prod1,
+            "brand":brand1,
+            "quantity":99}
+            ),
         "pathParameters" : {"userId":user1_str}
     }
     
@@ -163,6 +196,9 @@ def test_db_does_not_exist(set_env):
     res = get_handler.handler(dummy_event, dummy_context)
     assert res['statusCode'] == 400
 
+
+###
+# Test pathParameters
 def test_GET_pathParameters(dynamo_table, generate_inputs: dict[str,str]):
     ###
     # Assert GET with empty or wrong pathParameters -> 400
@@ -198,7 +234,10 @@ def test_DELETE_pathParameters(dynamo_table, generate_inputs: dict[str,str]):
     
     res_wrong_pathParameter = delete_handler.handler(generate_inputs['wrong_pathParameter'], CONTEXT_DUMMY)
     assert res_wrong_pathParameter['statusCode'] == 400
-    
+
+
+###
+# Test POST
 def test_POST_create(dynamo_table, generate_inputs: dict[str,str]):
     
     ###
@@ -227,7 +266,10 @@ def test_POST_body_not_empty(dynamo_table, generate_inputs: dict[str,str]):
     # Make sure the input was written by checking duplication error
     assert post_handler.handler(generate_inputs['valid_user1_prod1'], CONTEXT_DUMMY)['statusCode'] == 409
 
-def test_GET(dynamo_table, generate_inputs: dict[str,str]):
+
+###
+# Test GET empty
+def test_GET_empty(dynamo_table, generate_inputs: dict[str,str]):
 
     EVENT_NAME = 'valid_user1_prod1'
     EVENT = generate_inputs[EVENT_NAME]
@@ -250,6 +292,9 @@ def test_GET(dynamo_table, generate_inputs: dict[str,str]):
     }
     assert json.loads(res_get['body']) == BODY_EXPECT
 
+
+###
+# Test PUT and DELETE with only minimal fields product_id
 def test_PUT_once(dynamo_table, generate_inputs: dict[str,str]):
 
     ###
@@ -483,3 +528,158 @@ def test_DELETE_multi(dynamo_table, generate_inputs: dict[str,str]):
     res_get_body = json.loads(res_get['body'])
     assert res_get_body == USER2_EXPECT
 
+
+
+###
+# Test PUT with additional fields
+def test_PUT_addfield(dynamo_table, generate_inputs: dict[str,str]):
+    """
+    Add a new field to the body which should be written to the database and be retreived by the GET
+    addfield should be overwritten, new field should be added, old fields should not be updated
+    """
+
+    EVENT_BASIS = generate_inputs['valid_user1_prod1']
+    EVENT_ADDFIELD1 = generate_inputs['valid_user1_prod1_addfield1']
+    EVENT_ADDFIELD2 = generate_inputs['valid_user1_prod1_addfield2']
+
+    # POST valid, this creates for userId a cart entry
+    post_handler.handler(EVENT_BASIS, CONTEXT_DUMMY)
+
+    # FIRST
+    # PUT EVENT with same user to have quantity 1 on product_id
+    res_put = put_handler.handler(EVENT_BASIS, CONTEXT_DUMMY)
+    assert res_put['statusCode'] == 200
+    res_body = json.loads(res_put['body'])
+    # Assert that the quantity is 1 in the returned object
+    BODY_EXPECT = {
+        "userId" : EVENT_BASIS['pathParameters']['userId'],
+        "products" : [{"product_id" : json.loads(EVENT_BASIS['body'])['product_id'], "quantity":1}]
+    }
+    assert res_body == BODY_EXPECT
+    # Also assert with GET
+    res_get = get_handler.handler(EVENT_BASIS, CONTEXT_DUMMY)
+    assert res_get['statusCode'] == 200
+    res_body = json.loads(res_get['body'])
+    assert res_body == BODY_EXPECT
+
+    # SECOND
+    # PUT EVENT with additionalfield, should yield quantity 2 on product_id
+    # and also brand "brand1" and image "image_one"
+    res_put = put_handler.handler(EVENT_ADDFIELD1, CONTEXT_DUMMY)
+    assert res_put['statusCode'] == 200
+    res_body = json.loads(res_put['body'])
+    # Assert that the quantity is 2 in the returned object
+    BODY_EXPECT = {
+        "userId" : EVENT_BASIS['pathParameters']['userId'],
+        "products" : [{
+            "product_id" : json.loads(EVENT_BASIS['body'])['product_id'],
+            "quantity":2,
+            "brand" : json.loads(EVENT_ADDFIELD1['body'])['brand'],
+            "image" : json.loads(EVENT_ADDFIELD1['body'])['image']
+            }]
+    }
+    assert res_body == BODY_EXPECT
+    # Also assert with GET
+    res_get = get_handler.handler(EVENT_ADDFIELD1, CONTEXT_DUMMY)
+    assert res_get['statusCode'] == 200
+    res_body = json.loads(res_get['body'])
+    assert res_body == BODY_EXPECT
+
+    # THIRD
+    # PUT EVENT with additionalfield with a new value, should yield quantity 3 on product_id
+    # and also update brand to brand2, leave image to image_one and add title title_one
+    res_put = put_handler.handler(EVENT_ADDFIELD2, CONTEXT_DUMMY)
+    assert res_put['statusCode'] == 200
+    res_body = json.loads(res_put['body'])
+    # Assert that the quantity is 3 in the returned object
+    BODY_EXPECT = {
+        "userId" : EVENT_BASIS['pathParameters']['userId'],
+        "products" : [{
+            "product_id" : json.loads(EVENT_BASIS['body'])['product_id'],
+            "quantity":3,
+            "brand" : json.loads(EVENT_ADDFIELD2['body'])['brand'],
+            "image" : json.loads(EVENT_ADDFIELD1['body'])['image'],
+            "title" : json.loads(EVENT_ADDFIELD2['body'])['title']
+            }]
+    }
+    assert res_body == BODY_EXPECT
+    # Also assert with GET
+    res_get = get_handler.handler(EVENT_ADDFIELD2, CONTEXT_DUMMY)
+    assert res_get['statusCode'] == 200
+    res_body = json.loads(res_get['body'])
+    assert res_body == BODY_EXPECT
+
+def test_PUT_addfield_ignore_quantity(dynamo_table, generate_inputs: dict[str,str]):
+    """
+    Asser that additionalfield quantity is ignored in PUT
+    """
+
+    EVENT_BASIS = generate_inputs['valid_user1_prod1']
+    EVENT_ADDFIELD1 = generate_inputs['valid_user1_prod1_addfield1']
+    EVENT_ADDFIELD_QUANTITY = generate_inputs['valid_user1_prod1_addfield_quantity']
+
+    # POST valid, this creates for userId a cart entry
+    post_handler.handler(EVENT_BASIS, CONTEXT_DUMMY)
+
+    # FIRST
+    # PUT EVENT with same user to have quantity 1 on product_id
+    res_put = put_handler.handler(EVENT_BASIS, CONTEXT_DUMMY)
+    assert res_put['statusCode'] == 200
+    res_body = json.loads(res_put['body'])
+    # Assert that the quantity is 1 in the returned object
+    BODY_EXPECT = {
+        "userId" : EVENT_BASIS['pathParameters']['userId'],
+        "products" : [{"product_id" : json.loads(EVENT_BASIS['body'])['product_id'], "quantity":1}]
+    }
+    assert res_body == BODY_EXPECT
+    # Also assert with GET
+    res_get = get_handler.handler(EVENT_BASIS, CONTEXT_DUMMY)
+    assert res_get['statusCode'] == 200
+    res_body = json.loads(res_get['body'])
+    assert res_body == BODY_EXPECT
+
+    # SECOND
+    # PUT EVENT with additionalfield, should yield quantity 2 on product_id
+    # and also brand "brand1" and image "image_one"
+    res_put = put_handler.handler(EVENT_ADDFIELD1, CONTEXT_DUMMY)
+    assert res_put['statusCode'] == 200
+    res_body = json.loads(res_put['body'])
+    # Assert that the quantity is 2 in the returned object
+    BODY_EXPECT = {
+        "userId" : EVENT_BASIS['pathParameters']['userId'],
+        "products" : [{
+            "product_id" : json.loads(EVENT_BASIS['body'])['product_id'],
+            "quantity":2,
+            "brand" : json.loads(EVENT_ADDFIELD1['body'])['brand'],
+            "image" : json.loads(EVENT_ADDFIELD1['body'])['image']
+            }]
+    }
+    assert res_body == BODY_EXPECT
+    # Also assert with GET
+    res_get = get_handler.handler(EVENT_ADDFIELD1, CONTEXT_DUMMY)
+    assert res_get['statusCode'] == 200
+    res_body = json.loads(res_get['body'])
+    assert res_body == BODY_EXPECT
+
+    # THIRD
+    # PUT EVENT with additionalfield with a new value, should yield quantity 3 on product_id
+    # and also update brand to brand2, leave image to image_one and NOT ADD OR CHANGE quantity
+    res_put = put_handler.handler(EVENT_ADDFIELD_QUANTITY, CONTEXT_DUMMY)
+    assert res_put['statusCode'] == 200
+    res_body = json.loads(res_put['body'])
+    # Assert that the quantity is 3 in the returned object
+    BODY_EXPECT = {
+        "userId" : EVENT_BASIS['pathParameters']['userId'],
+        "products" : [{
+            "product_id" : json.loads(EVENT_BASIS['body'])['product_id'],
+            "quantity":3,
+            "brand" : json.loads(EVENT_ADDFIELD_QUANTITY['body'])['brand'],
+            "image" : json.loads(EVENT_ADDFIELD1['body'])['image']
+            }]
+    }
+    assert res_body == BODY_EXPECT
+    # Also assert with GET
+    res_get = get_handler.handler(EVENT_ADDFIELD_QUANTITY, CONTEXT_DUMMY)
+    assert res_get['statusCode'] == 200
+    res_body = json.loads(res_get['body'])
+    assert res_body == BODY_EXPECT

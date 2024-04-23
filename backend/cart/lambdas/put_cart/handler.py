@@ -97,6 +97,12 @@ def handler(event, context) -> list[dict]:
     # Due to the check on the request, we can safely assume the key 'product_id' is in the body and its only one
     product_id_to_update = body['product_id']
 
+    # Check if there are other fields in the body apart from product_id and quantity
+    # get a dict without product_id and quantity
+    product_id_additional_fields_to_update = {k:body[k] for k in body if k not in ("product_id","quantity")}
+    if product_id_additional_fields_to_update:
+        print(f"Found additionalfields {product_id_additional_fields_to_update}, those will be updated")
+
     print("This is the value extracted from the product_id field in the body")
     print(product_id_to_update)
     
@@ -154,6 +160,9 @@ def handler(event, context) -> list[dict]:
     
     # increase quantity
     product_updated['quantity'] += 1
+
+    # Now merge any additional fields, overwrite already existing fields
+    product_updated = {**product_updated, **product_id_additional_fields_to_update}
 
     print("This is the product_updated after increasing")
     print(product_updated)
