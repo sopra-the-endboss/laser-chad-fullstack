@@ -130,15 +130,19 @@ for payload in post_payloads:
     print(response.status_code)
     print(response.text)
 
-# Send PUT BATCH with arbitrary payload, must contain product_id and qty
-put_payload = [
-    {"product_id":2, "brand":"Apple", "qty":2},
-    {"product_id":3, "brand":"Intel", "qty":4}
-]
-
+###
+# PUT BATCH
+# Send PUT BATCH with arbitrary payload, must contain field "product"
+put_batch_payload = {
+    "products" : [
+        {"product_id":"2", "brand":"Apple", "quantity":2},
+        {"product_id":"3", "brand":"Intel", "quantity":4}
+    ]
+}
+    
 url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}/batch", protocol=PROTOCOL_TO_USE)
-print(f"Sending PUT to {url} with payload {put_payload}")
-response = requests.put(url, json = put_payload)
+print(f"Sending PUT to {url} with payload {put_batch_payload}")
+response = requests.put(url, json = put_batch_payload)
 print(response.status_code)
 print(response.text)
 

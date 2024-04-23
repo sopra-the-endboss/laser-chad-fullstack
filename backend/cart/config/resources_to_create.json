@@ -17,7 +17,7 @@
                         {
                             "path":"batch",
                             "methods_for_that_path":[
-                                {"method":"PUT","lambda_fct":"put_cart_batch"},
+                                {"method":"PUT","lambda_fct":"put_cart_batch","requestModels":{"application/json":"put_cart_batch"}},
                                 {"method":"OPTIONS","lambda_fct":"options_lambda_function"}
                             ],
                             "children_resources":[]
