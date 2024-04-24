@@ -4,10 +4,12 @@ import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import config from "../config/amplifyconfiguration.json";
 import AccountDetails from "./AccountDetails";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { signOut } from "aws-amplify/auth";
 import UpdateRole from "../components/Account/UpdateRole";
 import { useEffect, useState } from "react";
+import { clearCart } from "../reducers/slices/cartSlice";
+import { SendCart } from "../reducers/SendCart";
 
 /**
  * A component that uses AWS Amplify's Authenticator to manage user authentication.
@@ -25,6 +27,9 @@ import { useEffect, useState } from "react";
 Amplify.configure(config);
 
 const AmplifyLogin = () => {
+  
+  // To clear the cartItems via clearCart action
+  const dispatch = useDispatch()
   const authState = useSelector((state) => state.auth);
   const cartState = useSelector((state) => state.cart.cartItems);
 
@@ -44,8 +49,13 @@ const AmplifyLogin = () => {
   }, [authState]);
 
   const SaveCartData = async () => {
-    console.log("sending cart to backend...");
-    console.log("Data: ", authState.user.userId, cartState);
+    console.log("sending cart to backend via SendCart component ...");
+    await SendCart();
+
+    // After sending cart to backend, clear the cartItems
+    console.log("Clear the cartItems")
+    dispatch(clearCart());
+
     signOut();
   };
   return (
