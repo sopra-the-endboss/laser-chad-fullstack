@@ -59,8 +59,12 @@ const putCartBatch = async (userId, putBody, baseUrl) => {
 export const SendCart = async (userId, cartItems, baseUrl) => {
   console.log("SendCart : sending cart to backend...");
   console.log("User: ", userId);
-  console.log("Cart: ", cartItems);
+  console.log("CartItems: ", cartItems);
+
+  // Add the cartItems as "products" value to the body to send
+  const putBatchBody = {"products" : cartItems};
+  console.log("Cart Object ", putBatchBody);
 
   const postRes = await postCart(userId, baseUrl);
-  const putCart = await putCartBatch(userId, cartItems, baseUrl);
+  const putCart = await putCartBatch(userId, putBatchBody, baseUrl);
 };
