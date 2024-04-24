@@ -54,7 +54,7 @@ const AmplifyLogin = () => {
 
     // After sending cart to backend, clear the cartItems
     console.log("Clear the cartItems");
-    //dispatch(clearCart());
+    dispatch(clearCart());
 
     signOut();
   };
