@@ -701,6 +701,59 @@ def test_PUT_addfield_ignore_quantity(dynamo_table, generate_inputs: dict[str,st
 
 ###
 # Test PUT_BATCH
+def test_PUT_BATCH_empty(dynamo_table, generate_inputs: dict[str,str]):
+    """
+    PUT BATCH on empty cart should return 404, no userId found
+    PUT BATCH with empty products array should be accepted and write empty
+    PUT BATCH again with identical body should yield same entry
+    """
+
+    EVENT_NAME = 'valid_user1_prod1_addfield1'
+    event_raw = generate_inputs[EVENT_NAME]
+    # For the PUT_BATCH, the body looks different
+    EVENT = {}
+    EVENT['pathParameters'] = event_raw['pathParameters']
+    EVENT['body'] = json.dumps({
+        "products" : [] # empty products array
+    })
+
+    ###
+    # Assert PUT on empty table returns 404, userId not found
+    assert put_batch_handler.handler(EVENT, CONTEXT_DUMMY)['statusCode'] == 404
+
+    # FIRST
+    # POST valid, this creates for userId a cart entry
+    post_handler.handler(EVENT, CONTEXT_DUMMY)
+
+    # PUT BATCH valid, this creates an entry for the userId
+    res_put = put_batch_handler.handler(EVENT, CONTEXT_DUMMY)
+    assert res_put['statusCode'] == 200
+    res_body = json.loads(res_put['body'])
+    
+    # Assert that the upadted entry is exactly the body
+    BODY_EXPECT = {
+        "userId" : EVENT['pathParameters']['userId'],
+        "products" : []
+    }
+    assert res_body == BODY_EXPECT
+
+    # Verify that GET returns the same information
+    res_get = get_handler.handler(EVENT, CONTEXT_DUMMY)
+    res_get_body = json.loads(res_get['body'])
+    assert res_get_body == BODY_EXPECT
+
+    # SECOND
+    # PUT BATCH valid again, should yield identical result
+    res_put = put_batch_handler.handler(EVENT, CONTEXT_DUMMY)
+    assert res_put['statusCode'] == 200
+    res_body = json.loads(res_put['body'])
+    assert res_body == BODY_EXPECT
+
+    # Verify that GET returns the same information
+    res_get = get_handler.handler(EVENT, CONTEXT_DUMMY)
+    res_get_body = json.loads(res_get['body'])
+    assert res_get_body == BODY_EXPECT
+
 def test_PUT_BATCH_once(dynamo_table, generate_inputs: dict[str,str]):
     """
     PUT BATCH on empty cart should return 404, no userId found
