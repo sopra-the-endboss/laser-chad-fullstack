@@ -45,8 +45,8 @@ export const useCartManagement = (apigBaseUrl) => {
       for (const item of cartToFill) {
         const item_to_add = {};
         item_to_add["product_id"] = item.product_id;
-        const item_qty = item.qty;
-        for (let q_counter = 0; q_counter < item_qty; q_counter++) {
+        const item_quantity = item.quantity;
+        for (let q_counter = 0; q_counter < item_quantity; q_counter++) {
           console.log(
             `fillCart: Send quantity_counter ${q_counter} for product_id ${item.product_id}`
           );
