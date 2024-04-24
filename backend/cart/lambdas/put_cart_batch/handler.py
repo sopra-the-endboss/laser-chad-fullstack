@@ -6,6 +6,7 @@ Handle call to update a cart for a user_id with an arbitrary array of objects wh
 import boto3
 import simplejson as json
 from pprint import PrettyPrinter
+from decimal import Decimal
 pp = PrettyPrinter(indent=2)
 
 HTTP_RESPONSE_DICT = {
@@ -35,6 +36,9 @@ def handler(event, context) -> list[dict]:
     Arguments:
         event : a dict which contains all data from the request to the API
         context : a LambdaContext object
+
+    The body can be parsed to a dict and contains at least the field products
+    products is an array of min length 0, if not empty containing two fields product_id:str and quantity:int
     
     Returns:
         A valid HTTP Response dict which must contain the fields
@@ -91,7 +95,7 @@ def handler(event, context) -> list[dict]:
     print(event['body'])
 
     # serialize json string into dict
-    body = json.loads(event['body'])
+    body = json.loads(event['body'], parse_float=Decimal)
 
     # If there are any other fields than products, they will be ignored
 

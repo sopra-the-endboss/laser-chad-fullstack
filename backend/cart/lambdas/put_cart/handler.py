@@ -7,6 +7,7 @@ TODO: Allow for arbitrary additional fields with product_id
 import boto3
 import simplejson as json
 from pprint import PrettyPrinter
+from decimal import Decimal
 pp = PrettyPrinter(indent=2)
 
 HTTP_RESPONSE_DICT = {
@@ -92,7 +93,7 @@ def handler(event, context) -> list[dict]:
     print(event['body'])
 
     # serialize json string into dict
-    body = json.loads(event['body'])
+    body = json.loads(event['body'], parse_float=Decimal)
 
     # Due to the check on the request, we can safely assume the key 'product_id' is in the body and its only one
     product_id_to_update = body['product_id']
