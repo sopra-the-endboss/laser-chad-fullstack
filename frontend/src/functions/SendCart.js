@@ -20,6 +20,7 @@ const postCart = async (userId, baseUrl) => {
       console.log(`ERROR Post cart with data ${data}`);
     }
   } catch (error) {
+    console.log("ERROR postCart : PUT could not be completed");
     console.error(error);
   }
 };
@@ -52,6 +53,7 @@ const putCartBatch = async (userId, putBody, baseUrl) => {
       console.log("ERROR putCartBatch : with data ", data);
     }
   } catch (error) {
+    console.log("ERROR putCartBatch : PUT could not be completed. Most likely there are undefined products in the cartItems");
     console.error(error);
   }
 };
