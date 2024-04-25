@@ -59,16 +59,19 @@ api_id = deploy_utils.find_api_id_by_tag(
     tag_value = api_id_to_seach
 )
 
-print(f"Table count: {dynamo_table.item_count}")
-scan_response = dynamo_client.scan(TableName = "cart-table")
-scan_items = scan_response['Items']
-while 'LastEvaluatedKey' in scan_response:
-    response = dynamo_client.scan(
-        TableName='cart-table',
-        ExclusiveStartKey=response['LastEvaluatedKey']
-    )
-    scan_items.extend(response['Items'])
-pp.pprint(scan_items)
+def print_table_items(dynamo_table):
+    print(f"Table count: {dynamo_table.item_count}")
+    scan_response = dynamo_client.scan(TableName = "cart-table")
+    scan_items = scan_response['Items']
+    while 'LastEvaluatedKey' in scan_response:
+        response = dynamo_client.scan(
+            TableName='cart-table',
+            ExclusiveStartKey=response['LastEvaluatedKey']
+        )
+        scan_items.extend(response['Items'])
+    pp.pprint(scan_items)
+
+print_table_items(dynamo_table)
 
 # print("ALL APIS FOUND:\n")
 # print(apig_client.get_rest_apis()['items'])
@@ -93,13 +96,13 @@ pp.pprint(scan_items)
 # print("-----------------")
 
 
-# ###
-# # Send requests to test routes
+###
+# Send requests to test routes
 
-# # if in manual mode, get corresponding protocol, in dockermode is None, defaults to http
-# PROTOCOL_TO_USE = os.getenv("PROTOCOL", None)
+# if in manual mode, get corresponding protocol, in dockermode is None, defaults to http
+PROTOCOL_TO_USE = os.getenv("PROTOCOL", None)
 
-# user = "1"
+user = "user_empty_products_array"
 
 # # Test OPTIONS for all resources
 # url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
@@ -107,13 +110,13 @@ pp.pprint(scan_items)
 # response = requests.options(url)
 # print(response.text)
 
-# ###
-# # Send GET - should return empty -> 404
-# url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
-# print(f"Sending GET to {url}")
-# response = requests.get(url)
-# print(response.status_code)
-# print(response.text)
+###
+# Send GET - should return empty -> 404 or 200 if user exists in mock data
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+print(f"Sending GET to {url}")
+response = requests.get(url)
+print(response.status_code)
+print(response.text)
 
 # ###
 # # Send POST with arbitrary payload, should be ok, no model, but subsequent calls should be conflict
@@ -130,21 +133,20 @@ pp.pprint(scan_items)
 #     print(response.status_code)
 #     print(response.text)
 
-# ###
-# # PUT BATCH
-# # Send PUT BATCH with arbitrary payload, must contain field "product"
-# put_batch_payload = {
-#     "products" : [
-#         {"product_id":"2", "brand":"Apple", "quantity":2},
-#         {"product_id":"3", "brand":"Intel", "quantity":4}
-#     ]
-# }
-    
-# url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}/batch", protocol=PROTOCOL_TO_USE)
-# print(f"Sending PUT to {url} with payload {put_batch_payload}")
-# response = requests.put(url, json = put_batch_payload)
-# print(response.status_code)
-# print(response.text)
+###
+# PUT BATCH
+# Send PUT BATCH with arbitrary payload, must contain field "products"
+put_batch_payload = {
+    "products" : [
+        {"product_id":"2", "brand":"Apple", "quantity":2},
+        {"product_id":"3", "brand":"Intel", "quantity":4}
+    ]
+}
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}/batch", protocol=PROTOCOL_TO_USE)
+print(f"Sending PUT to {url} with payload {put_batch_payload}")
+response = requests.put(url, json = put_batch_payload)
+print(response.status_code)
+print(response.text)
 
 # # Send GET to check Batch
 # url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
@@ -186,19 +188,19 @@ pp.pprint(scan_items)
 #     print(response.text)
 
 
-# ###
-# # Send PUT valid new product_id -> 200
-# # Should set  new_prod to quantity 1
-# new_and_valid = {"product_id":"product_two"}
-# user = 1
-
-# payload = new_and_valid
-
-# url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
-# print(f"Sending PUT to {url} with payload {payload}")
-# response = requests.put(url, json = payload)
-# print(response.status_code)
-# print(response.text)
+###
+# Send PUT valid new field -> 200
+# Should set a new field to an existing producst_id
+new_and_valid = {
+    "product_id":"2",
+    "some_new_field":1234
+}
+payload = new_and_valid
+url = deploy_utils.get_resource_path(apig_client, api_id, stage_name = api_stage_name, resource_path = f"cart/{user}", protocol=PROTOCOL_TO_USE)
+print(f"Sending PUT to {url} with payload {payload}")
+response = requests.put(url, json = payload)
+print(response.status_code)
+print(response.text)
 
 
 
@@ -238,3 +240,6 @@ pp.pprint(scan_items)
 # response = requests.delete(url, json = payload)
 # print(response.status_code)
 # print(response.text)
+
+
+print_table_items(dynamo_table)
