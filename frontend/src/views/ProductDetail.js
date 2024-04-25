@@ -178,7 +178,7 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                         <Button
                             variant="contained"
                             color="primary"
-                            onClick={() =>
+                            onClick={() => {
                                 dispatch(
                                     addToCart({
                                         ...productDetails,
@@ -186,7 +186,12 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                                     })
                                 ) && console.log("Added to cart: ", productDetails)
                             }
-                            disabled={details || loadingDetails}
+                            }
+                            disabled={
+                                // make sure productDetails is an object with product_id, which must be a nonempty string, AND we are not loading anymore
+                                !(productDetails && productDetails?.product_id && typeof productDetails.product_id === 'string' && productDetails.product_id.trim() !== '') &&
+                                !loadingDetails
+                            }
                         >
                             Add to Cart
                         </Button>
