@@ -47,10 +47,6 @@ const ProductContent = ({setActiveStep, setCollectedData, collectedData}) => {
     const fetchCategories = useFetchCategories(setCategory);
 
 
-    // Handlers for each input
-    // Add similar handlers for other state variables as needed
-
-
     // fetch all category data
     useEffect(() => {
         fetchDistributor();
