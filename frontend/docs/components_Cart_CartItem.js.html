@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Cart/CartItem.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Cart/CartItem.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
+import Card from "@mui/material/Card";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import { useDispatch } from "react-redux";
+import {
+  addToCart,
+  reduceQuantity,
+  removeFromCart,
+} from "../../reducers/slices/cartSlice";
+
+/**
+ * Represents an individual item in the shopping cart.
+ *
+ * This component displays the item's image, brand, title, quantity, and price. It allows the user to
+ * increase or decrease the quantity of an item, or remove the item entirely from the cart.
+ * Actions such as increasing the quantity, decreasing the quantity, or removing the item
+ * are dispatched to the Redux store.
+ *
+ * @component
+ * @example
+ * const item = {
+ *   product_id: 1,
+ *   img: "url_to_image",
+ *   title: "Product Title",
+ *   brand: "Product Brand",
+ *   price: 9.99,
+ *   quantity: 1,
+ * }
+ * const onCardInteract = (clickable, id) => console.log(`Interacted with product ID: ${id}`)
+ * return &lt;CartItem item={item} onCardInteract={onCardInteract} />
+ *
+ */
+
+const CartItem = ({ item, onCardInteract }) => {
+  const dispatch = useDispatch();
+  return (
+    &lt;Card sx={{ display: "flex", marginBottom: 2 }}>
+      &lt;CardMedia
+        component="img"
+        sx={{
+          width: 100,
+          height: 100,
+          margin: 2,
+          cursor: "pointer",
+        }}
+        image={item.img}
+        alt={item.title}
+        onClick={() => onCardInteract(true, item.product_id)}
+      />
+      &lt;CardContent
+        sx={{
+          flex: "1 0 auto",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
+        &lt;div>
+          &lt;Typography variant="subtitle1" component="h2">
+            {item.brand}
+          &lt;/Typography>
+          &lt;Typography variant="body2" color="text.secondary">
+            {item.title}
+          &lt;/Typography>
+        &lt;/div>
+        &lt;div>
+          &lt;ButtonGroup size="small" aria-label="small outlined button group">
+            &lt;IconButton
+              onClick={() => dispatch(reduceQuantity(item.product_id))}
+            >
+              &lt;RemoveIcon />
+            &lt;/IconButton>
+            &lt;Typography sx={{ padding: 1 }}>{item.quantity}&lt;/Typography>
+            &lt;IconButton onClick={() => dispatch(addToCart(item))}>
+              &lt;AddIcon />
+            &lt;/IconButton>
+          &lt;/ButtonGroup>
+          &lt;IconButton
+            aria-label="delete"
+            onClick={() => dispatch(removeFromCart(item.product_id))}
+          >
+            &lt;DeleteIcon />
+          &lt;/IconButton>
+        &lt;/div>
+        &lt;Typography variant="body2">
+          Price: ${item.price?.toFixed(2)}
+        &lt;/Typography>
+        &lt;Typography variant="body2">
+          Total: ${(item?.quantity * item.price)?.toFixed(2)}
+        &lt;/Typography>
+      &lt;/CardContent>
+    &lt;/Card>
+  );
+};
+
+export default CartItem;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#AccountDetails">AccountDetails</a></li><li><a href="global.html#CartDrawer">CartDrawer</a></li><li><a href="global.html#CartItem">CartItem</a></li><li><a href="global.html#CustomModal">CustomModal</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#SellerGuard">SellerGuard</a></li><li><a href="global.html#cartSlice">cartSlice</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#persistConfig">persistConfig</a></li><li><a href="global.html#persistedReducer">persistedReducer</a></li><li><a href="global.html#persistor">persistor</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#useAuth">useAuth</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Apr 11 2024 15:53:51 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

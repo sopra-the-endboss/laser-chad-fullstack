@@ -15,6 +15,29 @@ import {
   removeFromCart,
 } from "../../reducers/slices/cartSlice";
 
+/**
+ * Represents an individual item in the shopping cart.
+ *
+ * This component displays the item's image, brand, title, quantity, and price. It allows the user to
+ * increase or decrease the quantity of an item, or remove the item entirely from the cart.
+ * Actions such as increasing the quantity, decreasing the quantity, or removing the item
+ * are dispatched to the Redux store.
+ *
+ * @component
+ * @example
+ * const item = {
+ *   product_id: 1,
+ *   img: "url_to_image",
+ *   title: "Product Title",
+ *   brand: "Product Brand",
+ *   price: 9.99,
+ *   quantity: 1,
+ * }
+ * const onCardInteract = (clickable, id) => console.log(`Interacted with product ID: ${id}`)
+ * return <CartItem item={item} onCardInteract={onCardInteract} />
+ *
+ */
+
 const CartItem = ({ item, onCardInteract }) => {
   const dispatch = useDispatch();
   return (
