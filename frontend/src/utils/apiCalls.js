@@ -69,6 +69,26 @@ export const usePostNewProduct = (productToPost, setLoading, setCreatedProductId
     };
 }
 
+export const useDeleteProduct = (productId, setLoading) => {
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    return async () => {
+        const baseURL = getDomain(apigBaseUrl);
+        api.defaults.baseURL = baseURL;
+
+        try {
+            const response = await api.delete(`/${PRODUCT_ENDPOINT}/${productId}`);
+            console.log(response);
+            setLoading(false);
+        } catch (error) {
+            handleError({
+                error: error,
+                message: "Failed to delete product!"
+            });
+        }
+    };
+}
+
 export const useFetchDistributor = (setAllDistributors) => {
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
 
