@@ -43,8 +43,7 @@ export const useCartManagement = (apigBaseUrl) => {
       console.log("fillCart : cartToFill is empty, do nothing");
     } else {
       for (const item of cartToFill) {
-        const item_to_add = {};
-        item_to_add["product_id"] = item.product_id;
+        const item_to_add = {...item};
         const item_quantity = item.quantity;
         for (let q_counter = 0; q_counter < item_quantity; q_counter++) {
           console.log(
