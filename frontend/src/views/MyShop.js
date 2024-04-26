@@ -6,7 +6,7 @@ import CustomModal from "../components/ui/CustomModal";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteProductConfirmation from "../components/ui/DeleteConfirmation";
+import DeleteConfirmation from "../components/ui/DeleteConfirmation";
 import {useDeleteProduct} from "../utils/apiCalls";
 
 const MyShop = () => {
@@ -119,8 +119,8 @@ const MyShop = () => {
                                             <SellProduct propData={product}/>
                                         </CustomModal>
                                         <CustomModal icon={<DeleteIcon/>}>
-                                            <DeleteProductConfirmation setItemToDelete={setItemToDelete} itemToDelete={product.product} idToDelete={product.product_id}
-                                                                       deleteFunction={deleteProduct}/>
+                                            <DeleteConfirmation setItemToDelete={setItemToDelete} itemToDelete={product.product} idToDelete={product.product_id}
+                                                                deleteFunction={deleteProduct}/>
                                         </CustomModal>
                                     </Stack>
                                 }

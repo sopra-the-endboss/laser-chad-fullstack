@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Button, Stack } from "@mui/material";
 import ModalContext from "../../context/ModalContext";
 
-const DeleteProductConfirmation = ({ setItemToDelete, itemToDelete, deleteFunction, idToDelete}) => {
+const DeleteConfirmation = ({ setItemToDelete, itemToDelete, deleteFunction, idToDelete}) => {
     const { handleClose } = useContext(ModalContext);
     const executeDeleteFunction = () => {
         handleClose();
@@ -18,4 +18,4 @@ const DeleteProductConfirmation = ({ setItemToDelete, itemToDelete, deleteFuncti
             </Stack>
         </Stack>
     );
-}; export default DeleteProductConfirmation;
+}; export default DeleteConfirmation;

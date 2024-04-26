@@ -1,39 +1,87 @@
-import {Paper, Skeleton} from "@mui/material";
+import {Box, List, ListItem, Paper, Skeleton, Stack} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import React from "react";
+import React, {useState} from "react";
 
-export const CommentaryComponent = (loadingComments, productComments) => {
-
-
-    // add a popover for some comment input
-    // the comment should include a rating
-    // a comment itself
-    // the username
-    // the date
-
-    // the popover should therefore enable the user to set a rating
-    // and set a comment.
-    // the user can also cancel and post the comment.
-
-    // preferably only to products he / she bought. endpoint however is not yet in place.
-    // therefore atm at any product.
+import {useSelector} from "react-redux";
+import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteConfirmation from "../ui/DeleteConfirmation";
+import CustomModal from "../ui/CustomModal";
+import AddIcon from "@mui/icons-material/Add";
+import {AddComment} from "../ui/AddComment";
+import {useDeleteComment} from "../../utils/apiCalls";
 
 
-    return (
-        {loadingComments ? (
-                <>
-                    <Skeleton variant="text" width="40%" height={18} />
-                    <Skeleton variant={"rectangle"} height={80} />
-                </>
+export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails, productComments, setProductComments}) => {
+    const auth = useSelector((state) => state.auth);
+    const user = auth.user;
+    const isLoggedIn = auth.isLoggedIn;
+    const isSeller = auth.groups.includes('seller');
 
-            ) : (
-                productComments?.reviews?.map((review, i) => (
-                    <Paper key={i} elevation={1} sx={{p: 2, mb: 2}}>
-                        <Typography variant="subtitle2">{loadingDetails ? <Skeleton width={30}/> : review?.user}</Typography>
-                        <Typography variant="body2" color="text.secondary">{loadingDetails ? <Skeleton /> : review?.comment}</Typography>
-                    </Paper>
-                ))
-            )}
-    )
+    const [itemToDelete, setItemToDelete] = useState(0);
+    const deleteCommentHook = useDeleteComment(itemToDelete, setLoading);
+
+    const deleteComment = async () => {
+        setLoading(true);
+        deleteCommentHook();
+    };
+
+    if (loadingComments) {
+        return (
+            <>
+                <Skeleton variant={"rectangle"} height={130}/>
+            </>
+        );
+    } else {
+        return (
+            <>
+                <Paper elevation={1} sx={{ p: 2, mb: 2 }}>
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Typography variant="h6">Comments</Typography>
+                        {isLoggedIn && (
+                            <CustomModal icon={<AddIcon />}>
+                                <AddComment setLoading={setLoading} user={user} setProductComments={setProductComments} productComments={productComments}/>
+                            </CustomModal>
+                        )}
+                    </Box>
+                    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', height: 180, overflow: 'auto' }}>
+                        {productComments?.reviews?.map((review, i) => (
+                                <ListItem key={i}>
+                                    <Box>
+                                        <Stack direction={"row"} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                                            <Typography variant="subtitle1" component="span">
+                                                {loadingDetails ? <Skeleton width={100}/> : review?.user}
+                                            </Typography>
+                                            <Typography variant="caption" sx={{ ml: 1, color: "red" }}>
+                                                {loadingDetails ? <Skeleton width={50}/> : review?.rating}
+                                            </Typography>
+                                            <Typography variant="caption" sx={{ ml: 1 }}>
+                                                {loadingDetails ? <Skeleton width={50}/> : review?.date}
+                                            </Typography>
+                                            {
+                                                isSeller && (
+                                                    <Typography variant="caption" sx={{ ml: 1 }}>
+                                                        <CustomModal icon={<DeleteIcon style={{height: '18px'}}/>}>
+                                                            <DeleteConfirmation
+                                                                setItemToDelete={setItemToDelete}
+                                                                idToDelete={review.id}
+                                                                deleteFunction={deleteComment}
+                                                                itemToDelete={review.comment} />
+                                                        </CustomModal>
+                                                    </Typography>
+                                                )
+                                            }
+                                        </Stack>
+                                        <Typography variant="body2" color="text.secondary">
+                                            {loadingDetails ? <Skeleton/> : review?.comment}
+                                        </Typography>
+                                    </Box>
+                                </ListItem>
+                            ))
+                        }
+                    </List>
+                </Paper>
+            </>
+        );
+    }
 
 };

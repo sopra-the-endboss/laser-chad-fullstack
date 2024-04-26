@@ -145,7 +145,7 @@ export const useFetchAllComments = (details, product_id, setProductComments, set
 
         try {
             if (!details) {
-                const response = await api.get(`${apigBaseUrl}/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`)
+                const response = await api.get(`/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`)
                 console.log(response);
                 setProductComments(response.data[0]);
                 setLoadingComments(false);
@@ -171,7 +171,7 @@ export const useFetchProductDetails = (details, product_id, setProductDetails, s
 
         try {
             if (!details) {
-                const response = await api.get(`${apigBaseUrl}/${PRODUCT_DETAIL_ENDPOINT}/${product_id}`)
+                const response = await api.get(`/${PRODUCT_DETAIL_ENDPOINT}/${product_id}`)
                 console.log(response);
                 setProductDetails(response.data[0]);
                 setLoadingDetails(false);
@@ -182,6 +182,52 @@ export const useFetchProductDetails = (details, product_id, setProductDetails, s
             handleError({
                 error: error,
                 message: "Failed to load product!",
+            });
+        }
+    };
+}
+
+
+
+export const usePostComment = (setLoadingComments, setComments, comment, productComments) => {
+
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    return async () => {
+        const baseURL = getDomain(apigBaseUrl);
+        api.defaults.baseURL = baseURL;
+
+        try {
+            const response = await api.post(`/${PRODUCT_COMMENT_ENDPOINT}/${productComments.product_id}`, comment);
+            console.log(response);
+            const copy = {...productComments}
+            copy.reviews.push(comment);
+            setComments(copy);
+            setLoadingComments(false);
+        } catch (error) {
+            handleError({
+                error: error,
+                message: "Failed to post comment!",
+            });
+        }
+    };
+}
+
+export const useDeleteComment = (commentId, setLoading) => {
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    return async () => {
+        const baseURL = getDomain(apigBaseUrl);
+        api.defaults.baseURL = baseURL;
+
+        try {
+            const response = await api.delete(`/${PRODUCT_COMMENT_ENDPOINT}/${commentId}`);
+            console.log(response);
+            setLoading(false);
+        } catch (error) {
+            handleError({
+                error: error,
+                message: "Failed to delete product!"
             });
         }
     };
