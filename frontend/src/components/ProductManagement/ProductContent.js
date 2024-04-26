@@ -11,8 +11,8 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import React, {useEffect, useState} from "react";
-import CategoryMock from "../../data/CategoryMock.json";
-import AllCompaniesMock from "../../data/AllCompanyMock.json";
+//import CategoryMock from "../../data/CategoryMock.json";
+//import AllCompaniesMock from "../../data/AllCompanyMock.json";
 import {useFetchCategories, useFetchDistributor} from "../../utils/apiCalls";
 
 const ProductContent = ({setActiveStep, setCollectedData, collectedData}) => {
@@ -57,6 +57,8 @@ const ProductContent = ({setActiveStep, setCollectedData, collectedData}) => {
         fetchCategories();
         //setCategory(CategoryMock);
         //setCompanies(AllCompaniesMock);
+        // again same issue as in App.js if we added hooks as dependencies we would be f***ed
+        // eslint-disable-next-line
     }, []);
 
 
