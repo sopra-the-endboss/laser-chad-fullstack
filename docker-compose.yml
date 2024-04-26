@@ -7,7 +7,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - WDS_SOCKET_HOST=127.0.0.1 
+      - WDS_SOCKET_HOST=127.0.0.1
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true
     #  - REACT_APP_API_URL=http://localhost:4566
@@ -192,7 +192,7 @@ services:
   #   environment:
   #     - AWS_DEFAULT_REGION=us-east-1
   #     - AWS_ENDPOINT_URL=http://localstack:4566 # host localstack must match the name of the service which runs localstack
-  #     - AWS_ACCESS_KEY_ID=fakecred # Sometimes boto3 needs credentials 
+  #     - AWS_ACCESS_KEY_ID=fakecred # Sometimes boto3 needs credentials
   #     - AWS_SECRET_ACCESS_KEY=fakecred
   #     - APIG_TAG_ID=${APIG_TAG_ID}
   #     - APIG_TAG=${APIG_TAG}

@@ -4,6 +4,7 @@ import {ProductDetail} from "../../views/ProductDetail";
 import Typography from "@mui/material/Typography";
 import ProductContent from "./ProductContent";
 import {Link} from "react-router-dom";
+import {usePostNewProduct} from "../../utils/apiCalls";
 
 const SellProduct = ({propData}) => {
 
@@ -13,17 +14,13 @@ const SellProduct = ({propData}) => {
 
     const [collectedData, setCollectedData] = useState(propData || {});
     const [loading, setLoading] = useState(true);
+    const [createdProductId, setCreatedProductId] = useState(10);
+    const postNewProduct = usePostNewProduct(collectedData, setLoading, setCreatedProductId);
+
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        // TODO: now publish
-        // let loader run
-        // show success post
-        setTimeout(() => {
-            // This code block simulates the completion of the upload process
-            setLoading(false);
-        }, 2000);
+        postNewProduct();
     };
-
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
@@ -43,8 +40,8 @@ const SellProduct = ({propData}) => {
                 return (
                     // Confirmation message or any additional information before publishing
                     <Stack style={{alignItems: "center", display: "flex"}} gap={2}>
-                        <Typography>Creating your product...</Typography>
-                        {loading ? <CircularProgress color="inherit" /> : <Link to={"/product/10"}>Check out your new product</Link>}
+                        {loading ? <Typography>Creating your product...</Typography> : <Typography>Product created.</Typography>}
+                        {loading ? <CircularProgress color="inherit" /> : <Link to={"/product/"+createdProductId}>Check out your new product</Link>}
                     </Stack>
                 );
             default:

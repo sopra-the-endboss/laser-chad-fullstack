@@ -6,7 +6,8 @@ import CustomModal from "../components/ui/CustomModal";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteProductConfirmation from "../components/ui/DeleteConfirmation";
+import DeleteConfirmation from "../components/ui/DeleteConfirmation";
+import {useDeleteProduct} from "../utils/apiCalls";
 
 const MyShop = () => {
 
@@ -14,6 +15,8 @@ const MyShop = () => {
     const [shopData, setShopData] = useState([]);
 
     const [loading, setLoading] = useState(true);
+    const [itemToDelete, setItemToDelete] = useState(0);
+    const deleteProductHook = useDeleteProduct(itemToDelete, setLoading, shopData, setShopData);
 
     useEffect(() => {
         //myshop is similar to allProductDetailsMock without the technical details.
@@ -22,7 +25,9 @@ const MyShop = () => {
     }, []);
 
     const deleteProduct = async () => {
-        console.log("Delete Product clicked");
+        setLoading(true);
+        setShopData(shopData.filter(item => item.product_id !== itemToDelete))
+        deleteProductHook();
     };
 
     return (
@@ -114,8 +119,8 @@ const MyShop = () => {
                                             <SellProduct propData={product}/>
                                         </CustomModal>
                                         <CustomModal icon={<DeleteIcon/>}>
-                                            <DeleteProductConfirmation itemToDelete={product.product}
-                                                                       deleteFunction={deleteProduct}/>
+                                            <DeleteConfirmation setItemToDelete={setItemToDelete} itemToDelete={product.product} idToDelete={product.product_id}
+                                                                deleteFunction={deleteProduct}/>
                                         </CustomModal>
                                     </Stack>
                                 }

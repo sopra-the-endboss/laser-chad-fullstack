@@ -6,27 +6,26 @@ import {Provider} from "react-redux";
 import store from "./reducers/store";
 import useAuth from "./reducers/useAuth";
 import Account from "./views/Account";
-import {useDispatch} from 'react-redux';
 import {useEffect, useState} from "react";
-//import AllProductsNameMock from "./data/AllProductsNameMock.json";
 import {ProductDetail} from "./views/ProductDetail";
 import {Container, Grid} from "@mui/material";
 import {Categories} from "./views/Categories";
 import MyShop from "./views/MyShop";
 import SellerGuard from "./components/Guards/SellerGuard";
 import {Playground} from "./views/Playground";
-import {useSelector} from 'react-redux';
-import {PRODUCT_ENDPOINT} from "./utils/constants";
-import {enqueueSnackbar, SnackbarProvider} from "notistack";
+import {SnackbarProvider} from "notistack";
+import {useFetchAllProducts, useFetchAPIGURL} from "./utils/apiCalls";
 
 function App() {
     const [data, setData] = useState([]);
     const [isSearchQuerySubmitted, searchQuerySubmitted] = useState(false);
     const [categoryFilter, setCategoryFilter] = useState("");
     const [AllProductsName, setAllProductsName] = useState([]);
-    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
-    const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
+
+    // fetching functions modularized
+    const fetchAPIGURL = useFetchAPIGURL();
+    const fetchAllProducts = useFetchAllProducts(setAllProductsName, setLoading);
 
     useAuth();
 
@@ -43,46 +42,14 @@ function App() {
     }, [categoryFilter, AllProductsName]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/apig_base_url')
-            .then(response => response.text())
-            .then(data => {
-                dispatch({type: 'SET_APIG_BASE_URL', payload: data});
-            })
-            .catch(error => {
-            console.error('Error:', error)
-            enqueueSnackbar(
-                {
-                    message: "Failed to reach endpoint!",
-                    variant: 'error',
-                    style: { width: '900px' },
-                    anchorOrigin: {vertical: 'top', horizontal: 'center'}
-                }
-            );
-        });
-    }, [dispatch]);
-
+        fetchAPIGURL();
+    }, [fetchAPIGURL]);
 
     useEffect(() => {
-        if (apigBaseUrl) {
-            fetch(`${apigBaseUrl}/${PRODUCT_ENDPOINT}`)
-                .then(response => response.json())
-                .then(data => {
-                    setAllProductsName(data);
-                    setLoading(false);
-                })
-                .catch(error => {
-                    console.error('Error:', error)
-                    enqueueSnackbar(
-                        {
-                            message: "Failed to load products!",
-                            variant: 'error',
-                            style: { width: '900px' },
-                            anchorOrigin: {vertical: 'top', horizontal: 'center'}
-                        }
-                    );
-                });
-        }
-    }, [apigBaseUrl]);
+        fetchAllProducts();
+        // adding fetchAllProducts into the dependencies leads to infinite calls. we dont do that here
+        // eslint-disable-next-line
+    }, [setAllProductsName, setLoading]);
 
     return (
         <Provider store={store}>
