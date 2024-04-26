@@ -1,7 +1,13 @@
 import {useDispatch, useSelector} from 'react-redux';
 import { api, handleError } from './api';
 import {getDomain} from "./getDomain";
-import {PRODUCT_CATEGORY, PRODUCT_DISTRIBUTOR, PRODUCT_ENDPOINT} from "./constants";
+import {
+    PRODUCT_CATEGORY,
+    PRODUCT_COMMENT_ENDPOINT,
+    PRODUCT_DETAIL_ENDPOINT,
+    PRODUCT_DISTRIBUTOR,
+    PRODUCT_ENDPOINT
+} from "./constants";
 
 
 export const useFetchAPIGURL = () => {
@@ -123,6 +129,59 @@ export const useFetchCategories = (setAllCategories) => {
             handleError({
                 error: error,
                 message: "Failed to fetch all categories!"
+            });
+        }
+    };
+}
+
+
+export const useFetchAllComments = (details, product_id, setProductComments, setLoadingComments) => {
+
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    return async () => {
+        const baseURL = getDomain(apigBaseUrl);
+        api.defaults.baseURL = baseURL;
+
+        try {
+            if (!details) {
+                const response = await api.get(`${apigBaseUrl}/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`)
+                console.log(response);
+                setProductComments(response.data[0]);
+                setLoadingComments(false);
+            } else if(details) {
+                setLoadingComments(false);
+            }
+        } catch (error) {
+            handleError({
+                error: error,
+                message: "Failed to load comments!",
+            });
+        }
+    };
+}
+
+export const useFetchProductDetails = (details, product_id, setProductDetails, setLoadingDetails) => {
+
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    return async () => {
+        const baseURL = getDomain(apigBaseUrl);
+        api.defaults.baseURL = baseURL;
+
+        try {
+            if (!details) {
+                const response = await api.get(`${apigBaseUrl}/${PRODUCT_DETAIL_ENDPOINT}/${product_id}`)
+                console.log(response);
+                setProductDetails(response.data[0]);
+                setLoadingDetails(false);
+            } else if(details) {
+                setLoadingDetails(false);
+            }
+        } catch (error) {
+            handleError({
+                error: error,
+                message: "Failed to load product!",
             });
         }
     };

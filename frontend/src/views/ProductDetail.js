@@ -19,6 +19,7 @@ import {addToCart} from "../reducers/slices/cartSlice";
 import {ProductDetailRow} from "../components/ProductDetails/ProductRowDetails";
 import {PRODUCT_COMMENT_ENDPOINT, PRODUCT_DETAIL_ENDPOINT} from "../utils/constants";
 import { useSnackbar } from "notistack";
+import {useFetchAllComments, useFetchProductDetails} from "../utils/apiCalls";
 
 export const ProductDetail = ({details, previousStep, nextStep}) => {
     const [productDetails, setProductDetails] = useState({technical_details: {}, product: "", ...details});
@@ -32,54 +33,17 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
     const [loadingDetails, setLoadingDetails] = useState(true);
     const [loadingComments, setLoadingComments] = useState(true);
 
+    const fetchComments = useFetchAllComments(details, product_id, setProductComments, setLoadingComments);
+    const fetchDetails = useFetchProductDetails(details, product_id, setProductDetails, setLoadingDetails);
+
     useEffect(() => {
-        if (apigBaseUrl && !details) {
-            fetch(`${apigBaseUrl}/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`)
-                .then(response => response.json())
-                .then(data => {
-                    setProductComments(data[0]);
-                    setLoadingComments(false);
-                })
-                .catch(error => {
-                    console.error('Error:', error)
-                    enqueueSnackbar(
-                        {
-                            message: "Failed to load comments!",
-                            variant: 'error',
-                            style: { width: '900px' },
-                            anchorOrigin: {vertical: 'top', horizontal: 'center'}
-                        }
-                    );
-                });
-        } else if(details) {
-            setLoadingComments(false);
-        }
-    }, [apigBaseUrl, product_id, details, enqueueSnackbar]);
+        fetchComments();
+    }, [apigBaseUrl, product_id, details]);
 
 
     useEffect(() => {
-        if (apigBaseUrl && !details) {
-            fetch(`${apigBaseUrl}/${PRODUCT_DETAIL_ENDPOINT}/${product_id}`)
-                .then(response => response.json())
-                .then(data => {
-                    setProductDetails(data[0]);
-                    setLoadingDetails(false);
-                })
-                .catch(error => {
-                    console.error('Error:', error)
-                    enqueueSnackbar(
-                        {
-                            message: "Failed to load product!",
-                            variant: 'error',
-                            style: { width: '900px' },
-                            anchorOrigin: {vertical: 'top', horizontal: 'center'}
-                        }
-                    );
-                });
-        } else if(details) {
-            setLoadingDetails(false);
-        }
-    }, [apigBaseUrl, product_id, details, enqueueSnackbar]);
+        fetchDetails();
+    }, [apigBaseUrl, product_id, details]);
 
 
     return (
