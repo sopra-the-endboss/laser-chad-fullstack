@@ -48,3 +48,23 @@ export const useFetchAllProducts = (setAllProductsName, setLoading) => {
         }
     };
 }
+
+export const usePostNewProduct = (productToPost, setLoading) => {
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    return async () => {
+        const baseURL = getDomain(apigBaseUrl);
+        api.defaults.baseURL = baseURL;
+
+        try {
+            const response = await api.post(`/${PRODUCT_ENDPOINT}`, productToPost);
+            console.log(response);
+            setLoading(false);
+        } catch (error) {
+            handleError({
+                error: error,
+                message: "Failed to post product!"
+            });
+        }
+    };
+}

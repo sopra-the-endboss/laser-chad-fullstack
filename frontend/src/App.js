@@ -47,7 +47,7 @@ function App() {
 
     useEffect(() => {
         fetchAllProducts();
-    }, [fetchAllProducts]);
+    }, [setAllProductsName, setLoading]);
 
     return (
         <Provider store={store}>

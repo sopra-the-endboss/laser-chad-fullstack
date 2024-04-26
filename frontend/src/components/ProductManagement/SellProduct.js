@@ -4,6 +4,7 @@ import {ProductDetail} from "../../views/ProductDetail";
 import Typography from "@mui/material/Typography";
 import ProductContent from "./ProductContent";
 import {Link} from "react-router-dom";
+import {postNewProduct, usePostNewProduct} from "../../utils/apiCalls";
 
 const SellProduct = ({propData}) => {
 
@@ -13,18 +14,14 @@ const SellProduct = ({propData}) => {
 
     const [collectedData, setCollectedData] = useState(propData || {});
     const [loading, setLoading] = useState(true);
+    const postNewProduct = usePostNewProduct(collectedData, setLoading);
+
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         console.log("wake up  in the moring")
-        // TODO: now publish
-        // let loader run
-        // show success post
-        setTimeout(() => {
-            // This code block simulates the completion of the upload process
-            setLoading(false);
-        }, 2000);
+        console.log(collectedData)
+        postNewProduct();
     };
-
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
