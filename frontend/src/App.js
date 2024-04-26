@@ -1,79 +1,55 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import ProductOverview from "./views/ProductOverview";
 import Navigation from "./components/Navigation";
-import { Provider } from "react-redux";
+import {Provider} from "react-redux";
 import store from "./reducers/store";
 import useAuth from "./hooks/useAuth";
 import Account from "./views/Account";
-import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
-import { ProductDetail } from "./views/ProductDetail";
-import { Container, Grid } from "@mui/material";
-import { Categories } from "./views/Categories";
+import {useEffect, useState} from "react";
+import {ProductDetail} from "./views/ProductDetail";
+import {Container, Grid} from "@mui/material";
+import {Categories} from "./views/Categories";
 import MyShop from "./views/MyShop";
 import SellerGuard from "./components/Guards/SellerGuard";
-import { Playground } from "./views/Playground";
-import { useSelector } from "react-redux";
-import { PRODUCT_ENDPOINT } from "./utils/constants";
-import { enqueueSnackbar, SnackbarProvider } from "notistack";
+import {Playground} from "./views/Playground";
+import {SnackbarProvider} from "notistack";
+import {useFetchAllProducts, useFetchAPIGURL} from "./utils/apiCalls";
 
 function App() {
-  const [data, setData] = useState([]);
-  const [isSearchQuerySubmitted, searchQuerySubmitted] = useState(false);
-  const [categoryFilter, setCategoryFilter] = useState("");
-  const [AllProductsName, setAllProductsName] = useState([]);
-  const apigBaseUrl = useSelector((state) => state.apigBaseUrl);
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
+    const [isSearchQuerySubmitted, searchQuerySubmitted] = useState(false);
+    const [categoryFilter, setCategoryFilter] = useState("");
+    const [AllProductsName, setAllProductsName] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-  useAuth();
+    // fetching functions modularized
+    const fetchAPIGURL = useFetchAPIGURL();
+    const fetchAllProducts = useFetchAllProducts(setAllProductsName, setLoading);
 
-  useEffect(() => {
-    // filter data for category
-    if (categoryFilter)
-      setData(
-        AllProductsName.filter((element) => element.category === categoryFilter)
-      );
-    else setData(AllProductsName);
-  }, [categoryFilter, AllProductsName]);
+    useAuth();
 
-  useEffect(() => {
-    fetch("http://localhost:5000/apig_base_url")
-      .then((response) => response.text())
-      .then((data) => {
-        dispatch({ type: "SET_APIG_BASE_URL", payload: data });
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        enqueueSnackbar({
-          message: "Failed to reach endpoint!",
-          variant: "error",
-          style: { width: "900px" },
-          anchorOrigin: { vertical: "top", horizontal: "center" },
-        });
-      });
-  }, [dispatch]);
+    useEffect(() => {
+        // filter data for category
+        if (categoryFilter)
+            setData(
+                AllProductsName.filter(
+                    (element) => element.category === categoryFilter
+                )
+            );
+        else
+            setData(AllProductsName);
+    }, [categoryFilter, AllProductsName]);
 
-  useEffect(() => {
-    if (apigBaseUrl) {
-      fetch(`${apigBaseUrl}/${PRODUCT_ENDPOINT}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setAllProductsName(data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          enqueueSnackbar({
-            message: "Failed to load products!",
-            variant: "error",
-            style: { width: "900px" },
-            anchorOrigin: { vertical: "top", horizontal: "center" },
-          });
-        });
-    }
-  }, [apigBaseUrl]);
+    useEffect(() => {
+        fetchAPIGURL();
+    }, [fetchAPIGURL]);
+
+    useEffect(() => {
+        fetchAllProducts();
+        // adding fetchAllProducts into the dependencies leads to infinite calls. we dont do that here
+        // eslint-disable-next-line
+    }, [setAllProductsName, setLoading]);
 
   return (
     <Provider store={store}>

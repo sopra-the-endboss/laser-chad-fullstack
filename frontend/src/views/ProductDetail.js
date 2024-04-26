@@ -17,8 +17,8 @@ import Typography from "@mui/material/Typography";
 import {useDispatch, useSelector} from "react-redux";
 import {addToCart} from "../reducers/slices/cartSlice";
 import {ProductDetailRow} from "../components/ProductDetails/ProductRowDetails";
-import {PRODUCT_COMMENT_ENDPOINT, PRODUCT_DETAIL_ENDPOINT} from "../utils/constants";
-import { useSnackbar } from "notistack";
+import {useFetchAllComments, useFetchProductDetails} from "../utils/apiCalls";
+import {CommentaryComponent} from "../components/ProductDetails/CommentaryComponent";
 
 export const ProductDetail = ({details, previousStep, nextStep}) => {
     const [productDetails, setProductDetails] = useState({technical_details: {}, product: "", ...details});
@@ -26,60 +26,20 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
     const {product_id} = useParams();
     const dispatch = useDispatch();
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
-
-    const { enqueueSnackbar } = useSnackbar();
-
     const [loadingDetails, setLoadingDetails] = useState(true);
     const [loadingComments, setLoadingComments] = useState(true);
 
+    const fetchComments = useFetchAllComments(details, product_id, setProductComments, setLoadingComments);
+    const fetchDetails = useFetchProductDetails(details, product_id, setProductDetails, setLoadingDetails);
+
     useEffect(() => {
-        if (apigBaseUrl && !details) {
-            fetch(`${apigBaseUrl}/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`)
-                .then(response => response.json())
-                .then(data => {
-                    setProductComments(data[0]);
-                    setLoadingComments(false);
-                })
-                .catch(error => {
-                    console.error('Error:', error)
-                    enqueueSnackbar(
-                        {
-                            message: "Failed to load comments!",
-                            variant: 'error',
-                            style: { width: '900px' },
-                            anchorOrigin: {vertical: 'top', horizontal: 'center'}
-                        }
-                    );
-                });
-        } else if(details) {
-            setLoadingComments(false);
-        }
-    }, [apigBaseUrl, product_id, details, enqueueSnackbar]);
+        fetchComments();
+    }, [apigBaseUrl, product_id, details]);
 
 
     useEffect(() => {
-        if (apigBaseUrl && !details) {
-            fetch(`${apigBaseUrl}/${PRODUCT_DETAIL_ENDPOINT}/${product_id}`)
-                .then(response => response.json())
-                .then(data => {
-                    setProductDetails(data[0]);
-                    setLoadingDetails(false);
-                })
-                .catch(error => {
-                    console.error('Error:', error)
-                    enqueueSnackbar(
-                        {
-                            message: "Failed to load product!",
-                            variant: 'error',
-                            style: { width: '900px' },
-                            anchorOrigin: {vertical: 'top', horizontal: 'center'}
-                        }
-                    );
-                });
-        } else if(details) {
-            setLoadingDetails(false);
-        }
-    }, [apigBaseUrl, product_id, details, enqueueSnackbar]);
+        fetchDetails();
+    }, [apigBaseUrl, product_id, details]);
 
 
     return (
@@ -208,21 +168,7 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                    <Typography variant="h6" align="left">Comments</Typography>
-                    {loadingComments ? (
-                        <>
-                            <Skeleton variant="text" width="40%" height={18} />
-                            <Skeleton variant={"rectangle"} height={80} />
-                        </>
-
-                    ) : (
-                        productComments?.reviews?.map((review, i) => (
-                            <Paper key={i} elevation={1} sx={{p: 2, mb: 2}}>
-                                <Typography variant="subtitle2">{loadingDetails ? <Skeleton width={30}/> : review?.user}</Typography>
-                                <Typography variant="body2" color="text.secondary">{loadingDetails ? <Skeleton /> : review?.comment}</Typography>
-                            </Paper>
-                        ))
-                    )}
+                    <CommentaryComponent setLoading={setLoadingComments} loadingComments={loadingComments} loadingDetails={loadingDetails} productComments={productComments} setProductComments={setProductComments} />
                 </Grid>
             </Grid>
             <Grid item xs={12} sx={{borderTop: 1, borderColor: "divider", paddingBottom: "16px", paddingTop: "16px"}}>
