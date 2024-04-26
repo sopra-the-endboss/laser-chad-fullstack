@@ -13,6 +13,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import React, {useEffect, useState} from "react";
 import CategoryMock from "../../data/CategoryMock.json";
 import AllCompaniesMock from "../../data/AllCompanyMock.json";
+import {useFetchCategories, useFetchDistributor} from "../../utils/apiCalls";
 
 const ProductContent = ({setActiveStep, setCollectedData, collectedData}) => {
 
@@ -42,6 +43,9 @@ const ProductContent = ({setActiveStep, setCollectedData, collectedData}) => {
     const [availability, setAvailability] = useState(collectedData.availability || '');
     const [subheader, setSubheader] = useState(collectedData.subheader || '');
 
+    const fetchDistributor = useFetchDistributor(setCompanies);
+    const fetchCategories = useFetchCategories(setCategory);
+
 
     // Handlers for each input
     // Add similar handlers for other state variables as needed
@@ -49,8 +53,10 @@ const ProductContent = ({setActiveStep, setCollectedData, collectedData}) => {
 
     // fetch all category data
     useEffect(() => {
-        setCategory(CategoryMock);
-        setCompanies(AllCompaniesMock);
+        fetchDistributor();
+        fetchCategories();
+        //setCategory(CategoryMock);
+        //setCompanies(AllCompaniesMock);
     }, []);
 
 

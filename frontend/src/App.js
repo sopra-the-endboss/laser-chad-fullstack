@@ -47,6 +47,8 @@ function App() {
 
     useEffect(() => {
         fetchAllProducts();
+        // adding fetchAllProducts into the dependencies leads to infinite calls. we dont do that here
+        // eslint-disable-next-line
     }, [setAllProductsName, setLoading]);
 
     return (

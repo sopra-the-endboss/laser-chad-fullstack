@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from 'react-redux';
 import { api, handleError } from './api';
 import {getDomain} from "./getDomain";
-import {PRODUCT_ENDPOINT} from "./constants";
+import {PRODUCT_CATEGORY, PRODUCT_DISTRIBUTOR, PRODUCT_ENDPOINT} from "./constants";
 
 
 export const useFetchAPIGURL = () => {
@@ -49,7 +49,7 @@ export const useFetchAllProducts = (setAllProductsName, setLoading) => {
     };
 }
 
-export const usePostNewProduct = (productToPost, setLoading) => {
+export const usePostNewProduct = (productToPost, setLoading, setCreatedProductId) => {
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
 
     return async () => {
@@ -58,12 +58,51 @@ export const usePostNewProduct = (productToPost, setLoading) => {
 
         try {
             const response = await api.post(`/${PRODUCT_ENDPOINT}`, productToPost);
-            console.log(response);
+            setCreatedProductId(response.data.product_id)
             setLoading(false);
         } catch (error) {
             handleError({
                 error: error,
                 message: "Failed to post product!"
+            });
+        }
+    };
+}
+
+export const useFetchDistributor = (setAllDistributors) => {
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    return async () => {
+        const baseURL = getDomain(apigBaseUrl);
+        api.defaults.baseURL = baseURL;
+
+        try {
+            const response = await api.post(`/${PRODUCT_DISTRIBUTOR}`);
+            console.log(response);
+            setAllDistributors(response.data);
+        } catch (error) {
+            handleError({
+                error: error,
+                message: "Failed to fetch all distributors!"
+            });
+        }
+    };
+}
+export const useFetchCategories = (setAllCategories) => {
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    return async () => {
+        const baseURL = getDomain(apigBaseUrl);
+        api.defaults.baseURL = baseURL;
+
+        try {
+            const response = await api.post(`/${PRODUCT_CATEGORY}`);
+            console.log(response);
+            setAllCategories(response.data);
+        } catch (error) {
+            handleError({
+                error: error,
+                message: "Failed to fetch all categories!"
             });
         }
     };

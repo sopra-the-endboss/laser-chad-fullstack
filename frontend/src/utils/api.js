@@ -37,7 +37,7 @@ export const handleError = ({error, message}) => {
         if (error?.message.match(/Network Error/)) {
             enqueueSnackbar(
                 {
-                    message: "The server cannot be reached.",
+                    message: "The service cannot be reached. " + message,
                     variant: 'error',
                     style: { width: '900px' },
                     anchorOrigin: {vertical: 'top', horizontal: 'center'}
