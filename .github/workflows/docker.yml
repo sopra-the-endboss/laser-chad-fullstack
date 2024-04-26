@@ -1,0 +1,66 @@
+name: Build and Push Docker image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Build and push frontend Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./frontend
+          push: true
+          tags: laserchads/frontend:latest
+
+      - name: Build and push apig-main Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./backend/apig-main
+          push: true
+          tags: laserchads/apig-main:latest
+
+      - name: Build and push apig-id-share Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./backend/apig-id-share
+          push: true
+          tags: laserchads/apig-id-share:latest
+
+      - name: Build and push options_lambda_function Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./backend/options_lambda_function/dockerfile
+          push: true
+          tags: laserchads/options_lambda_function:latest
+
+      - name: Build and push cart Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./backend/cart/dockerfile
+          push: true
+          tags: laserchads/cart:latest
+
+      - name: Build and push product-microservice Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./backend/product-microservice/dockerfile
+          push: true
+          tags: laserchads/product-microservice:latest
+      

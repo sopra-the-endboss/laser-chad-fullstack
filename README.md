@@ -42,13 +42,19 @@ The order of deployment works as follows and can be inferred from the different 
 
 
 # Architecture
-![Alt text](./ASE%20Architecture%20Diagram.drawio.svg?raw=true "Title")
+![Alt text](./ASE%20Architecture%20Diagram-Architecture%20Overview_1.drawio.svg?raw=true "Title")
+
 
 # Frontend
-Authentication setup:
-AWS Cognito and Amplify are used for Authentication.
+The frontend follows the react-js framework. Material ui is used for styling.
+**Authentication:**
+AWS Cognito and Amplify are used for user registration and user authentication. After sign-up, Cognito sends a verification challenge to the provided user email.
 
-Refer to the frontend README for further information.
+**State management:**
+Redux stores ensure client-sided state persistance. 
+Components like the shopping cart, sync the redux state to the backend on loggout to ensure overall persistence.
+
+Refer to the frontend README or the index.html generated with Jsdoc in the /frontend/doc folder for further information.
 
 # Backend
 The backend uses a microservice approach where each isolated component provides a certain part of the functionality which in its sum composes all neccesary backend services. All services provide their functionality through HTTP API endpoints. All planned and implemented services and its endpoints are described in the [API specification](api_specification.xlsx).   
@@ -60,5 +66,10 @@ All microservices use the AWS services API Gateway, Lambda and Dynamo DB. They a
 For the description of a general microservice architecture and the speicific services, see the READMEs in the backend folder.
 
 # Tests and Codequality
-For code quality, we use Qodana and Github Actions. Each push on main os run through the static code quality analizyer.
-For testing, all tests are located in the [tests folder](./tests/), mirroring the frontend/backend layout of the main repository. For the backend, pytest is used, for the frontent we use Jest. As with code quality, all tests are run via Github Actions and test reports are generated.
+For code quality, we use Qodana and Github Actions. Each push on main os run through the static code quality analyzer.
+For testing, all backend tests are located in the [tests folder](./tests/), mirroring the frontend/backend layout of the main repository. For the backend, pytest is used, for the frontent we use Jest. As with code quality, all tests are run via Github Actions and test reports are generated and can be view within Qodana Cloud.
+TBD: Coverage Report upload
+
+# Continuous Integration
+
+With every push on main, Github Actions builds and pushes the docker images to our public Docker Hub Container registry. They can be accessed [here](https://hub.docker.com/u/laserchads).
