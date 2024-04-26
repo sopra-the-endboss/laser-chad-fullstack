@@ -1,4 +1,32 @@
-import React from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Cart/CartDrawer.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Cart/CartDrawer.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
 import { Drawer, Button, Divider } from "@mui/material";
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
@@ -18,7 +46,7 @@ import { useNavigate } from "react-router-dom";
  * @example
  * const isOpen = true;
  * const toggleCart = () => console.log('Toggle cart drawer');
- * return <CartDrawer isOpen={isOpen} toggleCart={toggleCart} />;
+ * return &lt;CartDrawer isOpen={isOpen} toggleCart={toggleCart} />;
  *
  * @param {Object} props - Props for configuring the CartDrawer component.
  * @param {boolean} props.isOpen - State indicating whether the cart drawer is open.
@@ -35,7 +63,7 @@ const CartDrawer = ({ isOpen, toggleCart }) => {
     }
   };
   return (
-    <Drawer
+    &lt;Drawer
       open={isOpen}
       onClose={toggleCart(false)}
       anchor="right"
@@ -45,8 +73,8 @@ const CartDrawer = ({ isOpen, toggleCart }) => {
         },
       }}
     >
-      <Box sx={{ margin: 2 }}>
-        <Box
+      &lt;Box sx={{ margin: 2 }}>
+        &lt;Box
           sx={{
             fontSize: "24px",
             position: "fixed",
@@ -57,10 +85,10 @@ const CartDrawer = ({ isOpen, toggleCart }) => {
             zIndex: 2,
           }}
         >
-          <span>Your Shopping Cart</span>
-        </Box>
+          &lt;span>Your Shopping Cart&lt;/span>
+        &lt;/Box>
 
-        <Box
+        &lt;Box
           sx={{
             overflowY: "auto",
             marginBottom: "120px",
@@ -69,22 +97,22 @@ const CartDrawer = ({ isOpen, toggleCart }) => {
             zIndex: 1,
           }}
         >
-          <Divider />
+          &lt;Divider />
           {cartItems.length === 0 ? (
-            <Typography variant="p" align="left" margin={2}>
+            &lt;Typography variant="p" align="left" margin={2}>
               No items in cart.
-            </Typography>
+            &lt;/Typography>
           ) : (
             cartItems.map((item) => (
-              <CartItem
+              &lt;CartItem
                 key={item.product_id}
                 item={item}
                 onCardInteract={onCardInteract}
               />
             ))
           )}
-        </Box>
-        <Box
+        &lt;/Box>
+        &lt;Box
           sx={{
             position: "fixed",
             bottom: "0px",
@@ -95,24 +123,47 @@ const CartDrawer = ({ isOpen, toggleCart }) => {
             zIndex: 2,
           }}
         >
-          <Typography variant="h6" align="left" margin={2} display="table">
+          &lt;Typography variant="h6" align="left" margin={2} display="table">
             Total: $
             {cartItems
               .reduce((acc, item) => acc + item.quantity * item.price, 0)
               .toFixed(2)}
-          </Typography>
-          <Button
+          &lt;/Typography>
+          &lt;Button
             variant="contained"
             color="primary"
             disabled={cartItems.length === 0}
             onClick={() => navigate("/checkout")}
           >
             Proceed to Checkout
-          </Button>
-        </Box>
-      </Box>
-    </Drawer>
+          &lt;/Button>
+        &lt;/Box>
+      &lt;/Box>
+    &lt;/Drawer>
   );
 };
 
 export default CartDrawer;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#AccountDetails">AccountDetails</a></li><li><a href="global.html#CartDrawer">CartDrawer</a></li><li><a href="global.html#CartItem">CartItem</a></li><li><a href="global.html#CustomModal">CustomModal</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#SellerGuard">SellerGuard</a></li><li><a href="global.html#cartSlice">cartSlice</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#persistConfig">persistConfig</a></li><li><a href="global.html#persistedReducer">persistedReducer</a></li><li><a href="global.html#persistor">persistor</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#useAuth">useAuth</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Apr 11 2024 15:53:51 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
