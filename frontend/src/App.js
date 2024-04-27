@@ -4,7 +4,7 @@ import ProductOverview from "./views/ProductOverview";
 import Navigation from "./components/Navigation";
 import {Provider} from "react-redux";
 import store from "./reducers/store";
-import useAuth from "./reducers/useAuth";
+import useAuth from "./hooks/useAuth";
 import Account from "./views/Account";
 import {useEffect, useState} from "react";
 import {ProductDetail} from "./views/ProductDetail";
@@ -51,63 +51,66 @@ function App() {
         // eslint-disable-next-line
     }, [setAllProductsName, setLoading]);
 
-    return (
-        <Provider store={store}>
-            <div className="App">
-                <SnackbarProvider maxSnack={3}>
-                    <BrowserRouter>
-                        <Navigation
-                            setData={setData}
-                            searchQuerySubmitted={searchQuerySubmitted}
-                            AllProductsName={AllProductsName}
+  return (
+    <Provider store={store}>
+      <div className="App">
+        <SnackbarProvider maxSnack={3}>
+          <BrowserRouter>
+            <Navigation
+              setData={setData}
+              searchQuerySubmitted={searchQuerySubmitted}
+              AllProductsName={AllProductsName}
+            />
+            <div style={{ marginTop: "100px", marginBottom: "50px" }}>
+              <Container maxWidth="lg">
+                <Grid container spacing={2}>
+                  <Routes>
+                    <Route
+                      path="/"
+                      element={
+                        <ProductOverview
+                          isSearchQuerySubmitted={isSearchQuerySubmitted}
+                          data={data}
+                          setCategoryFilter={setCategoryFilter}
+                          loading={loading}
                         />
-                        <div style={{marginTop: "100px", marginBottom: "50px"}}>
-                            <Container maxWidth="lg">
-                                <Grid container spacing={2}>
-                                    <Routes>
-                                        <Route
-                                            path="/"
-                                            element={
-                                                <ProductOverview
-                                                    isSearchQuerySubmitted={isSearchQuerySubmitted}
-                                                    data={data}
-                                                    setCategoryFilter={setCategoryFilter}
-                                                    loading={loading}
-                                                />
-                                            }
-                                        />
-                                        <Route path="/categories" element={<Categories/>}/>
-                                        <Route
-                                            path="/categories/:categoryFilter"
-                                            element={
-                                                <ProductOverview
-                                                    isSearchQuerySubmitted={isSearchQuerySubmitted}
-                                                    data={data}
-                                                    setCategoryFilter={setCategoryFilter}
-                                                    loading={loading}
-                                                />
-                                            }
-                                        />
-                                        <Route
-                                            path="/product/:product_id"
-                                            element={<ProductDetail/>}
-                                        />
-                                        <Route path="/account" element={<Account/>}/>
-                                        <Route path="/playground" element={<Playground/>}/>
-                                        <Route path="/my-shop" element={
-                                            <SellerGuard>
-                                                <MyShop/>
-                                            </SellerGuard>
-                                        }/>
-                                    </Routes>
-                                </Grid>
-                            </Container>
-                        </div>
-                    </BrowserRouter>
-                </SnackbarProvider>
+                      }
+                    />
+                    <Route path="/categories" element={<Categories />} />
+                    <Route
+                      path="/categories/:categoryFilter"
+                      element={
+                        <ProductOverview
+                          isSearchQuerySubmitted={isSearchQuerySubmitted}
+                          data={data}
+                          setCategoryFilter={setCategoryFilter}
+                          loading={loading}
+                        />
+                      }
+                    />
+                    <Route
+                      path="/product/:product_id"
+                      element={<ProductDetail />}
+                    />
+                    <Route path="/account" element={<Account />} />
+                    <Route path="/playground" element={<Playground />} />
+                    <Route
+                      path="/my-shop"
+                      element={
+                        <SellerGuard>
+                          <MyShop />
+                        </SellerGuard>
+                      }
+                    />
+                  </Routes>
+                </Grid>
+              </Container>
             </div>
-        </Provider>
-    );
+          </BrowserRouter>
+        </SnackbarProvider>
+      </div>
+    </Provider>
+  );
 }
 
 export default App;

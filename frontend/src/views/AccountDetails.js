@@ -38,7 +38,7 @@ import {
  */
 
 const AccountDetails = () => {
-  const authState = useSelector((state) => state.auth);
+  const authState = useSelector((state) => state.auth.user);
   const [isEditing, setIsEditing] = useState(false);
   const [editState, setEditState] = useState(authState);
   const dispatch = useDispatch();
@@ -59,16 +59,23 @@ const AccountDetails = () => {
   };
 
   const handleUpdate = async () => {
-    const { givenname, familyname, email, birthdate } = editState;
+    const { givenname, familyname, email, birthdate, address, county, zip } =
+      editState;
+
+    let userAttributes = {
+      given_name: givenname,
+      family_name: familyname,
+      email: email,
+      birthdate: birthdate,
+    };
+
+    if (address) userAttributes["address"] = address;
+    if (county) userAttributes["custom:county"] = county;
+    if (zip) userAttributes["custom:zip"] = zip;
 
     try {
       updateUserAttributes({
-        userAttributes: {
-          given_name: givenname,
-          family_name: familyname,
-          email: email,
-          birthdate: birthdate,
-        },
+        userAttributes: userAttributes,
       });
       dispatch(setUserLoggedIn(editState));
       setIsEditing(false);
@@ -94,10 +101,10 @@ const AccountDetails = () => {
         User Account
       </Typography>
       <Typography variant="body2" color="textSecondary">
-        Account Type: {authState.groups}
+        Account Type: {authState.role}
       </Typography>
       <Divider sx={{ my: 2 }} />
-
+      {/* TODO: Loop over elements */}
       {isEditing ? (
         <React.Fragment>
           <Grid container spacing={2} alignItems="center">
@@ -157,6 +164,54 @@ const AccountDetails = () => {
               />
             </Grid>
 
+            <Grid item xs={6}>
+              <Typography>Address</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                name="address"
+                variant="outlined"
+                value={editState.address || ""}
+                onChange={handleInputChange}
+              />
+            </Grid>
+
+            <Grid item xs={6}>
+              <Typography>Zipcode</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                name="zip"
+                variant="outlined"
+                value={editState.zip || ""}
+                onChange={handleInputChange}
+                error={
+                  editState.zip &&
+                  (editState.zip < 1000 || editState.zip > 10000)
+                }
+                helperText={
+                  editState.zip &&
+                  (editState.zip < 1000 || editState.zip > 10000)
+                    ? "No valid Zipcode"
+                    : ""
+                }
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>County</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                name="county"
+                variant="outlined"
+                value={editState.county || ""}
+                onChange={handleInputChange}
+              />
+            </Grid>
+
             <Grid item xs={12}>
               <Button
                 variant="contained"
@@ -172,7 +227,7 @@ const AccountDetails = () => {
         <React.Fragment>
           <Grid container spacing={2}>
             <Grid item xs={6}>
-              <Typography>Full name:</Typography>
+              <Typography>Name:</Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography>
@@ -190,6 +245,24 @@ const AccountDetails = () => {
             </Grid>
             <Grid item xs={6}>
               <Typography>{authState.birthdate}</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>Address:</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>{authState.address} </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>Zipcode:</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>{authState.zip}</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>County:</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>{authState.county}</Typography>
             </Grid>
           </Grid>
           <IconButton onClick={handleEditToggle} size="large">

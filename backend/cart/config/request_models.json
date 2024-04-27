@@ -12,5 +12,37 @@
         }
     },
     "contentType" : "application/json"
+},
+"put_cart_batch": {
+    "model_spec": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "put_cart_batch",
+    "type": "object",
+    "required": [
+        "products"
+    ],
+    "properties": {
+        "products": {
+        "type": "array",
+        "minItems": 0,
+        "items": {
+            "type": "object",
+            "required": [
+                "product_id",
+                "quantity"
+            ],
+            "properties": {
+                "product_id": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "number"
+                }
+            }
+        }
+        }
+        }
+    },
+    "contentType" : "application/json"
 }
 }

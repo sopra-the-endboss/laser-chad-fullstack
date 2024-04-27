@@ -24,9 +24,9 @@ import { Navigate } from "react-router-dom";
  */
 
 const SellerGuard = ({ children }) => {
-  const userGroups = useSelector((state) => state.auth.groups);
+  const userGroups = useSelector((state) => state.auth.user.role);
 
-  const isSeller = userGroups?.includes("seller");
+  const isSeller = userGroups?.includes("Seller");
 
   if (!isSeller) {
     return <Navigate to="/" replace />;

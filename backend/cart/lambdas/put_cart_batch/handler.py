@@ -1,7 +1,6 @@
 """
-put_cart
-Handle call to update a cart with a product_id and quantity for a given userId
-TODO: Allow for arbitrary additional fields with product_id
+put_cart_batch
+Handle call to update a cart for a user_id with an arbitrary array of objects whit at least product_id and quantity
 """
 
 import boto3
@@ -37,6 +36,9 @@ def handler(event, context) -> list[dict]:
     Arguments:
         event : a dict which contains all data from the request to the API
         context : a LambdaContext object
+
+    The body can be parsed to a dict and contains at least the field products
+    products is an array of min length 0, if not empty containing two fields product_id:str and quantity:int
     
     Returns:
         A valid HTTP Response dict which must contain the fields
@@ -50,7 +52,7 @@ def handler(event, context) -> list[dict]:
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default
         headers : Default to allow CORS, otherwise not used
-        body : JSON serialized new cart
+        body : JSON serialized new cart entry
 
         400 if the handler can not complete
         404 if there is no cart with userId
@@ -58,7 +60,7 @@ def handler(event, context) -> list[dict]:
 
     PATH_PARAMETER_FILTER = "userId" # Must match the name in resources_to_create.json in the path with {}
     
-    print("put_cart invoked")
+    print("put_cart_batch invoked")
 
     print("DEBUG: This is the event")
     pp.pprint(event)
@@ -89,24 +91,18 @@ def handler(event, context) -> list[dict]:
 
     ###
     # Check the body item to update
-    print("Check body, should be a dict or something serializable into a dict")
+    print("Check body, should be a list of json serializable objects")
     print(event['body'])
 
     # serialize json string into dict
     body = json.loads(event['body'], parse_float=Decimal)
 
-    # Due to the check on the request, we can safely assume the key 'product_id' is in the body and its only one
-    product_id_to_update = body['product_id']
+    # If there are any other fields than products, they will be ignored
 
-    # Check if there are other fields in the body apart from product_id and quantity
-    # get a dict without product_id and quantity
-    product_id_additional_fields_to_update = {k:body[k] for k in body if k not in ("product_id","quantity")}
-    if product_id_additional_fields_to_update:
-        print(f"Found additionalfields {product_id_additional_fields_to_update}, those will be updated")
-
-    print("This is the value extracted from the product_id field in the body")
-    print(product_id_to_update)
-    
+    # Due to the check on the request, we can safely assume the key 'products' is in the body
+    products_to_update = body['products']
+    print("This is the new cart which will be placed if user exists")
+    print(products_to_update)
 
     ###
     # Now we have to check if there is a cart for filter
@@ -119,76 +115,27 @@ def handler(event, context) -> list[dict]:
     # If None we did not find anything, return 404
     if not cart_found:
         return return_error(f"No cart with userId {filter} found, return 404", 404)
-
-    ###
-    # Now either product_id_to_update is in the cart, then we increase quantity by 1
-    # OR if product_id_to_update not in cart, we add it with quantity 1
-    print("this is the cart_found")
-    print(type(cart_found))
-    print(cart_found)
-
-    # Cart could be empty, then products is still a list
-    products_found = cart_found['products']
-    product_ids_found = [p['product_id'] for p in products_found]
-    product_quantitys_found = [p['quantity'] for p in products_found]
-
-    print("this is the products found, and the product_ids and the quantitys")
-    print(products_found)
-    print(product_ids_found)
-    print(product_quantitys_found)
-
-    # Assert that there are no duplicated product_id in a cart
-    if len(product_ids_found) != len(set(product_ids_found)):
-        print("product_ids_found contains duplicates, abort")
-        raise ValueError("product_ids_found contains duplicates, abort")
     
-    # Assert that there are no non-positive quantity in a cart
-    if any(quantity <= 0 for quantity in product_quantitys_found):
-        print("product_quantitys_found contains non-positive quantities, abort")
-        raise ValueError("product_quantitys_found contains non-positive quantities, abort")
-    
-    # Search for product_id_to_update, check if it is present, if not create a new one
-    product_id_to_update_found = product_id_to_update in product_ids_found
-    # If it is not present, create new product with quantity 0
-    if not product_id_to_update_found:
-        print(f"product_id {product_id_to_update} to put not found, create it")
-        product_updated = {"product_id":product_id_to_update, "quantity":0}
-    else:
-        print(f"product_id {product_id_to_update} is already present in cart, pop it")
-        # If it is present remove the old product from products_found, replace it with a new one
-        index_product_id_to_update = product_ids_found.index(product_id_to_update)
-        product_updated = products_found.pop(index_product_id_to_update)
-    
-    # increase quantity
-    product_updated['quantity'] += 1
+    # If we found an existing cart, fetch it to print it
+    # pop returns the old products
+    cart_updated = cart_found.copy()
+    products_to_replace = cart_updated.pop('products')
+    print(f"Found cart, this will be replaced")
+    print(products_to_replace)
 
-    # Now merge any additional fields, overwrite already existing fields
-    product_updated = {**product_updated, **product_id_additional_fields_to_update}
-
-    print("This is the product_updated after increasing")
-    print(product_updated)
-
-    print("this is the not yet updated product list")
-    print(products_found)
-
-    print("this is the new product we will put")
-    print(product_updated)
-
-    # Add the new updated product to the products found list
-    products_found.append(product_updated)
-
-    print("this is the updated product list")
-    print(products_found)
+    # Then replace the entry with the new body
+    cart_updated["products"] = products_to_update
 
     # Add the updated cart to the DB, overwrite with key filter
     _ = dynamo_table.put_item(
-        Item = cart_found,
+        Item = cart_updated,
         ReturnValues = "NONE"
     )
-    
+
+    # Return the updated cart
     print("Success, return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = 200
-    HTTP_RESPONSE_DICT['body'] = json.dumps(cart_found)
+    HTTP_RESPONSE_DICT['body'] = json.dumps(cart_updated)
 
     return HTTP_RESPONSE_DICT
 

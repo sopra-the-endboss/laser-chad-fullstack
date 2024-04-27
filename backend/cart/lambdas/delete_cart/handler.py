@@ -1,11 +1,12 @@
 """
 delete_cart
-Handle call to decrease/delete a cart with a product_id and qty for a given userId
+Handle call to decrease/delete a cart with a product_id and quantity for a given userId
 """
 
 import boto3
 import simplejson as json
 from pprint import PrettyPrinter
+from decimal import Decimal
 pp = PrettyPrinter(indent=2)
 
 HTTP_RESPONSE_DICT = {
@@ -92,7 +93,7 @@ def handler(event, context) -> list[dict]:
     print(event['body'])
 
     # serialize json string into dict
-    body = json.loads(event['body'])
+    body = json.loads(event['body'], parse_float=Decimal)
 
     # Due to the check on the request, we can safely assume the key 'product_id' is in the body and its only one
     product_id_to_delete = body['product_id']
@@ -114,8 +115,8 @@ def handler(event, context) -> list[dict]:
         return return_error(f"No cart with userId {filter} found, return 404", 404)
 
     ###
-    # Now either product_id_to_delete is in the cart, then we decrease qty by 1
-    # If decrease would lead to qty = 0, we remove the product_id_to_delete from cart
+    # Now either product_id_to_delete is in the cart, then we decrease quantity by 1
+    # If decrease would lead to quantity = 0, we remove the product_id_to_delete from cart
     # OR if product_id_to_delete not in cart, we do nothing
     print("this is the cart_found")
     print(type(cart_found))
@@ -124,26 +125,26 @@ def handler(event, context) -> list[dict]:
     # Cart could be empty, then products is still a list
     products_found = cart_found['products']
     product_ids_found = [p['product_id'] for p in products_found]
-    product_qtys_found = [p['qty'] for p in products_found]
+    product_quantitys_found = [p['quantity'] for p in products_found]
 
-    print("this is the products found, and the product_ids and the qtys")
+    print("this is the products found, and the product_ids and the quantitys")
     print(products_found)
     print(product_ids_found)
-    print(product_qtys_found)
+    print(product_quantitys_found)
 
     # Assert that there are no duplicated product_id in a cart
     if len(product_ids_found) != len(set(product_ids_found)):
         print("product_ids_found contains duplicates, abort")
         raise ValueError("product_ids_found contains duplicates, abort")
     
-    # Assert that there are no non-positive qty in a cart
-    if any(qty <= 0 for qty in product_qtys_found):
-        print("product_qtys_found contains non-positive quantities, abort")
-        raise ValueError("product_qtys_found contains non-positive quantities, abort")
+    # Assert that there are no non-positive quantity in a cart
+    if any(quantity <= 0 for quantity in product_quantitys_found):
+        print("product_quantitys_found contains non-positive quantities, abort")
+        raise ValueError("product_quantitys_found contains non-positive quantities, abort")
     
     # Search for product_id_to_update, check if it is present, if not do nothing and return the cart
     product_id_to_delete_found = product_id_to_delete in product_ids_found
-    # If it is not present, create new product with qty 0
+    # If it is not present, create new product with quantity 0
     if not product_id_to_delete_found:
         print(f"product_id {product_id_to_delete} to put not found, nothing to delete")
         
@@ -158,13 +159,13 @@ def handler(event, context) -> list[dict]:
         index_product_id_to_delete = product_ids_found.index(product_id_to_delete)
         product_to_update = products_found.pop(index_product_id_to_delete)
 
-        # If qty is 1, delete the product, otherwise decrease
-        if product_to_update['qty'] == 1:
-            print(f"product_id {product_id_to_delete} has only one qty, delete the product")
+        # If quantity is 1, delete the product, otherwise decrease
+        if product_to_update['quantity'] == 1:
+            print(f"product_id {product_id_to_delete} has only one quantity, delete the product")
             PRODUCT_DELETED = True
         else:
-            # decrease qty
-            product_to_update['qty'] -= 1
+            # decrease quantity
+            product_to_update['quantity'] -= 1
 
     if PRODUCT_DELETED:
         print("Product deleted, this is the updated product list")

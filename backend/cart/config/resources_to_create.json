@@ -13,7 +13,16 @@
                         {"method":"DELETE","lambda_fct":"delete_cart","requestModels":{"application/json":"put_cart"}},
                         {"method":"OPTIONS","lambda_fct":"options_lambda_function"}
                     ],
-                    "children_resources":[]
+                    "children_resources":[
+                        {
+                            "path":"batch",
+                            "methods_for_that_path":[
+                                {"method":"PUT","lambda_fct":"put_cart_batch","requestModels":{"application/json":"put_cart_batch"}},
+                                {"method":"OPTIONS","lambda_fct":"options_lambda_function"}
+                            ],
+                            "children_resources":[]
+                        }
+                    ]
                 }
             ]
         }

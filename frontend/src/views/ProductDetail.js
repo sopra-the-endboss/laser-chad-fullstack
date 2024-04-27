@@ -139,21 +139,29 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                         )}
                     </Grid>
                     <Grid item xs={12}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={() =>
-                                dispatch(
-                                    addToCart({
-                                        ...productDetails,
-                                        img: productDetails?.images[0],
-                                    })
-                                ) && console.log("Added to cart: ", productDetails)
-                            }
-                            disabled={details || loadingDetails}
-                        >
+                        {(
+                            // make sure productDetails is an object with product_id, which must be a nonempty string, AND we are not loading anymore
+                            (productDetails && productDetails?.product_id && typeof productDetails.product_id === 'string' && productDetails.product_id.trim() !== '') &&
+                            !loadingDetails
+                        ) ? (
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={() => {
+                                    dispatch(
+                                        addToCart({
+                                            ...productDetails,
+                                            img: productDetails?.images[0],
+                                        })
+                                    ) && console.log("Added to cart: ", productDetails)
+                                }}
+                            >
                             Add to Cart
-                        </Button>
+                            </Button>
+                         ) : (
+                            <Button disabled={true}>Not in Stock</Button>
+                         )}
+                        
                     </Grid>
                     <Grid item xs={12}>
                         <Button variant="outlined" color="primary" disabled={loadingDetails}>Pin Product</Button>
