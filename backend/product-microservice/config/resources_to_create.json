@@ -157,5 +157,36 @@
             ],
             "children_resources": []
         }
+    ],
+    "order": [
+        {
+            "path": "order",
+            "methods_for_that_path": [],
+            "children_resources": [
+
+                {
+                    "path": "{user_id}",
+                    "methods_for_that_path": [
+                        {
+                            "method": "GET",
+                            "lambda_fct": "get_order"
+                        },
+                        {
+                            "method": "POST",
+                            "lambda_fct": "post_order",
+                            "requestModels": {
+                                "application/json": "post_order"
+                            }
+                        },
+                        {
+                            "method": "OPTIONS",
+                            "lambda_fct": "options_lambda_function"
+                        }
+                    ],
+                    "children_resources": []
+                }
+            ]
+        }
     ]
+
 }

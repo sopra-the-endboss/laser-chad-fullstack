@@ -77,5 +77,21 @@
         }
     ],
     "BillingMode": "PAY_PER_REQUEST"
+},
+{
+    "TableName":"order-table",
+    "KeySchema": [
+        {
+            "AttributeName": "order_id",
+            "KeyType": "HASH"
+        }
+    ],
+    "AttributeDefinitions": [
+        {
+            "AttributeName": "order_id",
+            "AttributeType": "S"
+        }
+    ],
+    "BillingMode": "PAY_PER_REQUEST"
 }
 ]

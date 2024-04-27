@@ -60,5 +60,22 @@
             }
         },
         "contentType": "application/json"
+    },
+    "post_order": {
+        "model_spec": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "post_order",
+            "type": "object",
+            "required": ["user_id", "order_id"],
+            "properties": {
+                "user_id": {
+                    "type": "string"
+                },
+                "order_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "contentType": "application/json"
     }
 }
