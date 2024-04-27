@@ -67,13 +67,6 @@
                     "lambda_fct": "get_product_comment"
                 },
                 {
-                    "method": "POST",
-                    "lambda_fct": "post_product_comment",
-                    "requestModels": {
-                        "application/json": "post_product_comment"
-                    }
-                },
-                {
                     "method": "OPTIONS",
                     "lambda_fct": "options_lambda_function"
                 }
@@ -85,6 +78,13 @@
                         {
                             "method": "GET",
                             "lambda_fct": "get_product_comment"
+                        },
+                        {
+                            "method": "POST",
+                            "lambda_fct": "post_product_comment",
+                            "requestModels": {
+                                "application/json": "post_product_comment"
+                            }
                         },
                         {
                             "method": "OPTIONS",

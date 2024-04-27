@@ -33,15 +33,12 @@
     "post_product_comment": {
         "model_spec": {
             "$schema": "http://json-schema.org/draft-04/schema#",
-            "title": "post_product",
+            "title": "post_product_comment",
             "type": "object",
-            "required": ["product_id", "reviews"],
+            "required": ["comment"],
             "properties": {
-                "product_id": {
+                "comment": {
                     "type": "string"
-                },
-                "reviews": {
-                    "type": "array"
                 }
             }
         },
