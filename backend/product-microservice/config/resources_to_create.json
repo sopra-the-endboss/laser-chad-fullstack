@@ -58,44 +58,6 @@
             ]
         }
     ],
-    "product-detail": [
-        {
-            "path": "product-detail",
-            "methods_for_that_path": [
-                {
-                    "method": "GET",
-                    "lambda_fct": "get_product_detail"
-                },
-                {
-                    "method": "POST",
-                    "lambda_fct": "post_product_detail",
-                    "requestModels": {
-                        "application/json": "post_product_detail"
-                    }
-                },
-                {
-                    "method": "OPTIONS",
-                    "lambda_fct": "options_lambda_function"
-                }
-            ],
-            "children_resources": [
-                {
-                    "path": "{product_id}",
-                    "methods_for_that_path": [
-                        {
-                            "method": "GET",
-                            "lambda_fct": "get_product_detail"
-                        },
-                        {
-                            "method": "OPTIONS",
-                            "lambda_fct": "options_lambda_function"
-                        }
-                    ],
-                    "children_resources": []
-                }
-            ]
-        }
-    ],
     "product-comment": [
         {
             "path": "product-comment",

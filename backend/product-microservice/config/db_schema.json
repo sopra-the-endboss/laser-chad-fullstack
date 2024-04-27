@@ -15,22 +15,6 @@
 "BillingMode": "PAY_PER_REQUEST"
 },
 {
-    "TableName":"product-detail-table",
-    "KeySchema": [
-        {
-            "AttributeName": "product_id",
-            "KeyType": "HASH"
-        }
-    ],
-    "AttributeDefinitions": [
-        {
-            "AttributeName": "product_id",
-            "AttributeType": "S"
-        }
-    ],
-    "BillingMode": "PAY_PER_REQUEST"
-},
-{
     "TableName":"product-comment-table",
     "KeySchema": [
         {
