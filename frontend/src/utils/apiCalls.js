@@ -188,7 +188,7 @@ export const useFetchProductDetails = (details, product_id, setProductDetails, s
 
 
 
-export const usePostComment = (setLoadingComments, setComments, comment, productComments) => {
+export const usePostComment = (setLoadingComments, setComments, comment, productComments, product_id) => {
 
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
 
@@ -197,7 +197,7 @@ export const usePostComment = (setLoadingComments, setComments, comment, product
         api.defaults.baseURL = baseURL;
 
         try {
-            const response = await api.post(`/${PRODUCT_COMMENT_ENDPOINT}/${productComments.product_id}`, comment);
+            const response = await api.post(`/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`, comment);
             console.log(response);
             const copy = {...productComments}
             copy.reviews.push(comment);

@@ -651,629 +651,636 @@
             "brand": "Logitech"
         },
         {
-          "product_id": "66",
-          "product": "Dell XPS 15",
-          "highlighted": false,
-          "images": [
-            "https://www.digitec.ch/im/Files/2/0/3/5/9/6/0/8/UBVBa-7VUE-i5Djte0yBlA.r.jpg?impolicy=ProductTileImage&resizeWidth=648&resizeHeight=486&cropWidth=648&cropHeight=486&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/Files/2/0/3/5/9/6/1/0/RDBxIBAIbU6m34Onj9Vk3Q.r.jpg?impolicy=ProductTileImage&resizeWidth=648&resizeHeight=486&cropWidth=648&cropHeight=486&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/Files/2/0/3/5/9/6/0/3/kcEBwORP00e9EB0fn8fu-g.r.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/Files/2/0/3/5/9/6/0/5/VXCQVm1wgE-HmVUOAo7giQ.r.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/Files/2/0/3/5/9/6/0/6/OZ3zMe835UW2qF2zH-VWxQ.r.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
-          ],
-          "price": 17.32,
-          "formatted_text": "",
-          "category": "Tech",
-          "brand": "Dell",
-          "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
-          "technical_details": {
-            "processor": "Intel Core i7",
-            "ram": "16GB",
-            "storage": "512GB SSD",
-            "screen": "15.6-inch 4K UHD",
-            "battery": "86Wh",
-            "operating_system": "Windows 10 Home",
-            "graphics": "NVproduct_idIA GeForce GTX 1650 Ti",
-            "ports": {
-              "usb_c": 2,
-              "hdmi": 1,
-              "headphone_jack": 1,
-              "sd_card_reader": 1
+            "product_id": "66",
+            "product": "Dell XPS 15",
+            "highlighted": false,
+            "images": [
+                "https://www.digitec.ch/im/Files/2/0/3/5/9/6/0/8/UBVBa-7VUE-i5Djte0yBlA.r.jpg?impolicy=ProductTileImage&resizeWidth=648&resizeHeight=486&cropWidth=648&cropHeight=486&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/Files/2/0/3/5/9/6/1/0/RDBxIBAIbU6m34Onj9Vk3Q.r.jpg?impolicy=ProductTileImage&resizeWidth=648&resizeHeight=486&cropWidth=648&cropHeight=486&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/Files/2/0/3/5/9/6/0/3/kcEBwORP00e9EB0fn8fu-g.r.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/Files/2/0/3/5/9/6/0/5/VXCQVm1wgE-HmVUOAo7giQ.r.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/Files/2/0/3/5/9/6/0/6/OZ3zMe835UW2qF2zH-VWxQ.r.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
+            ],
+            "price": 17.32,
+            "formatted_text": "",
+            "category": "Tech",
+            "brand": "Dell",
+            "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
+            "technical_details": {
+                "processor": "Intel Core i7",
+                "ram": "16GB",
+                "storage": "512GB SSD",
+                "screen": "15.6-inch 4K UHD",
+                "battery": "86Wh",
+                "operating_system": "Windows 10 Home",
+                "graphics": "NVproduct_idIA GeForce GTX 1650 Ti",
+                "ports": {
+                    "usb_c": 2,
+                    "hdmi": 1,
+                    "headphone_jack": 1,
+                    "sd_card_reader": 1
+                },
+                "weight": "1.83kg"
             },
-            "weight": "1.83kg"
-          },
-          "warranty": "1 year",
-          "color": "Silver",
-          "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
-          "availability": "In stock"
+            "warranty": "1 year",
+            "color": "Silver",
+            "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
+            "availability": "In stock"
         },
         {
-          "product_id": "67",
-          "product": "Asus ROG Zephyrus G14",
-          "highlighted": true,
-          "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
-          "images": [
-            "https://www.digitec.ch/im/productimages/7/5/3/5/8/0/5/1/4/1/5/4/5/6/1/7/3/8/5879a91d-9442-40b0-a14f-d4ab6477e3fe.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/5/8/3/4/6/0/8/8/5/5/9/7/9/8/2/8/7/1/1/a1369e23-906b-44de-bed8-28330aae1893.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/5/0/9/4/5/1/5/5/4/5/5/1/3/7/7/1/6/7/1/b67a74c7-7d14-400f-8168-8e6549d86d6e.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/5/6/8/5/0/3/8/5/4/9/5/7/6/5/9/0/2/1/0/e208e019-44fb-4d28-8704-0ee0370f7a1f.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
-          ],
-          "price": 24.99,
-          "formatted_text": "The ultimate gaming laptop.",
-          "category": "Tech",
-          "brand": "Asus",
-          "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
-          "technical_details": {
-            "processor": "AMD Ryzen 9",
-            "ram": "16GB",
-            "storage": "1TB SSD",
-            "screen": "14-inch Full HD",
-            "battery": "75Wh",
-            "operating_system": "Windows 10 Home",
-            "graphics": "NVproduct_idIA GeForce RTX 2060",
-            "ports": {
-              "usb_c": 2,
-              "usb_a": 2,
-              "hdmi": 1,
-              "headphone_jack": 1
+            "product_id": "67",
+            "product": "Asus ROG Zephyrus G14",
+            "highlighted": true,
+            "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
+            "images": [
+                "https://www.digitec.ch/im/productimages/7/5/3/5/8/0/5/1/4/1/5/4/5/6/1/7/3/8/5879a91d-9442-40b0-a14f-d4ab6477e3fe.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/5/8/3/4/6/0/8/8/5/5/9/7/9/8/2/8/7/1/1/a1369e23-906b-44de-bed8-28330aae1893.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/5/0/9/4/5/1/5/5/4/5/5/1/3/7/7/1/6/7/1/b67a74c7-7d14-400f-8168-8e6549d86d6e.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/5/6/8/5/0/3/8/5/4/9/5/7/6/5/9/0/2/1/0/e208e019-44fb-4d28-8704-0ee0370f7a1f.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
+            ],
+            "price": 24.99,
+            "formatted_text": "The ultimate gaming laptop.",
+            "category": "Tech",
+            "brand": "Asus",
+            "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
+            "technical_details": {
+                "processor": "AMD Ryzen 9",
+                "ram": "16GB",
+                "storage": "1TB SSD",
+                "screen": "14-inch Full HD",
+                "battery": "75Wh",
+                "operating_system": "Windows 10 Home",
+                "graphics": "NVproduct_idIA GeForce RTX 2060",
+                "ports": {
+                    "usb_c": 2,
+                    "usb_a": 2,
+                    "hdmi": 1,
+                    "headphone_jack": 1
+                },
+                "weight": "1.6kg"
             },
-            "weight": "1.6kg"
-          },
-          "warranty": "2 years",
-          "color": "Eclipse Gray",
-          "availability": "In stock"
+            "warranty": "2 years",
+            "color": "Eclipse Gray",
+            "availability": "In stock"
         },
         {
-          "product_id": "68",
-          "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
-          "product": "Apple MacBook Pro 16",
-          "highlighted": false,
-          "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
-          "images": [
-            "https://www.digitec.ch/im/productimages/5/6/4/4/7/4/1/9/1/3/5/2/5/4/9/4/6/2/caac20ef-b06f-41e9-a0bf-d88900ec25b3.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/7/7/2/2/6/5/2/3/5/4/7/0/1/1/3/4/5/5/6/220f7345-2c62-41af-848b-c8eaebe160fc.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/8/5/3/9/5/4/6/5/7/3/5/8/8/9/4/3/3/4/2/70f4fb8a-d8e5-4ce0-9b00-eca4781f7bf3.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/5/2/4/4/8/2/8/8/4/8/0/8/4/2/2/3/9/3/5/d8bb11c4-642b-4775-8b3f-87cf298b4e4c.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/5/1/8/2/8/8/2/5/3/8/0/6/9/7/2/9/3/360f3bad-0cd5-4318-a7e8-8a0371a21136.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/7/6/3/3/5/3/2/6/0/6/6/5/2/7/7/3/8/7/5/d38b9153-de43-4adc-b7ef-81c81005f61d.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/2/0/0/4/9/6/7/8/7/5/0/6/9/2/7/0/4/2/4/bf0a99f5-9707-4b7a-a8f1-11cc2a7ecba5.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/7/4/0/7/1/4/2/8/0/1/9/4/9/8/5/1/6/4/7/46a11b38-fa6d-4ea7-9d39-72da14b18989.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/8/8/2/1/7/9/6/5/5/0/2/6/0/0/4/3/2/6/2/12b98228-cafd-4a7c-97cf-3db4f61c0543.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/4/5/8/4/6/1/0/3/2/1/9/8/5/3/8/6/6/2/f2485dba-e356-49d8-8206-0dfb8e843068.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
-          ],
-          "price": 39.99,
-          "formatted_text": "",
-          "category": "Tech",
-          "brand": "Apple",
-          "technical_details": {
-            "processor": "Apple M1 Pro",
-            "ram": "16GB",
-            "storage": "512GB SSD",
-            "screen": "16-inch Retina",
-            "battery": "100Wh",
-            "operating_system": "macOS",
-            "graphics": "Integrated 16-core GPU",
-            "ports": {
-              "thunderbolt": 3,
-              "hdmi": 1,
-              "headphone_jack": 1,
-              "sd_card_reader": 1
+            "product_id": "68",
+            "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
+            "product": "Apple MacBook Pro 16",
+            "highlighted": false,
+            "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
+            "images": [
+                "https://www.digitec.ch/im/productimages/5/6/4/4/7/4/1/9/1/3/5/2/5/4/9/4/6/2/caac20ef-b06f-41e9-a0bf-d88900ec25b3.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/7/7/2/2/6/5/2/3/5/4/7/0/1/1/3/4/5/5/6/220f7345-2c62-41af-848b-c8eaebe160fc.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/8/5/3/9/5/4/6/5/7/3/5/8/8/9/4/3/3/4/2/70f4fb8a-d8e5-4ce0-9b00-eca4781f7bf3.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/5/2/4/4/8/2/8/8/4/8/0/8/4/2/2/3/9/3/5/d8bb11c4-642b-4775-8b3f-87cf298b4e4c.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/5/1/8/2/8/8/2/5/3/8/0/6/9/7/2/9/3/360f3bad-0cd5-4318-a7e8-8a0371a21136.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/7/6/3/3/5/3/2/6/0/6/6/5/2/7/7/3/8/7/5/d38b9153-de43-4adc-b7ef-81c81005f61d.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/2/0/0/4/9/6/7/8/7/5/0/6/9/2/7/0/4/2/4/bf0a99f5-9707-4b7a-a8f1-11cc2a7ecba5.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/7/4/0/7/1/4/2/8/0/1/9/4/9/8/5/1/6/4/7/46a11b38-fa6d-4ea7-9d39-72da14b18989.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/8/8/2/1/7/9/6/5/5/0/2/6/0/0/4/3/2/6/2/12b98228-cafd-4a7c-97cf-3db4f61c0543.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/4/5/8/4/6/1/0/3/2/1/9/8/5/3/8/6/6/2/f2485dba-e356-49d8-8206-0dfb8e843068.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
+            ],
+            "price": 39.99,
+            "formatted_text": "",
+            "category": "Tech",
+            "brand": "Apple",
+            "technical_details": {
+                "processor": "Apple M1 Pro",
+                "ram": "16GB",
+                "storage": "512GB SSD",
+                "screen": "16-inch Retina",
+                "battery": "100Wh",
+                "operating_system": "macOS",
+                "graphics": "Integrated 16-core GPU",
+                "ports": {
+                    "thunderbolt": 3,
+                    "hdmi": 1,
+                    "headphone_jack": 1,
+                    "sd_card_reader": 1
+                },
+                "weight": "2.1kg"
             },
-            "weight": "2.1kg"
-          },
-          "warranty": "1 year",
-          "color": "Space Gray",
-          "availability": "In stock"
+            "warranty": "1 year",
+            "color": "Space Gray",
+            "availability": "In stock"
         },
         {
-          "product_id": "69",
-          "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
-          "product": "HP Spectre x360",
-          "highlighted": false,
-          "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
-          "images": [
-            "https://www.digitec.ch/im/productimages/5/5/4/3/5/7/5/8/0/8/7/5/6/2/7/4/5/2/3/7e21c178-76b1-4d2f-a8f0-2c2a1fe00e46_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/3/0/9/0/0/2/7/8/4/7/5/4/1/6/3/4/8/2/63932b8e-0201-4111-b352-a52defa5c828_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
-          ],
-          "price": 20.99,
-          "formatted_text": "Versatility meets performance.",
-          "category": "Tech",
-          "brand": "HP",
-          "technical_details": {
-            "processor": "Intel Core i7",
-            "ram": "16GB",
-            "storage": "512GB SSD",
-            "screen": "13.3-inch Full HD touch",
-            "battery": "66Wh",
-            "operating_system": "Windows 10 Pro",
-            "graphics": "Integrated Intel Iris Xe",
-            "ports": {
-              "usb_c": 2,
-              "thunderbolt": 2,
-              "headphone_jack": 1
+            "product_id": "69",
+            "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
+            "product": "HP Spectre x360",
+            "highlighted": false,
+            "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
+            "images": [
+                "https://www.digitec.ch/im/productimages/5/5/4/3/5/7/5/8/0/8/7/5/6/2/7/4/5/2/3/7e21c178-76b1-4d2f-a8f0-2c2a1fe00e46_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/3/0/9/0/0/2/7/8/4/7/5/4/1/6/3/4/8/2/63932b8e-0201-4111-b352-a52defa5c828_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
+            ],
+            "price": 20.99,
+            "formatted_text": "Versatility meets performance.",
+            "category": "Tech",
+            "brand": "HP",
+            "technical_details": {
+                "processor": "Intel Core i7",
+                "ram": "16GB",
+                "storage": "512GB SSD",
+                "screen": "13.3-inch Full HD touch",
+                "battery": "66Wh",
+                "operating_system": "Windows 10 Pro",
+                "graphics": "Integrated Intel Iris Xe",
+                "ports": {
+                    "usb_c": 2,
+                    "thunderbolt": 2,
+                    "headphone_jack": 1
+                },
+                "weight": "1.3kg"
             },
-            "weight": "1.3kg"
-          },
-          "warranty": "1 year",
-          "color": "Nightfall Black",
-          "availability": "In stock"
+            "warranty": "1 year",
+            "color": "Nightfall Black",
+            "availability": "In stock"
         },
         {
-          "product_id": "70",
-          "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
-          "product": "Lenovo ThinkPad X1 Carbon",
-          "highlighted": true,
-          "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
-          "images": [
-            "https://www.digitec.ch/im/productimages/5/5/2/0/3/0/5/5/4/7/2/4/3/2/0/3/8/0/3/390a1a62-552f-4a83-a567-4bad5724f058_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/6/7/9/9/7/8/3/8/7/5/3/5/6/9/3/2/3/0/9/a50edc45-19f4-43ee-8fd4-5f2a1ced4d81_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
-          ],
-          "price": 18.50,
-          "formatted_text": "Built for business.",
-          "category": "Tech",
-          "brand": "Lenovo",
-          "technical_details": {
-            "processor": "Intel Core i7",
-            "ram": "16GB",
-            "storage": "1TB SSD",
-            "screen": "14-inch UHD",
-            "battery": "80Wh",
-            "operating_system": "Windows 10 Pro",
-            "graphics": "Integrated Intel UHD",
-            "ports": {
-              "usb_c": 2,
-              "hdmi": 1,
-              "headphone_jack": 1,
-              "network_extension": 1
+            "product_id": "70",
+            "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
+            "product": "Lenovo ThinkPad X1 Carbon",
+            "highlighted": true,
+            "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
+            "images": [
+                "https://www.digitec.ch/im/productimages/5/5/2/0/3/0/5/5/4/7/2/4/3/2/0/3/8/0/3/390a1a62-552f-4a83-a567-4bad5724f058_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/6/7/9/9/7/8/3/8/7/5/3/5/6/9/3/2/3/0/9/a50edc45-19f4-43ee-8fd4-5f2a1ced4d81_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
+            ],
+            "price": 18.5,
+            "formatted_text": "Built for business.",
+            "category": "Tech",
+            "brand": "Lenovo",
+            "technical_details": {
+                "processor": "Intel Core i7",
+                "ram": "16GB",
+                "storage": "1TB SSD",
+                "screen": "14-inch UHD",
+                "battery": "80Wh",
+                "operating_system": "Windows 10 Pro",
+                "graphics": "Integrated Intel UHD",
+                "ports": {
+                    "usb_c": 2,
+                    "hdmi": 1,
+                    "headphone_jack": 1,
+                    "network_extension": 1
+                },
+                "weight": "1.09kg"
             },
-            "weight": "1.09kg"
-          },
-          "warranty": "3 years",
-          "color": "Black",
-          "availability": "Pre-order"
+            "warranty": "3 years",
+            "color": "Black",
+            "availability": "Pre-order"
         },
         {
-          "product_id": "71",
-          "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
-          "product": "Microsoft Surface Laptop 4",
-          "highlighted": false,
-          "images": [
-            "https://www.digitec.ch/im/productimages/5/1/1/3/1/3/2/2/7/3/1/5/5/9/6/6/5/6/9/4ab41e8c-eb72-4582-9535-f246fb2e7f23_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/6/3/5/5/5/4/3/7/8/2/5/7/9/8/3/7/2/4/2/8266c589-1e0f-4117-8a34-95853844aa1e.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/5/8/0/9/3/0/1/0/5/7/3/5/4/2/2/6/5/8/2/2ad04b34-4d9e-4e3e-8602-2357d31ea391_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
-          ],
-          "price": 2299,
-          "formatted_text": "Sleek design, powerful performance.",
-          "category": "Tech",
-          "brand": "Microsoft",
-          "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
-          "technical_details": {
-            "processor": "AMD Ryzen 5",
-            "ram": "8GB",
-            "storage": "256GB SSD",
-            "screen": "13.5-inch PixelSense",
-            "battery": "47.4Wh",
-            "operating_system": "Windows 10 Home",
-            "graphics": "AMD Radeon Graphics",
-            "ports": {
-              "usb_c": 1,
-              "usb_a": 1,
-              "headphone_jack": 1,
-              "surface_connect": 1
+            "product_id": "71",
+            "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
+            "product": "Microsoft Surface Laptop 4",
+            "highlighted": false,
+            "images": [
+                "https://www.digitec.ch/im/productimages/5/1/1/3/1/3/2/2/7/3/1/5/5/9/6/6/5/6/9/4ab41e8c-eb72-4582-9535-f246fb2e7f23_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/6/3/5/5/5/4/3/7/8/2/5/7/9/8/3/7/2/4/2/8266c589-1e0f-4117-8a34-95853844aa1e.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/5/8/0/9/3/0/1/0/5/7/3/5/4/2/2/6/5/8/2/2ad04b34-4d9e-4e3e-8602-2357d31ea391_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
+            ],
+            "price": 2299,
+            "formatted_text": "Sleek design, powerful performance.",
+            "category": "Tech",
+            "brand": "Microsoft",
+            "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
+            "technical_details": {
+                "processor": "AMD Ryzen 5",
+                "ram": "8GB",
+                "storage": "256GB SSD",
+                "screen": "13.5-inch PixelSense",
+                "battery": "47.4Wh",
+                "operating_system": "Windows 10 Home",
+                "graphics": "AMD Radeon Graphics",
+                "ports": {
+                    "usb_c": 1,
+                    "usb_a": 1,
+                    "headphone_jack": 1,
+                    "surface_connect": 1
+                },
+                "weight": "1.54kg"
             },
-            "weight": "1.54kg"
-          },
-          "warranty": "1 year",
-          "color": "Platinum",
-          "availability": "In stock"
+            "warranty": "1 year",
+            "color": "Platinum",
+            "availability": "In stock"
         },
         {
-          "product_id": "72",
-          "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
-          "product": "Microsoft Surface Laptop 4",
-          "highlighted": false,
-          "images": [
-            "https://www.digitec.ch/im/productimages/5/1/1/3/1/3/2/2/7/3/1/5/5/9/6/6/5/6/9/4ab41e8c-eb72-4582-9535-f246fb2e7f23_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/6/3/5/5/5/4/3/7/8/2/5/7/9/8/3/7/2/4/2/8266c589-1e0f-4117-8a34-95853844aa1e.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/5/8/0/9/3/0/1/0/5/7/3/5/4/2/2/6/5/8/2/2ad04b34-4d9e-4e3e-8602-2357d31ea391_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
-          ],
-          "price": 2299,
-          "formatted_text": "Sleek design, powerful performance.",
-          "category": "Tech",
-          "brand": "Microsoft",
-          "technical_details": {
-            "processor": "AMD Ryzen 5",
-            "ram": "8GB",
-            "storage": "256GB SSD",
-            "screen": "13.5-inch PixelSense",
-            "battery": "47.4Wh",
-            "operating_system": "Windows 10 Home",
-            "graphics": "AMD Radeon Graphics",
-            "ports": {
-              "usb_c": 1,
-              "usb_a": 1,
-              "headphone_jack": 1,
-              "surface_connect": 1
+            "product_id": "72",
+            "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
+            "product": "Microsoft Surface Laptop 4",
+            "highlighted": false,
+            "images": [
+                "https://www.digitec.ch/im/productimages/5/1/1/3/1/3/2/2/7/3/1/5/5/9/6/6/5/6/9/4ab41e8c-eb72-4582-9535-f246fb2e7f23_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/6/3/5/5/5/4/3/7/8/2/5/7/9/8/3/7/2/4/2/8266c589-1e0f-4117-8a34-95853844aa1e.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/5/8/0/9/3/0/1/0/5/7/3/5/4/2/2/6/5/8/2/2ad04b34-4d9e-4e3e-8602-2357d31ea391_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
+            ],
+            "price": 2299,
+            "formatted_text": "Sleek design, powerful performance.",
+            "category": "Tech",
+            "brand": "Microsoft",
+            "technical_details": {
+                "processor": "AMD Ryzen 5",
+                "ram": "8GB",
+                "storage": "256GB SSD",
+                "screen": "13.5-inch PixelSense",
+                "battery": "47.4Wh",
+                "operating_system": "Windows 10 Home",
+                "graphics": "AMD Radeon Graphics",
+                "ports": {
+                    "usb_c": 1,
+                    "usb_a": 1,
+                    "headphone_jack": 1,
+                    "surface_connect": 1
+                },
+                "weight": "1.54kg"
             },
-            "weight": "1.54kg"
-          },
-          "warranty": "1 year",
-          "color": "Platinum",
-          "availability": "In stock"
+            "warranty": "1 year",
+            "color": "Platinum",
+            "availability": "In stock"
         },
         {
-          "product_id": "73",
-          "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
-          "product": "Microsoft Surface Laptop 4",
-          "highlighted": false,
-          "images": [
-            "https://www.digitec.ch/im/productimages/5/1/1/3/1/3/2/2/7/3/1/5/5/9/6/6/5/6/9/4ab41e8c-eb72-4582-9535-f246fb2e7f23_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/6/3/5/5/5/4/3/7/8/2/5/7/9/8/3/7/2/4/2/8266c589-1e0f-4117-8a34-95853844aa1e.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/5/8/0/9/3/0/1/0/5/7/3/5/4/2/2/6/5/8/2/2ad04b34-4d9e-4e3e-8602-2357d31ea391_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
-          ],
-          "price": 2299,
-          "formatted_text": "Sleek design, powerful performance.",
-          "category": "Tech",
-          "brand": "Microsoft",
-          "technical_details": {
-            "processor": "AMD Ryzen 5",
-            "ram": "8GB",
-            "storage": "256GB SSD",
-            "screen": "13.5-inch PixelSense",
-            "battery": "47.4Wh",
-            "operating_system": "Windows 10 Home",
-            "graphics": "AMD Radeon Graphics",
-            "ports": {
-              "usb_c": 1,
-              "usb_a": 1,
-              "headphone_jack": 1,
-              "surface_connect": 1
+            "product_id": "73",
+            "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
+            "product": "Microsoft Surface Laptop 4",
+            "highlighted": false,
+            "images": [
+                "https://www.digitec.ch/im/productimages/5/1/1/3/1/3/2/2/7/3/1/5/5/9/6/6/5/6/9/4ab41e8c-eb72-4582-9535-f246fb2e7f23_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/6/3/5/5/5/4/3/7/8/2/5/7/9/8/3/7/2/4/2/8266c589-1e0f-4117-8a34-95853844aa1e.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/5/8/0/9/3/0/1/0/5/7/3/5/4/2/2/6/5/8/2/2ad04b34-4d9e-4e3e-8602-2357d31ea391_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
+            ],
+            "price": 2299,
+            "formatted_text": "Sleek design, powerful performance.",
+            "category": "Tech",
+            "brand": "Microsoft",
+            "technical_details": {
+                "processor": "AMD Ryzen 5",
+                "ram": "8GB",
+                "storage": "256GB SSD",
+                "screen": "13.5-inch PixelSense",
+                "battery": "47.4Wh",
+                "operating_system": "Windows 10 Home",
+                "graphics": "AMD Radeon Graphics",
+                "ports": {
+                    "usb_c": 1,
+                    "usb_a": 1,
+                    "headphone_jack": 1,
+                    "surface_connect": 1
+                },
+                "weight": "1.54kg"
             },
-            "weight": "1.54kg"
-          },
-          "warranty": "1 year",
-          "color": "Platinum",
-          "availability": "In stock"
+            "warranty": "1 year",
+            "color": "Platinum",
+            "availability": "In stock"
         },
         {
-          "product_id": "74",
-          "product": "Microsoft Surface Laptop 4",
-          "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
-          "highlighted": false,
-          "images": [
-            "https://www.digitec.ch/im/productimages/5/1/1/3/1/3/2/2/7/3/1/5/5/9/6/6/5/6/9/4ab41e8c-eb72-4582-9535-f246fb2e7f23_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/6/3/5/5/5/4/3/7/8/2/5/7/9/8/3/7/2/4/2/8266c589-1e0f-4117-8a34-95853844aa1e.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/5/8/0/9/3/0/1/0/5/7/3/5/4/2/2/6/5/8/2/2ad04b34-4d9e-4e3e-8602-2357d31ea391_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
-          ],
-          "price": 2299,
-          "formatted_text": "Sleek design, powerful performance.",
-          "category": "Tech",
-          "brand": "Microsoft",
-          "technical_details": {
-            "processor": "AMD Ryzen 5",
-            "ram": "8GB",
-            "storage": "256GB SSD",
-            "screen": "13.5-inch PixelSense",
-            "battery": "47.4Wh",
-            "operating_system": "Windows 10 Home",
-            "graphics": "AMD Radeon Graphics",
-            "ports": {
-              "usb_c": 1,
-              "usb_a": 1,
-              "headphone_jack": 1,
-              "surface_connect": 1
+            "product_id": "74",
+            "product": "Microsoft Surface Laptop 4",
+            "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
+            "highlighted": false,
+            "images": [
+                "https://www.digitec.ch/im/productimages/5/1/1/3/1/3/2/2/7/3/1/5/5/9/6/6/5/6/9/4ab41e8c-eb72-4582-9535-f246fb2e7f23_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/6/3/5/5/5/4/3/7/8/2/5/7/9/8/3/7/2/4/2/8266c589-1e0f-4117-8a34-95853844aa1e.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/5/8/0/9/3/0/1/0/5/7/3/5/4/2/2/6/5/8/2/2ad04b34-4d9e-4e3e-8602-2357d31ea391_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
+            ],
+            "price": 2299,
+            "formatted_text": "Sleek design, powerful performance.",
+            "category": "Tech",
+            "brand": "Microsoft",
+            "technical_details": {
+                "processor": "AMD Ryzen 5",
+                "ram": "8GB",
+                "storage": "256GB SSD",
+                "screen": "13.5-inch PixelSense",
+                "battery": "47.4Wh",
+                "operating_system": "Windows 10 Home",
+                "graphics": "AMD Radeon Graphics",
+                "ports": {
+                    "usb_c": 1,
+                    "usb_a": 1,
+                    "headphone_jack": 1,
+                    "surface_connect": 1
+                },
+                "weight": "1.54kg"
             },
-            "weight": "1.54kg"
-          },
-          "warranty": "1 year",
-          "color": "Platinum",
-          "availability": "In stock"
+            "warranty": "1 year",
+            "color": "Platinum",
+            "availability": "In stock"
         },
         {
-          "product_id": "75",
-          "product": "Microsoft Surface Laptop 4",
-          "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
-          "highlighted": false,
-          "images": [
-            "https://www.digitec.ch/im/productimages/5/1/1/3/1/3/2/2/7/3/1/5/5/9/6/6/5/6/9/4ab41e8c-eb72-4582-9535-f246fb2e7f23_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/6/3/5/5/5/4/3/7/8/2/5/7/9/8/3/7/2/4/2/8266c589-1e0f-4117-8a34-95853844aa1e.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-            "https://www.digitec.ch/im/productimages/5/8/0/9/3/0/1/0/5/7/3/5/4/2/2/6/5/8/2/2ad04b34-4d9e-4e3e-8602-2357d31ea391_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
-          ],
-          "price": 2299,
-          "formatted_text": "Sleek design, powerful performance.",
-          "category": "Tech",
-          "brand": "Microsoft",
-          "technical_details": {
-            "processor": "AMD Ryzen 5",
-            "ram": "8GB",
-            "storage": "256GB SSD",
-            "screen": "13.5-inch PixelSense",
-            "battery": "47.4Wh",
-            "operating_system": "Windows 10 Home",
-            "graphics": "AMD Radeon Graphics",
-            "ports": {
-              "usb_c": 1,
-              "usb_a": 1,
-              "headphone_jack": 1,
-              "surface_connect": 1
+            "product_id": "75",
+            "product": "Microsoft Surface Laptop 4",
+            "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
+            "highlighted": false,
+            "images": [
+                "https://www.digitec.ch/im/productimages/5/1/1/3/1/3/2/2/7/3/1/5/5/9/6/6/5/6/9/4ab41e8c-eb72-4582-9535-f246fb2e7f23_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/6/3/5/5/5/4/3/7/8/2/5/7/9/8/3/7/2/4/2/8266c589-1e0f-4117-8a34-95853844aa1e.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/5/8/0/9/3/0/1/0/5/7/3/5/4/2/2/6/5/8/2/2ad04b34-4d9e-4e3e-8602-2357d31ea391_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
+            ],
+            "price": 2299,
+            "formatted_text": "Sleek design, powerful performance.",
+            "category": "Tech",
+            "brand": "Microsoft",
+            "technical_details": {
+                "processor": "AMD Ryzen 5",
+                "ram": "8GB",
+                "storage": "256GB SSD",
+                "screen": "13.5-inch PixelSense",
+                "battery": "47.4Wh",
+                "operating_system": "Windows 10 Home",
+                "graphics": "AMD Radeon Graphics",
+                "ports": {
+                    "usb_c": 1,
+                    "usb_a": 1,
+                    "headphone_jack": 1,
+                    "surface_connect": 1
+                },
+                "weight": "1.54kg"
             },
-            "weight": "1.54kg"
-          },
-          "warranty": "1 year",
-          "color": "Platinum",
-          "availability": "In stock"
+            "warranty": "1 year",
+            "color": "Platinum",
+            "availability": "In stock"
         }
-
     ],
     "product-comment-table": [
         {
-          "product_id": "1",
-          "reviews": [
-            {
-              "user": "JaneDoe123",
-              "rating": 5,
-              "title": "Great Laptop for Professionals",
-              "comment": "I've been using the Dell XPS 15 for work and it's a powerhouse. Handles all my tasks with ease.",
-              "date": "2024-03-01"
-            },
-            {
-              "user": "TechSavvy",
-              "rating": 4,
-              "title": "Solid Performance, but Gets Hot",
-              "comment": "The laptop performance is top-notch for programming and design, but it does get quite hot under heavy load.",
-              "date": "2024-02-24"
-            }
-          ]
+            "product_id": "1",
+            "reviews": [
+                {
+                    "user": "JaneDoe123",
+                    "rating": 5,
+                    "title": "Great Laptop for Professionals",
+                    "comment": "I've been using the Dell XPS 15 for work and it's a powerhouse. Handles all my tasks with ease.",
+                    "date": "2024-03-01",
+                    "review_id": "cc2b30fe3e"
+                },
+                {
+                    "user": "TechSavvy",
+                    "rating": 4,
+                    "title": "Solid Performance, but Gets Hot",
+                    "comment": "The laptop performance is top-notch for programming and design, but it does get quite hot under heavy load.",
+                    "date": "2024-02-24",
+                    "review_id": "bbfa10c02c"
+                }
+            ]
         },
         {
-          "product_id": "2",
-          "reviews": [
-            {
-              "user": "GamerGal83",
-              "rating": 4.5,
-              "title": "Awesome for Gaming on the Go",
-              "comment": "I love the portability and the battery life is decent enough for my gaming sessions.",
-              "date": "2024-03-10"
-            },
-            {
-              "user": "GotRailedInTheBack",
-              "rating": 4.0,
-              "title": "Awesome to watch Netflix and getting drilled",
-              "comment": "Took the virginity of 72 men with the help of this bad boy and got banged while watching Netflix.",
-              "date": "2024-02-06"
-            }
-          ]
+            "product_id": "2",
+            "reviews": [
+                {
+                    "user": "GamerGal83",
+                    "rating": 4.5,
+                    "title": "Awesome for Gaming on the Go",
+                    "comment": "I love the portability and the battery life is decent enough for my gaming sessions.",
+                    "date": "2024-03-10",
+                    "review_id": "fe912ec4ce"
+                },
+                {
+                    "user": "GotRailedInTheBack",
+                    "rating": 4.0,
+                    "title": "Awesome to watch Netflix and getting drilled",
+                    "comment": "Took the virginity of 72 men with the help of this bad boy and got banged while watching Netflix.",
+                    "date": "2024-02-06",
+                    "review_id": "eb36adccff"
+                }
+            ]
         },
         {
-          "product_id": "3",
-          "reviews": [
-            {
-              "user": "CreativePro",
-              "rating": 4.7,
-              "title": "Perfect for Design Work",
-              "comment": "The color accuracy and performance are amazing for my design projects.",
-              "date": "2024-03-05"
-            }
-          ]
+            "product_id": "3",
+            "reviews": [
+                {
+                    "user": "CreativePro",
+                    "rating": 4.7,
+                    "title": "Perfect for Design Work",
+                    "comment": "The color accuracy and performance are amazing for my design projects.",
+                    "date": "2024-03-05",
+                    "review_id": "7e75b10b1a"
+                }
+            ]
         },
         {
-          "product_id": "4",
-          "reviews": [
-            {
-              "user": "BizExec",
-              "rating": 4,
-              "title": "Versatile and Reliable",
-              "comment": "The 2-in-1 form factor is a game-changer for presentations and meetings.",
-              "date": "2024-03-15"
-            }
-          ]
+            "product_id": "4",
+            "reviews": [
+                {
+                    "user": "BizExec",
+                    "rating": 4,
+                    "title": "Versatile and Reliable",
+                    "comment": "The 2-in-1 form factor is a game-changer for presentations and meetings.",
+                    "date": "2024-03-15",
+                    "review_id": "503296ac94"
+                }
+            ]
         },
         {
-          "product_id": "5",
-          "reviews": [
-            {
-              "user": "RoadWarrior",
-              "rating": 4.8,
-              "title": "Travel Friendly and Durable",
-              "comment": "It holds up well to the rigors of travel, and the keyboard is the best.",
-              "date": "2024-03-20"
-            }
-          ]
+            "product_id": "5",
+            "reviews": [
+                {
+                    "user": "RoadWarrior",
+                    "rating": 4.8,
+                    "title": "Travel Friendly and Durable",
+                    "comment": "It holds up well to the rigors of travel, and the keyboard is the best.",
+                    "date": "2024-03-20",
+                    "review_id": "26c6239345"
+                }
+            ]
         },
         {
-          "product_id": "6",
-          "reviews": [
-            {
-              "user": "StudentLife",
-              "rating": 4.3,
-              "title": "Lightweight and Fast",
-              "comment": "It's perfect for my college classes and the touch screen is a nice bonus.",
-              "date": "2024-03-18"
-            }
-          ]
+            "product_id": "6",
+            "reviews": [
+                {
+                    "user": "StudentLife",
+                    "rating": 4.3,
+                    "title": "Lightweight and Fast",
+                    "comment": "It's perfect for my college classes and the touch screen is a nice bonus.",
+                    "date": "2024-03-18",
+                    "review_id": "19a8c5a9e1"
+                }
+            ]
         }
     ],
     "distributor-table": [
-      {
-        "distributor_id": "1",
-        "name": "TechNova",
-        "industry": "Technology",
-        "headquarters": "San Francisco, CA, USA",
-        "numberOfEmployees": 5000,
-        "foundationYear": 2001
-      },
-      {
-        "distributor_id": "2",
-        "name": "GreenHarvest",
-        "industry": "Agriculture",
-        "headquarters": "Lincoln, NE, USA",
-        "numberOfEmployees": 200,
-        "foundationYear": 1998
-      },
-      {
-        "distributor_id": "3",
-        "name": "MediSolutions",
-        "industry": "Healthcare",
-        "headquarters": "Boston, MA, USA",
-        "numberOfEmployees": 1500,
-        "foundationYear": 2010
-      },
-      {
-        "distributor_id": "4",
-        "name": "EduFuture",
-        "industry": "Education",
-        "headquarters": "New York, NY, USA",
-        "numberOfEmployees": 300,
-        "foundationYear": 2015
-      },
-      {
-        "distributor_id": "5",
-        "name": "InnovateSecure",
-        "industry": "Cybersecurity",
-        "headquarters": "Austin, TX, USA",
-        "numberOfEmployees": 800,
-        "foundationYear": 2005
-      },
-      {
-        "distributor_id": "6",
-        "name": "EcoBuild",
-        "industry": "Construction",
-        "headquarters": "Denver, CO, USA",
-        "numberOfEmployees": 1000,
-        "foundationYear": 2000
-      },
-      {
-        "distributor_id": "7",
-        "name": "ArtiCraft",
-        "industry": "Retail",
-        "headquarters": "Portland, OR, USA",
-        "numberOfEmployees": 50,
-        "foundationYear": 2012
-      },
-      {
-        "distributor_id": "8",
-        "name": "GlobalLink",
-        "industry": "Telecommunications",
-        "headquarters": "Seattle, WA, USA",
-        "numberOfEmployees": 4500,
-        "foundationYear": 1996
-      },
-      {
-        "distributor_id": "9",
-        "name": "NextGen Motors",
-        "industry": "Automotive",
-        "headquarters": "Detroit, MI, USA",
-        "numberOfEmployees": 3200,
-        "foundationYear": 1985
-      },
-      {
-        "distributor_id": "10",
-        "name": "CleanEnergy Inc.",
-        "industry": "Renewable Energy",
-        "headquarters": "San Diego, CA, USA",
-        "numberOfEmployees": 2200,
-        "foundationYear": 2008
-      }
+        {
+            "distributor_id": "1",
+            "name": "TechNova",
+            "industry": "Technology",
+            "headquarters": "San Francisco, CA, USA",
+            "numberOfEmployees": 5000,
+            "foundationYear": 2001
+        },
+        {
+            "distributor_id": "2",
+            "name": "GreenHarvest",
+            "industry": "Agriculture",
+            "headquarters": "Lincoln, NE, USA",
+            "numberOfEmployees": 200,
+            "foundationYear": 1998
+        },
+        {
+            "distributor_id": "3",
+            "name": "MediSolutions",
+            "industry": "Healthcare",
+            "headquarters": "Boston, MA, USA",
+            "numberOfEmployees": 1500,
+            "foundationYear": 2010
+        },
+        {
+            "distributor_id": "4",
+            "name": "EduFuture",
+            "industry": "Education",
+            "headquarters": "New York, NY, USA",
+            "numberOfEmployees": 300,
+            "foundationYear": 2015
+        },
+        {
+            "distributor_id": "5",
+            "name": "InnovateSecure",
+            "industry": "Cybersecurity",
+            "headquarters": "Austin, TX, USA",
+            "numberOfEmployees": 800,
+            "foundationYear": 2005
+        },
+        {
+            "distributor_id": "6",
+            "name": "EcoBuild",
+            "industry": "Construction",
+            "headquarters": "Denver, CO, USA",
+            "numberOfEmployees": 1000,
+            "foundationYear": 2000
+        },
+        {
+            "distributor_id": "7",
+            "name": "ArtiCraft",
+            "industry": "Retail",
+            "headquarters": "Portland, OR, USA",
+            "numberOfEmployees": 50,
+            "foundationYear": 2012
+        },
+        {
+            "distributor_id": "8",
+            "name": "GlobalLink",
+            "industry": "Telecommunications",
+            "headquarters": "Seattle, WA, USA",
+            "numberOfEmployees": 4500,
+            "foundationYear": 1996
+        },
+        {
+            "distributor_id": "9",
+            "name": "NextGen Motors",
+            "industry": "Automotive",
+            "headquarters": "Detroit, MI, USA",
+            "numberOfEmployees": 3200,
+            "foundationYear": 1985
+        },
+        {
+            "distributor_id": "10",
+            "name": "CleanEnergy Inc.",
+            "industry": "Renewable Energy",
+            "headquarters": "San Diego, CA, USA",
+            "numberOfEmployees": 2200,
+            "foundationYear": 2008
+        }
     ],
     "category-table": [
-      {
-        "category_id": "1",
-        "name": "Tech",
-        "options": [
-          "connectivity",
-          "warranty period",
-          "brand",
-          "energy efficiency",
-          "compatibility"
-        ]
-      },
-      {
-        "category_id": "2",
-        "name": "Smartphone",
-        "options": [
-          "memory",
-          "storage",
-          "display size",
-          "display resolution",
-          "operating system",
-          "battery capacity",
-          "number of cameras",
-          "photo resolution",
-          "5G support",
-          "water resistance"
-        ]
-      },
-      {
-        "category_id": "3",
-        "name": "Laptop",
-        "options": [
-          "processor type",
-          "RAM",
-          "storage",
-          "display size",
-          "display resolution",
-          "operating system",
-          "graphics card",
-          "weight",
-          "battery life",
-          "touchscreen support"
-        ]
-      },
-      {
-        "category_id": "4",
-        "name": "Accessories",
-        "options": [
-          "compatibility",
-          "type",
-          "material",
-          "wireless capability",
-          "color"
-        ]
-      },
-      {
-        "category_id": "5",
-        "name": "Gaming",
-        "options": [
-          "platform",
-          "genre",
-          "ESRB rating",
-          "multiplayer support",
-          "DLC availability"
-        ]
-      },
-      {
-        "category_id": "6",
-        "name": "Anime",
-        "options": [
-          "genre",
-          "format",
-          "audience age group",
-          "sub or dub",
-          "year of release"
-        ]
-      },
-      {
-        "category_id": "7",
-        "name": "Photo",
-        "options": [
-          "camera type",
-          "resolution",
-          "sensor size",
-          "lens compatibility",
-          "ISO range",
-          "video resolution"
-        ]
-      },
-      {
-        "category_id": "8",
-        "name": "Sale",
-        "options": [
-          "discount type",
-          "product category",
-          "timeframe",
-          "exclusive deals",
-          "bundle offers"
-        ]
-      }
-    ]    
+        {
+            "category_id": "1",
+            "name": "Tech",
+            "options": [
+                "connectivity",
+                "warranty period",
+                "brand",
+                "energy efficiency",
+                "compatibility"
+            ]
+        },
+        {
+            "category_id": "2",
+            "name": "Smartphone",
+            "options": [
+                "memory",
+                "storage",
+                "display size",
+                "display resolution",
+                "operating system",
+                "battery capacity",
+                "number of cameras",
+                "photo resolution",
+                "5G support",
+                "water resistance"
+            ]
+        },
+        {
+            "category_id": "3",
+            "name": "Laptop",
+            "options": [
+                "processor type",
+                "RAM",
+                "storage",
+                "display size",
+                "display resolution",
+                "operating system",
+                "graphics card",
+                "weight",
+                "battery life",
+                "touchscreen support"
+            ]
+        },
+        {
+            "category_id": "4",
+            "name": "Accessories",
+            "options": [
+                "compatibility",
+                "type",
+                "material",
+                "wireless capability",
+                "color"
+            ]
+        },
+        {
+            "category_id": "5",
+            "name": "Gaming",
+            "options": [
+                "platform",
+                "genre",
+                "ESRB rating",
+                "multiplayer support",
+                "DLC availability"
+            ]
+        },
+        {
+            "category_id": "6",
+            "name": "Anime",
+            "options": [
+                "genre",
+                "format",
+                "audience age group",
+                "sub or dub",
+                "year of release"
+            ]
+        },
+        {
+            "category_id": "7",
+            "name": "Photo",
+            "options": [
+                "camera type",
+                "resolution",
+                "sensor size",
+                "lens compatibility",
+                "ISO range",
+                "video resolution"
+            ]
+        },
+        {
+            "category_id": "8",
+            "name": "Sale",
+            "options": [
+                "discount type",
+                "product category",
+                "timeframe",
+                "exclusive deals",
+                "bundle offers"
+            ]
+        }
+    ]
 }
