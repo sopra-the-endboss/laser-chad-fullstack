@@ -161,10 +161,7 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                          ) : (
                             <Button disabled={true}>Not in Stock</Button>
                          )}
-                        
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button variant="outlined" color="primary" disabled={loadingDetails}>Pin Product</Button>
+
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
