@@ -5,16 +5,17 @@ This is the main project repository. It consists of a React frontend with multip
 **NOTE**  
 - The deployment was not tested with all new Macbook M1 and M2 chip architectures. If the deployment via pulled images fails, refer to the [general deployment section](#general-deployment) and build and run the containers from the dockerfiles yourself.    
 - Also, after starting the containers, wait for 2 minutes to allow all containers to run and exit. This time is needed to start localstack and deploy all the backend services that need to be active in order to run properly.
+- It can happen, when the images are pulled for the first time, that the deployment fails due to the localstack container not being ready. In the rare case, a simple `docker compose down` followed by a `docker compose up` solves the problem.
 
 
-## Deployment for Deliverable 2
-In order to simplify deployment for the deliverable, we uploaded all neccesary images to the docker hub and created a dedicated docker compose yaml. This speeds up build time. You can simply run
+## Deployment for Deliverable 3
+In order to simplify deployment for the deliverable, we established a CI integraiton which automatically uploads the latest images to the docker hub. See section Continuous Integration. In order to use the latests images, simply run the following line from a terminal in the root directory:
 ```
-docker compose -f docker-compose_deliverable2.yml up -d --build
+docker compose -f docker-compose_main_latest.yml up -d --build
 ```
 This should pull all pre-built images and start the containers. To shut it down run
 ```
-docker compose -f docker-compose_deliverable2.yml down
+docker compose -f docker-compose_main_latest.yml down
 ```
 Should this fail, see the next [section](#general-deployment) for a general deployment where the images are built from the dockerfiles.
 
