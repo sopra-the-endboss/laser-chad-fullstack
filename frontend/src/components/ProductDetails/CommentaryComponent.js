@@ -15,7 +15,7 @@ export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails
     const auth = useSelector((state) => state.auth);
     const user = auth.user;
     const isLoggedIn = auth.isLoggedIn;
-    const isSeller = auth.groups.includes('seller');
+    const isSeller = user.role === "Seller";
 
     const [itemToDelete, setItemToDelete] = useState(0);
     const deleteCommentHook = useDeleteComment(itemToDelete, setLoading);
