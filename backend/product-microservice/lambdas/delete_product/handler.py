@@ -68,8 +68,6 @@ def handler(event, context) -> list[dict]:
     dynamo_resource = boto3.resource("dynamodb")
     dynamo_table_product = dynamo_resource.Table('product-table')
     dynamo_table_product_comment = dynamo_resource.Table('product-comment-table')
-    dynamo_table_product_detail = dynamo_resource.Table('product-detail-table')
-
     print(f"Assure pathParameter {PATH_PARAMETER_FILTER} is present in event")
     if not PATH_PARAMETER_FILTER in event['pathParameters']:
         return return_error(f"pathParameter {PATH_PARAMETER_FILTER} not found in event, abort")

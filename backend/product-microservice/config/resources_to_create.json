@@ -58,44 +58,6 @@
             ]
         }
     ],
-    "product-detail": [
-        {
-            "path": "product-detail",
-            "methods_for_that_path": [
-                {
-                    "method": "GET",
-                    "lambda_fct": "get_product_detail"
-                },
-                {
-                    "method": "POST",
-                    "lambda_fct": "post_product_detail",
-                    "requestModels": {
-                        "application/json": "post_product_detail"
-                    }
-                },
-                {
-                    "method": "OPTIONS",
-                    "lambda_fct": "options_lambda_function"
-                }
-            ],
-            "children_resources": [
-                {
-                    "path": "{product_id}",
-                    "methods_for_that_path": [
-                        {
-                            "method": "GET",
-                            "lambda_fct": "get_product_detail"
-                        },
-                        {
-                            "method": "OPTIONS",
-                            "lambda_fct": "options_lambda_function"
-                        }
-                    ],
-                    "children_resources": []
-                }
-            ]
-        }
-    ],
     "product-comment": [
         {
             "path": "product-comment",
@@ -103,13 +65,6 @@
                 {
                     "method": "GET",
                     "lambda_fct": "get_product_comment"
-                },
-                {
-                    "method": "POST",
-                    "lambda_fct": "post_product_comment",
-                    "requestModels": {
-                        "application/json": "post_product_comment"
-                    }
                 },
                 {
                     "method": "OPTIONS",
@@ -123,6 +78,13 @@
                         {
                             "method": "GET",
                             "lambda_fct": "get_product_comment"
+                        },
+                        {
+                            "method": "POST",
+                            "lambda_fct": "post_product_comment",
+                            "requestModels": {
+                                "application/json": "post_product_comment"
+                            }
                         },
                         {
                             "method": "OPTIONS",
@@ -157,5 +119,36 @@
             ],
             "children_resources": []
         }
+    ],
+    "order": [
+        {
+            "path": "order",
+            "methods_for_that_path": [],
+            "children_resources": [
+
+                {
+                    "path": "{user_id}",
+                    "methods_for_that_path": [
+                        {
+                            "method": "GET",
+                            "lambda_fct": "get_order"
+                        },
+                        {
+                            "method": "POST",
+                            "lambda_fct": "post_order",
+                            "requestModels": {
+                                "application/json": "post_order"
+                            }
+                        },
+                        {
+                            "method": "OPTIONS",
+                            "lambda_fct": "options_lambda_function"
+                        }
+                    ],
+                    "children_resources": []
+                }
+            ]
+        }
     ]
+
 }

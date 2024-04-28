@@ -649,11 +649,9 @@
             "formatted_text": "",
             "category": "Tech",
             "brand": "Logitech"
-        }
-    ],
-    "product-detail-table": [
+        },
         {
-          "product_id": "1",
+          "product_id": "66",
           "product": "Dell XPS 15",
           "highlighted": false,
           "images": [
@@ -690,7 +688,7 @@
           "availability": "In stock"
         },
         {
-          "product_id": "2",
+          "product_id": "67",
           "product": "Asus ROG Zephyrus G14",
           "highlighted": true,
           "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
@@ -726,7 +724,7 @@
           "availability": "In stock"
         },
         {
-          "product_id": "3",
+          "product_id": "68",
           "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
           "product": "Apple MacBook Pro 16",
           "highlighted": false,
@@ -768,7 +766,7 @@
           "availability": "In stock"
         },
         {
-          "product_id": "4",
+          "product_id": "69",
           "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
           "product": "HP Spectre x360",
           "highlighted": false,
@@ -801,7 +799,7 @@
           "availability": "In stock"
         },
         {
-          "product_id": "5",
+          "product_id": "70",
           "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
           "product": "Lenovo ThinkPad X1 Carbon",
           "highlighted": true,
@@ -835,7 +833,7 @@
           "availability": "Pre-order"
         },
         {
-          "product_id": "6",
+          "product_id": "71",
           "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
           "product": "Microsoft Surface Laptop 4",
           "highlighted": false,
@@ -870,7 +868,7 @@
           "availability": "In stock"
         },
         {
-          "product_id": "7",
+          "product_id": "72",
           "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
           "product": "Microsoft Surface Laptop 4",
           "highlighted": false,
@@ -904,7 +902,7 @@
           "availability": "In stock"
         },
         {
-          "product_id": "8",
+          "product_id": "73",
           "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
           "product": "Microsoft Surface Laptop 4",
           "highlighted": false,
@@ -938,7 +936,7 @@
           "availability": "In stock"
         },
         {
-          "product_id": "9",
+          "product_id": "74",
           "product": "Microsoft Surface Laptop 4",
           "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
           "highlighted": false,
@@ -972,7 +970,7 @@
           "availability": "In stock"
         },
         {
-          "product_id": "10",
+          "product_id": "75",
           "product": "Microsoft Surface Laptop 4",
           "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
           "highlighted": false,
@@ -1005,6 +1003,7 @@
           "color": "Platinum",
           "availability": "In stock"
         }
+
     ],
     "product-comment-table": [
         {

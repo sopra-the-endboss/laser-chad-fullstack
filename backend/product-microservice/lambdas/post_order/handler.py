@@ -59,7 +59,7 @@ def handler(event: dict, context) -> dict:
     print("DEBUG: This is the event raw")
     print(event)
     
-    TableName = "product-detail-table"
+    TableName = "order-table"
 
     print("Creating dynamo table object ...")
     dynamo_resource = boto3.resource("dynamodb")
@@ -88,7 +88,7 @@ def handler(event: dict, context) -> dict:
 
     print("Return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = '200'
-    HTTP_RESPONSE_DICT['body'] = '' # We return the full dict from the dynamo.put_item method
+    HTTP_RESPONSE_DICT['body'] =  {'user_id': item['user_id']}
 
     print(f"DEBUG: This is the HTTP response we are sending back")
     pp.pprint(HTTP_RESPONSE_DICT)

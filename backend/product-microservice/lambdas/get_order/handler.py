@@ -44,9 +44,9 @@ def handler(event, context) -> list[dict]:
         body : JSON serialized List object with all the items found. Each item is a dict
     """
 
-    PATH_PARAMETER_FILTER = "product_id" # Must match the name in resources_to_create.json in the path with {}
+    PATH_PARAMETER_FILTER = "user_id" # Must match the name in resources_to_create.json in the path with {}
     
-    print("get_product_detail invoked")
+    print("get_order invoked")
 
     print("DEBUG: This is the context")
     pp.pprint(context)
@@ -57,7 +57,7 @@ def handler(event, context) -> list[dict]:
     print("DEBUG: This is the event raw")
     print(event)
 
-    TableName = "product-detail-table"
+    TableName = "order-table"
 
     print(f"Using table {TableName}")
 

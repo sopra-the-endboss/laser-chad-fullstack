@@ -4,7 +4,6 @@ import {getDomain} from "./getDomain";
 import {
     PRODUCT_CATEGORY,
     PRODUCT_COMMENT_ENDPOINT,
-    PRODUCT_DETAIL_ENDPOINT,
     PRODUCT_DISTRIBUTOR,
     PRODUCT_ENDPOINT
 } from "./constants";
@@ -103,7 +102,7 @@ export const useFetchDistributor = (setAllDistributors) => {
         api.defaults.baseURL = baseURL;
 
         try {
-            const response = await api.post(`/${PRODUCT_DISTRIBUTOR}`);
+            const response = await api.get(`/${PRODUCT_DISTRIBUTOR}`);
             console.log(response);
             setAllDistributors(response.data);
         } catch (error) {
@@ -122,7 +121,7 @@ export const useFetchCategories = (setAllCategories) => {
         api.defaults.baseURL = baseURL;
 
         try {
-            const response = await api.post(`/${PRODUCT_CATEGORY}`);
+            const response = await api.get(`/${PRODUCT_CATEGORY}`);
             console.log(response);
             setAllCategories(response.data);
         } catch (error) {
@@ -171,7 +170,7 @@ export const useFetchProductDetails = (details, product_id, setProductDetails, s
 
         try {
             if (!details) {
-                const response = await api.get(`/${PRODUCT_DETAIL_ENDPOINT}/${product_id}`)
+                const response = await api.get(`/${PRODUCT_ENDPOINT}/${product_id}`)
                 console.log(response);
                 setProductDetails(response.data[0]);
                 setLoadingDetails(false);

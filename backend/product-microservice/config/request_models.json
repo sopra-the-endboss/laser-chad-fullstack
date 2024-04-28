@@ -30,32 +30,32 @@
         },
         "contentType": "application/json"
     },
-    "post_product_detail": {
+    "post_product_comment": {
         "model_spec": {
             "$schema": "http://json-schema.org/draft-04/schema#",
-            "title": "post_product",
+            "title": "post_product_comment",
             "type": "object",
-            "required": ["product_id"],
+            "required": ["comment"],
             "properties": {
-                "product_id": {
+                "comment": {
                     "type": "string"
                 }
             }
         },
         "contentType": "application/json"
     },
-    "post_product_comment": {
+    "post_order": {
         "model_spec": {
             "$schema": "http://json-schema.org/draft-04/schema#",
-            "title": "post_product",
+            "title": "post_order",
             "type": "object",
-            "required": ["product_id", "reviews"],
+            "required": ["user_id", "order_id"],
             "properties": {
-                "product_id": {
+                "user_id": {
                     "type": "string"
                 },
-                "reviews": {
-                    "type": "array"
+                "order_id": {
+                    "type": "string"
                 }
             }
         },
