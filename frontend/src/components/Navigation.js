@@ -88,11 +88,6 @@ const Navbar = ({ setData, searchQuerySubmitted, AllProductsName }) => {
       route: "/categories",
       location: "Categories",
     },
-
-    {
-      route: "/pinned",
-      location: "Pinned Products",
-    },
     {
       route: "/account",
       location: "Account",
