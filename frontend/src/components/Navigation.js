@@ -72,12 +72,8 @@ const Navbar = ({ setData, searchQuerySubmitted, AllProductsName }) => {
     }
   };
 
-  // Is this still needed with the Seller Guard?
   const authState = useSelector((state) => state.auth.user);
-  let isSeller = false;
-  if (authState.groups) {
-    isSeller = authState.role === "Seller";
-  }
+  let isSeller = authState.role === "Seller";
 
   const inactive =
     "text-gray-600 hover:bg-gray-200 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium";
