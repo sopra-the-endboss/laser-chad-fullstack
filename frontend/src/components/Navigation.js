@@ -73,7 +73,7 @@ const Navbar = ({ setData, searchQuerySubmitted, AllProductsName }) => {
   };
 
   const authState = useSelector((state) => state.auth.user);
-  let isSeller = authState.role === "Seller";
+  let isSeller = authState ? authState?.role === "Seller" : false ;
 
   const inactive =
     "text-gray-600 hover:bg-gray-200 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium";
