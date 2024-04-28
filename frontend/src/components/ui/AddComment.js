@@ -3,6 +3,7 @@ import {Button, Grid, Rating, Stack, TextField} from "@mui/material";
 import ModalContext from "../../context/ModalContext";
 import Typography from "@mui/material/Typography";
 import {usePostComment} from "../../utils/apiCalls";
+import {useParams} from "react-router-dom";
 
 export const AddComment = ({user, setProductComments, setLoading, productComments}) => {
 
@@ -10,7 +11,8 @@ export const AddComment = ({user, setProductComments, setLoading, productComment
     const [newComment, setNewComment] = useState('');
     const [submissionElement, setSubmissionElement] = useState({});
     const {handleClose} = useContext(ModalContext);
-    const postComment = usePostComment(setLoading, setProductComments, submissionElement, productComments)
+    const {product_id} = useParams();
+    const postComment = usePostComment(setLoading, setProductComments, submissionElement, productComments, product_id);
     const submitComment = () => {
         setLoading(true);
         const submitElement = {
