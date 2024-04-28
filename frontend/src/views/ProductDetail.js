@@ -151,7 +151,8 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                                     dispatch(
                                         addToCart({
                                             ...productDetails,
-                                            img: productDetails?.images[0],
+                                            // try images and image, otherwise undefined, aka no image is added to the cartItem
+                                            img: (productDetails?.images?.[0] ?? productDetails?.image),
                                         })
                                     ) && console.log("Added to cart: ", productDetails)
                                 }}
