@@ -24,21 +24,21 @@ jobs:
         with:
           context: ./frontend
           push: true
-          tags: laserchads/frontend:latest
+          tags: laserchads/frontend:final-submission
 
       - name: Build and push apig-main Docker image
         uses: docker/build-push-action@v2
         with:
           context: ./backend/apig-main
           push: true
-          tags: laserchads/apig-main:latest
+          tags: laserchads/apig-main:final-submission
 
       - name: Build and push apig-id-share Docker image
         uses: docker/build-push-action@v2
         with:
           context: ./backend/apig-id-share
           push: true
-          tags: laserchads/apig-id-share:latest
+          tags: laserchads/apig-id-share:final-submission
 
       - name: Build and push options_lambda_function Docker image
         uses: docker/build-push-action@v4
@@ -46,7 +46,7 @@ jobs:
           context: .
           file: ./backend/options_lambda_function/dockerfile
           push: true
-          tags: laserchads/options_lambda_function:latest
+          tags: laserchads/options_lambda_function:final-submission
 
       - name: Build and push cart Docker image
         uses: docker/build-push-action@v4
@@ -54,7 +54,7 @@ jobs:
           context: .
           file: ./backend/cart/dockerfile
           push: true
-          tags: laserchads/cart:latest
+          tags: laserchads/cart:final-submission
 
       - name: Build and push product-microservice Docker image
         uses: docker/build-push-action@v4
@@ -62,5 +62,5 @@ jobs:
           context: .
           file: ./backend/product-microservice/dockerfile
           push: true
-          tags: laserchads/product-microservice:latest
+          tags: laserchads/product-microservice:final-submission
       
