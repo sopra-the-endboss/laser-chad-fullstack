@@ -13,11 +13,14 @@ const authSlice = createSlice({
     user: {
       userId: null,
       email: null,
-      groups: [],
       birthdate: null,
       givenname: null,
       familyname: null,
       role: null,
+      address: null,
+      county: null,
+      zip: null,
+      city: null,
     },
   },
   reducers: {
@@ -50,7 +53,6 @@ const authSlice = createSlice({
       state.user = {
         userId: null,
         email: null,
-        groups: [],
         birthdate: null,
         givenname: null,
         familyname: null,
@@ -58,6 +60,7 @@ const authSlice = createSlice({
         address: null,
         county: null,
         zip: null,
+        city: null,
       };
     },
     updateUserDetail: (state, action) => {

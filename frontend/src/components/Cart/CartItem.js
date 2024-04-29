@@ -90,7 +90,7 @@ const CartItem = ({ item, onCardInteract }) => {
           </IconButton>
         </div>
         <Typography variant="body2">
-          Price: ${item.price?.toFixed(2)}
+          Price: ${Number(item.price)?.toFixed(2)}
         </Typography>
         <Typography variant="body2">
           Total: ${(item?.quantity * item.price)?.toFixed(2)}
