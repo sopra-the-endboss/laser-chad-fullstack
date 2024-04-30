@@ -149,10 +149,18 @@ def handler(event: dict, context) -> dict:
                 }
         )
             
+    print("Delete the cart")
 
-    # Delete the item from dynamo_table_cart
-    dynamo_table_cart.delete_item(Key={"userId": filter})
-
+    # Delete the products from dynamo_table_cart
+    response_get_item = dynamo_table_cart.get_item(Key = {'userId':filter})
+    cart_found = response_get_item.get("Item", None)
+    print("DEBUG: This is the cart found")
+    pp.pprint(cart_found)
+    cart_found['products'] = []
+    _ = dynamo_table_cart.put_item(
+        Item = cart_found,
+        ReturnValues = "NONE"
+    )
 
     print("Return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = '200'

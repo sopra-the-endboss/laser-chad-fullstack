@@ -108,31 +108,22 @@ def handler(event, context) -> list[dict]:
     if not order_object_found:
         return return_error(f"No orders with user_id {filter} found, return 404", 404)
 
-    order_object = None
-
-    for order in order_object_found['orders']:
+    for i, order in enumerate(order_object_found['orders']):
         if order['order_id'] == order_id:
-            order_object = order
+            order_object_found['orders'][i]['status'] = new_status
             break
 
-    if order_object:
-        order_object['status'] = new_status
-
-        # Update the item in the DynamoDB table
-        dynamo_table.update_item(
-            Key={PATH_PARAMETER_FILTER: filter},
-            UpdateExpression="set orders = :o",
-            ExpressionAttributeValues={
-                ':o': order_object_found['orders']
-            },
-            ReturnValues="UPDATED_NEW"
+    # Now we have to update the item
+    try:
+        response = dynamo_table.put_item(
+            Item = order_object_found
         )
-    else:
-        return return_error(f"Order_id {order_id} not found in orders, abort")
+    except Exception as e:
+        return return_error(f"Error updating item: {str(e)}")
 
     print("Success, return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = 200
-    HTTP_RESPONSE_DICT['body'] = json.dumps(order_object)
+    HTTP_RESPONSE_DICT['body'] = json.dumps(order_object_found)
 
     return HTTP_RESPONSE_DICT
 

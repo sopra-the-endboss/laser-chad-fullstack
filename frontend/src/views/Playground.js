@@ -7,6 +7,8 @@ export const Playground = () => {
     const [PostResponse, setPostResponse] = useState('');
     const [PutResponse, setPutResponse] = useState('');
     const authState = useSelector((state) => state.auth);
+    const [GetCartResponse, setGetCartResponse] = useState('');
+    const [RecentOrderId, setRecentOrderId] = useState('');
 
     const handleGetClick = async () => {
         try {
@@ -33,6 +35,7 @@ export const Playground = () => {
             const text = await res.text();
             try {
                 const data = JSON.parse(text);
+                setRecentOrderId(data.order_id);
                 setPostResponse(data);
             } catch (err) {
                 console.error('This does not look like a valid JSON: ', text);
@@ -51,7 +54,7 @@ export const Playground = () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "order_id": "Dl6iK64Zmh",
+                    "order_id": RecentOrderId,
                     "status": "shipped"
                 })
             });
@@ -72,6 +75,16 @@ export const Playground = () => {
         }
     }
 
+    const handleGetCartClick = async () => {
+        try {
+            const res = await fetch(apigBaseUrl + "/cart/"+authState.user.userId);
+            const data = await res.json();
+            setGetCartResponse(data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
 
 
     return (
@@ -85,6 +98,9 @@ export const Playground = () => {
 
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handlePutClick}>Send PUT Request</button>
             <p>PutResponse: {JSON.stringify(PutResponse)}</p>
+
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleGetCartClick}>Send GET cart Request</button>
+            <p>GetResponse: {JSON.stringify(GetCartResponse)}</p>
 
         </div>
     );
