@@ -58,7 +58,7 @@ def handler(event: dict, context) -> dict:
         body : Empty, this function does not return anything except the statusCode
     """
 
-    PATH_PARAMETER_FILTER_CART = "user_id"
+    
     
     print("post_lambda invoked")
 
@@ -86,15 +86,15 @@ def handler(event: dict, context) -> dict:
     dynamo_resource = boto3.resource("dynamodb")
     dynamo_table_cart = dynamo_resource.Table(TableNameCart)
 
-    print(f"Assure pathParameter {PATH_PARAMETER_FILTER_CART} is present in event")
-    if not PATH_PARAMETER_FILTER_CART in event['pathParameters']:
-        return return_error(f"pathParameter {PATH_PARAMETER_FILTER_CART} not found in event, abort")
+    print(f"Assure pathParameter user_id is present in event")
+    if not "user_id" in event['pathParameters']:
+        return return_error(f"pathParameter user_id not found in event, abort")
 
-    filter = event['pathParameters'][PATH_PARAMETER_FILTER_CART]
+    filter = event['pathParameters']["user_id"]
     print(f"This is the filter: {filter}")
     
     # There can only be one item because there is only one HASH key in the DB, the result is either a dict or not present at all
-    response_get_item = dynamo_table_cart.get_item(Key = {PATH_PARAMETER_FILTER_CART:filter})
+    response_get_item = dynamo_table_cart.get_item(Key = {'userId':filter})
     
     # Check if we found a result, otherwise retrieve empty list
     cart_found = response_get_item.get("Item", None)
@@ -103,7 +103,8 @@ def handler(event: dict, context) -> dict:
     if not cart_found:
         return return_error(f"No cart with userId {filter} found", 404)
 
-    cart_json = json.dumps(cart_found)
+    print("Cart found, this is the products list")
+    pp.pprint(cart_found['products'])
 
 
 
@@ -123,7 +124,7 @@ def handler(event: dict, context) -> dict:
     new_order = {
         'order_id': ''.join(random.choices(string.ascii_letters + string.digits, k=10)),
         'status': 'pending',
-        'products': cart_json['products']
+        'products': cart_found['products']
     }
 
     # Try to get the item from the table
@@ -150,7 +151,7 @@ def handler(event: dict, context) -> dict:
             
 
     # Delete the item from dynamo_table_cart
-    dynamo_table_cart.delete_item(Key={PATH_PARAMETER_FILTER_CART: filter})
+    dynamo_table_cart.delete_item(Key={"userId": filter})
 
 
     print("Return HTTP object")

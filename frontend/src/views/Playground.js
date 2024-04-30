@@ -5,6 +5,7 @@ export const Playground = () => {
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
     const [GetResponse, setGetResponse] = useState('');
     const [PostResponse, setPostResponse] = useState('');
+    const [PutResponse, setPutResponse] = useState('');
     const authState = useSelector((state) => state.auth);
 
     const handleGetClick = async () => {
@@ -50,7 +51,7 @@ export const Playground = () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "order_id": "123",
+                    "order_id": "Dl6iK64Zmh",
                     "status": "shipped"
                 })
             });
@@ -82,7 +83,7 @@ export const Playground = () => {
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handlePostClick}>Send POST Request</button>
             <p>PostResponse: {JSON.stringify(PostResponse)}</p>
 
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handlePutClick}>Send POST Request</button>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handlePutClick}>Send PUT Request</button>
             <p>PutResponse: {JSON.stringify(PutResponse)}</p>
 
         </div>

@@ -54,7 +54,7 @@ def handler(event, context) -> list[dict]:
         404 if there is no orders with userId
     """
 
-    PATH_PARAMETER_FILTER = "userId" # Must match the name in resources_to_create.json in the path with {}
+    PATH_PARAMETER_FILTER = "user_id" # Must match the name in resources_to_create.json in the path with {}
     
     print("put_order invoked")
 
@@ -97,7 +97,6 @@ def handler(event, context) -> list[dict]:
     new_status = body['status']
     
 
-    ###
     # Now we have to check if there is a order object for filter
     # There can only be one item because there is only one HASH key in the DB, the result is either a dict or not present at all
     response_get_item = dynamo_table.get_item(Key = {PATH_PARAMETER_FILTER:filter})
@@ -109,8 +108,6 @@ def handler(event, context) -> list[dict]:
     if not order_object_found:
         return return_error(f"No orders with user_id {filter} found, return 404", 404)
 
-    
-
     order_object = None
 
     for order in order_object_found['orders']:
@@ -120,10 +117,19 @@ def handler(event, context) -> list[dict]:
 
     if order_object:
         order_object['status'] = new_status
+
+        # Update the item in the DynamoDB table
+        dynamo_table.update_item(
+            Key={PATH_PARAMETER_FILTER: filter},
+            UpdateExpression="set orders = :o",
+            ExpressionAttributeValues={
+                ':o': order_object_found['orders']
+            },
+            ReturnValues="UPDATED_NEW"
+        )
     else:
         return return_error(f"Order_id {order_id} not found in orders, abort")
 
-    
     print("Success, return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = 200
     HTTP_RESPONSE_DICT['body'] = json.dumps(order_object)

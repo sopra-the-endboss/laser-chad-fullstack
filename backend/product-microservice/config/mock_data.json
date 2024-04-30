@@ -1275,5 +1275,8 @@
           "bundle offers"
         ]
       }
-    ]    
+    ],
+    "order-table": [
+
+    ]
 }
