@@ -141,6 +141,14 @@
                             }
                         },
                         {
+                            "method": "PUT",
+                            "lambda_fct": "put_order",
+                            "requestModels": {
+                                "application/json": "put_order"
+                            }
+                            
+                        },
+                        {
                             "method": "OPTIONS",
                             "lambda_fct": "options_lambda_function"
                         }

@@ -7,9 +7,12 @@ import os
 import boto3
 import simplejson as json
 from decimal import Decimal
+from botocore.exceptions import ClientError
 
 # TODO: Remove later
 from pprint import PrettyPrinter
+import random
+import string
 pp = PrettyPrinter(indent=2)
 
 HTTP_RESPONSE_DICT = {
@@ -26,6 +29,13 @@ HTTP_RESPONSE_DICT = {
         }
     # Here comes to body, as a JSON string
 }
+
+def return_error(msg:str, code:int = 400) -> dict:
+    print(msg)
+    error_return_dict = HTTP_RESPONSE_DICT.copy()
+    error_return_dict['statusCode']=code
+    error_return_dict['body']=json.dumps(msg)
+    return error_return_dict
 
 def handler(event: dict, context) -> dict:
     """
@@ -47,6 +57,8 @@ def handler(event: dict, context) -> dict:
         headers : Empty by default, dict otherwise
         body : Empty, this function does not return anything except the statusCode
     """
+
+    PATH_PARAMETER_FILTER_CART = "user_id"
     
     print("post_lambda invoked")
 
@@ -59,41 +71,98 @@ def handler(event: dict, context) -> dict:
     print("DEBUG: This is the event raw")
     print(event)
     
-    TableName = "order-table"
+    TableNameCart = "cart-table"
+
+    print(f"Using table {TableNameCart}")
+
+    print("Check if table is available ...")
+    dynamo_client = boto3.client("dynamodb")
+    available_tables = dynamo_client.list_tables()
+    available_tables = available_tables['TableNames']
+    if not TableNameCart in available_tables:
+        return return_error(f"Table {TableNameCart} not found in the available tables, abort")
 
     print("Creating dynamo table object ...")
     dynamo_resource = boto3.resource("dynamodb")
-    dynamo_table = dynamo_resource.Table(TableName)
+    dynamo_table_cart = dynamo_resource.Table(TableNameCart)
 
-    print("Parse body")
-    try:
-        item = json.loads(event['body'], parse_float=Decimal)
-        print("DEBUG: This is the item")
-        print(item)
-    except json.decoder.JSONDecodeError as e:
-        print("JSONDecodeError IN PARSING BODY")
-        raise e
+    print(f"Assure pathParameter {PATH_PARAMETER_FILTER_CART} is present in event")
+    if not PATH_PARAMETER_FILTER_CART in event['pathParameters']:
+        return return_error(f"pathParameter {PATH_PARAMETER_FILTER_CART} not found in event, abort")
+
+    filter = event['pathParameters'][PATH_PARAMETER_FILTER_CART]
+    print(f"This is the filter: {filter}")
+    
+    # There can only be one item because there is only one HASH key in the DB, the result is either a dict or not present at all
+    response_get_item = dynamo_table_cart.get_item(Key = {PATH_PARAMETER_FILTER_CART:filter})
+    
+    # Check if we found a result, otherwise retrieve empty list
+    cart_found = response_get_item.get("Item", None)
+
+    # If None we did not found anything, return 404
+    if not cart_found:
+        return return_error(f"No cart with userId {filter} found", 404)
+
+    cart_json = json.dumps(cart_found)
+
+
+
+    # Now we have the cart, we can start to write the order
+
+    TableNameOrder = "order-table"
+
+    print(f"Using table {TableNameOrder}")
+
+    print("Creating dynamo table object ...")
+
+    dynamo_table_order = dynamo_resource.Table(TableNameOrder)
 
     print("Try writing item")
-    response_put = dynamo_table.put_item(
-        TableName = TableName,
-        ReturnValues = "NONE",
-        Item = item
-    )
 
-    print("This is the response_put object from the put_item call")
-    print(response_put)
-    print("This is the response_put object from the put_item call with PrettyPrinter")
-    pp.pprint(response_put)
+    # Generate a new order
+    new_order = {
+        'order_id': ''.join(random.choices(string.ascii_letters + string.digits, k=10)),
+        'status': 'pending',
+        'products': cart_json['products']
+    }
+
+    # Try to get the item from the table
+    try:
+        response_get = dynamo_table_order.get_item(Key={'user_id': filter})
+    except ClientError as e:
+        print(e.response['Error']['Message'])
+    else:
+        item = response_get.get('Item')
+        if item:
+            # If the item exists, append the new order to the 'orders' list and put the item back
+            item['orders'].append(new_order)
+            dynamo_table_order.put_item(Item=item)
+        else:
+            # If the item doesn't exist, create a new item
+            response_put = dynamo_table_order.put_item(
+                TableName = TableNameOrder,
+                ReturnValues = "NONE",
+                Item = {
+                    'user_id': filter,
+                    'orders': [new_order]
+                }
+        )
+            
+
+    # Delete the item from dynamo_table_cart
+    dynamo_table_cart.delete_item(Key={PATH_PARAMETER_FILTER_CART: filter})
+
 
     print("Return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = '200'
-    HTTP_RESPONSE_DICT['body'] =  {'user_id': item['user_id']}
+    HTTP_RESPONSE_DICT['body'] =  new_order
 
     print(f"DEBUG: This is the HTTP response we are sending back")
     pp.pprint(HTTP_RESPONSE_DICT)
     
     return HTTP_RESPONSE_DICT
+
+    
     
 if __name__ == "__main__":
     print(handler(None, None))
