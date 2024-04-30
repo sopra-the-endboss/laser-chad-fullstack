@@ -66,13 +66,13 @@
     "TableName":"order-table",
     "KeySchema": [
         {
-            "AttributeName": "order_id",
+            "AttributeName": "user_id",
             "KeyType": "HASH"
         }
     ],
     "AttributeDefinitions": [
         {
-            "AttributeName": "order_id",
+            "AttributeName": "user_id",
             "AttributeType": "S"
         }
     ],

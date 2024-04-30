@@ -135,10 +135,15 @@
                         },
                         {
                             "method": "POST",
-                            "lambda_fct": "post_order",
+                            "lambda_fct": "post_order"
+                        },
+                        {
+                            "method": "PUT",
+                            "lambda_fct": "put_order",
                             "requestModels": {
-                                "application/json": "post_order"
+                                "application/json": "put_order"
                             }
+                            
                         },
                         {
                             "method": "OPTIONS",

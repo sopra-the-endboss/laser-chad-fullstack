@@ -1,11 +1,13 @@
 This is the main project repository. It consists of a React frontend with multiple composable serverless microservices and a backend with serveral AWS components.
 
 # Deployment
+See below for instructions on how to start the containers. After the proper startup including some minutes to let the containers set up all the services, the project can be reached via `localhost:3000`.
 
-**NOTE**  
+**NOTES AND KNOWN BUGS**  
 - The deployment was not tested with all new Macbook M1 and M2 chip architectures. If the deployment via pulled images fails, refer to the [general deployment section](#general-deployment) and build and run the containers from the dockerfiles yourself.    
 - Also, after starting the containers, wait for 2 minutes to allow all containers to run and exit. This time is needed to start localstack and deploy all the backend services that need to be active in order to run properly.
 - It can happen, when the images are pulled for the first time, that the deployment fails due to the localstack container not being ready. In the rare case, a simple `docker compose down` followed by a `docker compose up` solves the problem.
+- Upon the first start of the frontend when trying to reach localhost:3000, it can happen that the backend is not yet ready and responds too slow to the startup call where all products are fetched. In this case, an error is displayed "The service cannot be reached. Failed to load products!". If this happens, a simple refresh of the page will solve the issue.
 
 
 ## Deployment for Deliverable 3

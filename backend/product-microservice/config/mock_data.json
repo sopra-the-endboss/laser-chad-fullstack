@@ -1183,104 +1183,107 @@
         }
     ],
     "category-table": [
-        {
-            "category_id": "1",
-            "name": "Tech",
-            "options": [
-                "connectivity",
-                "warranty period",
-                "brand",
-                "energy efficiency",
-                "compatibility"
-            ]
-        },
-        {
-            "category_id": "2",
-            "name": "Smartphone",
-            "options": [
-                "memory",
-                "storage",
-                "display size",
-                "display resolution",
-                "operating system",
-                "battery capacity",
-                "number of cameras",
-                "photo resolution",
-                "5G support",
-                "water resistance"
-            ]
-        },
-        {
-            "category_id": "3",
-            "name": "Laptop",
-            "options": [
-                "processor type",
-                "RAM",
-                "storage",
-                "display size",
-                "display resolution",
-                "operating system",
-                "graphics card",
-                "weight",
-                "battery life",
-                "touchscreen support"
-            ]
-        },
-        {
-            "category_id": "4",
-            "name": "Accessories",
-            "options": [
-                "compatibility",
-                "type",
-                "material",
-                "wireless capability",
-                "color"
-            ]
-        },
-        {
-            "category_id": "5",
-            "name": "Gaming",
-            "options": [
-                "platform",
-                "genre",
-                "ESRB rating",
-                "multiplayer support",
-                "DLC availability"
-            ]
-        },
-        {
-            "category_id": "6",
-            "name": "Anime",
-            "options": [
-                "genre",
-                "format",
-                "audience age group",
-                "sub or dub",
-                "year of release"
-            ]
-        },
-        {
-            "category_id": "7",
-            "name": "Photo",
-            "options": [
-                "camera type",
-                "resolution",
-                "sensor size",
-                "lens compatibility",
-                "ISO range",
-                "video resolution"
-            ]
-        },
-        {
-            "category_id": "8",
-            "name": "Sale",
-            "options": [
-                "discount type",
-                "product category",
-                "timeframe",
-                "exclusive deals",
-                "bundle offers"
-            ]
-        }
+      {
+        "category_id": "1",
+        "name": "Tech",
+        "options": [
+          "connectivity",
+          "warranty period",
+          "brand",
+          "energy efficiency",
+          "compatibility"
+        ]
+      },
+      {
+        "category_id": "2",
+        "name": "Smartphone",
+        "options": [
+          "memory",
+          "storage",
+          "display size",
+          "display resolution",
+          "operating system",
+          "battery capacity",
+          "number of cameras",
+          "photo resolution",
+          "5G support",
+          "water resistance"
+        ]
+      },
+      {
+        "category_id": "3",
+        "name": "Laptop",
+        "options": [
+          "processor type",
+          "RAM",
+          "storage",
+          "display size",
+          "display resolution",
+          "operating system",
+          "graphics card",
+          "weight",
+          "battery life",
+          "touchscreen support"
+        ]
+      },
+      {
+        "category_id": "4",
+        "name": "Accessories",
+        "options": [
+          "compatibility",
+          "type",
+          "material",
+          "wireless capability",
+          "color"
+        ]
+      },
+      {
+        "category_id": "5",
+        "name": "Gaming",
+        "options": [
+          "platform",
+          "genre",
+          "ESRB rating",
+          "multiplayer support",
+          "DLC availability"
+        ]
+      },
+      {
+        "category_id": "6",
+        "name": "Anime",
+        "options": [
+          "genre",
+          "format",
+          "audience age group",
+          "sub or dub",
+          "year of release"
+        ]
+      },
+      {
+        "category_id": "7",
+        "name": "Photo",
+        "options": [
+          "camera type",
+          "resolution",
+          "sensor size",
+          "lens compatibility",
+          "ISO range",
+          "video resolution"
+        ]
+      },
+      {
+        "category_id": "8",
+        "name": "Sale",
+        "options": [
+          "discount type",
+          "product category",
+          "timeframe",
+          "exclusive deals",
+          "bundle offers"
+        ]
+      }
+    ],
+    "order-table": [
+
     ]
 }
