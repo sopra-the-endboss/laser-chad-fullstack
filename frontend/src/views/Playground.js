@@ -65,7 +65,7 @@ export const Playground = () => {
             const text = await res.text();
             try {
                 const data = JSON.parse(text);
-                setPostResponse(data);
+                setPutResponse(data);
             } catch (err) {
                 console.error('This does not look like a valid JSON: ', text);
                 throw err;
