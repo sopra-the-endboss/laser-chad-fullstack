@@ -1012,7 +1012,7 @@
                     "user": "JaneDoe123",
                     "rating": 5,
                     "title": "Great Laptop for Professionals",
-                    "comment": "I've been using the Dell XPS 15 for work and it's a powerhouse. Handles all my tasks with ease.",
+                    "review": "I've been using the Dell XPS 15 for work and it's a powerhouse. Handles all my tasks with ease.",
                     "date": "2024-03-01",
                     "review_id": "cc2b30fe3e"
                 },
@@ -1020,7 +1020,7 @@
                     "user": "TechSavvy",
                     "rating": 4,
                     "title": "Solid Performance, but Gets Hot",
-                    "comment": "The laptop performance is top-notch for programming and design, but it does get quite hot under heavy load.",
+                    "review": "The laptop performance is top-notch for programming and design, but it does get quite hot under heavy load.",
                     "date": "2024-02-24",
                     "review_id": "bbfa10c02c"
                 }
@@ -1033,7 +1033,7 @@
                     "user": "GamerGal83",
                     "rating": 4.5,
                     "title": "Awesome for Gaming on the Go",
-                    "comment": "I love the portability and the battery life is decent enough for my gaming sessions.",
+                    "review": "I love the portability and the battery life is decent enough for my gaming sessions.",
                     "date": "2024-03-10",
                     "review_id": "fe912ec4ce"
                 },
@@ -1041,7 +1041,7 @@
                     "user": "GotRailedInTheBack",
                     "rating": 4.0,
                     "title": "Awesome to watch Netflix and getting drilled",
-                    "comment": "Took the virginity of 72 men with the help of this bad boy and got banged while watching Netflix.",
+                    "review": "Took the virginity of 72 men with the help of this bad boy and got banged while watching Netflix.",
                     "date": "2024-02-06",
                     "review_id": "eb36adccff"
                 }
@@ -1054,7 +1054,7 @@
                     "user": "CreativePro",
                     "rating": 4.7,
                     "title": "Perfect for Design Work",
-                    "comment": "The color accuracy and performance are amazing for my design projects.",
+                    "review": "The color accuracy and performance are amazing for my design projects.",
                     "date": "2024-03-05",
                     "review_id": "7e75b10b1a"
                 }
@@ -1067,7 +1067,7 @@
                     "user": "BizExec",
                     "rating": 4,
                     "title": "Versatile and Reliable",
-                    "comment": "The 2-in-1 form factor is a game-changer for presentations and meetings.",
+                    "review": "The 2-in-1 form factor is a game-changer for presentations and meetings.",
                     "date": "2024-03-15",
                     "review_id": "503296ac94"
                 }
@@ -1080,7 +1080,7 @@
                     "user": "RoadWarrior",
                     "rating": 4.8,
                     "title": "Travel Friendly and Durable",
-                    "comment": "It holds up well to the rigors of travel, and the keyboard is the best.",
+                    "review": "It holds up well to the rigors of travel, and the keyboard is the best.",
                     "date": "2024-03-20",
                     "review_id": "26c6239345"
                 }
@@ -1093,7 +1093,7 @@
                     "user": "StudentLife",
                     "rating": 4.3,
                     "title": "Lightweight and Fast",
-                    "comment": "It's perfect for my college classes and the touch screen is a nice bonus.",
+                    "review": "It's perfect for my college classes and the touch screen is a nice bonus.",
                     "date": "2024-03-18",
                     "review_id": "19a8c5a9e1"
                 }

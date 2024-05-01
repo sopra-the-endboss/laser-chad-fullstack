@@ -35,9 +35,9 @@
             "$schema": "http://json-schema.org/draft-04/schema#",
             "title": "post_product_comment",
             "type": "object",
-            "required": ["comment"],
+            "required": ["review_id"],
             "properties": {
-                "comment": {
+                "review_id": {
                     "type": "string"
                 }
             }

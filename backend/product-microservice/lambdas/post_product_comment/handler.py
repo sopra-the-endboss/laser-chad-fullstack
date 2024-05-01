@@ -4,9 +4,12 @@ TODO: Error handling (either let handler function fail, or wrap?), duplicates?
 The handler has the name of the table hardcoded, this is determined by the config file config/db_schema.json upon deployment
 """
 import os
+import random
+import string
 import boto3
 import simplejson as json
 from decimal import Decimal
+from botocore.exceptions import ClientError
 
 # TODO: Remove later
 from pprint import PrettyPrinter
@@ -26,6 +29,13 @@ HTTP_RESPONSE_DICT = {
         }
     # Here comes to body, as a JSON string
 }
+
+def return_error(msg:str, code:int = 400) -> dict:
+    print(msg)
+    error_return_dict = HTTP_RESPONSE_DICT.copy()
+    error_return_dict['statusCode']=code
+    error_return_dict['body']=json.dumps(msg)
+    return error_return_dict
 
 def handler(event: dict, context) -> dict:
     """
@@ -65,6 +75,13 @@ def handler(event: dict, context) -> dict:
     dynamo_resource = boto3.resource("dynamodb")
     dynamo_table = dynamo_resource.Table(TableName)
 
+    print(f"Assure pathParameter product_id is present in event")
+    if not "product_id" in event['pathParameters']:
+        return return_error(f"pathParameter product_id not found in event, abort")
+
+    filter = event['pathParameters']["product_id"]
+    print(f"This is the filter: {filter}")
+
     print("Parse body")
     try:
         new_item = json.loads(event['body'], parse_float=Decimal)
@@ -74,49 +91,47 @@ def handler(event: dict, context) -> dict:
         print("JSONDecodeError IN PARSING BODY")
         raise e
     
-    # Check if an item with the same product_id already exists
-    response_get = dynamo_table.get_item(
-        Key = {
-            'product_id': new_item['product_id']
-        }
-    )
+    new_review = {
+        'user': new_item['user'],
+        'user_id': new_item['user_id'],
+        'rating': new_item['rating'],
+        'comment': new_item['comment'],
+        'title' : new_item['title'],
+        'date' : new_item['date'],
+        'review_id': ''.join(random.choices(string.ascii_letters + string.digits, k=10)),
 
-    if 'Item' in response_get:
-        print("Item with the same product_id already exists")
-        # Handle the case when an item with the same product_id already exists
-        # You can raise an exception, return an error response, or handle it in any other way you prefer
-
-        existing_item = response_get['Item']
-        existing_reviews = existing_item.get('reviews', [])
-        new_reviews = new_item.get('reviews', [])
-        existing_reviews.extend(new_reviews)
-        existing_item['reviews'] = existing_reviews
-        response_put = dynamo_table.put_item(
-            TableName=TableName,
-            ReturnValues="NONE",
-            Item=existing_item
-        )
+    }
+    
+   # Try to get the item from the table
+    try:
+        response_get = dynamo_table.get_item(Key={'user_id': filter})
+    except ClientError as e:
+        print(e.response['Error']['Message'])
     else:
-        print("Item does not exist, proceed with writing")
-        # Proceed with writing the item to the table
-        
-        print("Try writing item")
-        response_put = dynamo_table.put_item(
-            TableName = TableName,
-            ReturnValues = "NONE",
-            Item = new_item
+        item = response_get.get('Item')
+        if item:
+            # If the item exists, append the new order to the 'orders' list and put the item back
+            item['reviews'].append(new_review)
+            dynamo_table.put_item(Item=item)
+        else:
+            # If the item doesn't exist, create a new item
+            response_put = dynamo_table.put_item(
+                TableName = TableName,
+                ReturnValues = "NONE",
+                Item = {
+                    'product_id': filter,
+                    'reviews': [new_review]
+                }
         )
 
     
+    response_get = dynamo_table.get_item(Key={'user_id': filter})
+    item = response_get.get('Item')
 
-    print("This is the response_put object from the put_item call")
-    print(response_put)
-    print("This is the response_put object from the put_item call with PrettyPrinter")
-    pp.pprint(response_put)
 
     print("Return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = '200'
-    HTTP_RESPONSE_DICT['body'] = '' # We return the full dict from the dynamo.put_item method
+    HTTP_RESPONSE_DICT['body'] = item
 
     print(f"DEBUG: This is the HTTP response we are sending back")
     pp.pprint(HTTP_RESPONSE_DICT)
