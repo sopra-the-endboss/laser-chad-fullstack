@@ -91,27 +91,33 @@ def handler(event: dict, context) -> dict:
         print("JSONDecodeError IN PARSING BODY")
         raise e
     
+    generated_review_id = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
+
     new_review = {
         'user': new_item['user'],
         'user_id': new_item['user_id'],
         'rating': new_item['rating'],
-        'comment': new_item['comment'],
+        'review': new_item['review'],
         'title' : new_item['title'],
         'date' : new_item['date'],
-        'review_id': ''.join(random.choices(string.ascii_letters + string.digits, k=10)),
+        'review_id': generated_review_id,
 
     }
     
    # Try to get the item from the table
     try:
-        response_get = dynamo_table.get_item(Key={'user_id': filter})
+        response_get = dynamo_table.get_item(Key={'product_id': filter})
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
         item = response_get.get('Item')
         if item:
+            print("DEBUG: Item exists")
+            pp.pprint(item)
             # If the item exists, append the new order to the 'orders' list and put the item back
             item['reviews'].append(new_review)
+            print("DEBUG: This is the item after appending the new review")
+            pp.pprint(item)
             dynamo_table.put_item(Item=item)
         else:
             # If the item doesn't exist, create a new item
@@ -125,13 +131,11 @@ def handler(event: dict, context) -> dict:
         )
 
     
-    response_get = dynamo_table.get_item(Key={'user_id': filter})
-    item = response_get.get('Item')
 
 
     print("Return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = '200'
-    HTTP_RESPONSE_DICT['body'] = item
+    HTTP_RESPONSE_DICT['body'] = {"review_id": generated_review_id}
 
     print(f"DEBUG: This is the HTTP response we are sending back")
     pp.pprint(HTTP_RESPONSE_DICT)

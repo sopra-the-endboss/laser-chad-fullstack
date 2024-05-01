@@ -3,24 +3,28 @@ import { useSelector } from 'react-redux';
 
 export const Playground = () => {
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
-    const [GetResponse, setGetResponse] = useState('');
-    const [PostResponse, setPostResponse] = useState('');
-    const [PutResponse, setPutResponse] = useState('');
+    const [GetOrderResponse, setGetOrderResponse] = useState('');
+    const [PostOrderResponse, setPostOrderResponse] = useState('');
+    const [PutOrderResponse, setPutOrderResponse] = useState('');
     const authState = useSelector((state) => state.auth);
     const [GetCartResponse, setGetCartResponse] = useState('');
     const [RecentOrderId, setRecentOrderId] = useState('');
+    const [GetCommentResponse, setGetCommentResponse] = useState('');
+    const [PostCommentResponse, setPostCommentResponse] = useState('');
+    const [DeleteCommentResponse, setDeleteCommentResponse] = useState('');
+    const [generatedReviewId, setGeneratedReviewId] = useState('');
 
-    const handleGetClick = async () => {
+    const handleGetOrderClick = async () => {
         try {
             const res = await fetch(apigBaseUrl + "/order/"+authState.user.userId);
             const data = await res.json();
-            setGetResponse(data);
+            setGetOrderResponse(data);
         } catch (error) {
             console.error(error);
         }
     };
 
-    const handlePostClick = async () => {
+    const handlePostOrderClick = async () => {
         try {
             const res = await fetch(apigBaseUrl + "/order/"+authState.user.userId, {
                 method: 'POST',
@@ -36,7 +40,7 @@ export const Playground = () => {
             try {
                 const data = JSON.parse(text);
                 setRecentOrderId(data.order_id);
-                setPostResponse(data);
+                setPostOrderResponse(data);
             } catch (err) {
                 console.error('This does not look like a valid JSON: ', text);
                 throw err;
@@ -46,7 +50,7 @@ export const Playground = () => {
         }
     };
 
-    const handlePutClick = async () => {
+    const handlePutOrderClick = async () => {
         try {
             const res = await fetch(apigBaseUrl + "/order/"+authState.user.userId, {
                 method: 'PUT',
@@ -65,7 +69,7 @@ export const Playground = () => {
             const text = await res.text();
             try {
                 const data = JSON.parse(text);
-                setPutResponse(data);
+                setPutOrderResponse(data);
             } catch (err) {
                 console.error('This does not look like a valid JSON: ', text);
                 throw err;
@@ -87,20 +91,117 @@ export const Playground = () => {
 
 
 
+
+
+
+
+
+    const handleGetCommentClick = async () => {
+        try {
+            const res = await fetch(apigBaseUrl + "/product-comment/1");
+            const data = await res.json();
+            setGetCommentResponse(data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handlePostCommentClick = async () => {
+        try {
+            const res = await fetch(apigBaseUrl + "/product-comment/1", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+
+                        "user_id": authState.user.userId,
+                        "user": "Nilsen",
+                        "rating": 3,
+                        "title": "Mid",
+                        "review": "Its mid tbh",
+                        "date": "2024-03-03",
+                        
+                    
+                })
+            });
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+    
+            const text = await res.text();
+            try {
+                const data = JSON.parse(text);
+                setGeneratedReviewId(data.review_id);
+                setPostCommentResponse(data);
+            } catch (err) {
+                console.error('This does not look like a valid JSON: ', text);
+                throw err;
+            }
+        } catch (error) {
+            console.error('There was a problem with the fetch operation: ', error);
+        }
+    }
+
+    const handleDeleteCommentClick = async () => {
+        try {
+            const res = await fetch(apigBaseUrl + "/product-comment/1", {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "review_id": generatedReviewId,
+                    "user_id": authState.user.userId
+                })
+            });
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+    
+            const text = await res.text();
+            try {
+                const data = JSON.parse(text);
+                setDeleteCommentResponse(data);
+            } catch (err) {
+                console.error('This does not look like a valid JSON: ', text);
+                throw err;
+            }
+        } catch (error) {
+            console.error('There was a problem with the fetch operation: ', error);
+        }
+    }
+
+
+
+
+
     return (
         <div>
             <p>API Gateway Base URL: {apigBaseUrl}</p>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleGetClick}>Send GET Request</button>
-            <p>GetResponse: {JSON.stringify(GetResponse)}</p>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleGetOrderClick}>Send GET order Request</button>
+            <p>GetOrderResponse: {JSON.stringify(GetOrderResponse)}</p>
 
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handlePostClick}>Send POST Request</button>
-            <p>PostResponse: {JSON.stringify(PostResponse)}</p>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handlePostOrderClick}>Send POST order Request</button>
+            <p>PostOrderResponse: {JSON.stringify(PostOrderResponse)}</p>
 
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handlePutClick}>Send PUT Request</button>
-            <p>PutResponse: {JSON.stringify(PutResponse)}</p>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handlePutOrderClick}>Send PUT order Request</button>
+            <p>PutOrderResponse: {JSON.stringify(PutOrderResponse)}</p>
 
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleGetCartClick}>Send GET cart Request</button>
-            <p>GetResponse: {JSON.stringify(GetCartResponse)}</p>
+            <p>GetCartResponse: {JSON.stringify(GetCartResponse)}</p>
+
+
+
+
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleGetCommentClick}>Send GET comment Request</button>
+            <p>GetCommentResponse: {JSON.stringify(GetCommentResponse)}</p>
+
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handlePostCommentClick}>Send POST comment Request</button>
+            <p>PostCommentResponse: {JSON.stringify(PostCommentResponse)}</p>
+
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleDeleteCommentClick}>Send DELETE comment Request</button>
+            <p>DeleteCommentResponse: {JSON.stringify(DeleteCommentResponse)}</p>
 
         </div>
     );

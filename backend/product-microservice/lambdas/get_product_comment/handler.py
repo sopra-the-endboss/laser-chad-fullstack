@@ -103,7 +103,7 @@ def handler(event, context) -> list[dict]:
 
     print("Return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = '200'
-    HTTP_RESPONSE_DICT['body'] = json.dumps(found_items_list)
+    HTTP_RESPONSE_DICT['body'] = json.dumps(found_items_list[0]) if len(found_items_list) == 1 else (json.dumps({}) if len(found_items_list) == 0 else json.dumps(found_items_list))
 
     print(f"DEBUG: This is the HTTP response we are sending back")
     pp.pprint(HTTP_RESPONSE_DICT)

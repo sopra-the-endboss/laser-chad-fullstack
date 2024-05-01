@@ -107,12 +107,14 @@ def handler(event, context) -> list[dict]:
     else:
         item = response_get.get('Item')
         if item:
+            review_found = False  # Add a flag to track if the review was found
             for i, review in enumerate(item['reviews']):
                 if review['review_id'] == review_id:
                     if review['user_id'] != user_id:
                         return return_error(f"User with user_id {user_id} not authorized to delete review with review_id {review_id}", 401)
                     
                     del item['reviews'][i]
+                    review_found = True  # Set the flag to True if the review was found and deleted
 
                     # Now we have to update the item
                     try:
@@ -123,12 +125,12 @@ def handler(event, context) -> list[dict]:
                         return return_error(f"Error updating item: {str(e)}")
 
                     break
-            return return_error(f"Review with review_id {review_id} not found in table, abort", 404)
+            if not review_found:  # Only return the error if the review was not found
+                return return_error(f"Review with review_id {review_id} not found in table, abort", 404)
         else:
-            return return_error(f"Product with product_id {filter} not found in table, abort", 404
-        )
+            return return_error(f"Product with product_id {filter} not found in table, abort", 404)
 
-    response_get = dynamo_table.get_item(Key={'user_id': filter})
+    response_get = dynamo_table.get_item(Key={'product_id': filter})
     item = response_get.get('Item')
 
 

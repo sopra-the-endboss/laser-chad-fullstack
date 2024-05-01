@@ -87,6 +87,10 @@
                             }
                         },
                         {
+                            "method": "DELETE",
+                            "lambda_fct": "delete_product_comment"
+                        },
+                        {
                             "method": "OPTIONS",
                             "lambda_fct": "options_lambda_function"
                         }
