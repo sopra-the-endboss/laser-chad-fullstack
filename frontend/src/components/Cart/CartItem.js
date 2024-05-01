@@ -17,8 +17,10 @@ import {
 
 /**
  * Represents an individual item in the shopping cart.
- *
- * This component displays the item's image, brand, title, quantity, and price. It allows the user to
+ * 
+ * NOTE: product.title is not always defined, since this property is only defined in ProductOverview. As an alternative product.product is also used.
+ * 
+ * This component displays the item's image, brand, title/product, quantity, and price. It allows the user to
  * increase or decrease the quantity of an item, or remove the item entirely from the cart.
  * Actions such as increasing the quantity, decreasing the quantity, or removing the item
  * are dispatched to the Redux store.
@@ -27,7 +29,7 @@ import {
  * @example
  * const item = {
  *   product_id: 1,
- *   img: "url_to_image",
+ *   images: ["url_to_image"], 
  *   title: "Product Title",
  *   brand: "Product Brand",
  *   price: 9.99,
@@ -50,8 +52,8 @@ const CartItem = ({ item, onCardInteract }) => {
           margin: 2,
           cursor: "pointer",
         }}
-        image={item.img}
-        alt={item.title}
+        image={item?.images && item.images[0]} // try to fetch the first image from the images array, undefined otherwise
+        alt={item.title || item.product}
         onClick={() => onCardInteract(true, item.product_id)}
       />
       <CardContent
@@ -64,10 +66,10 @@ const CartItem = ({ item, onCardInteract }) => {
       >
         <div>
           <Typography variant="subtitle1" component="h2">
-            {item.brand}
+            {item.title || item.product}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {item.title}
+            {item.brand}
           </Typography>
         </div>
         <div>

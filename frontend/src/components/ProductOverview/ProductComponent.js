@@ -9,17 +9,23 @@ import {useDispatch} from "react-redux";
 import {addToCart} from "../../reducers/slices/cartSlice";
 
 export default function ProductComponent({
-                                             product_id,
-                                             brand,
-                                             title,
-                                             img,
-                                             description,
-                                             formatted_text,
-                                             price,
-                                             category,
-                                             onCardInteract,
-                                             loading
-                                         }) {
+    
+        // Those are the props from the product object, they are passed to the addToCart function
+        product_id,
+        brand,
+        product,
+        images,
+        description,
+        formatted_text,
+        price,
+        category,
+        
+        // Title is added by the
+        title,
+        onCardInteract,
+        loading
+    }) {
+    
     const dispatch = useDispatch();
 
     return (<Card
@@ -42,7 +48,7 @@ export default function ProductComponent({
         ) : (
             <CardMedia
                 component="img"
-                image={img}
+                image={images[0]}
                 alt={title}
                 sx={{height: 160, cursor: "pointer"}}
                 onClick={() => onCardInteract(true, product_id)}
@@ -70,7 +76,9 @@ export default function ProductComponent({
             disabled={loading}
             onClick={(event) => {
                 event.stopPropagation();
-                dispatch(addToCart({product_id, brand, title, price, img}));
+                const productToCart = {product_id,brand,product,images,description,formatted_text,price,category,}
+                dispatch(addToCart(productToCart));
+                console.log("Added to cart: ", productToCart);
             }}
         >
             <AddShoppingCartIcon fontSize="small"/>
