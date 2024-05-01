@@ -60,14 +60,14 @@ const ProductOverview = ({isSearchQuerySubmitted, data, setCategoryFilter, loadi
                             <Grid item xs={4}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12}>
-                                        <ProductComponent title={"Comment Section"}
+                                        <ProductComponent product={"Comment Section"}
                                                           images={["https://preview.redd.it/madoka-ayukawa-from-kimagure-orange-road-1987-v0-fx15w3vtkjz81.png?width=640&crop=smart&auto=webp&s=471f01d04aec447193f23c558de3746b8e61e25a"]}
                                                           description={"Show top comment of the day or something or different product highlight"}
                                                           onCardInteract={onCardInteract} loading={loading} />
                                     </Grid>
 
                                     <Grid item xs={12}>
-                                        <ProductComponent title={"News"}
+                                        <ProductComponent product={"News"}
                                                           images={["https://preview.redd.it/madoka-ayukawa-from-kimagure-orange-road-1987-v0-fx15w3vtkjz81.png?width=640&crop=smart&auto=webp&s=471f01d04aec447193f23c558de3746b8e61e25a"]}
                                                           description={"Show some news related to products or a blog post or something"}
                                                           onCardInteract={onCardInteract} loading={loading} />
@@ -82,7 +82,6 @@ const ProductOverview = ({isSearchQuerySubmitted, data, setCategoryFilter, loadi
                 <Grid item xs={3} key={index}>
                     <ProductComponent 
                         {...product}
-                        title={product?.product}
                         onCardInteract={onCardInteract}
                         loading={loading}
                     />

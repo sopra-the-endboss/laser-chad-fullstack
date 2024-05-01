@@ -20,8 +20,6 @@ export default function ProductComponent({
         price,
         category,
         
-        // Title is added by the
-        title,
         onCardInteract,
         loading
     }) {
@@ -49,7 +47,7 @@ export default function ProductComponent({
             <CardMedia
                 component="img"
                 image={images[0]}
-                alt={title}
+                alt={product}
                 sx={{height: 160, cursor: "pointer"}}
                 onClick={() => onCardInteract(true, product_id)}
             />)
@@ -58,7 +56,7 @@ export default function ProductComponent({
         <CardContent>
             <CardContentComponent
                 formatted_text={formatted_text}
-                title={title}
+                product_title={product}
                 description={description}
                 price={price}
                 category={category}

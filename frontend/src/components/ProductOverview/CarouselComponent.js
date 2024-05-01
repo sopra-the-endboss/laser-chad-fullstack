@@ -60,7 +60,7 @@ function CarouselComponent({carouselData, clickable = true, onCardInteract, load
                             justifyContent: 'end'
                         }}>
                             <CardContentComponent
-                                title={item['product']}
+                                product_title={item['product']}
                                 formatted_text={item?.formatted_text}
                                 category={item?.category}
                                 price={item?.price}
