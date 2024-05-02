@@ -7,7 +7,7 @@
     "@aws-amplify/ui-react": "^6.1.6",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.15.14",
+    "@mui/icons-material": "^5.15.16",
     "@mui/material": "^5.15.13",
     "@reduxjs/toolkit": "^2.2.1",
     "amazon-cognito-identity-js": "^6.3.12",
