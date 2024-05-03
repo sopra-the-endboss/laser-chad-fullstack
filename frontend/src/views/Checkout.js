@@ -10,42 +10,62 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  IconButton,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import EditIcon from "@mui/icons-material/Edit";
 import { useSelector } from "react-redux";
+import { updateUserAttributes } from "aws-amplify/auth";
+import { useDispatch } from "react-redux";
+import { setUserLoggedIn } from "../reducers/slices/authSlice";
 
 const CheckoutPage = () => {
   const authState = useSelector((state) => state.auth.user);
   const [isEditing, setIsEditing] = useState(false);
+  const [editState, setEditState] = useState(authState);
+  const dispatch = useDispatch();
 
-  const [formData, setFormData] = useState({
-    firstName: authState.givenname || "",
-    lastName: authState.familyname || "",
-    email: authState.email || "",
-    address: authState.address || "",
-    city: authState.city || "",
-    zip: authState.zip || "",
-    county: authState.county || "",
-    cardName: "",
-    cardNumber: "",
-    cardExp: "",
-    cardCVV: "",
-  });
-
-  const handleChange = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const handleEditToggle = () => {
     setIsEditing(!isEditing);
+    if (isEditing) {
+      setEditState(authState);
+    }
+  };
+
+  const handleUpdate = async () => {
+    const { givenname, familyname, email, address, county, zip, city } =
+      editState;
+
+    let userAttributes = {
+      given_name: givenname,
+      family_name: familyname,
+      email: email,
+      address: address,
+      "custom:county": county,
+      "custom:zip": zip,
+      "custom:city": city,
+    };
+
+    try {
+      updateUserAttributes({
+        userAttributes: userAttributes,
+      });
+      dispatch(setUserLoggedIn(editState));
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error updating user attributes", error);
+    }
   };
 
   const formFields = [
+    { name: "givenname", label: "Givenname", autoComplete: "givenname" },
+    { name: "familyname", label: "Familyname", autoComplete: "familyname" },
     { name: "email", label: "Email", autoComplete: "email" },
     {
       name: "address",
@@ -71,11 +91,6 @@ const CheckoutPage = () => {
   //     { name: "cardCVV", label: "CVV", autoComplete: "cc-csc" },
   //   ];
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Form data submitted:", formData);
-  };
-
   return (
     <Container component="main" maxWidth="md">
       <Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
@@ -99,40 +114,38 @@ const CheckoutPage = () => {
             /> */}
             {isEditing ? (
               <React.Fragment>
-                <form onSubmit={handleSubmit}>
-                  <Grid container spacing={3}>
-                    {formFields.map((field) => (
-                      <Grid
-                        item
-                        xs={12}
-                        sm={field.name.includes("card") ? 6 : 12}
-                        key={field.name}
-                      >
-                        <TextField
-                          required
-                          name={field.name}
-                          label={field.label}
-                          fullWidth
-                          autoComplete={field.autoComplete}
-                          variant="outlined"
-                          value={formData[field.name]}
-                          onChange={handleChange}
-                        />
-                      </Grid>
-                    ))}
-                    <Grid item xs={12}>
-                      <Button
-                        onClick={handleEditToggle}
-                        type="submit"
+                <Grid container spacing={3}>
+                  {formFields.map((field) => (
+                    <Grid
+                      item
+                      xs={12}
+                      sm={field.name.includes("card") ? 6 : 12}
+                      key={field.name}
+                    >
+                      <TextField
+                        required
+                        name={field.name}
+                        label={field.label}
                         fullWidth
-                        variant="contained"
-                        color="primary"
-                      >
-                        Submit
-                      </Button>
+                        autoComplete={field.autoComplete}
+                        variant="outlined"
+                        value={editState[field.name]}
+                        onChange={handleInputChange}
+                      />
                     </Grid>
+                  ))}
+                  <Grid item xs={12}>
+                    <Button
+                      onClick={handleUpdate}
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                    >
+                      Submit
+                    </Button>
                   </Grid>
-                </form>
+                </Grid>
               </React.Fragment>
             ) : (
               <React.Fragment>
@@ -149,15 +162,17 @@ const CheckoutPage = () => {
                       " " +
                       authState.county}
                   </p>
+                  <h3 class="accountH3">Delivery method</h3>
+                  <p class="accountText">Shipping</p>
                 </div>
                 <div class="editButtonRight">
-                  <IconButton
+                  <Button
                     onClick={handleEditToggle}
                     variant="contained"
                     size="small"
                   >
-                    <EditIcon />
-                  </IconButton>
+                    Edit
+                  </Button>
                 </div>
               </React.Fragment>
             )}
