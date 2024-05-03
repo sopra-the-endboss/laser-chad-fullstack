@@ -70,3 +70,20 @@ body {
   justify-content: center;
   width: 100%;
 }
+
+.accountH3 {
+  font-weight: bold;
+  text-align: left;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+.accountText {
+  text-align: left;
+}
+
+.editButtonRight {
+  right: 0;
+}
