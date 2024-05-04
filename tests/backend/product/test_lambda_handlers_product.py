@@ -7,8 +7,6 @@ What we pass in the lambda handlers are event bodies
 An event body is a string, which is supposed to be serializable to json
 
 We do NOT TEST that the event contains all fields from the HTTP request from the API Gateway, we assume this is done by the API Gateway
-
-NOTE: post_product_batch is not in use, is not tested!
 """
 
 import os

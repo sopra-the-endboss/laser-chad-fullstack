@@ -14,22 +14,6 @@
         },
         "contentType": "application/json"
     },
-    "post_product_batch": {
-        "model_spec": {
-            "$schema": "http://json-schema.org/draft-04/schema#",
-            "title": "post_product_batch",
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "product_id": {
-                        "type": "string"
-                    }
-                }
-            }
-        },
-        "contentType": "application/json"
-    },
     "post_product_comment": {
         "model_spec": {
             "$schema": "http://json-schema.org/draft-04/schema#",

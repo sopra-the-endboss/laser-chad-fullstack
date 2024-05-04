@@ -37,23 +37,6 @@
                         }
                     ],
                     "children_resources": []
-                },
-                {
-                    "path": "batch",
-                    "methods_for_that_path": [
-                        {
-                            "method": "POST",
-                            "lambda_fct": "post_product_batch",
-                            "requestModels": {
-                                "application/json": "post_product_batch"
-                            }
-                        },
-                        {
-                            "method": "OPTIONS",
-                            "lambda_fct": "options_lambda_function"
-                        }
-                    ],
-                    "children_resources": []
                 }
             ]
         }
