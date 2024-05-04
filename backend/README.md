@@ -28,3 +28,6 @@ During deployment we ran into CORS errors which blocked calls from the frontend 
 The backend tests are run in a CI pipeline with Github Actions. See the [github actions folder](../.github/workflows/code_quality.yml) for the concrete command and workflow.  
 If you want to run the test manually and generate an inline coverage report, run this from a terminal in the root directory:
 `coverage run -m pytest && coverage report -m`
+
+#### Test limitations
+The current moto3 mocking framework for AWS does not support our API Gateway integration (AWS_PROXY), hence a proper intergation test with a mocked API Gateway with localstack is currently not possible. For more information see http://docs.getmoto.org/en/latest/docs/services/apigateway.html.
