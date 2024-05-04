@@ -23,3 +23,8 @@ During deployment we ran into CORS errors which blocked calls from the frontend 
 
 ## Datamodel (open for adjustment)
 ![Datamodel](./microservices_components.svg?raw=true "Datamodel")
+
+## Tests
+The backend tests are run in a CI pipeline with Github Actions. See the [github actions folder](../.github/workflows/code_quality.yml) for the concrete command and workflow.  
+If you want to run the test manually and generate an inline coverage report, run this from a terminal in the root directory:
+`coverage run -m pytest && coverage report -m`
