@@ -87,3 +87,7 @@ body {
 .editButtonRight {
   text-align: right;
 }
+
+.accountBox {
+  min-width: 600px;
+}

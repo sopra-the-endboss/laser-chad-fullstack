@@ -66,7 +66,9 @@ const AccountDetails = () => {
       },
     ];
     console.log(mock);
-    dispatch(addToCart(mock[0]));
+    for (let i in mock) {
+      dispatch(addToCart(mock[i]));
+    }
   };
 
   const formFields = [
@@ -74,13 +76,7 @@ const AccountDetails = () => {
       name: "givenname",
       label: "Givenname",
       autoComplete: "givenname",
-      value: authState.givenname,
-    },
-    {
-      name: "familyname",
-      label: "Familyname",
-      autoComplete: "familyname",
-      value: authState.familyname,
+      value: authState.givenname + " " + authState.familyname,
     },
     {
       name: "birthdate",
@@ -106,21 +102,7 @@ const AccountDetails = () => {
       name: "city",
       label: "City",
       autoComplete: "shipping address-level2",
-      value: authState.city,
-      type: "address",
-    },
-    {
-      name: "zip",
-      label: "Zip / Postal code",
-      autoComplete: "shipping postal-code",
-      value: authState.zip,
-      type: "address",
-    },
-    {
-      name: "county",
-      label: "County",
-      autoComplete: "shipping address-level2",
-      value: authState.county,
+      value: authState.zip + " " + authState.city + " " + authState.county,
       type: "address",
     },
   ];
@@ -230,18 +212,13 @@ const AccountDetails = () => {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <Grid container spacing={3}>
-            {formFields.map((field, index) => (
-              <React.Fragment key={index}>
-                <Grid item xs={6}>
-                  <Typography>{field.label}:</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography>{field.value}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
-          </Grid>
+          <h3 className="accountH3">Account Details</h3>
+          {formFields.map((field, index) => (
+            <React.Fragment key={index}>
+              <p className="accountText">{field.value}</p>
+            </React.Fragment>
+          ))}
+
           <IconButton onClick={handleEditToggle} size="large">
             <EditIcon />
           </IconButton>
