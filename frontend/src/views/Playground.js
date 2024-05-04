@@ -15,6 +15,7 @@ export const Playground = () => {
     const [generatedReviewId, setGeneratedReviewId] = useState('');
     const [GetProductResponse, setGetProductResponse] = useState('');
     const [DeleteProductResponse, setDeleteProductResponse] = useState('');
+    const [GetMyShopResponse, setGetMyShopResponse] = useState('');
 
     const handleGetOrderClick = async () => {
         try {
@@ -210,6 +211,16 @@ export const Playground = () => {
         }
     }
 
+    const handleGetMyShopClick = async () => {
+        try {
+            const res = await fetch(apigBaseUrl + "/my-shop/"+authState.user.userId);
+            const data = await res.json();
+            setGetMyShopResponse(data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
 
 
 
@@ -247,6 +258,11 @@ export const Playground = () => {
 
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleDeleteProductClick}>Send DELETE product Request</button>
             <p>DeleteProductResponse: {JSON.stringify(DeleteProductResponse)}</p>
+
+
+
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleGetMyShopClick}>Send GET my shop Request</button>
+            <p>GetMyShopResponse: {JSON.stringify(GetMyShopResponse)}</p>
 
         </div>
     );

@@ -4,651 +4,846 @@
             "product_id": "1",
             "product": "Apple iPhone 15 Pro",
             "highlighted": true,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 57.46,
             "formatted_text": "Sale male",
             "category": "Smartphone",
-            "brand": "Apple"
+            "brand": "Apple",
+            "seller_id": "IHwljIlqkO"
         },
         {
             "product_id": "2",
             "product": "Apple MacBook Air",
             "highlighted": true,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 775.82,
             "formatted_text": "Sale",
             "category": "Laptop",
-            "brand": "Apple"
+            "brand": "Apple",
+            "seller_id": "fTTlzlcwce"
         },
         {
             "product_id": "3",
             "product": "Samsung Galaxy S9",
             "highlighted": true,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 482.89,
             "formatted_text": "",
             "category": "Smartphone",
-            "brand": "Samsung"
+            "brand": "Samsung",
+            "seller_id": "ULsONtVOFj"
         },
         {
             "product_id": "4",
             "product": "Lenovo Thinkpad",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 245.99,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Lenovo"
+            "brand": "Lenovo",
+            "seller_id": "pyNaydpwLF"
         },
         {
             "product_id": "5",
             "product": "Dell XPS 15",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 17.32,
             "formatted_text": "Sale",
             "category": "Laptop",
-            "brand": "Dell"
+            "brand": "Dell",
+            "seller_id": "pmvXLvhfcd"
         },
         {
             "product_id": "6",
             "product": "Microsoft Surface Pro 7",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 15.89,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Microsoft"
+            "brand": "Microsoft",
+            "seller_id": "RWrAyWLxEH"
         },
         {
             "product_id": "7",
             "product": "Google Pixelbook Go",
             "highlighted": true,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 364.66,
             "formatted_text": "",
             "category": "Smartphone",
-            "brand": "Google"
+            "brand": "Google",
+            "seller_id": "HGRmjRRKnu"
         },
         {
             "product_id": "8",
             "product": "Sony WH-1000XM4 Headphones",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 155.12,
             "formatted_text": "",
             "category": "Accessories",
-            "brand": "Sony"
+            "brand": "Sony",
+            "seller_id": "EuvkWKCslq"
         },
         {
             "product_id": "9",
             "product": "Bose QuietComfort 35 II",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 307.63,
             "formatted_text": "",
             "category": "Audio",
-            "brand": "Bose"
+            "brand": "Bose",
+            "seller_id": "ceeWiUHTAL"
         },
         {
             "product_id": "10",
             "product": "Nvidia GeForce RTX 3080",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 790.1,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Nvidia"
+            "brand": "Nvidia",
+            "seller_id": "lMvRBXFnag"
         },
         {
             "product_id": "11",
             "product": "AMD Ryzen 9 5900X",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 138.88,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "AMD"
+            "brand": "AMD",
+            "seller_id": "XoaUBQtIMg"
         },
         {
             "product_id": "12",
             "product": "Canon EOS R5 Camera",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 297.81,
             "formatted_text": "",
             "category": "Photo",
-            "brand": "Canon"
+            "brand": "Canon",
+            "seller_id": "fiEwjXYsNM"
         },
         {
             "product_id": "13",
             "product": "GoPro HERO9 Black",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 175.1,
             "formatted_text": "",
             "category": "Photo",
-            "brand": "GoPro"
+            "brand": "GoPro",
+            "seller_id": "rQVoNeEzKy"
         },
         {
             "product_id": "14",
             "product": "DJI Mavic Air 2 Drone",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 594.87,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "DJI"
+            "brand": "DJI",
+            "seller_id": "tQEmygMOMJ"
         },
         {
             "product_id": "15",
             "product": "Apple iPad Pro",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 203.83,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Apple"
+            "brand": "Apple",
+            "seller_id": "FYOeXMtoEv"
         },
         {
             "product_id": "16",
             "product": "Samsung Galaxy Tab S7",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 420.56,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Samsung"
+            "brand": "Samsung",
+            "seller_id": "biCAlSapuD"
         },
         {
             "product_id": "17",
             "product": "Amazon Kindle Paperwhite",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 507.26,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Amazon"
+            "brand": "Amazon",
+            "seller_id": "hqAzMBWehV"
         },
         {
             "product_id": "18",
             "product": "Fitbit Charge 4",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 725.48,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Fitbit"
+            "brand": "Fitbit",
+            "seller_id": "wlywDbpqry"
         },
         {
             "product_id": "19",
             "product": "Garmin Forerunner 945",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 426.79,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Garmin"
+            "brand": "Garmin",
+            "seller_id": "OmqoNxFrcs"
         },
         {
             "product_id": "20",
             "product": "Philips Hue Smart Bulbs",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 792.7,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Philips"
+            "brand": "Philips",
+            "seller_id": "AxyrvSmmdD"
         },
         {
             "product_id": "21",
             "product": "Sonos One Speaker",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 521.98,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Sonos"
+            "brand": "Sonos",
+            "seller_id": "OUOIKOqrJi"
         },
         {
             "product_id": "22",
             "product": "Google Nest Hub Max",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 925.82,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Google"
+            "brand": "Google",
+            "seller_id": "LTQUUVcxgA"
         },
         {
             "product_id": "23",
             "product": "Ring Video Doorbell 3",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 361.24,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Ring"
+            "brand": "Ring",
+            "seller_id": "PgKMMLVXaU"
         },
         {
             "product_id": "24",
             "product": "Apple Watch Series 6",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 844.69,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Apple"
+            "brand": "Apple",
+            "seller_id": "FwvJXuEtpP"
         },
         {
             "product_id": "25",
             "product": "Oculus Quest 2 VR Headset",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 973.19,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Oculus"
+            "brand": "Oculus",
+            "seller_id": "gxyhwqlwKY"
         },
         {
             "product_id": "26",
             "product": "Xiaomi Mi 11 Ultra",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 653.27,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Xiaomi"
+            "brand": "Xiaomi",
+            "seller_id": "wfncAIBCSr"
         },
         {
             "product_id": "27",
             "product": "Logitech MX Master 3 Mouse",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 684.14,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Logitech"
+            "brand": "Logitech",
+            "seller_id": "fDvfCVcWoU"
         },
         {
             "product_id": "28",
             "product": "Razer Blade 15 Gaming Laptop",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 477.35,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Razer"
+            "brand": "Razer",
+            "seller_id": "AbHemwFHth"
         },
         {
             "product_id": "29",
             "product": "Anker PowerCore 10000 Portable Charger",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 23.81,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Anker"
+            "brand": "Anker",
+            "seller_id": "XPlwWFfwBK"
         },
         {
             "product_id": "30",
             "product": "Apple AirPods Pro",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 463.38,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Apple"
+            "brand": "Apple",
+            "seller_id": "FiLVGWfLuw"
         },
         {
             "product_id": "31",
             "product": "Samsung QLED 4K Smart TV",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 342.0,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Samsung"
+            "brand": "Samsung",
+            "seller_id": "kKDUmOAAyl"
         },
         {
             "product_id": "32",
             "product": "LG OLED CX TV",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 475.47,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "LG"
+            "brand": "LG",
+            "seller_id": "XHXQLFMcBv"
         },
         {
             "product_id": "33",
             "product": "Asus ROG Strix GeForce RTX 3090",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 681.01,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Asus"
+            "brand": "Asus",
+            "seller_id": "czOkLFXjxH"
         },
         {
             "product_id": "34",
             "product": "HyperX Cloud II Gaming Headset",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 201.77,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "HyperX"
+            "brand": "HyperX",
+            "seller_id": "xYxaMKTWcV"
         },
         {
             "product_id": "35",
             "product": "Yamaha P-45 Digital Piano",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 163.76,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Yamaha"
+            "brand": "Yamaha",
+            "seller_id": "veGFFkKXRz"
         },
         {
             "product_id": "36",
             "product": "Wacom Intuos Graphic Drawing Tablet",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 746.75,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Wacom"
+            "brand": "Wacom",
+            "seller_id": "BDtfUxjACB"
         },
         {
             "product_id": "37",
             "product": "Blue Yeti USB Microphone",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 762.13,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Blue"
+            "brand": "Blue",
+            "seller_id": "GUBTMcGpsg"
         },
         {
             "product_id": "38",
             "product": "Elgato Stream Deck",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 37.94,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Elgato"
+            "brand": "Elgato",
+            "seller_id": "OcAiaDwUED"
         },
         {
             "product_id": "39",
             "product": "Netgear Nighthawk AX12 Router",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 843.69,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Netgear"
+            "brand": "Netgear",
+            "seller_id": "QQWVGcLzkm"
         },
         {
             "product_id": "40",
             "product": "TP-Link Deco Mesh WiFi System",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 218.02,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "TP-Link"
+            "brand": "TP-Link",
+            "seller_id": "FIjTuxxEvJ"
         },
         {
             "product_id": "41",
             "product": "Eero 6 Mesh WiFi System",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 543.35,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Eero"
+            "brand": "Eero",
+            "seller_id": "FWXRobZoLj"
         },
         {
             "product_id": "42",
             "product": "Corsair K95 RGB Mechanical Keyboard",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 888.71,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Corsair"
+            "brand": "Corsair",
+            "seller_id": "uOzShkWmVY"
         },
         {
             "product_id": "43",
             "product": "SteelSeries Arctis Pro Wireless Headset",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 289.13,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "SteelSeries"
+            "brand": "SteelSeries",
+            "seller_id": "ytPiDifzlc"
         },
         {
             "product_id": "44",
             "product": "Roku Streaming Stick+",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 220.65,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Roku"
+            "brand": "Roku",
+            "seller_id": "BoiflmrcHG"
         },
         {
             "product_id": "45",
             "product": "Amazon Echo Dot (4th Gen)",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 599.84,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Amazon"
+            "brand": "Amazon",
+            "seller_id": "YrcvBiIFeb"
         },
         {
             "product_id": "46",
             "product": "Microsoft Xbox Series X",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 748.31,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Microsoft"
+            "brand": "Microsoft",
+            "seller_id": "lbWdQTXOyG"
         },
         {
             "product_id": "47",
             "product": "Sony PlayStation 5",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 936.88,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Sony"
+            "brand": "Sony",
+            "seller_id": "BeMoUYWLqV"
         },
         {
             "product_id": "48",
             "product": "Nintendo Switch",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 942.78,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Nintendo"
+            "brand": "Nintendo",
+            "seller_id": "sxIcdAnPfA"
         },
         {
             "product_id": "49",
             "product": "Apple Mac Mini M1",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 27.28,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Apple"
+            "brand": "Apple",
+            "seller_id": "KwAIUpGoQE"
         },
         {
             "product_id": "50",
             "product": "Samsung T5 Portable SSD",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 715.93,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Samsung"
+            "brand": "Samsung",
+            "seller_id": "FGrAJJjANh"
         },
         {
             "product_id": "51",
             "product": "Seagate Backup Plus External Hard Drive",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 293.35,
             "formatted_text": "Some other text",
             "category": "Tech",
-            "brand": "Seagate"
+            "brand": "Seagate",
+            "seller_id": "SiUAlcxScM"
         },
         {
             "product_id": "52",
             "product": "Canon PIXMA All-in-One Printer",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 842.59,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Canon"
+            "brand": "Canon",
+            "seller_id": "lYANwGfUfh"
         },
         {
             "product_id": "53",
             "product": "Dyson V11 Torque Drive Cordless Vacuum",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 808.36,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Dyson"
+            "brand": "Dyson",
+            "seller_id": "BZqFUwbRdj"
         },
         {
             "product_id": "54",
             "product": "iRobot Roomba s9+ Robot Vacuum",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 509.61,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "iRobot"
+            "brand": "iRobot",
+            "seller_id": "bToiUMVoRa"
         },
         {
             "product_id": "55",
             "product": "Philips Norelco Electric Shaver",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 184.53,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Philips"
+            "brand": "Philips",
+            "seller_id": "oVgIKfeitE"
         },
         {
             "product_id": "56",
             "product": "Braun Series 9 Electric Razor",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 744.53,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Braun"
+            "brand": "Braun",
+            "seller_id": "llmbOKlRYa"
         },
         {
             "product_id": "57",
             "product": "KitchenAid Artisan Stand Mixer",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 774.82,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "KitchenAid"
+            "brand": "KitchenAid",
+            "seller_id": "IHbgFNMUhd"
         },
         {
             "product_id": "58",
             "product": "Instant Pot Duo 7-in-1 Electric Pressure Cooker",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 922.99,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Instant"
+            "brand": "Instant",
+            "seller_id": "IIfqcrLzJC"
         },
         {
             "product_id": "59",
             "product": "Nespresso Vertuo Coffee and Espresso Machine",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 258.23,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Nespresso"
+            "brand": "Nespresso",
+            "seller_id": "beMXIZqHoW"
         },
         {
             "product_id": "60",
             "product": "Sony A7 III Mirrorless Camera",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 535.3,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Sony"
+            "brand": "Sony",
+            "seller_id": "ZIxarhQlyc"
         },
         {
             "product_id": "61",
             "product": "Fujifilm X-T4 Mirrorless Camera",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 55.1,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Fujifilm"
+            "brand": "Fujifilm",
+            "seller_id": "dPBkigZqvz"
         },
         {
             "product_id": "62",
             "product": "GoPro MAX Action Camera",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 140.48,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "GoPro"
+            "brand": "GoPro",
+            "seller_id": "zgcUiBgIvp"
         },
         {
             "product_id": "63",
             "product": "Dell UltraSharp 27 4K Monitor",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 40.94,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Dell"
+            "brand": "Dell",
+            "seller_id": "vwxKwSYgOp"
         },
         {
             "product_id": "64",
             "product": "Apple Magic Keyboard",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 81.98,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Apple"
+            "brand": "Apple",
+            "seller_id": "qAMDcrEVUy"
         },
         {
             "product_id": "65",
             "product": "Logitech G Pro Wireless Gaming Mouse",
             "highlighted": false,
-            "images": ["https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"],
+            "images": [
+                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+            ],
             "price": 20.7,
             "formatted_text": "",
             "category": "Tech",
-            "brand": "Logitech"
+            "brand": "Logitech",
+            "seller_id": "qpeolbUKYJ"
         },
         {
             "product_id": "66",
@@ -685,7 +880,8 @@
             "warranty": "1 year",
             "color": "Silver",
             "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
-            "availability": "In stock"
+            "availability": "In stock",
+            "seller_id": "SHTHRhqKZB"
         },
         {
             "product_id": "67",
@@ -721,7 +917,8 @@
             },
             "warranty": "2 years",
             "color": "Eclipse Gray",
-            "availability": "In stock"
+            "availability": "In stock",
+            "seller_id": "xnGijXrGVv"
         },
         {
             "product_id": "68",
@@ -763,7 +960,8 @@
             },
             "warranty": "1 year",
             "color": "Space Gray",
-            "availability": "In stock"
+            "availability": "In stock",
+            "seller_id": "rerBDRmiDX"
         },
         {
             "product_id": "69",
@@ -796,7 +994,8 @@
             },
             "warranty": "1 year",
             "color": "Nightfall Black",
-            "availability": "In stock"
+            "availability": "In stock",
+            "seller_id": "CZGhMnbvAJ"
         },
         {
             "product_id": "70",
@@ -830,7 +1029,8 @@
             },
             "warranty": "3 years",
             "color": "Black",
-            "availability": "Pre-order"
+            "availability": "Pre-order",
+            "seller_id": "bopddZeeUk"
         },
         {
             "product_id": "71",
@@ -865,7 +1065,8 @@
             },
             "warranty": "1 year",
             "color": "Platinum",
-            "availability": "In stock"
+            "availability": "In stock",
+            "seller_id": "cYKARSKcwB"
         },
         {
             "product_id": "72",
@@ -899,7 +1100,8 @@
             },
             "warranty": "1 year",
             "color": "Platinum",
-            "availability": "In stock"
+            "availability": "In stock",
+            "seller_id": "iAyTPOtkTG"
         },
         {
             "product_id": "73",
@@ -933,7 +1135,8 @@
             },
             "warranty": "1 year",
             "color": "Platinum",
-            "availability": "In stock"
+            "availability": "In stock",
+            "seller_id": "BuaSXbdrKp"
         },
         {
             "product_id": "74",
@@ -967,7 +1170,8 @@
             },
             "warranty": "1 year",
             "color": "Platinum",
-            "availability": "In stock"
+            "availability": "In stock",
+            "seller_id": "jLxtrFRIBE"
         },
         {
             "product_id": "75",
@@ -1001,7 +1205,8 @@
             },
             "warranty": "1 year",
             "color": "Platinum",
-            "availability": "In stock"
+            "availability": "In stock",
+            "seller_id": "JGymIlGwxh"
         }
     ],
     "product-comment-table": [

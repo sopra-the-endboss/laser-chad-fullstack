@@ -141,6 +141,28 @@
                 }
             ]
         }
+    ],
+    "my-shop": [
+        {
+            "path": "my-shop",
+            "methods_for_that_path": [],
+            "children_resources": [
+                {
+                    "path": "{seller_id}",
+                    "methods_for_that_path": [
+                        {
+                            "method": "GET",
+                            "lambda_fct": "get_my_shop"
+                        },
+                        {
+                            "method": "OPTIONS",
+                            "lambda_fct": "options_lambda_function"
+                        }
+                    ],
+                    "children_resources": []
+                }
+            ]
+        }
     ]
 
 }
