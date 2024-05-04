@@ -1,5 +1,5 @@
 import "../App.css";
-import React, { useState } from "react";
+import React from "react";
 import {
   Typography,
   Paper,
@@ -10,18 +10,12 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useSelector } from "react-redux";
-import { updateUserAttributes } from "aws-amplify/auth";
-import { useDispatch } from "react-redux";
-import { setUserLoggedIn } from "../reducers/slices/authSlice";
+
 import AccountSummary from "../components/Account/AccountSummary";
 import CartItem from "../components/Cart/CartItem";
 import { useNavigate } from "react-router-dom";
 
 const CheckoutPage = () => {
-  const authState = useSelector((state) => state.auth.user);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editState, setEditState] = useState(authState);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.cartItems);
 
@@ -30,63 +24,6 @@ const CheckoutPage = () => {
       navigate("/product/" + id);
     }
   };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setEditState((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handleEditToggle = () => {
-    setIsEditing(!isEditing);
-    if (isEditing) {
-      setEditState(authState);
-    }
-  };
-
-  const handleUpdate = async () => {
-    const { givenname, familyname, email, address, county, zip, city } =
-      editState;
-
-    let userAttributes = {
-      given_name: givenname,
-      family_name: familyname,
-      email: email,
-      address: address,
-      "custom:county": county,
-      "custom:zip": zip,
-      "custom:city": city,
-    };
-
-    try {
-      updateUserAttributes({
-        userAttributes: userAttributes,
-      });
-      dispatch(setUserLoggedIn(editState));
-      setIsEditing(false);
-    } catch (error) {
-      console.error("Error updating user attributes", error);
-    }
-  };
-
-  const formFields = [
-    { name: "givenname", label: "Givenname", autoComplete: "givenname" },
-    { name: "familyname", label: "Familyname", autoComplete: "familyname" },
-    { name: "email", label: "Email", autoComplete: "email" },
-    {
-      name: "address",
-      label: "Address",
-      autoComplete: "shipping address-line1",
-    },
-    { name: "city", label: "City", autoComplete: "shipping address-level2" },
-    {
-      name: "zip",
-      label: "Zip / Postal code",
-      autoComplete: "shipping postal-code",
-    },
-  ];
 
   //   const cardFields = [
   //     { name: "cardName", label: "Name on card", autoComplete: "cc-name" },
@@ -116,15 +53,7 @@ const CheckoutPage = () => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AccountSummary
-              formFields={formFields}
-              isEditing={isEditing}
-              editState={editState}
-              authState={authState}
-              handleInputChange={handleInputChange}
-              handleUpdate={handleUpdate}
-              handleEditToggle={handleEditToggle}
-            />
+            <AccountSummary />
           </AccordionDetails>
         </Accordion>
         <Accordion>
