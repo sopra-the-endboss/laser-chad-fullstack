@@ -93,7 +93,7 @@ def handler(event, context) -> list[dict]:
     print(product_id_to_delete)
     
 
-    for dynamo_table in [dynamo_table_product, dynamo_table_product_comment, dynamo_table_product_detail]:
+    for dynamo_table in [dynamo_table_product, dynamo_table_product_comment]:
         ###
         # Now we have to check if there is a product for filter
         # There can only be one item because there is only one HASH key in the DB, the result is either a dict or not present at all
@@ -113,7 +113,7 @@ def handler(event, context) -> list[dict]:
     
     print("Success, return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = 200
-    HTTP_RESPONSE_DICT['body'] = "Deleted product with product_id {product_id_to_delete}"
+    HTTP_RESPONSE_DICT['body'] = {'product_id': product_id_to_delete}
     return HTTP_RESPONSE_DICT
 
 if __name__ == "__main__":
