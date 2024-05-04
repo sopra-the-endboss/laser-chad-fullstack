@@ -4,9 +4,12 @@
             "$schema": "http://json-schema.org/draft-04/schema#",
             "title": "post_product",
             "type": "object",
-            "required": ["product_id"],
+            "required": ["product_id", "seller_id"],
             "properties": {
                 "product_id": {
+                    "type": "string"
+                },
+                "seller_id": {
                     "type": "string"
                 }
 
@@ -35,26 +38,26 @@
             "$schema": "http://json-schema.org/draft-04/schema#",
             "title": "post_product_comment",
             "type": "object",
-            "required": ["comment"],
+            "required": ["user_id"],
             "properties": {
-                "comment": {
+                "review_id": {
                     "type": "string"
                 }
             }
         },
         "contentType": "application/json"
     },
-    "post_order": {
+    "put_order": {
         "model_spec": {
             "$schema": "http://json-schema.org/draft-04/schema#",
-            "title": "post_order",
+            "title": "put_order",
             "type": "object",
-            "required": ["user_id", "order_id"],
+            "required": ["order_id", "status"],
             "properties": {
-                "user_id": {
+                "order_id": {
                     "type": "string"
                 },
-                "order_id": {
+                "status_id": {
                     "type": "string"
                 }
             }

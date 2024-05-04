@@ -87,6 +87,10 @@
                             }
                         },
                         {
+                            "method": "DELETE",
+                            "lambda_fct": "delete_product_comment"
+                        },
+                        {
                             "method": "OPTIONS",
                             "lambda_fct": "options_lambda_function"
                         }
@@ -135,10 +139,37 @@
                         },
                         {
                             "method": "POST",
-                            "lambda_fct": "post_order",
+                            "lambda_fct": "post_order"
+                        },
+                        {
+                            "method": "PUT",
+                            "lambda_fct": "put_order",
                             "requestModels": {
-                                "application/json": "post_order"
+                                "application/json": "put_order"
                             }
+                            
+                        },
+                        {
+                            "method": "OPTIONS",
+                            "lambda_fct": "options_lambda_function"
+                        }
+                    ],
+                    "children_resources": []
+                }
+            ]
+        }
+    ],
+    "my-shop": [
+        {
+            "path": "my-shop",
+            "methods_for_that_path": [],
+            "children_resources": [
+                {
+                    "path": "{seller_id}",
+                    "methods_for_that_path": [
+                        {
+                            "method": "GET",
+                            "lambda_fct": "get_my_shop"
                         },
                         {
                             "method": "OPTIONS",

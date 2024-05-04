@@ -3,9 +3,11 @@ delete_product
 Handle call to decrease/delete a product with a product_id and quantity for a given userId
 """
 
+from decimal import Decimal
 import boto3
 import simplejson as json
 from pprint import PrettyPrinter
+from botocore.exceptions import ClientError
 pp = PrettyPrinter(indent=2)
 
 HTTP_RESPONSE_DICT = {
@@ -66,8 +68,7 @@ def handler(event, context) -> list[dict]:
         
     print("Creating dynamo table object ...")
     dynamo_resource = boto3.resource("dynamodb")
-    dynamo_table_product = dynamo_resource.Table('product-table')
-    dynamo_table_product_comment = dynamo_resource.Table('product-comment-table')
+    dynamo_table = dynamo_resource.Table('product-comment-table')
     print(f"Assure pathParameter {PATH_PARAMETER_FILTER} is present in event")
     if not PATH_PARAMETER_FILTER in event['pathParameters']:
         return return_error(f"pathParameter {PATH_PARAMETER_FILTER} not found in event, abort")
@@ -76,44 +77,66 @@ def handler(event, context) -> list[dict]:
     print(f"This is the filter: {filter}")
 
 
-    ###
-    # Check the body item to update
-    print("Check body, should be a dict or something serializable into a dict")
-    print(event['body'])
-
-
-
-    print(f"Filtering items with {PATH_PARAMETER_FILTER}")
-    if event['pathParameters']:
-        if PATH_PARAMETER_FILTER in event['pathParameters']:
-            product_id_to_delete = event['pathParameters'][PATH_PARAMETER_FILTER]
-
-
-    print("This is the value extracted from the products field in the body")
-    print(product_id_to_delete)
     
 
-    for dynamo_table in [dynamo_table_product, dynamo_table_product_comment]:
-        ###
-        # Now we have to check if there is a product for filter
-        # There can only be one item because there is only one HASH key in the DB, the result is either a dict or not present at all
-        response_get_item = dynamo_table.get_item(Key = {PATH_PARAMETER_FILTER:filter})
-        
-        # Check if we found a result, otherwise retrieve empty list
-        product_found = response_get_item.get("Item", None)
+    print(f"Assure pathParameter product_id is present in event")
+    if not "product_id" in event['pathParameters']:
+        return return_error(f"pathParameter product_id not found in event, abort")
 
-        # If None we did not found anything, return 404
-        if not product_found:
-            print(f"Product with product_id {filter} not found in table {dynamo_table.name}")
-        
-        # Delete the product from the DynamoDB table
-        dynamo_table.delete_item(Key={'product_id': product_id_to_delete})
-
-
+    filter = event['pathParameters']["product_id"]
+    print(f"This is the filter: {filter}")
     
+
+    print("Parse body")
+    try:
+        body = json.loads(event['body'], parse_float=Decimal)
+        print("DEBUG: This is the body")
+        print(body)
+    except json.decoder.JSONDecodeError as e:
+        print("JSONDecodeError IN PARSING BODY")
+        raise e
+    
+    review_id = body['review_id']
+    user_id = body['user_id']
+
+    # Try to get the item from the table
+    try:
+        response_get = dynamo_table.get_item(Key={'product_id': filter})
+    except ClientError as e:
+        print(e.response['Error']['Message'])
+    else:
+        item = response_get.get('Item')
+        if item:
+            review_found = False  # Add a flag to track if the review was found
+            for i, review in enumerate(item['reviews']):
+                if review['review_id'] == review_id:
+                    if review['user_id'] != user_id:
+                        return return_error(f"User with user_id {user_id} not authorized to delete review with review_id {review_id}", 401)
+                    
+                    del item['reviews'][i]
+                    review_found = True  # Set the flag to True if the review was found and deleted
+
+                    # Now we have to update the item
+                    try:
+                        response = dynamo_table.put_item(
+                            Item = item
+                        )
+                    except Exception as e:
+                        return return_error(f"Error updating item: {str(e)}")
+
+                    break
+            if not review_found:  # Only return the error if the review was not found
+                return return_error(f"Review with review_id {review_id} not found in table, abort", 404)
+        else:
+            return return_error(f"Product with product_id {filter} not found in table, abort", 404)
+
+    response_get = dynamo_table.get_item(Key={'product_id': filter})
+    item = response_get.get('Item')
+
+
     print("Success, return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = 200
-    HTTP_RESPONSE_DICT['body'] = {'product_id': product_id_to_delete}
+    HTTP_RESPONSE_DICT['body'] = item
     return HTTP_RESPONSE_DICT
 
 if __name__ == "__main__":

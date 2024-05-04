@@ -1,11 +1,12 @@
 """
-delete_product
-Handle call to decrease/delete a product with a product_id and quantity for a given userId
+put_order
+Handle call to update a order with a status given a oder_id and status
 """
 
 import boto3
 import simplejson as json
 from pprint import PrettyPrinter
+from decimal import Decimal
 pp = PrettyPrinter(indent=2)
 
 HTTP_RESPONSE_DICT = {
@@ -46,28 +47,36 @@ def handler(event, context) -> list[dict]:
         The body must be a JSON serializable string, handeled by json.dumps()
 
         statusCode : 200 if success, 4XX otherwise
-        isBase64Encoded : False by default1
+        isBase64Encoded : False by default
         headers : Default to allow CORS, otherwise not used
-        body : JSON serialized new product
 
         400 if the handler can not complete
-        404 if there is no product with product_id
+        404 if there is no orders with userId
     """
 
-    PATH_PARAMETER_FILTER = "product_id" # Must match the name in resources_to_create.json in the path with {}
-    PRODUCT_DELETED = False
-
-    print("delete_product invoked")
+    PATH_PARAMETER_FILTER = "user_id" # Must match the name in resources_to_create.json in the path with {}
+    
+    print("put_order invoked")
 
     print("DEBUG: This is the event")
     pp.pprint(event)
     
+    # First fetch the name of the DB table to work with
+    TableName = "order-table"
 
+    print(f"Using table {TableName}")
+
+    print("Check if table is available ...")
+    dynamo_client = boto3.client("dynamodb")
+    available_tables = dynamo_client.list_tables()
+    available_tables = available_tables['TableNames']
+    if not TableName in available_tables:
+        return return_error(f"Table {TableName} not found in the available tables, abort")
         
     print("Creating dynamo table object ...")
     dynamo_resource = boto3.resource("dynamodb")
-    dynamo_table_product = dynamo_resource.Table('product-table')
-    dynamo_table_product_comment = dynamo_resource.Table('product-comment-table')
+    dynamo_table = dynamo_resource.Table(TableName)
+
     print(f"Assure pathParameter {PATH_PARAMETER_FILTER} is present in event")
     if not PATH_PARAMETER_FILTER in event['pathParameters']:
         return return_error(f"pathParameter {PATH_PARAMETER_FILTER} not found in event, abort")
@@ -81,39 +90,41 @@ def handler(event, context) -> list[dict]:
     print("Check body, should be a dict or something serializable into a dict")
     print(event['body'])
 
+    # serialize json string into dict
+    body = json.loads(event['body'], parse_float=Decimal)
 
-
-    print(f"Filtering items with {PATH_PARAMETER_FILTER}")
-    if event['pathParameters']:
-        if PATH_PARAMETER_FILTER in event['pathParameters']:
-            product_id_to_delete = event['pathParameters'][PATH_PARAMETER_FILTER]
-
-
-    print("This is the value extracted from the products field in the body")
-    print(product_id_to_delete)
+    order_id = body['order_id']
+    new_status = body['status']
     
 
-    for dynamo_table in [dynamo_table_product, dynamo_table_product_comment]:
-        ###
-        # Now we have to check if there is a product for filter
-        # There can only be one item because there is only one HASH key in the DB, the result is either a dict or not present at all
-        response_get_item = dynamo_table.get_item(Key = {PATH_PARAMETER_FILTER:filter})
-        
-        # Check if we found a result, otherwise retrieve empty list
-        product_found = response_get_item.get("Item", None)
-
-        # If None we did not found anything, return 404
-        if not product_found:
-            print(f"Product with product_id {filter} not found in table {dynamo_table.name}")
-        
-        # Delete the product from the DynamoDB table
-        dynamo_table.delete_item(Key={'product_id': product_id_to_delete})
-
-
+    # Now we have to check if there is a order object for filter
+    # There can only be one item because there is only one HASH key in the DB, the result is either a dict or not present at all
+    response_get_item = dynamo_table.get_item(Key = {PATH_PARAMETER_FILTER:filter})
     
+    # Check if we found a result, otherwise retrieve empty list
+    order_object_found = response_get_item.get("Item", None)
+
+    # If None we did not find anything, return 404
+    if not order_object_found:
+        return return_error(f"No orders with user_id {filter} found, return 404", 404)
+
+    for i, order in enumerate(order_object_found['orders']):
+        if order['order_id'] == order_id:
+            order_object_found['orders'][i]['status'] = new_status
+            break
+
+    # Now we have to update the item
+    try:
+        response = dynamo_table.put_item(
+            Item = order_object_found
+        )
+    except Exception as e:
+        return return_error(f"Error updating item: {str(e)}")
+
     print("Success, return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = 200
-    HTTP_RESPONSE_DICT['body'] = {'product_id': product_id_to_delete}
+    HTTP_RESPONSE_DICT['body'] = json.dumps(order_object_found)
+
     return HTTP_RESPONSE_DICT
 
 if __name__ == "__main__":

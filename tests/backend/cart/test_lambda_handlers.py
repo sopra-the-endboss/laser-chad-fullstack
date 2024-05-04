@@ -109,6 +109,7 @@ def generate_inputs() -> dict[str,dict]:
     brand1 = "apple"
     brand2 = "intel"
     image1 = "image_one"
+    image2 = "image_two"
     title1 = "title_two"
 
     ###
@@ -132,7 +133,7 @@ def generate_inputs() -> dict[str,dict]:
         "body" : json.dumps({
             "product_id":prod1,
             "brand":brand1,
-            "image":image1}
+            "images":[image1,image2]}
             ),
         "pathParameters" : {"userId":user1_str}
     }
@@ -514,7 +515,7 @@ def test_DELETE_multi(dynamo_table, generate_inputs: dict[str,str]):
                 "product_id" : "product_one",
                 "quantity" : 1,
                 "brand":json.loads(EVENT_1['body'])['brand'],
-                "image":json.loads(EVENT_1['body'])['image']
+                "images":json.loads(EVENT_1['body'])['images']
             }
         ]
     }
@@ -574,7 +575,7 @@ def test_PUT_addfield(dynamo_table, generate_inputs: dict[str,str]):
 
     # SECOND
     # PUT EVENT with additionalfield, should yield quantity 2 on product_id
-    # and also brand "brand1" and image "image_one"
+    # and also brand "brand1" and images ["image_one","image_two"]
     res_put = put_handler.handler(EVENT_ADDFIELD1, CONTEXT_DUMMY)
     assert res_put['statusCode'] == 200
     res_body = json.loads(res_put['body'])
@@ -585,7 +586,7 @@ def test_PUT_addfield(dynamo_table, generate_inputs: dict[str,str]):
             "product_id" : json.loads(EVENT_BASIS['body'])['product_id'],
             "quantity":2,
             "brand" : json.loads(EVENT_ADDFIELD1['body'])['brand'],
-            "image" : json.loads(EVENT_ADDFIELD1['body'])['image']
+            "images" : json.loads(EVENT_ADDFIELD1['body'])['images']
             }]
     }
     assert res_body == BODY_EXPECT
@@ -597,7 +598,7 @@ def test_PUT_addfield(dynamo_table, generate_inputs: dict[str,str]):
 
     # THIRD
     # PUT EVENT with additionalfield with a new value, should yield quantity 3 on product_id
-    # and also update brand to brand2, leave image to image_one and add title title_one
+    # and also update brand to brand2, leave images to image_one and add title title_one
     res_put = put_handler.handler(EVENT_ADDFIELD2, CONTEXT_DUMMY)
     assert res_put['statusCode'] == 200
     res_body = json.loads(res_put['body'])
@@ -608,7 +609,7 @@ def test_PUT_addfield(dynamo_table, generate_inputs: dict[str,str]):
             "product_id" : json.loads(EVENT_BASIS['body'])['product_id'],
             "quantity":3,
             "brand" : json.loads(EVENT_ADDFIELD2['body'])['brand'],
-            "image" : json.loads(EVENT_ADDFIELD1['body'])['image'],
+            "images" : json.loads(EVENT_ADDFIELD1['body'])['images'],
             "title" : json.loads(EVENT_ADDFIELD2['body'])['title']
             }]
     }
@@ -653,7 +654,7 @@ def test_PUT_addfield_ignore_quantity(dynamo_table, generate_inputs: dict[str,st
 
     # SECOND
     # PUT EVENT with additionalfield, should yield quantity 2 on product_id
-    # and also brand "brand1" and image "image_one"
+    # and also brand "brand1" and images "image_one"
     res_put = put_handler.handler(EVENT_ADDFIELD1, CONTEXT_DUMMY)
     assert res_put['statusCode'] == 200
     res_body = json.loads(res_put['body'])
@@ -664,7 +665,7 @@ def test_PUT_addfield_ignore_quantity(dynamo_table, generate_inputs: dict[str,st
             "product_id" : json.loads(EVENT_BASIS['body'])['product_id'],
             "quantity":2,
             "brand" : json.loads(EVENT_ADDFIELD1['body'])['brand'],
-            "image" : json.loads(EVENT_ADDFIELD1['body'])['image']
+            "images" : json.loads(EVENT_ADDFIELD1['body'])['images']
             }]
     }
     assert res_body == BODY_EXPECT
@@ -676,7 +677,7 @@ def test_PUT_addfield_ignore_quantity(dynamo_table, generate_inputs: dict[str,st
 
     # THIRD
     # PUT EVENT with additionalfield with a new value, should yield quantity 3 on product_id
-    # and also update brand to brand2, leave image to image_one and NOT ADD OR CHANGE quantity
+    # and also update brand to brand2, leave images to image_one and NOT ADD OR CHANGE quantity
     res_put = put_handler.handler(EVENT_ADDFIELD_QUANTITY, CONTEXT_DUMMY)
     assert res_put['statusCode'] == 200
     res_body = json.loads(res_put['body'])
@@ -687,7 +688,7 @@ def test_PUT_addfield_ignore_quantity(dynamo_table, generate_inputs: dict[str,st
             "product_id" : json.loads(EVENT_BASIS['body'])['product_id'],
             "quantity":3,
             "brand" : json.loads(EVENT_ADDFIELD_QUANTITY['body'])['brand'],
-            "image" : json.loads(EVENT_ADDFIELD1['body'])['image']
+            "images" : json.loads(EVENT_ADDFIELD1['body'])['images']
             }]
     }
     assert res_body == BODY_EXPECT

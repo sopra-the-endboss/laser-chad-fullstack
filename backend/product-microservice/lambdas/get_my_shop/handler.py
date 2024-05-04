@@ -44,9 +44,9 @@ def handler(event, context) -> list[dict]:
         body : JSON serialized List object with all the items found. Each item is a dict
     """
 
-    PATH_PARAMETER_FILTER = "product_id" # Must match the name in resources_to_create.json in the path with {}
+    PATH_PARAMETER_FILTER = "seller_id" # Must match the name in resources_to_create.json in the path with {}
     
-    print("get_product_comment invoked")
+    print("get_product invoked")
 
     print("DEBUG: This is the context")
     pp.pprint(context)
@@ -57,7 +57,7 @@ def handler(event, context) -> list[dict]:
     print("DEBUG: This is the event raw")
     print(event)
 
-    TableName = "product-comment-table"
+    TableName = "product-table"
 
     print(f"Using table {TableName}")
 
@@ -89,21 +89,16 @@ def handler(event, context) -> list[dict]:
     print(f"Items found after scanning table:")
     print(found_items_list)
 
-    # Now check if we have a partParameter id which is used as a filter
-    # If we have a non empty dict for event['pathParameters'] we want to apply a filter to all items found
-    print(f"Filtering items with {PATH_PARAMETER_FILTER}")
     if event['pathParameters']:
         if PATH_PARAMETER_FILTER in event['pathParameters']:
             path_parameter_to_match = event['pathParameters'][PATH_PARAMETER_FILTER]
-            print(f"Found path parameter {PATH_PARAMETER_FILTER}. Apply filter to all retrieved objects ...")
-            found_items_filtered = [item for item in found_items_list if item[PATH_PARAMETER_FILTER] == path_parameter_to_match]
-            found_items_list = found_items_filtered
-            print(f"Items after filtering")
-            print(found_items_list)
+
+    filtered_items_list = [item for item in found_items_list if item.get('seller_id') == path_parameter_to_match]
+    found_items_list = filtered_items_list
 
     print("Return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = '200'
-    HTTP_RESPONSE_DICT['body'] = json.dumps(found_items_list[0]) if len(found_items_list) == 1 else (json.dumps({}) if len(found_items_list) == 0 else json.dumps(found_items_list))
+    HTTP_RESPONSE_DICT['body'] = json.dumps(found_items_list)
 
     print(f"DEBUG: This is the HTTP response we are sending back")
     pp.pprint(HTTP_RESPONSE_DICT)

@@ -33,6 +33,7 @@ function App() {
   // fetching functions modularized
   const fetchAPIGURL = useFetchAPIGURL();
   const fetchAllProducts = useFetchAllProducts(setAllProductsName, setLoading);
+  const [apiGURLFetched, setApiGURLFetched] = useState(false);
 
   useAuth();
 
@@ -46,14 +47,18 @@ function App() {
   }, [categoryFilter, AllProductsName]);
 
   useEffect(() => {
-    fetchAPIGURL();
+    fetchAPIGURL().then(() => {
+      setApiGURLFetched(true);
+    });
   }, [fetchAPIGURL]);
 
   useEffect(() => {
-    fetchAllProducts();
+    if (apiGURLFetched) {
+      fetchAllProducts();
+    }
     // adding fetchAllProducts into the dependencies leads to infinite calls. we dont do that here
     // eslint-disable-next-line
-  }, [setAllProductsName, setLoading]);
+  }, [setAllProductsName, setLoading, apiGURLFetched]);
 
   return (
     <Provider store={store}>

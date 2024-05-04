@@ -111,7 +111,6 @@ const Navbar = ({ setData, searchQuerySubmitted, AllProductsName }) => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4 mb-4">
         <div className="relative flex items-center justify-between h-16">
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex-shrink-0 flex items-center">ICON</div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
                 {routes.map((route) => (

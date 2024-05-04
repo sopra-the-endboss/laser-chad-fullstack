@@ -27,12 +27,12 @@ const cartSlice = createSlice({
      * @param {Object} action - An action object containing the item's details.
      * @param {string} action.payload.brand - The brand of the product.
      * @param {number} action.payload.product_id - The unique identifier for the product.
-     * @param {string} action.payload.title - The title of the product.
+     * @param {string} action.payload.product - Product name.
      * @param {number} action.payload.price - The price of the product.
-     * @param {string} action.payload.img - The image URL of the product.
+     * @param {array} action.payload.images - The images URLs of the product.
      */
     addToCart: (state, action) => {
-      const { brand, product_id, title, price, img } = action.payload;
+      const { brand, product_id, product, price, images } = action.payload;
       const existingIndex = state.cartItems.findIndex(
         (item) => item.product_id === action.payload.product_id
       );
@@ -43,9 +43,9 @@ const cartSlice = createSlice({
         state.cartItems.push({
           brand,
           product_id,
-          title,
+          product,
           price,
-          img,
+          images,
           quantity: 1,
         });
       }
@@ -90,19 +90,12 @@ const cartSlice = createSlice({
     clearCart: (state, action) => {
       state.cartItems = [];
     },
-
-    sendCart: (state) => {},
   },
 });
 
 /**
  * Exported actions from the cartSlice for use in dispatching changes to the cart state.
  */
-export const {
-  addToCart,
-  reduceQuantity,
-  removeFromCart,
-  sendCart,
-  clearCart,
-} = cartSlice.actions;
+export const { addToCart, reduceQuantity, removeFromCart, clearCart } =
+  cartSlice.actions;
 export default cartSlice.reducer;

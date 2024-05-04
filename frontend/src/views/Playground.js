@@ -3,42 +3,67 @@ import { useSelector } from 'react-redux';
 
 export const Playground = () => {
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
-    const [GetResponse, setGetResponse] = useState('');
-    const [PostResponse, setPostResponse] = useState('');
-    const [PostBatchResponse, setPostBatchResponse] = useState('');
-    const [PostCommentResponse, setPostCommentResponse] = useState('');
+    const [GetOrderResponse, setGetOrderResponse] = useState('');
+    const [PostOrderResponse, setPostOrderResponse] = useState('');
+    const [PutOrderResponse, setPutOrderResponse] = useState('');
+    const authState = useSelector((state) => state.auth);
+    const [GetCartResponse, setGetCartResponse] = useState('');
+    const [RecentOrderId, setRecentOrderId] = useState('');
     const [GetCommentResponse, setGetCommentResponse] = useState('');
-    const [DeleteResponse, setDeleteResponse] = useState('');
-    const [GetDistributorResponse, setGetDistributorResponse] = useState('');
-    const [GetCategoryResponse, setGetCategoryResponse] = useState('');
+    const [PostCommentResponse, setPostCommentResponse] = useState('');
+    const [DeleteCommentResponse, setDeleteCommentResponse] = useState('');
+    const [generatedReviewId, setGeneratedReviewId] = useState('');
+    const [GetProductResponse, setGetProductResponse] = useState('');
+    const [DeleteProductResponse, setDeleteProductResponse] = useState('');
+    const [GetMyShopResponse, setGetMyShopResponse] = useState('');
 
-    const handleClick = async () => {
+    const handleGetOrderClick = async () => {
         try {
-            const res = await fetch(apigBaseUrl + "/product/1");
+            const res = await fetch(apigBaseUrl + "/order/"+authState.user.userId);
             const data = await res.json();
-            setGetResponse(data);
+            setGetOrderResponse(data);
         } catch (error) {
             console.error(error);
         }
     };
 
-    const handlePostClick = async () => {
+    const handlePostOrderClick = async () => {
         try {
-            const res = await fetch(apigBaseUrl + "/product", {
+            const res = await fetch(apigBaseUrl + "/order/"+authState.user.userId, {
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+    
+            const text = await res.text();
+            try {
+                const data = JSON.parse(text);
+                setRecentOrderId(data.order_id);
+                setPostOrderResponse(data);
+            } catch (err) {
+                console.error('This does not look like a valid JSON: ', text);
+                throw err;
+            }
+        } catch (error) {
+            console.error('There was a problem with the fetch operation: ', error);
+        }
+    };
+
+    const handlePutOrderClick = async () => {
+        try {
+            const res = await fetch(apigBaseUrl + "/order/"+authState.user.userId, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "product_id": "1",
-                    "product": "Apple iPhone 15 Pro",
-                    "highlighted": true,
-                    "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
-                    "price": 57.46,
-                    "formatted_text": "",
-                    "category": "Smartphone",
-                    "brand": "Apple"
-                  })
+                    "order_id": RecentOrderId,
+                    "status": "shipped"
+                })
             });
             if (!res.ok) {
                 throw new Error(`HTTP error! status: ${res.status}`);
@@ -47,7 +72,7 @@ export const Playground = () => {
             const text = await res.text();
             try {
                 const data = JSON.parse(text);
-                setPostResponse(data);
+                setPutOrderResponse(data);
             } catch (err) {
                 console.error('This does not look like a valid JSON: ', text);
                 throw err;
@@ -55,105 +80,53 @@ export const Playground = () => {
         } catch (error) {
             console.error('There was a problem with the fetch operation: ', error);
         }
-    };
+    }
 
-    const handleDeleteClick = async () => {
+    const handleGetCartClick = async () => {
         try {
-            const res = await fetch(apigBaseUrl + "/product/2", {
-                method: 'DELETE'
-            });
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
-
-            const text = await res.text();
-            try {
-                const data = JSON.parse(text);
-                setDeleteResponse(data);
-            } catch (err) {
-                console.error('This does not look like a valid JSON: ', text);
-                throw err;
-            }
+            const res = await fetch(apigBaseUrl + "/cart/"+authState.user.userId);
+            const data = await res.json();
+            setGetCartResponse(data);
         } catch (error) {
-            console.error('There was a problem with the fetch operation: ', error);
+            console.error(error);
         }
-    };
+    }
 
-    const handlePostBatchClick = async () => {
+
+
+
+
+
+
+
+    const handleGetCommentClick = async () => {
         try {
-            const res = await fetch(apigBaseUrl + "/product/batch", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify([
-                    {
-                      "product_id": "1",
-                      "product": "Apple iPhone 15 Pro",
-                      "highlighted": true,
-                      "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
-                      "price": 57.46,
-                      "formatted_text": "",
-                      "category": "Smartphone",
-                      "brand": "Apple"
-                    },
-                    {
-                      "product_id": "2",
-                      "product": "Apple MacBook Air",
-                      "highlighted": true,
-                      "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
-                      "price": 775.82,
-                      "formatted_text": "",
-                      "category": "Laptop",
-                      "brand": "Apple"
-                    },
-                    {
-                      "product_id": "3",
-                      "product": "Samsung Galaxy S9",
-                      "highlighted": true,
-                      "image": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
-                      "price": 482.89,
-                      "formatted_text": "",
-                      "category": "Smartphone",
-                      "brand": "Samsung"
-                    }
-                ])
-            });
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
-    
-            const text = await res.text();
-            try {
-                const data = JSON.parse(text);
-                setPostBatchResponse(data);
-            } catch (err) {
-                console.error('This does not look like a valid JSON: ', text);
-                throw err;
-            }
+            const res = await fetch(apigBaseUrl + "/product-comment/1");
+            const data = await res.json();
+            setGetCommentResponse(data);
         } catch (error) {
-            console.error('There was a problem with the fetch operation: ', error);
+            console.error(error);
         }
     };
 
     const handlePostCommentClick = async () => {
         try {
-            const res = await fetch(apigBaseUrl + "/product-comment", {
+            const res = await fetch(apigBaseUrl + "/product-comment/1", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "product_id": "2",
-                    "reviews": [
-                      {
-                        "user": "GamerGa999",
-                        "rating": 4.5,
-                        "title": "Bad for Gaming on the Go",
-                        "comment": "Its just kinda shit",
-                        "date": "2024-03-11"
-                      }]
-                  })
+
+                        "user_id": authState.user.userId,
+                        "user": "Nilsen",
+                        "rating": 3,
+                        "title": "Mid",
+                        "review": "Its mid tbh",
+                        "date": "2024-03-03",
+                        
+                    
+                })
             });
             if (!res.ok) {
                 throw new Error(`HTTP error! status: ${res.status}`);
@@ -162,6 +135,7 @@ export const Playground = () => {
             const text = await res.text();
             try {
                 const data = JSON.parse(text);
+                setGeneratedReviewId(data.review_id);
                 setPostCommentResponse(data);
             } catch (err) {
                 console.error('This does not look like a valid JSON: ', text);
@@ -170,66 +144,125 @@ export const Playground = () => {
         } catch (error) {
             console.error('There was a problem with the fetch operation: ', error);
         }
-    };
+    }
 
-    const handleGetComment = async () => {
+    const handleDeleteCommentClick = async () => {
         try {
-            const res = await fetch(apigBaseUrl + "/product-comment/2");
+            const res = await fetch(apigBaseUrl + "/product-comment/1", {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "review_id": generatedReviewId,
+                    "user_id": authState.user.userId
+                })
+            });
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+    
+            const text = await res.text();
+            try {
+                const data = JSON.parse(text);
+                setDeleteCommentResponse(data);
+            } catch (err) {
+                console.error('This does not look like a valid JSON: ', text);
+                throw err;
+            }
+        } catch (error) {
+            console.error('There was a problem with the fetch operation: ', error);
+        }
+    }
+
+
+    const handleGetProductClick = async () => {
+        try {
+            const res = await fetch(apigBaseUrl + "/product/1");
             const data = await res.json();
-            setGetCommentResponse(data);
+            setGetProductResponse(data);
         } catch (error) {
             console.error(error);
         }
-    };
+    }
 
-    const handleGetDistributorClick = async () => {
+    const handleDeleteProductClick = async () => {
         try {
-            const res = await fetch(apigBaseUrl + "/distributor");
+            const res = await fetch(apigBaseUrl + "/product/1", {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+    
+            const text = await res.text();
+            try {
+                const data = JSON.parse(text);
+                setDeleteProductResponse(data);
+            } catch (err) {
+                console.error('This does not look like a valid JSON: ', text);
+                throw err;
+            }
+        } catch (error) {
+            console.error('There was a problem with the fetch operation: ', error);
+        }
+    }
+
+    const handleGetMyShopClick = async () => {
+        try {
+            const res = await fetch(apigBaseUrl + "/my-shop/"+authState.user.userId);
             const data = await res.json();
-            setGetDistributorResponse(data);
+            setGetMyShopResponse(data);
         } catch (error) {
             console.error(error);
         }
+    }
 
-    };
 
-    const handleGetCategoryClick = async () => {
-        try {
-            const res = await fetch(apigBaseUrl + "/category");
-            const data = await res.json();
-            setGetCategoryResponse(data);
-        } catch (error) {
-            console.error(error);
-        }
 
-    };
+
 
     return (
         <div>
             <p>API Gateway Base URL: {apigBaseUrl}</p>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleClick}>Send GET Request</button>
-            <p>GetResponse: {JSON.stringify(GetResponse)}</p>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleGetOrderClick}>Send GET order Request</button>
+            <p>GetOrderResponse: {JSON.stringify(GetOrderResponse)}</p>
 
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handlePostClick}>Send POST Request</button>
-            <p>PostResponse: {JSON.stringify(PostResponse)}</p>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handlePostOrderClick}>Send POST order Request</button>
+            <p>PostOrderResponse: {JSON.stringify(PostOrderResponse)}</p>
 
-            <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={handleDeleteClick}>Send DELETE Request</button>
-            <p>DeleteResponse: {JSON.stringify(DeleteResponse)}</p>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handlePutOrderClick}>Send PUT order Request</button>
+            <p>PutOrderResponse: {JSON.stringify(PutOrderResponse)}</p>
 
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handlePostBatchClick}>Send POST Batch Request</button>
-            <p>PostBatchResponse: {JSON.stringify(PostBatchResponse)}</p>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleGetCartClick}>Send GET cart Request</button>
+            <p>GetCartResponse: {JSON.stringify(GetCartResponse)}</p>
 
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handlePostCommentClick}>Send POST Comment Request</button>
-            <p>PostCommentResponse: {JSON.stringify(PostCommentResponse)}</p>
 
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleGetComment}>Send GET Comment Request</button>
+
+
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleGetCommentClick}>Send GET comment Request</button>
             <p>GetCommentResponse: {JSON.stringify(GetCommentResponse)}</p>
 
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleGetDistributorClick}>Send GET Distributor Request</button>
-            <p>GetDistributorResponse: {JSON.stringify(GetDistributorResponse)}</p>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handlePostCommentClick}>Send POST comment Request</button>
+            <p>PostCommentResponse: {JSON.stringify(PostCommentResponse)}</p>
 
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleGetCategoryClick}>Send GET Category Request</button>
-            <p>GetCategoryResponse: {JSON.stringify(GetCategoryResponse)}</p>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleDeleteCommentClick}>Send DELETE comment Request</button>
+            <p>DeleteCommentResponse: {JSON.stringify(DeleteCommentResponse)}</p>
+
+
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleGetProductClick}>Send GET product Request</button>
+            <p>GetProductResponse: {JSON.stringify(GetProductResponse)}</p>
+
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleDeleteProductClick}>Send DELETE product Request</button>
+            <p>DeleteProductResponse: {JSON.stringify(DeleteProductResponse)}</p>
+
+
+
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleGetMyShopClick}>Send GET my shop Request</button>
+            <p>GetMyShopResponse: {JSON.stringify(GetMyShopResponse)}</p>
 
         </div>
     );
