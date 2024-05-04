@@ -15,6 +15,7 @@ function CarouselComponent({carouselData, clickable = true, onCardInteract, load
     const dispatch = useDispatch();
     if (carouselData) {
         // Normalize the carousel data to always have an 'images' array
+        // TODO: Could be simplified since all items should contain a field images:[str]
         const normalizedCarouselData = Array.isArray(carouselData) ? carouselData.map(item => {
             return {
                 ...item, images: item.images || [item.image]
@@ -59,7 +60,7 @@ function CarouselComponent({carouselData, clickable = true, onCardInteract, load
                             justifyContent: 'end'
                         }}>
                             <CardContentComponent
-                                title={item['product']}
+                                product_title={item['product']}
                                 formatted_text={item?.formatted_text}
                                 category={item?.category}
                                 price={item?.price}
@@ -79,13 +80,9 @@ function CarouselComponent({carouselData, clickable = true, onCardInteract, load
                                 disabled={loading}
                                 onClick={(event) => {
                                     event.stopPropagation();
-                                    dispatch(addToCart({
-                                        product_id: item.product_id,
-                                        brand: item.brand,
-                                        title: item.product,
-                                        price: item.price,
-                                        img: item.image
-                                    }));
+                                    const productToCart = {...item}
+                                    dispatch(addToCart(productToCart));
+                                    console.log("Added to cart: ", productToCart);
                                 }}
                             >
                                 <AddShoppingCartIcon fontSize="small"/>

@@ -13,6 +13,8 @@ export const Playground = () => {
     const [PostCommentResponse, setPostCommentResponse] = useState('');
     const [DeleteCommentResponse, setDeleteCommentResponse] = useState('');
     const [generatedReviewId, setGeneratedReviewId] = useState('');
+    const [GetProductResponse, setGetProductResponse] = useState('');
+    const [DeleteProductResponse, setDeleteProductResponse] = useState('');
 
     const handleGetOrderClick = async () => {
         try {
@@ -173,6 +175,42 @@ export const Playground = () => {
     }
 
 
+    const handleGetProductClick = async () => {
+        try {
+            const res = await fetch(apigBaseUrl + "/product/1");
+            const data = await res.json();
+            setGetProductResponse(data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const handleDeleteProductClick = async () => {
+        try {
+            const res = await fetch(apigBaseUrl + "/product/1", {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+    
+            const text = await res.text();
+            try {
+                const data = JSON.parse(text);
+                setDeleteProductResponse(data);
+            } catch (err) {
+                console.error('This does not look like a valid JSON: ', text);
+                throw err;
+            }
+        } catch (error) {
+            console.error('There was a problem with the fetch operation: ', error);
+        }
+    }
+
+
 
 
 
@@ -202,6 +240,13 @@ export const Playground = () => {
 
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleDeleteCommentClick}>Send DELETE comment Request</button>
             <p>DeleteCommentResponse: {JSON.stringify(DeleteCommentResponse)}</p>
+
+
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleGetProductClick}>Send GET product Request</button>
+            <p>GetProductResponse: {JSON.stringify(GetProductResponse)}</p>
+
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleDeleteProductClick}>Send DELETE product Request</button>
+            <p>DeleteProductResponse: {JSON.stringify(DeleteProductResponse)}</p>
 
         </div>
     );

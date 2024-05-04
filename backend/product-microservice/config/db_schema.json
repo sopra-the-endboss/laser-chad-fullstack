@@ -1,81 +1,82 @@
-[{
-"TableName":"product-table",
-"KeySchema": [
+[
     {
-        "AttributeName": "product_id",
-        "KeyType": "HASH"
-    }
-],
-"AttributeDefinitions": [
+        "TableName": "product-table",
+        "KeySchema": [
+            {
+                "AttributeName": "product_id",
+                "KeyType": "HASH"
+            }
+        ],
+        "AttributeDefinitions": [
+            {
+                "AttributeName": "product_id",
+                "AttributeType": "S"
+            }
+        ],
+        "BillingMode": "PAY_PER_REQUEST"
+    },
     {
-        "AttributeName": "product_id",
-        "AttributeType": "S"
+        "TableName": "product-comment-table",
+        "KeySchema": [
+            {
+                "AttributeName": "product_id",
+                "KeyType": "HASH"
+            }
+        ],
+        "AttributeDefinitions": [
+            {
+                "AttributeName": "product_id",
+                "AttributeType": "S"
+            }
+        ],
+        "BillingMode": "PAY_PER_REQUEST"
+    },
+    {
+        "TableName": "distributor-table",
+        "KeySchema": [
+            {
+                "AttributeName": "distributor_id",
+                "KeyType": "HASH"
+            }
+        ],
+        "AttributeDefinitions": [
+            {
+                "AttributeName": "distributor_id",
+                "AttributeType": "S"
+            }
+        ],
+        "BillingMode": "PAY_PER_REQUEST"
+    },
+    {
+        "TableName": "category-table",
+        "KeySchema": [
+            {
+                "AttributeName": "category_id",
+                "KeyType": "HASH"
+            }
+        ],
+        "AttributeDefinitions": [
+            {
+                "AttributeName": "category_id",
+                "AttributeType": "S"
+            }
+        ],
+        "BillingMode": "PAY_PER_REQUEST"
+    },
+    {
+        "TableName": "order-table",
+        "KeySchema": [
+            {
+                "AttributeName": "user_id",
+                "KeyType": "HASH"
+            }
+        ],
+        "AttributeDefinitions": [
+            {
+                "AttributeName": "user_id",
+                "AttributeType": "S"
+            }
+        ],
+        "BillingMode": "PAY_PER_REQUEST"
     }
-],
-"BillingMode": "PAY_PER_REQUEST"
-},
-{
-    "TableName":"product-comment-table",
-    "KeySchema": [
-        {
-            "AttributeName": "product_id",
-            "KeyType": "HASH"
-        }
-    ],
-    "AttributeDefinitions": [
-        {
-            "AttributeName": "product_id",
-            "AttributeType": "S"
-        }
-    ],
-    "BillingMode": "PAY_PER_REQUEST"
-},
-{
-    "TableName":"distributor-table",
-    "KeySchema": [
-        {
-            "AttributeName": "distributor_id",
-            "KeyType": "HASH"
-        }
-    ],
-    "AttributeDefinitions": [
-        {
-            "AttributeName": "distributor_id",
-            "AttributeType": "S"
-        }
-    ],
-    "BillingMode": "PAY_PER_REQUEST"
-},
-{
-    "TableName":"category-table",
-    "KeySchema": [
-        {
-            "AttributeName": "category_id",
-            "KeyType": "HASH"
-        }
-    ],
-    "AttributeDefinitions": [
-        {
-            "AttributeName": "category_id",
-            "AttributeType": "S"
-        }
-    ],
-    "BillingMode": "PAY_PER_REQUEST"
-},
-{
-    "TableName":"order-table",
-    "KeySchema": [
-        {
-            "AttributeName": "user_id",
-            "KeyType": "HASH"
-        }
-    ],
-    "AttributeDefinitions": [
-        {
-            "AttributeName": "user_id",
-            "AttributeType": "S"
-        }
-    ],
-    "BillingMode": "PAY_PER_REQUEST"
-}
 ]
