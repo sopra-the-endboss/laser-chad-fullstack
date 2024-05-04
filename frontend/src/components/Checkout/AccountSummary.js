@@ -76,12 +76,7 @@ const AccountSummary = () => {
         <React.Fragment>
           <Grid container spacing={3}>
             {formFields.map((field) => (
-              <Grid
-                item
-                xs={12}
-                sm={field.name.includes("card") ? 6 : 12}
-                key={field.name}
-              >
+              <Grid item xs={12} sm={12} key={field.name}>
                 <TextField
                   required
                   name={field.name}

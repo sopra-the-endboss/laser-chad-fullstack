@@ -11,8 +11,9 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useSelector } from "react-redux";
 
-import AccountSummary from "../components/Account/AccountSummary";
+import AccountSummary from "../components/Checkout/AccountSummary";
 import CartItem from "../components/Cart/CartItem";
+import Payment from "../components/Checkout/Payment";
 import { useNavigate } from "react-router-dom";
 
 const CheckoutPage = () => {
@@ -24,17 +25,6 @@ const CheckoutPage = () => {
       navigate("/product/" + id);
     }
   };
-
-  //   const cardFields = [
-  //     { name: "cardName", label: "Name on card", autoComplete: "cc-name" },
-  //     {
-  //       name: "cardNumber",
-  //       label: "Credit card number",
-  //       autoComplete: "cc-number",
-  //     },
-  //     { name: "cardExp", label: "Expiry date", autoComplete: "cc-exp" },
-  //     { name: "cardCVV", label: "CVV", autoComplete: "cc-csc" },
-  //   ];
 
   return (
     <Container component="main" maxWidth="md">
@@ -87,7 +77,7 @@ const CheckoutPage = () => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography></Typography>
+            <Payment />
           </AccordionDetails>
         </Accordion>
       </Paper>
