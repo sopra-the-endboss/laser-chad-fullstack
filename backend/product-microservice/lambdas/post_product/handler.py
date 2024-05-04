@@ -1,6 +1,5 @@
 """
-Handle call which writes an item to the template DB
-TODO: Error handling (either let handler function fail, or wrap?), duplicates?
+Post a product to the db.
 The handler has the name of the table hardcoded, this is determined by the config file config/db_schema.json upon deployment
 """
 import os
@@ -27,6 +26,13 @@ HTTP_RESPONSE_DICT = {
     # Here comes to body, as a JSON string
 }
 
+def return_error(msg:str, code:int = 400) -> dict:
+    print(msg)
+    error_return_dict = HTTP_RESPONSE_DICT.copy()
+    error_return_dict['statusCode']=code
+    error_return_dict['body']=json.dumps(msg)
+    return error_return_dict
+
 def handler(event: dict, context) -> dict:
     """
     Arguments:
@@ -45,7 +51,7 @@ def handler(event: dict, context) -> dict:
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default
         headers : Empty by default, dict otherwise
-        body : Empty, this function does not return anything except the statusCode
+        body : A JSON serialized string with an object containing one field, the product_id of the successfully inserted product
     """
     
     print("post_lambda invoked")
@@ -55,16 +61,21 @@ def handler(event: dict, context) -> dict:
 
     print("DEBUG: This is the event")
     pp.pprint(event)
-    
-    print("DEBUG: This is the event raw")
-    print(event)
-    
+   
     TableName = "product-table"
+
+    print("Check if table is available ...")
+    dynamo_client = boto3.client("dynamodb")
+    available_tables = dynamo_client.list_tables()
+    available_tables = available_tables['TableNames']
+    if not TableName in available_tables:
+        return return_error(f"Table {TableName} not found in the available tables, abort")
 
     print("Creating dynamo table object ...")
     dynamo_resource = boto3.resource("dynamodb")
     dynamo_table = dynamo_resource.Table(TableName)
 
+    # Since we need "product_id" to be present, we can safely assume the body is not empty
     print("Parse body")
     try:
         item = json.loads(event['body'], parse_float=Decimal)
@@ -81,14 +92,14 @@ def handler(event: dict, context) -> dict:
         Item = item
     )
 
-    print("This is the response_put object from the put_item call")
-    print(response_put)
     print("This is the response_put object from the put_item call with PrettyPrinter")
     pp.pprint(response_put)
 
     print("Return HTTP object")
-    HTTP_RESPONSE_DICT['statusCode'] = '200'
-    HTTP_RESPONSE_DICT['body'] =  {'product_id': item['product_id']}
+    HTTP_RESPONSE_DICT['statusCode'] = 200
+    HTTP_RESPONSE_DICT['body'] =  json.dumps(
+        {'product_id': item['product_id']}
+    )
 
     print(f"DEBUG: This is the HTTP response we are sending back")
     pp.pprint(HTTP_RESPONSE_DICT)
