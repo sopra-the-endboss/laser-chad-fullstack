@@ -55,6 +55,10 @@ export const useFetchAllProducts = (setAllProductsName, setLoading) => {
 }
 
 export const usePostNewProduct = (productToPost, setLoading, setCreatedProductId) => {
+    const authState = useSelector((state) => state.auth);
+
+    const sellerId = authState.user.userId;
+    productToPost.seller_id = sellerId;
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
 
     return async () => {

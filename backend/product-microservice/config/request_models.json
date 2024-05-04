@@ -4,9 +4,12 @@
             "$schema": "http://json-schema.org/draft-04/schema#",
             "title": "post_product",
             "type": "object",
-            "required": ["product_id"],
+            "required": ["product_id", "seller_id"],
             "properties": {
                 "product_id": {
+                    "type": "string"
+                },
+                "seller_id": {
                     "type": "string"
                 }
 
