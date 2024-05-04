@@ -70,13 +70,46 @@ const AccountDetails = () => {
       dispatch(addToCart(mock[i]));
     }
   };
-
+  const accountFields = [
+    {
+      name: "fullname",
+      label: "Fullname",
+      autoComplete: "fullname",
+      value: authState.givenname + " " + authState.familyname,
+    },
+    {
+      name: "birthdate",
+      label: "Birthdate",
+      autoComplete: "birthdate",
+      value: authState.birthdate,
+      type: "date",
+    },
+    {
+      name: "email",
+      label: "Email",
+      autoComplete: "email",
+      value: authState.email,
+    },
+    {
+      name: "fulladdress",
+      label: "Fulladdress",
+      autoComplete: "shipping address-level2",
+      value: authState.zip + " " + authState.city + " " + authState.county,
+      type: "address",
+    },
+  ];
   const formFields = [
     {
       name: "givenname",
       label: "Givenname",
       autoComplete: "givenname",
-      value: authState.givenname + " " + authState.familyname,
+      value: authState.givenname,
+    },
+    {
+      name: "familyname",
+      label: "Familyname",
+      autoComplete: "familyname",
+      value: authState.familyname,
     },
     {
       name: "birthdate",
@@ -102,7 +135,21 @@ const AccountDetails = () => {
       name: "city",
       label: "City",
       autoComplete: "shipping address-level2",
-      value: authState.zip + " " + authState.city + " " + authState.county,
+      value: authState.city,
+      type: "address",
+    },
+    {
+      name: "zip",
+      label: "Zip / Postal code",
+      autoComplete: "shipping postal-code",
+      value: authState.zip,
+      type: "address",
+    },
+    {
+      name: "county",
+      label: "County",
+      autoComplete: "shipping address-level2",
+      value: authState.county,
       type: "address",
     },
   ];
@@ -213,7 +260,7 @@ const AccountDetails = () => {
       ) : (
         <React.Fragment>
           <h3 className="accountH3">Account Details</h3>
-          {formFields.map((field, index) => (
+          {accountFields.map((field, index) => (
             <React.Fragment key={index}>
               <p className="accountText">{field.value}</p>
             </React.Fragment>
