@@ -48,7 +48,7 @@ def handler(event, context) -> list[dict]:
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default1
         headers : Default to allow CORS, otherwise not used
-        body : JSON serialized new product
+        body :  A JSON serialized string with an object containing one field, the product_id of the successfully deleted product
 
         400 if the handler can not complete
         404 if there is no product with product_id
@@ -61,13 +61,26 @@ def handler(event, context) -> list[dict]:
 
     print("DEBUG: This is the event")
     pp.pprint(event)
-    
 
+    TableName_product = "product-table"
+    TableName_productcomment = "product-comment-table"
+
+    print(f"Using tables {TableName_product} and {TableName_product}")
+
+    print("Check if tables are available ...")
+    dynamo_client = boto3.client("dynamodb")
+    available_tables = dynamo_client.list_tables()
+    available_tables = available_tables['TableNames']
+    for t in (TableName_product, TableName_productcomment):
+        if not t in available_tables:
+            return return_error(f"Table {t} not found in the available tables, abort")
         
     print("Creating dynamo table object ...")
     dynamo_resource = boto3.resource("dynamodb")
     dynamo_table_product = dynamo_resource.Table('product-table')
     dynamo_table_product_comment = dynamo_resource.Table('product-comment-table')
+    
+    
     print(f"Assure pathParameter {PATH_PARAMETER_FILTER} is present in event")
     if not PATH_PARAMETER_FILTER in event['pathParameters']:
         return return_error(f"pathParameter {PATH_PARAMETER_FILTER} not found in event, abort")
@@ -113,7 +126,7 @@ def handler(event, context) -> list[dict]:
     
     print("Success, return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = 200
-    HTTP_RESPONSE_DICT['body'] = {'product_id': product_id_to_delete}
+    HTTP_RESPONSE_DICT['body'] = json.dumps({'product_id': product_id_to_delete})
     return HTTP_RESPONSE_DICT
 
 if __name__ == "__main__":

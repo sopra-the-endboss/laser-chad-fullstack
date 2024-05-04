@@ -7,6 +7,8 @@ What we pass in the lambda handlers are event bodies
 An event body is a string, which is supposed to be serializable to json
 
 We do NOT TEST that the event contains all fields from the HTTP request from the API Gateway, we assume this is done by the API Gateway
+
+NOTE: post_product_batch is not in use, is not tested!
 """
 
 import os
@@ -34,20 +36,23 @@ sys.path.insert(0,path_to_append)
 import importlib
 get_handler_product = importlib.import_module("backend.product-microservice.lambdas.get_product.handler")
 post_handler_product = importlib.import_module("backend.product-microservice.lambdas.post_product.handler")
-post_batch_handler_product = importlib.import_module("backend.product-microservice.lambdas.post_product_batch.handler")
 delete_handler_product = importlib.import_module("backend.product-microservice.lambdas.delete_product.handler")
 
 
 ###
 # Load configs
 db_config_path = "./backend/product-microservice/config"
-db_table_name = "product-table"
+db_table_names = ("product-table", "product-comment-table")
+db_schemas_to_create = {}
 try:
     with open(f"{db_config_path}/db_schema.json","r") as file:
         db_schemas = json.load(file)
-        db_schema = next((db_schema for db_schema in db_schemas if db_schema['TableName'] == db_table_name), None)
-        if db_schema is None:
-            raise ValueError(f"Did not find db schema for {db_table_name}")
+        for db_table_name in db_table_names:
+            tmp_schema = next((db_schema for db_schema in db_schemas if db_schema['TableName'] == db_table_name), None)
+            if tmp_schema is None:
+                raise ValueError(f"Did not find db schema for {db_table_name}")
+            else:
+                db_schemas_to_create[db_table_name] = tmp_schema
 except FileNotFoundError:
     print("Did not find json file with db config")
 
@@ -83,10 +88,20 @@ def db_client(set_env):
 
 @mock_aws
 @pytest.fixture
-def dynamo_table(db_client):
-    db_client.create_table(**db_schema)
+def dynamo_table_product(db_client):
+    db_schema_to_create = db_schemas_to_create['product-table']
+    db_client.create_table(**db_schema_to_create)
     db_resource = boto3.resource("dynamodb")
-    dynamo_table = db_resource.Table(db_schema['TableName'])
+    dynamo_table = db_resource.Table(db_schema_to_create['TableName'])
+    yield dynamo_table
+
+@mock_aws
+@pytest.fixture
+def dynamo_table_product_comment(db_client):
+    db_schema_to_create = db_schemas_to_create['product-comment-table']
+    db_client.create_table(**db_schema_to_create)
+    db_resource = boto3.resource("dynamodb")
+    dynamo_table = db_resource.Table(db_schema_to_create['TableName'])
     yield dynamo_table
 
 @pytest.fixture
@@ -216,8 +231,8 @@ def generate_inputs() -> dict[str,dict]:
 
     return inputs_to_return
 
-def test_simple_count(dynamo_table):
-    item_count = dynamo_table.item_count
+def test_simple_count(dynamo_table_product):
+    item_count = dynamo_table_product.item_count
     assert item_count == 0
 
 @mock_aws
@@ -231,11 +246,23 @@ def test_db_does_not_exist(set_env):
     
     res = post_handler_product.handler(dummy_event, dummy_context)
     assert res['statusCode'] == 400
+    
+    res = delete_handler_product.handler(dummy_event, dummy_context)
+    assert res['statusCode'] == 400
+
+@mock_aws
+def test_db_comment_does_not_exist(dynamo_table_product, set_env):
+    # Pass in empty arguments, we only want to test 400 if table does not exist
+    dummy_event = {}
+    dummy_context = {}
+
+    res = delete_handler_product.handler(dummy_event, dummy_context)
+    assert res['statusCode'] == 400
 
 
 ###
 # Test pathParameters
-def test_GET(dynamo_table, generate_inputs: dict[str,str]):
+def test_GET(dynamo_table_product, generate_inputs: dict[str,str]):
     
     ###
     # Assert GET with empty or wrong pathParameters returns 200 -> Empty table
@@ -260,14 +287,14 @@ def test_GET(dynamo_table, generate_inputs: dict[str,str]):
     assert res_valid_pathParameter['statusCode'] == 200
     assert res_valid_pathParameter['body'] == json.dumps([])
 
-def test_POST_emptyBody(dynamo_table, generate_inputs: dict[str,str]):
+def test_POST_emptyBody(dynamo_table_product, generate_inputs: dict[str,str]):
     
     ###
     # Assert POST with empty body leads to json error
     with pytest.raises(json.JSONDecodeError):
         res_empty_body = post_handler_product.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
 
-def test_POST_GET(dynamo_table, generate_inputs: dict[str,str]):
+def test_POST_GET(dynamo_table_product, generate_inputs: dict[str,str]):
     
     ###
     # Assert POST valid -> 200 and return the product_id
