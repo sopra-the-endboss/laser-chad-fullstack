@@ -63,7 +63,7 @@ function App() {
   return (
     <Provider store={store}>
       <div className="App">
-        <SnackbarProvider maxSnack={3}>
+        <SnackbarProvider maxSnack={3} autoHideDuration={1000}>
           <BrowserRouter>
             <Navigation
               setData={setData}

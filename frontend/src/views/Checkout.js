@@ -1,10 +1,7 @@
 import "../App.css";
 import React, { useState } from "react";
 import {
-  Button,
-  TextField,
   Typography,
-  Grid,
   Paper,
   Container,
   Accordion,
@@ -16,12 +13,23 @@ import { useSelector } from "react-redux";
 import { updateUserAttributes } from "aws-amplify/auth";
 import { useDispatch } from "react-redux";
 import { setUserLoggedIn } from "../reducers/slices/authSlice";
+import AccountSummary from "../components/Account/AccountSummary";
+import CartItem from "../components/Cart/CartItem";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutPage = () => {
   const authState = useSelector((state) => state.auth.user);
   const [isEditing, setIsEditing] = useState(false);
   const [editState, setEditState] = useState(authState);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const cartItems = useSelector((state) => state.cart.cartItems);
+
+  const onCardInteract = (clickable, id) => {
+    if (clickable) {
+      navigate("/product/" + id);
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -108,74 +116,15 @@ const CheckoutPage = () => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            {/* <AccountSummary
-              userDetails={authState}
-              onEdit={(handleEdit) => {}}
-            /> */}
-            {isEditing ? (
-              <React.Fragment>
-                <Grid container spacing={3}>
-                  {formFields.map((field) => (
-                    <Grid
-                      item
-                      xs={12}
-                      sm={field.name.includes("card") ? 6 : 12}
-                      key={field.name}
-                    >
-                      <TextField
-                        required
-                        name={field.name}
-                        label={field.label}
-                        fullWidth
-                        autoComplete={field.autoComplete}
-                        variant="outlined"
-                        value={editState[field.name]}
-                        onChange={handleInputChange}
-                      />
-                    </Grid>
-                  ))}
-                  <Grid item xs={12}>
-                    <Button
-                      onClick={handleUpdate}
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                    >
-                      Submit
-                    </Button>
-                  </Grid>
-                </Grid>
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                <div>
-                  <h3 class="accountH3">Delivery Information</h3>
-                  <p class="accountText">
-                    {authState.givenname + " " + authState.familyname}
-                  </p>
-                  <p class="accountText">{authState.address}</p>
-                  <p class="accountText">
-                    {authState.zip +
-                      " " +
-                      authState.city +
-                      " " +
-                      authState.county}
-                  </p>
-                  <h3 class="accountH3">Delivery method</h3>
-                  <p class="accountText">Shipping</p>
-                </div>
-                <div class="editButtonRight">
-                  <Button
-                    onClick={handleEditToggle}
-                    variant="contained"
-                    size="small"
-                  >
-                    Edit
-                  </Button>
-                </div>
-              </React.Fragment>
-            )}
+            <AccountSummary
+              formFields={formFields}
+              isEditing={isEditing}
+              editState={editState}
+              authState={authState}
+              handleInputChange={handleInputChange}
+              handleUpdate={handleUpdate}
+              handleEditToggle={handleEditToggle}
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -189,7 +138,13 @@ const CheckoutPage = () => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography></Typography>
+            {cartItems.map((item) => (
+              <CartItem
+                key={item.product_id}
+                item={item}
+                onCardInteract={onCardInteract}
+              />
+            ))}
           </AccordionDetails>
         </Accordion>
         <Accordion>

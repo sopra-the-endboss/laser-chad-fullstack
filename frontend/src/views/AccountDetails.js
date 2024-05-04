@@ -47,14 +47,26 @@ const AccountDetails = () => {
   // Add Mock Product for checkout process development
 
   const addMockProduct = () => {
-    const mock = {
-      brand: "Apple",
-      product_id: "1",
-      title: "iphone 13 pro max",
-      price: Number(799.9),
-      img: "https://www.digitec.ch/im/productimages/5/6/4/4/7/4/1/9/1/3/5/2/5/4/9/4/6/2/caac20ef-b06f-41e9-a0bf-d88900ec25b3.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-    };
-    dispatch(addToCart(mock));
+    const mock = [
+      {
+        brand: "Apple",
+        product_id: "1",
+        product: "iphone 13 pro max",
+        price: Number(799.9),
+        images:
+          "https://www.digitec.ch/im/productimages/5/6/4/4/7/4/1/9/1/3/5/2/5/4/9/4/6/2/caac20ef-b06f-41e9-a0bf-d88900ec25b3.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+      },
+      {
+        brand: "Apple",
+        product_id: "2",
+        product: "Apple MacBook Air",
+        price: Number(775.82),
+        image:
+          "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
+      },
+    ];
+    console.log(mock);
+    dispatch(addToCart(mock[0]));
   };
 
   const formFields = [
