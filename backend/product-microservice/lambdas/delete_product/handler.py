@@ -1,6 +1,6 @@
 """
 delete_product
-Handle call to decrease/delete a product with a product_id and quantity for a given userId
+Handle call to delete a product and all comments with a product_id
 """
 
 import boto3
@@ -48,14 +48,13 @@ def handler(event, context) -> list[dict]:
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default1
         headers : Default to allow CORS, otherwise not used
-        body :  A JSON serialized string with an object containing one field, the product_id of the successfully deleted product
+        body :  A JSON serialized string with an object containing one field, the product_id of the to delete product
+          - NOTE: If product_id is not found, 200 is returned with the product_id which was not found
 
         400 if the handler can not complete
-        404 if there is no product with product_id
     """
 
     PATH_PARAMETER_FILTER = "product_id" # Must match the name in resources_to_create.json in the path with {}
-    PRODUCT_DELETED = False
 
     print("delete_product invoked")
 
@@ -80,7 +79,6 @@ def handler(event, context) -> list[dict]:
     dynamo_table_product = dynamo_resource.Table('product-table')
     dynamo_table_product_comment = dynamo_resource.Table('product-comment-table')
     
-    
     print(f"Assure pathParameter {PATH_PARAMETER_FILTER} is present in event")
     if not PATH_PARAMETER_FILTER in event['pathParameters']:
         return return_error(f"pathParameter {PATH_PARAMETER_FILTER} not found in event, abort")
@@ -88,25 +86,17 @@ def handler(event, context) -> list[dict]:
     filter = event['pathParameters'][PATH_PARAMETER_FILTER]
     print(f"This is the filter: {filter}")
 
-
-    ###
-    # Check the body item to update
-    print("Check body, should be a dict or something serializable into a dict")
-    print(event['body'])
-
-
-
     print(f"Filtering items with {PATH_PARAMETER_FILTER}")
     if event['pathParameters']:
         if PATH_PARAMETER_FILTER in event['pathParameters']:
             product_id_to_delete = event['pathParameters'][PATH_PARAMETER_FILTER]
 
-
     print("This is the value extracted from the products field in the body")
-    print(product_id_to_delete)
+    pp.pprint(product_id_to_delete)
     
 
     for dynamo_table in [dynamo_table_product, dynamo_table_product_comment]:
+
         ###
         # Now we have to check if there is a product for filter
         # There can only be one item because there is only one HASH key in the DB, the result is either a dict or not present at all
@@ -115,15 +105,13 @@ def handler(event, context) -> list[dict]:
         # Check if we found a result, otherwise retrieve empty list
         product_found = response_get_item.get("Item", None)
 
-        # If None we did not found anything, return 404
+        # If None we did not find anything, warn but do not abort
         if not product_found:
-            print(f"Product with product_id {filter} not found in table {dynamo_table.name}")
+            print(f"Product with product_id {filter} not found in table {dynamo_table.name}, nothing is deleted")
         
         # Delete the product from the DynamoDB table
         dynamo_table.delete_item(Key={'product_id': product_id_to_delete})
 
-
-    
     print("Success, return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = 200
     HTTP_RESPONSE_DICT['body'] = json.dumps({'product_id': product_id_to_delete})
