@@ -208,7 +208,7 @@ services:
   #     - apig-id-share
   #     - options_lambda_function
   #   networks:
-      - backend
+  #     - backend
 
 #volumes:
 #  dbvolume:
