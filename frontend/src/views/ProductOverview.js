@@ -60,15 +60,15 @@ const ProductOverview = ({isSearchQuerySubmitted, data, setCategoryFilter, loadi
                             <Grid item xs={4}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12}>
-                                        <ProductComponent title={"Comment Section"}
-                                                          img={"https://preview.redd.it/madoka-ayukawa-from-kimagure-orange-road-1987-v0-fx15w3vtkjz81.png?width=640&crop=smart&auto=webp&s=471f01d04aec447193f23c558de3746b8e61e25a"}
+                                        <ProductComponent product={"Comment Section"}
+                                                          images={["https://preview.redd.it/madoka-ayukawa-from-kimagure-orange-road-1987-v0-fx15w3vtkjz81.png?width=640&crop=smart&auto=webp&s=471f01d04aec447193f23c558de3746b8e61e25a"]}
                                                           description={"Show top comment of the day or something or different product highlight"}
                                                           onCardInteract={onCardInteract} loading={loading} />
                                     </Grid>
 
                                     <Grid item xs={12}>
-                                        <ProductComponent title={"News"}
-                                                          img={"https://preview.redd.it/madoka-ayukawa-from-kimagure-orange-road-1987-v0-fx15w3vtkjz81.png?width=640&crop=smart&auto=webp&s=471f01d04aec447193f23c558de3746b8e61e25a"}
+                                        <ProductComponent product={"News"}
+                                                          images={["https://preview.redd.it/madoka-ayukawa-from-kimagure-orange-road-1987-v0-fx15w3vtkjz81.png?width=640&crop=smart&auto=webp&s=471f01d04aec447193f23c558de3746b8e61e25a"]}
                                                           description={"Show some news related to products or a blog post or something"}
                                                           onCardInteract={onCardInteract} loading={loading} />
                                     </Grid>
@@ -80,8 +80,11 @@ const ProductOverview = ({isSearchQuerySubmitted, data, setCategoryFilter, loadi
             }
             {(loading ? Array.from(new Array(12)) : productData).map((product, index) => (
                 <Grid item xs={3} key={index}>
-                    <ProductComponent {...product} title={product?.product} img={product?.image}
-                                      onCardInteract={onCardInteract} loading={loading}/>
+                    <ProductComponent 
+                        {...product}
+                        onCardInteract={onCardInteract}
+                        loading={loading}
+                    />
                 </Grid>
             ))}
         </>

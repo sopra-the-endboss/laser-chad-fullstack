@@ -5,7 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import {useNavigate} from "react-router-dom";
 
 export function CardContentComponent({
-                                         title, category, price, description, height, brand, clickable = true, loading
+                                         product_title, category, price, description, height, brand, clickable = true, loading
                                      }) {
     const navigate = useNavigate();
     const onChipInteract = (e) => {
@@ -28,7 +28,7 @@ export function CardContentComponent({
             {loading ? (
                 <Skeleton />
             ) : (
-                <><span style={{fontWeight: "bold"}}>{brand}</span> {title}</>
+                <><span style={{fontWeight: "bold"}}>{brand}</span> {product_title}</>
             )}
         </Typography>
         <Typography variant="body2" color="text.secondary" component="div">

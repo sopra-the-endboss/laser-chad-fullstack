@@ -151,8 +151,8 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                                     dispatch(
                                         addToCart({
                                             ...productDetails,
-                                            // try images and image, otherwise undefined, aka no image is added to the cartItem
-                                            img: (productDetails?.images?.[0] ?? productDetails?.image),
+                                            // try images, make sure it is an array, otherwise add empty array
+                                            image: (("images" in productDetails) && Array.isArray(productDetails.images) ? productDetails.images : []),
                                         })
                                     ) && console.log("Added to cart: ", productDetails)
                                 }}
@@ -160,7 +160,7 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                             Add to Cart
                             </Button>
                          ) : (
-                            <Button disabled={true}>Not in Stock</Button>
+                            <Button disabled={true}>Not addable to cart</Button>
                          )}
 
                     </Grid>
