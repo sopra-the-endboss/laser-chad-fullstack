@@ -22,8 +22,34 @@
             "$schema": "http://json-schema.org/draft-04/schema#",
             "title": "post_product_comment",
             "type": "object",
-            "required": ["user_id"],
+            "required": [
+                "user",
+                "user_id",
+                "rating",
+                "review",
+                "title",
+                "date",
+                "review_id"
+            ],
             "properties": {
+                "user": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "review": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                },
                 "review_id": {
                     "type": "string"
                 }
