@@ -47,7 +47,7 @@ const Payment = () => {
         ))}
         <Grid item xs={12}>
           <Button
-            onClick={handleUpdate}
+            // onClick={handleUpdate}
             type="submit"
             fullWidth
             variant="contained"

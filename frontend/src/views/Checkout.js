@@ -7,6 +7,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Button,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useSelector } from "react-redux";
@@ -80,6 +81,9 @@ const CheckoutPage = () => {
             <Payment />
           </AccordionDetails>
         </Accordion>
+        <div className="buttonRight" style={{ marginTop: "10px" }}>
+          <Button variant="contained">Buy Now</Button>
+        </div>
       </Paper>
     </Container>
   );

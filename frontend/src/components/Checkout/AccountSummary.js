@@ -116,7 +116,7 @@ const AccountSummary = () => {
             <h3 className="accountH3">Delivery method</h3>
             <p className="accountText">Shipping</p>
           </div>
-          <div className="editButtonRight">
+          <div className="buttonRight">
             <Button onClick={handleEditToggle} variant="contained" size="small">
               Edit
             </Button>
