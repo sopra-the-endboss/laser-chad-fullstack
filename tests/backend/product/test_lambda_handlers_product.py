@@ -118,6 +118,10 @@ def generate_inputs() -> dict[str,dict]:
     prod_id_1 = "IPhone"
     prod_id_2 = "Gameboy"
 
+    # seller_id
+    seller_id_1 = "Coop"
+    seller_id_2 = "Migros"
+
     # additional fields
     brand_1 = "Apple"
     brand_2 = "Nintendo"
@@ -166,7 +170,8 @@ def generate_inputs() -> dict[str,dict]:
 
     inputs_to_return['valid_body_single'] = {
         "body" : json.dumps({
-            "product_id":prod_id_1
+            "product_id":prod_id_1,
+            "seller_id":seller_id_1,
         }),
         "pathParameters" : {}
     }
@@ -174,6 +179,7 @@ def generate_inputs() -> dict[str,dict]:
     inputs_to_return['valid_body_additionalFields'] = {
         "body" : json.dumps({
             "product_id":prod_id_2,
+            "seller_id":seller_id_2,
             "brand":brand_1,
             "images":[image_1]
         }),
@@ -183,7 +189,8 @@ def generate_inputs() -> dict[str,dict]:
     # BODY VALID, PATHPARAMETERS VALID
     inputs_to_return['valid_body_valid_pathParameters_single'] = {
         "body" : json.dumps({
-            "product_id":prod_id_1
+            "product_id":prod_id_1,
+            "seller_id":seller_id_1
         }),
         "pathParameters" : {
             "product_id":prod_id_1
@@ -193,6 +200,7 @@ def generate_inputs() -> dict[str,dict]:
     inputs_to_return['valid_body_valid_pathParameters_additionalFields_body'] = {
         "body" : json.dumps({
             "product_id":prod_id_2,
+            "seller_id":seller_id_2,
             "brand":brand_1,
             "images":[image_1]
         }),
@@ -200,61 +208,6 @@ def generate_inputs() -> dict[str,dict]:
             "product_id":prod_id_2
         }
     }
-
-
-    # inputs_to_return['valid_user1_prod1_addfield1'] = {
-    #     "body" : json.dumps({
-    #         "product_id":prod1,
-    #         "brand":brand1,
-    #         "image":image1}
-    #         ),
-    #     "pathParameters" : {"userId":user1_str}
-    # }
-    
-    # inputs_to_return['valid_user1_prod1_addfield2'] = {
-    #     "body" : json.dumps({
-    #         "product_id":prod1,
-    #         "brand":brand2,
-    #         "title":title1}
-    #         ),
-    #     "pathParameters" : {"userId":user1_str}
-    # }
-    
-    # inputs_to_return['valid_user1_prod1_addfield_quantity'] = {
-    #     "body" : json.dumps({
-    #         "product_id":prod1,
-    #         "brand":brand1,
-    #         "quantity":99}
-    #         ),
-    #     "pathParameters" : {"userId":user1_str}
-    # }
-    
-    # inputs_to_return['valid_user1_prod2'] = {
-    #     "body" : json.dumps({"product_id":prod2}),
-    #     "pathParameters" : {"userId":user1_str}
-    # }
-    
-    # inputs_to_return['valid_user2_prod1'] = {
-    #     "body" : json.dumps({"product_id":prod1}),
-    #     "pathParameters" : {"userId":user2_str}
-    # }
-    
-    # inputs_to_return['valid_user2_prod2'] = {
-    #     "body" : json.dumps({"product_id":prod2}),
-    #     "pathParameters" : {"userId":user2_str}
-    # }
-    
-
-
-    # inputs_to_return['valid_user1_int_prod1'] = {
-    #     "body" : json.dumps({"product_id":prod1}),
-    #     "pathParameters" : {"userId":user1_int}
-    # }
-
-    # inputs_to_return['valid_user1_prod1_additional_field'] = {
-    #     "body" : json.dumps({"product_id":prod1, "additionalField":"additionalValue"}),
-    #     "pathParameters" : {"userId":user1_str}
-    # }
 
     return inputs_to_return
 
@@ -327,18 +280,21 @@ def test_POST_GET(dynamo_table_product, generate_inputs: dict[str,str]):
     # Assert POST valid -> 200 and return the product_id
     EVENT_NAME = 'valid_body_single'
     EVENT = generate_inputs[EVENT_NAME]
+    EVENT_BODY = json.loads(EVENT['body'])
     EVENT_PRODUCT_ID = json.loads(EVENT['body'])['product_id']
     res_valid_pathParameter = post_handler_product.handler(EVENT, CONTEXT_DUMMY)
     assert res_valid_pathParameter['statusCode'] == 200
     assert json.loads(res_valid_pathParameter['body'])['product_id'] == EVENT_PRODUCT_ID
 
     ###
-    # Assert GET all -> 200 and return one item, containing our product_id
+    # Assert GET all -> 200 and return one item, containing the body of our event
     res_get_all = get_handler_product.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
     assert res_get_all['statusCode'] == 200
     assert len(json.loads(res_get_all['body'])) == 1
-    assert EVENT_PRODUCT_ID in [prod['product_id'] for prod in json.loads(res_get_all['body'])]
-
+    # Assert all fields from the product are there after POST and GET
+    res_get_all_product = next((product for product in json.loads(res_get_all['body']) if product['product_id'] == EVENT_PRODUCT_ID), None)
+    assert EVENT_BODY == res_get_all_product
+    
     ###
     # Assert POST valid with another prod_id additional fields -> 200 and return the product_id
     EVENT2_NAME = 'valid_body_additionalFields'
@@ -354,7 +310,6 @@ def test_POST_GET(dynamo_table_product, generate_inputs: dict[str,str]):
     res_get_all = get_handler_product.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
     assert res_get_all['statusCode'] == 200
     assert len(json.loads(res_get_all['body'])) == 2
-    assert EVENT2_PRODUCT_ID in [prod['product_id'] for prod in json.loads(res_get_all['body'])]
     # Assert all fields from the product are there after POST and GET
     res_get_all_product = next((product for product in json.loads(res_get_all['body']) if product['product_id'] == EVENT2_PRODUCT_ID), None)
     assert EVENT2_BODY == res_get_all_product
@@ -377,7 +332,6 @@ def test_POST_GET(dynamo_table_product, generate_inputs: dict[str,str]):
     res_get_all = get_handler_product.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
     assert res_get_all['statusCode'] == 200
     assert len(json.loads(res_get_all['body'])) == 2
-    assert EVENT_OVERWRITE_PRODUCT_ID in [prod['product_id'] for prod in json.loads(res_get_all['body'])]
     # Assert all fields from the product are there after POST and GET
     res_get_all_product = next((product for product in json.loads(res_get_all['body']) if product['product_id'] == EVENT_OVERWRITE_PRODUCT_ID), None)
     assert EVENT_OVERWRITE_BODY == res_get_all_product
