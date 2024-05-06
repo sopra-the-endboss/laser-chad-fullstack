@@ -1,6 +1,7 @@
 import {Box, List, ListItem, Paper, Skeleton, Stack} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import {useParams} from "react-router-dom";
 
 import {useSelector} from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -16,14 +17,22 @@ export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails
     const user = auth.user;
     const isLoggedIn = auth.isLoggedIn;
     const isSeller = user ? user?.role === "Seller" : false;
+    const {product_id} = useParams();
 
-    const [itemToDelete, setItemToDelete] = useState(0);
-    const deleteCommentHook = useDeleteComment(itemToDelete, setLoading);
+    const [itemToDelete, setItemToDelete] = useState({});
+    const deleteCommentHook = useDeleteComment(itemToDelete, setLoading, product_id);
 
     const deleteComment = async () => {
         setLoading(true);
         deleteCommentHook();
     };
+
+    useEffect(() => {
+        if (Object.keys(itemToDelete).length > 0) {
+            console.log("itemToDelete to be deleted:", itemToDelete);
+            deleteComment();
+        }
+    }, [itemToDelete])
 
     if (loadingComments) {
         return (
@@ -55,7 +64,6 @@ export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails
                                     <Box>
                                         <Stack direction={"row"} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                                             <Typography variant="subtitle1" component="span">
-                                                {/* {loadingDetails ? <Skeleton width={100}/> : review?.user} */}
                                                 {review?.user}
                                             </Typography>
                                             <Typography variant="caption" sx={{ ml: 1, color: "red" }}>
@@ -70,9 +78,8 @@ export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails
                                                         <CustomModal icon={<DeleteIcon style={{height: '18px'}}/>}>
                                                             <DeleteConfirmation
                                                                 setItemToDelete={setItemToDelete}
-                                                                idToDelete={review.review_id}
-                                                                deleteFunction={deleteComment}
-                                                                itemToDelete={review.review} />
+                                                                itemToDelete={{...review}}
+                                                            />
                                                         </CustomModal>
                                                     </Typography>
                                                 )

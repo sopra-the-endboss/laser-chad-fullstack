@@ -225,7 +225,7 @@ export const usePostComment = (setLoadingComments, setComments, comment, product
     };
 }
 
-export const useDeleteComment = (commentId, setLoading) => {
+export const useDeleteComment = (item_to_delete, setLoading, product_id) => {
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
 
     return async () => {
@@ -233,7 +233,11 @@ export const useDeleteComment = (commentId, setLoading) => {
         api.defaults.baseURL = baseURL;
 
         try {
-            const response = await api.delete(`/${PRODUCT_COMMENT_ENDPOINT}/${commentId}`);
+            // NOTE: Delete should not have body actually... 
+            const response = await api.delete(
+                `/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`,
+                {data : item_to_delete}
+            );
             console.log(response);
             setLoading(false);
         } catch (error) {
