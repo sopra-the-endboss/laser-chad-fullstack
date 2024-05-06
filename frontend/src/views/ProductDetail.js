@@ -33,14 +33,14 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
     const fetchDetails = useFetchProductDetails(details, product_id, setProductDetails, setLoadingDetails);
 
     useEffect(() => {
-        fetchComments();
+        const comment_data = fetchComments();
+        setProductComments(comment_data);
     }, [apigBaseUrl, product_id, details]);
 
 
     useEffect(() => {
         fetchDetails();
     }, [apigBaseUrl, product_id, details]);
-
 
     return (
         <Grid container>
@@ -166,7 +166,13 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                    <CommentaryComponent setLoading={setLoadingComments} loadingComments={loadingComments} loadingDetails={loadingDetails} productComments={productComments} setProductComments={setProductComments} />
+                    <CommentaryComponent
+                        setLoading={setLoadingComments}
+                        loadingComments={loadingComments}
+                        loadingDetails={loadingDetails}
+                        productComments={productComments}
+                        setProductComments={setProductComments}
+                    />
                 </Grid>
             </Grid>
             <Grid item xs={12} sx={{borderTop: 1, borderColor: "divider", paddingBottom: "16px", paddingTop: "16px"}}>

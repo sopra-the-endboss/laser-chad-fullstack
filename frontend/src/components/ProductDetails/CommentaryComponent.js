@@ -14,6 +14,7 @@ import {useDeleteComment} from "../../utils/apiCalls";
 export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails, productComments, setProductComments}) => {
     const auth = useSelector((state) => state.auth);
     const user = auth.user;
+    const user_id = user.userId; // TODO: Needed as user_id?
     const isLoggedIn = auth.isLoggedIn;
     const isSeller = user ? user?.role === "Seller" : false;
 
@@ -32,6 +33,9 @@ export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails
             </>
         );
     } else {
+
+        console.log("CommentComponent: productComments", productComments);
+
         return (
             <>
                 <Paper elevation={1} sx={{ p: 2, mb: 2 }}>
@@ -49,13 +53,14 @@ export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails
                                     <Box>
                                         <Stack direction={"row"} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                                             <Typography variant="subtitle1" component="span">
-                                                {loadingDetails ? <Skeleton width={100}/> : review?.user}
+                                                {/* {loadingDetails ? <Skeleton width={100}/> : review?.user} */}
+                                                {review?.user}
                                             </Typography>
                                             <Typography variant="caption" sx={{ ml: 1, color: "red" }}>
-                                                {loadingDetails ? <Skeleton width={50}/> : review?.rating}
+                                                {review?.rating}
                                             </Typography>
                                             <Typography variant="caption" sx={{ ml: 1 }}>
-                                                {loadingDetails ? <Skeleton width={50}/> : review?.date}
+                                                {review?.date}
                                             </Typography>
                                             {
                                                 isSeller && (
@@ -63,16 +68,16 @@ export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails
                                                         <CustomModal icon={<DeleteIcon style={{height: '18px'}}/>}>
                                                             <DeleteConfirmation
                                                                 setItemToDelete={setItemToDelete}
-                                                                idToDelete={review.id}
+                                                                idToDelete={review.review_id}
                                                                 deleteFunction={deleteComment}
-                                                                itemToDelete={review.comment} />
+                                                                itemToDelete={review.review} />
                                                         </CustomModal>
                                                     </Typography>
                                                 )
                                             }
                                         </Stack>
                                         <Typography variant="body2" color="text.secondary">
-                                            {loadingDetails ? <Skeleton/> : review?.comment}
+                                            {loadingDetails ? <Skeleton/> : review?.review}
                                         </Typography>
                                     </Box>
                                 </ListItem>

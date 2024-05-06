@@ -149,7 +149,10 @@ export const useFetchAllComments = (details, product_id, setProductComments, set
         try {
             if (!details) {
                 const response = await api.get(`/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`)
+                
+                console.log("DEBUG: useFetchAllComments response");
                 console.log(response);
+                
                 setProductComments(response.data[0]);
                 setLoadingComments(false);
             } else if(details) {
@@ -175,7 +178,10 @@ export const useFetchProductDetails = (details, product_id, setProductDetails, s
         try {
             if (!details) {
                 const response = await api.get(`/${PRODUCT_ENDPOINT}/${product_id}`)
+
+                console.log("DEBUG: useFetchProductDetails response");
                 console.log(response);
+
                 setProductDetails(response.data[0]);
                 setLoadingDetails(false);
             } else if(details) {
