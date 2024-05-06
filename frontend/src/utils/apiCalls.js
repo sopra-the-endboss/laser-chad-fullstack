@@ -156,8 +156,6 @@ export const useFetchAllComments = (details, product_id, setLoadingComments) => 
                 
                 if (response) {
                     return response.data;
-                    // setProductComments(data[0]);
-                    // setLoadingComments(false);
                 }
 
             } else if(details) {
