@@ -1224,6 +1224,7 @@
                 },
                 {
                     "user": "TechSavvy",
+                    "user_id": "TechSavvy",
                     "rating": 4,
                     "title": "Solid Performance, but Gets Hot",
                     "review": "The laptop performance is top-notch for programming and design, but it does get quite hot under heavy load.",
@@ -1243,14 +1244,6 @@
                     "review": "I love the portability and the battery life is decent enough for my gaming sessions.",
                     "date": "2024-03-10",
                     "review_id": "fe912ec4ce"
-                },
-                {
-                    "user": "GotRailedInTheBack",
-                    "rating": 4.0,
-                    "title": "Awesome to watch Netflix and getting drilled",
-                    "review": "Took the virginity of 72 men with the help of this bad boy and got banged while watching Netflix.",
-                    "date": "2024-02-06",
-                    "review_id": "eb36adccff"
                 }
             ]
         },
