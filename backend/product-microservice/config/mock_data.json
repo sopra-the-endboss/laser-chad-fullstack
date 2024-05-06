@@ -1215,6 +1215,7 @@
             "reviews": [
                 {
                     "user": "JaneDoe123",
+                    "user_id": "JaneDoe123",
                     "rating": 5,
                     "title": "Great Laptop for Professionals",
                     "review": "I've been using the Dell XPS 15 for work and it's a powerhouse. Handles all my tasks with ease.",
@@ -1223,6 +1224,7 @@
                 },
                 {
                     "user": "TechSavvy",
+                    "user_id": "TechSavvy",
                     "rating": 4,
                     "title": "Solid Performance, but Gets Hot",
                     "review": "The laptop performance is top-notch for programming and design, but it does get quite hot under heavy load.",
@@ -1236,19 +1238,12 @@
             "reviews": [
                 {
                     "user": "GamerGal83",
+                    "user_id": "GamerGal83",
                     "rating": 4.5,
                     "title": "Awesome for Gaming on the Go",
                     "review": "I love the portability and the battery life is decent enough for my gaming sessions.",
                     "date": "2024-03-10",
                     "review_id": "fe912ec4ce"
-                },
-                {
-                    "user": "GotRailedInTheBack",
-                    "rating": 4.0,
-                    "title": "Awesome to watch Netflix and getting drilled",
-                    "review": "Took the virginity of 72 men with the help of this bad boy and got banged while watching Netflix.",
-                    "date": "2024-02-06",
-                    "review_id": "eb36adccff"
                 }
             ]
         },
@@ -1257,6 +1252,7 @@
             "reviews": [
                 {
                     "user": "CreativePro",
+                    "user_id": "CreativePro",
                     "rating": 4.7,
                     "title": "Perfect for Design Work",
                     "review": "The color accuracy and performance are amazing for my design projects.",
@@ -1270,6 +1266,7 @@
             "reviews": [
                 {
                     "user": "BizExec",
+                    "user_id": "BizExec",
                     "rating": 4,
                     "title": "Versatile and Reliable",
                     "review": "The 2-in-1 form factor is a game-changer for presentations and meetings.",
@@ -1283,6 +1280,7 @@
             "reviews": [
                 {
                     "user": "RoadWarrior",
+                    "user_id": "RoadWarrior",
                     "rating": 4.8,
                     "title": "Travel Friendly and Durable",
                     "review": "It holds up well to the rigors of travel, and the keyboard is the best.",
@@ -1296,6 +1294,7 @@
             "reviews": [
                 {
                     "user": "StudentLife",
+                    "user_id": "StudentLife",
                     "rating": 4.3,
                     "title": "Lightweight and Fast",
                     "review": "It's perfect for my college classes and the touch screen is a nice bonus.",

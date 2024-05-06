@@ -104,9 +104,6 @@ def handler(event: dict, context) -> dict:
         print("JSONDecodeError IN PARSING BODY")
         return return_error("Error parsing body", 400)
     
-    generated_review_id = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
-
-    # TODO: new_item could not have those fields?
     new_review = {
         'user': new_item['user'],
         'user_id': new_item['user_id'],
@@ -114,7 +111,8 @@ def handler(event: dict, context) -> dict:
         'review': new_item['review'],
         'title' : new_item['title'],
         'date' : new_item['date'],
-        'review_id': generated_review_id,
+        'review_id': new_item['review_id']
+
     }
     
     # Try to get the item from the table
@@ -131,21 +129,31 @@ def handler(event: dict, context) -> dict:
             item['reviews'].append(new_review)
             print("DEBUG: This is the item after appending the new review")
             pp.pprint(item)
-            dynamo_table.put_item(Item=item)
-        else:
-            # If the item doesn't exist, create a new item
-            response_put = dynamo_table.put_item(
+            _ = dynamo_table.put_item(
                 TableName = TableName,
                 ReturnValues = "NONE",
-                Item = {
-                    'product_id': filter,
-                    'reviews': [new_review]
-                }
+                Item=item
+            )
+        else:
+            # If the item doesn't exist, create a new item
+            print("DEBUG: Item does not exist, create anew")
+            
+            item = {
+                'product_id': filter,
+                'reviews': [new_review]
+            }
+            print("DEBUG: This is the new item we will put")
+            pp.pprint(item)
+
+        _ = dynamo_table.put_item(
+            TableName = TableName,
+            ReturnValues = "NONE",
+            Item = item
         )
 
     print("Return HTTP object")
-    HTTP_RESPONSE_DICT['statusCode'] = 200
-    HTTP_RESPONSE_DICT['body'] = json.dumps({"review_id": generated_review_id})
+    HTTP_RESPONSE_DICT['statusCode'] = '200'
+    HTTP_RESPONSE_DICT['body'] = json.dumps(item)
 
     print(f"DEBUG: This is the HTTP response we are sending back")
     pp.pprint(HTTP_RESPONSE_DICT)

@@ -1,6 +1,7 @@
 import {Box, List, ListItem, Paper, Skeleton, Stack} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import {useParams} from "react-router-dom";
 
 import {useSelector} from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -16,14 +17,22 @@ export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails
     const user = auth.user;
     const isLoggedIn = auth.isLoggedIn;
     const isSeller = user ? user?.role === "Seller" : false;
+    const {product_id} = useParams();
 
-    const [itemToDelete, setItemToDelete] = useState(0);
-    const deleteCommentHook = useDeleteComment(itemToDelete, setLoading);
+    const [itemToDelete, setItemToDelete] = useState({});
+    const deleteCommentHook = useDeleteComment(itemToDelete, setLoading, product_id);
 
     const deleteComment = async () => {
-        setLoading(true);
         deleteCommentHook();
+        setLoading(true);
     };
+
+    useEffect(() => {
+        if (Object.keys(itemToDelete).length > 0) {
+            console.log("itemToDelete to be deleted:", itemToDelete);
+            deleteComment();
+        }
+    }, [itemToDelete])
 
     if (loadingComments) {
         return (
@@ -32,14 +41,20 @@ export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails
             </>
         );
     } else {
+
         return (
             <>
                 <Paper elevation={1} sx={{ p: 2, mb: 2 }}>
                     <Box display="flex" justifyContent="space-between" alignItems="center">
-                        <Typography variant="h6">Comments</Typography>
+                        <Typography variant="h6">Reviews</Typography>
                         {isLoggedIn && (
                             <CustomModal icon={<AddIcon />}>
-                                <AddComment setLoading={setLoading} user={user} setProductComments={setProductComments} productComments={productComments}/>
+                                <AddComment
+                                    setLoading={setLoading}
+                                    user={user}
+                                    setProductComments={setProductComments}
+                                    productComments={productComments}
+                                />
                             </CustomModal>
                         )}
                     </Box>
@@ -49,13 +64,13 @@ export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails
                                     <Box>
                                         <Stack direction={"row"} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                                             <Typography variant="subtitle1" component="span">
-                                                {loadingDetails ? <Skeleton width={100}/> : review?.user}
+                                                {review?.user}
                                             </Typography>
                                             <Typography variant="caption" sx={{ ml: 1, color: "red" }}>
-                                                {loadingDetails ? <Skeleton width={50}/> : review?.rating}
+                                                {review?.rating}
                                             </Typography>
                                             <Typography variant="caption" sx={{ ml: 1 }}>
-                                                {loadingDetails ? <Skeleton width={50}/> : review?.date}
+                                                {review?.date}
                                             </Typography>
                                             {
                                                 isSeller && (
@@ -63,16 +78,16 @@ export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails
                                                         <CustomModal icon={<DeleteIcon style={{height: '18px'}}/>}>
                                                             <DeleteConfirmation
                                                                 setItemToDelete={setItemToDelete}
-                                                                idToDelete={review.id}
-                                                                deleteFunction={deleteComment}
-                                                                itemToDelete={review.comment} />
+                                                                itemToDelete={{...review}}
+
+                                                            />
                                                         </CustomModal>
                                                     </Typography>
                                                 )
                                             }
                                         </Stack>
                                         <Typography variant="body2" color="text.secondary">
-                                            {loadingDetails ? <Skeleton/> : review?.comment}
+                                            {loadingDetails ? <Skeleton/> : review?.review}
                                         </Typography>
                                     </Box>
                                 </ListItem>

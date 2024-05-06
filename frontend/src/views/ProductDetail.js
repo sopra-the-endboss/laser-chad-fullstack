@@ -29,18 +29,22 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
     const [loadingDetails, setLoadingDetails] = useState(true);
     const [loadingComments, setLoadingComments] = useState(true);
 
-    const fetchComments = useFetchAllComments(details, product_id, setProductComments, setLoadingComments);
+    const fetchComments = useFetchAllComments(details, product_id, setLoadingComments);
     const fetchDetails = useFetchProductDetails(details, product_id, setProductDetails, setLoadingDetails);
 
     useEffect(() => {
-        fetchComments();
+        fetchComments().then(
+            (data) => {
+                setProductComments(data);
+                setLoadingComments(false);
+            }
+        ).catch((error) => {})
     }, [apigBaseUrl, product_id, details]);
 
 
     useEffect(() => {
         fetchDetails();
     }, [apigBaseUrl, product_id, details]);
-
 
     return (
         <Grid container>
@@ -166,7 +170,13 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                    <CommentaryComponent setLoading={setLoadingComments} loadingComments={loadingComments} loadingDetails={loadingDetails} productComments={productComments} setProductComments={setProductComments} />
+                    <CommentaryComponent
+                        setLoading={setLoadingComments}
+                        loadingComments={loadingComments}
+                        loadingDetails={loadingDetails}
+                        productComments={productComments}
+                        setProductComments={setProductComments}
+                    />
                 </Grid>
             </Grid>
             <Grid item xs={12} sx={{borderTop: 1, borderColor: "divider", paddingBottom: "16px", paddingTop: "16px"}}>
