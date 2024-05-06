@@ -4,6 +4,7 @@ import ModalContext from "../../context/ModalContext";
 import Typography from "@mui/material/Typography";
 import {usePostComment} from "../../utils/apiCalls";
 import {useParams} from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 
 export const AddComment = ({user, setProductComments, setLoading, productComments}) => {
 
@@ -17,13 +18,19 @@ export const AddComment = ({user, setProductComments, setLoading, productComment
     const submitComment = () => {
         // setLoading(true); // TODO: WHY THE EVERLOVING FUCK DOES THIS LINE PREVENT THE postComment() execution????!!!!
         // if setLoading(true) is executed, the post of a new comment does not work
+
+        // Create unique uuid for review
+        const review_id = uuidv4();
+
         const submitElement = {
             user: user.givenname.concat(" ", user.familyname),
             user_id: user.userId,
             rating: rating,
             title: newTitle,
             review: newReview,
-            date: new Date().toISOString().split('T')[0]
+            date: new Date().toISOString().split('T')[0],
+            review_id: review_id
+
         };
         console.log("submitElement", submitElement);
         setSubmissionElement(submitElement);

@@ -7,7 +7,7 @@ const DeleteConfirmation = ({ setItemToDelete, itemToDelete }) => {
     const { handleClose } = useContext(ModalContext);
     const setupDeleteFunction = () => {
         handleClose();
-        setItemToDelete(itemToDelete)
+        setItemToDelete(itemToDelete);
     }
 
     return (

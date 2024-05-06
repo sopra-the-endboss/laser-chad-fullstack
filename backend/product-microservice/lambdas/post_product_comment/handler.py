@@ -91,8 +91,6 @@ def handler(event: dict, context) -> dict:
         print("JSONDecodeError IN PARSING BODY")
         raise e
     
-    generated_review_id = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
-
     new_review = {
         'user': new_item['user'],
         'user_id': new_item['user_id'],
@@ -100,7 +98,7 @@ def handler(event: dict, context) -> dict:
         'review': new_item['review'],
         'title' : new_item['title'],
         'date' : new_item['date'],
-        'review_id': generated_review_id,
+        'review_id': new_item['review_id']
 
     }
     
@@ -118,7 +116,11 @@ def handler(event: dict, context) -> dict:
             item['reviews'].append(new_review)
             print("DEBUG: This is the item after appending the new review")
             pp.pprint(item)
-            dynamo_table.put_item(Item=item)
+            response_put = dynamo_table.put_item(
+                TableName = TableName,
+                ReturnValues = "NONE",
+                Item=item
+            )
         else:
             # If the item doesn't exist, create a new item
             response_put = dynamo_table.put_item(
@@ -130,12 +132,10 @@ def handler(event: dict, context) -> dict:
                 }
         )
 
-    
-
 
     print("Return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = '200'
-    HTTP_RESPONSE_DICT['body'] = {"review_id": generated_review_id}
+    HTTP_RESPONSE_DICT['body'] = json.dumps(response_put)
 
     print(f"DEBUG: This is the HTTP response we are sending back")
     pp.pprint(HTTP_RESPONSE_DICT)

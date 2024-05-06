@@ -23,8 +23,8 @@ export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails
     const deleteCommentHook = useDeleteComment(itemToDelete, setLoading, product_id);
 
     const deleteComment = async () => {
-        setLoading(true);
         deleteCommentHook();
+        setLoading(true);
     };
 
     useEffect(() => {
@@ -79,6 +79,7 @@ export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails
                                                             <DeleteConfirmation
                                                                 setItemToDelete={setItemToDelete}
                                                                 itemToDelete={{...review}}
+
                                                             />
                                                         </CustomModal>
                                                     </Typography>
