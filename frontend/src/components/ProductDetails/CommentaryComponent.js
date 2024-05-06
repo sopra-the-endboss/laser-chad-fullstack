@@ -14,7 +14,6 @@ import {useDeleteComment} from "../../utils/apiCalls";
 export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails, productComments, setProductComments}) => {
     const auth = useSelector((state) => state.auth);
     const user = auth.user;
-    const user_id = user.userId; // TODO: Needed as user_id?
     const isLoggedIn = auth.isLoggedIn;
     const isSeller = user ? user?.role === "Seller" : false;
 
@@ -34,8 +33,6 @@ export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails
         );
     } else {
 
-        console.log("CommentComponent: productComments", productComments);
-
         return (
             <>
                 <Paper elevation={1} sx={{ p: 2, mb: 2 }}>
@@ -43,7 +40,12 @@ export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails
                         <Typography variant="h6">Comments</Typography>
                         {isLoggedIn && (
                             <CustomModal icon={<AddIcon />}>
-                                <AddComment setLoading={setLoading} user={user} setProductComments={setProductComments} productComments={productComments}/>
+                                <AddComment
+                                    setLoading={setLoading}
+                                    user={user}
+                                    setProductComments={setProductComments}
+                                    productComments={productComments}
+                                />
                             </CustomModal>
                         )}
                     </Box>

@@ -33,7 +33,7 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
     const fetchDetails = useFetchProductDetails(details, product_id, setProductDetails, setLoadingDetails);
 
     useEffect(() => {
-        const comment_data = fetchComments().then(
+        fetchComments().then(
             (data) => {
                 setProductComments(data);
                 setLoadingComments(false);
