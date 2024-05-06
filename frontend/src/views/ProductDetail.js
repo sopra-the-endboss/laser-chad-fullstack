@@ -29,12 +29,16 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
     const [loadingDetails, setLoadingDetails] = useState(true);
     const [loadingComments, setLoadingComments] = useState(true);
 
-    const fetchComments = useFetchAllComments(details, product_id, setProductComments, setLoadingComments);
+    const fetchComments = useFetchAllComments(details, product_id, setLoadingComments);
     const fetchDetails = useFetchProductDetails(details, product_id, setProductDetails, setLoadingDetails);
 
     useEffect(() => {
-        const comment_data = fetchComments();
-        setProductComments(comment_data);
+        const comment_data = fetchComments().then(
+            (data) => {
+                setProductComments(data);
+                setLoadingComments(false);
+            }
+        ).catch((error) => {})
     }, [apigBaseUrl, product_id, details]);
 
 

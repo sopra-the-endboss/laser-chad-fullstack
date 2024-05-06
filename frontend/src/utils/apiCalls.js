@@ -138,7 +138,7 @@ export const useFetchCategories = (setAllCategories) => {
 }
 
 
-export const useFetchAllComments = (details, product_id, setProductComments, setLoadingComments) => {
+export const useFetchAllComments = (details, product_id, setLoadingComments) => {
 
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
 
@@ -148,13 +148,18 @@ export const useFetchAllComments = (details, product_id, setProductComments, set
 
         try {
             if (!details) {
+
                 const response = await api.get(`/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`)
                 
                 console.log("DEBUG: useFetchAllComments response");
                 console.log(response);
                 
-                setProductComments(response.data[0]);
-                setLoadingComments(false);
+                if (response) {
+                    return response.data;
+                    // setProductComments(data[0]);
+                    // setLoadingComments(false);
+                }
+
             } else if(details) {
                 setLoadingComments(false);
             }
