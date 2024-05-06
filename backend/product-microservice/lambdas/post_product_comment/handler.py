@@ -116,26 +116,31 @@ def handler(event: dict, context) -> dict:
             item['reviews'].append(new_review)
             print("DEBUG: This is the item after appending the new review")
             pp.pprint(item)
-            response_put = dynamo_table.put_item(
+            _ = dynamo_table.put_item(
                 TableName = TableName,
                 ReturnValues = "NONE",
                 Item=item
             )
         else:
             # If the item doesn't exist, create a new item
-            response_put = dynamo_table.put_item(
-                TableName = TableName,
-                ReturnValues = "NONE",
-                Item = {
-                    'product_id': filter,
-                    'reviews': [new_review]
-                }
-        )
+            print("DEBUG: Item does not exist, create anew")
+            
+            item = {
+                'product_id': filter,
+                'reviews': [new_review]
+            }
+            print("DEBUG: This is the new item we will put")
+            pp.pprint(item)
 
+        _ = dynamo_table.put_item(
+            TableName = TableName,
+            ReturnValues = "NONE",
+            Item = item
+        )
 
     print("Return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = '200'
-    HTTP_RESPONSE_DICT['body'] = json.dumps(response_put)
+    HTTP_RESPONSE_DICT['body'] = json.dumps(item)
 
     print(f"DEBUG: This is the HTTP response we are sending back")
     pp.pprint(HTTP_RESPONSE_DICT)

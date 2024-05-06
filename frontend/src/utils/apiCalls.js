@@ -212,7 +212,17 @@ export const usePostComment = (setLoadingComments, setComments, comment, product
         try {
             const response = await api.post(`/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`, comment);
             console.log(response);
-            const copy = {...productComments}
+
+            console.log("DEBUG: usePostComment productComments", productComments);
+            
+            // If productComments is empty, we have to crate field product_id and reviews as empty array
+            const copy = {...productComments};
+            if (Object.keys(copy).length === 0) {
+                console.log("empty productComments object found");
+                copy.product_id = product_id;
+                copy.reviews = [];
+            }
+
             copy.reviews.push(comment);
             setComments(copy);
             setLoadingComments(false);
