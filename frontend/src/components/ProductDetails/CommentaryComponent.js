@@ -37,7 +37,7 @@ export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails
             <>
                 <Paper elevation={1} sx={{ p: 2, mb: 2 }}>
                     <Box display="flex" justifyContent="space-between" alignItems="center">
-                        <Typography variant="h6">Comments</Typography>
+                        <Typography variant="h6">Reviews</Typography>
                         {isLoggedIn && (
                             <CustomModal icon={<AddIcon />}>
                                 <AddComment
