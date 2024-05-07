@@ -6,7 +6,8 @@ import { useState } from "react";
 import { updateUserAttributes } from "aws-amplify/auth";
 import { useDispatch } from "react-redux";
 import { setUserLoggedIn } from "../reducers/slices/authSlice";
-import { addToCart } from "../reducers/slices/cartSlice";
+import { GetOrder } from "../functions/GetOrder";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Grid,
@@ -15,6 +16,9 @@ import {
   Box,
   IconButton,
   Divider,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
 } from "@mui/material";
 
 /**
@@ -40,13 +44,23 @@ import {
 
 const AccountDetails = () => {
   const authState = useSelector((state) => state.auth.user);
+  const apigBaseUrl = useSelector((state) => state.apigBaseUrl);
   const [isEditing, setIsEditing] = useState(false);
   const [editState, setEditState] = useState(authState);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const orderData = GetOrder(authState.userId, apigBaseUrl);
+
+  const onCardInteract = (clickable, id) => {
+    if (clickable) {
+      navigate("/product/" + id);
+    }
+  };
 
   // Add Mock Product for checkout process development
 
   const addMockProduct = () => {
+    console.log(orderData);
     const mock = [
       {
         brand: "Apple",
@@ -65,10 +79,11 @@ const AccountDetails = () => {
           "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
       },
     ];
-    console.log(mock);
-    for (let i in mock) {
-      dispatch(addToCart(mock[i]));
-    }
+
+    // console.log(mock);
+    // for (let i in mock) {
+    //   dispatch(addToCart(mock[i]));
+    // }
   };
   const accountFields = [
     {
@@ -271,6 +286,27 @@ const AccountDetails = () => {
           </IconButton>
           {/* Add Mock Product for checkout process development */}
           <button onClick={addMockProduct}>Add to Cart</button>
+          <Divider />
+          <Accordion>
+            <AccordionSummary
+              expandIcon="X"
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography variant="h6" gutterBottom>
+                Order History
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              {/* {cartItems.map((item) => (
+                <CartItem
+                  key={item.product_id}
+                  item={item}
+                  onCardInteract={onCardInteract}
+                />
+              ))} */}
+            </AccordionDetails>
+          </Accordion>
         </React.Fragment>
       )}
     </Box>

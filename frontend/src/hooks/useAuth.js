@@ -33,24 +33,17 @@ const useAuth = () => {
     let currentUserId = null;
 
     // Get the user data
-    console.log(`loginCart: Get user data via CognitoAccount`);
     const { attributes } = await CognitoAccount();
-    console.log(`loginCart: This is the userId: ${attributes.sub}`);
 
     // Catch missing userId
     currentUserId = attributes?.sub;
     if (currentUserId === null || typeof currentUserId === "undefined") {
-      console.log(
-        "loginCart: currentUserId is null or undefined, return empty cart"
-      );
       fillCart([]);
     } else {
       // clear the current cartItems before fetching
-      console.log("loginCart: Clear the cart");
       dispatch(clearCart());
 
       // use userId to make HTTP request, fill cartItems with result (empty if error)
-      console.log(`loginCart: Fetch cart for user ${currentUserId}`);
       const getCartItems = await getCart(currentUserId);
       fillCart(getCartItems);
     }

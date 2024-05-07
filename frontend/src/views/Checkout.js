@@ -34,9 +34,9 @@ const CheckoutPage = () => {
   };
 
   const sendOrder = async () => {
-    //await SendCart(authState.userId, cartItems, baseUrl);
+    await SendCart(authState.userId, cartItems, baseUrl);
     await SendOrder(authState.userId, baseUrl);
-    //dispatch(clearCart());
+    dispatch(clearCart());
   };
 
   return (
