@@ -10,21 +10,33 @@ import {
   Button,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import AccountSummary from "../components/Checkout/AccountSummary";
 import CartItem from "../components/Cart/CartItem";
 import Payment from "../components/Checkout/Payment";
 import { useNavigate } from "react-router-dom";
+import { SendOrder } from "../functions/SendOrder";
+import { clearCart } from "../reducers/slices/cartSlice";
+import { SendCart } from "../functions/SendCart";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
+  const authState = useSelector((state) => state.auth.user);
+  const baseUrl = useSelector((state) => state.apigBaseUrl);
 
   const onCardInteract = (clickable, id) => {
     if (clickable) {
       navigate("/product/" + id);
     }
+  };
+
+  const sendOrder = async () => {
+    //await SendCart(authState.userId, cartItems, baseUrl);
+    await SendOrder(authState.userId, baseUrl);
+    //dispatch(clearCart());
   };
 
   return (
@@ -82,7 +94,9 @@ const CheckoutPage = () => {
           </AccordionDetails>
         </Accordion>
         <div className="buttonRight" style={{ marginTop: "10px" }}>
-          <Button variant="contained">Buy Now</Button>
+          <Button variant="contained" onClick={sendOrder}>
+            Buy Now
+          </Button>
         </div>
       </Paper>
     </Container>
