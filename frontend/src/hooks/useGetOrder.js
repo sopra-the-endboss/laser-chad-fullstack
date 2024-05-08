@@ -1,7 +1,7 @@
 //import { useDispatch } from "react-redux";
 //import { addToHistory } from "../reducers/slices/orderSlice";
 
-const useGetOrder = () => {
+export const useGetOrder = () => {
   //const dispatch = useDispatch();
   const getOrder = async (userId, baseUrl) => {
     try {
@@ -32,6 +32,8 @@ const useGetOrder = () => {
       return [];
     }
   };
+
+  return { getOrder };
 };
 
-export const { getOrder } = useGetOrder;
+// export const { getOrder } = useGetOrder;
