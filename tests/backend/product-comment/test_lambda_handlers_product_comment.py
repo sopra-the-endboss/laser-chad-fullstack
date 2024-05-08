@@ -340,96 +340,100 @@ def test_POST_GET(dynamo_table_product_comment, generate_inputs: dict[str,str]):
     assert EVENT_REVIEW in res_body['reviews']
     assert len(res_body['reviews']) == 1 # So far only one review
     
-def test_DELETE_pathParameter(dynamo_table_product, dynamo_table_product_comment, generate_inputs: dict[str,str]):
+def test_DELETE_invalid_pathParameters(dynamo_table_product_comment, generate_inputs: dict[str,str]):
 
     ###
-    # NOTE: Only test the product table component, not the comment table
-    # NOTE: We do not test non-string pathParameters, as this is not possible with the API Gateway
-
-    # Assert empty pathParameters
-    res = delete_handler_product_comment.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
-    assert res['statusCode'] == 400
-
-    # Assert wrong pathParameters name
-    res = delete_handler_product_comment.handler(generate_inputs['wrong_pathParameter'], CONTEXT_DUMMY)
-    assert res['statusCode'] == 400
+    # Test invalid inputs to DELETE
     
-    # Assert additional pathParameter is ignored -> 200 on empty table
-    res = delete_handler_product_comment.handler(generate_inputs['valid_pathParameter_emptyBody_additionalPathParameter'], CONTEXT_DUMMY)
+    ###
+    # Assert DELETE with empty pathParameter raises 400
+    res_empty_pathParameter = delete_handler_product_comment.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
+    assert res_empty_pathParameter['statusCode'] == 400
+
+    res_wrong_pathParameter = delete_handler_product_comment.handler(generate_inputs['wrong_pathParameter'], CONTEXT_DUMMY)
+    assert res_wrong_pathParameter['statusCode'] == 400
+
+    res_wrong_pathParameter = delete_handler_product_comment.handler(generate_inputs['wrong_pathParameter_array'], CONTEXT_DUMMY)
+    assert res_wrong_pathParameter['statusCode'] == 400
+
+def test_DELETE_delete_all_reviews_for_product(dynamo_table_product_comment, generate_inputs: dict[str,str]):
+
+    ###
+    # Setup the DB with some products and reviews
+    events_to_post = [
+        'valid_body_valid_pathParameter_prod1_review1',
+        'valid_body_valid_pathParameter_prod1_review2',
+        'valid_body_valid_pathParameter_prod2_review1',
+        'valid_body_valid_pathParameter_prod2_review2'
+    ]
+    for e in events_to_post:
+        post_handler_product_comment.handler(generate_inputs[e], CONTEXT_DUMMY)
+
+    ###
+    # Assert DELETE prod1 review1 -> 200 and return the entries for prod1 without review1, but with review2
+    EVENT_NAME = 'valid_body_valid_pathParameter_prod1_review1'
+    EVENT = generate_inputs[EVENT_NAME]
+    EVENT_PRODUCUT_ID = EVENT['pathParameters']['product_id']
+    EVENT_REVIEW = json.loads(EVENT['body'])
+    res = delete_handler_product_comment.handler(EVENT, CONTEXT_DUMMY)
+    res_body = json.loads(res['body'])
     assert res['statusCode'] == 200
+    assert res_body['product_id'] == EVENT_PRODUCUT_ID
+    assert EVENT_REVIEW not in res_body['reviews']
+    assert len(res_body['reviews']) == 1
 
-# def test_DELETE_nomatch(dynamo_table_product, dynamo_table_product_comment, generate_inputs: dict[str,str]):
+    ###
+    # Assert DELETE prod1 review2 -> 200 and return empty list
+    EVENT_NAME = 'valid_body_valid_pathParameter_prod1_review2'
+    EVENT = generate_inputs[EVENT_NAME]
+    EVENT_PRODUCUT_ID = EVENT['pathParameters']['product_id']
+    EVENT_REVIEW = json.loads(EVENT['body'])
+    res = delete_handler_product_comment.handler(EVENT, CONTEXT_DUMMY)
+    res_body = json.loads(res['body'])
+    assert res['statusCode'] == 200
+    assert res_body['product_id'] == EVENT_PRODUCUT_ID
+    assert EVENT_REVIEW not in res_body['reviews']
+    assert len(res_body['reviews']) == 0
 
-#     ###
-#     # NOTE: Only test the product table component, not the comment table
-#     # NOTE: We do not test non-string pathParameters, as this is not possible with the API Gateway
+    ###
+    # Assert GET for prod1 does find it, with emtpy reviews list
+    res_get = get_handler_product_comment.handler(generate_inputs['valid_body_valid_pathParameter_prod1_review1'], CONTEXT_DUMMY)
+    res_get_body = json.loads(res_get['body'])
+    assert res_get['statusCode'] == 200
+    assert res_get_body[0]['product_id'] == EVENT_PRODUCUT_ID
+    assert res_get_body[0]['reviews'] == []
 
-#     # Assert no match returns 200 and the product_id
-#     EVENT_NAME = 'valid_pathParameter_emptyBody'
-#     EVENT = generate_inputs[EVENT_NAME]
-#     EVENT_PRODUCT_ID_EXPECTED = EVENT['pathParameters']['product_id']
-#     res = delete_handler_product_comment.handler(generate_inputs['valid_pathParameter_emptyBody'], CONTEXT_DUMMY)
-#     assert res['statusCode'] == 200
-#     assert json.loads(res['body'])['product_id'] == EVENT_PRODUCT_ID_EXPECTED
+def test_DELETE_404(dynamo_table_product_comment, generate_inputs: dict[str,str]):
 
-#     # POST a product to table
-#     EVENT_NAME = 'valid_body_single'
-#     EVENT = generate_inputs[EVENT_NAME]
-#     _ = post_handler_product_comment.handler(EVENT, CONTEXT_DUMMY)
+    ###
+    # Assert DELETE on nonexistent product_id -> 404
+    EVENT_NAME = 'valid_body_valid_pathParameter_prod1_review1'
+    EVENT = generate_inputs[EVENT_NAME]
+    res = delete_handler_product_comment.handler(EVENT, CONTEXT_DUMMY)
+    res_body = json.loads(res['body'])
+    assert res['statusCode'] == 404
 
-#     # Assert no match still returns 200 and the product_id
-#     res = delete_handler_product_comment.handler(generate_inputs['valid_pathParameter_emptyBody'], CONTEXT_DUMMY)
-#     assert res['statusCode'] == 200
-#     assert json.loads(res['body'])['product_id'] == EVENT_PRODUCT_ID_EXPECTED
+    ###
+    # Assert DELETE on nonexistent review_id -> 404
+    # First POST prod1 review1
+    post_handler_product_comment.handler(generate_inputs['valid_body_valid_pathParameter_prod1_review1'], CONTEXT_DUMMY)
+    # then DELETE on review2
+    EVENT_NAME = 'valid_body_valid_pathParameter_prod1_review2'
+    EVENT = generate_inputs[EVENT_NAME]
+    res = delete_handler_product_comment.handler(EVENT, CONTEXT_DUMMY)
+    res_body = json.loads(res['body'])
+    assert res['statusCode'] == 404
 
-# def test_DELETE(dynamo_table_product, dynamo_table_product_comment, generate_inputs: dict[str,str]):
+def test_DELETE_401(dynamo_table_product_comment, generate_inputs: dict[str,str]):
 
-#     ###
-#     # NOTE: Only test the product table component, not the comment table
+    # First POST prod1 review1
+    post_handler_product_comment.handler(generate_inputs['valid_body_valid_pathParameter_prod1_review1'], CONTEXT_DUMMY)
 
-#     EVENT_GET = generate_inputs['empty_pathParameter']
-
-#     # POST a product to table, GET to assert item count 2
-#     EVENT_NAME = 'valid_body_valid_pathParameters_single'
-#     EVENT = generate_inputs[EVENT_NAME]
-#     EVENT_PRODUCT_ID_EXPECTED = EVENT['pathParameters']['product_id']
-
-#     _ = post_handler_product_comment.handler(EVENT, CONTEXT_DUMMY)    
-    
-#     # GET and assert 200 and empty table
-#     res_get_all = get_handler_product_comment.handler(EVENT_GET, CONTEXT_DUMMY)
-#     assert res_get_all['statusCode'] == 200
-#     assert len(json.loads(res_get_all['body'])) == 1
-
-#     # DELETE and assert 200 and product_id
-#     res_delete = delete_handler_product_comment.handler(EVENT, CONTEXT_DUMMY)
-#     assert res_delete['statusCode'] == 200
-#     assert json.loads(res_delete['body'])['product_id'] == EVENT_PRODUCT_ID_EXPECTED
-
-#     # GET and assert 200 and empty table
-#     res_get_all = get_handler_product_comment.handler(EVENT_GET, CONTEXT_DUMMY)
-#     assert res_get_all['statusCode'] == 200
-#     assert len(json.loads(res_get_all['body'])) == 0
-
-#     # POST a product twice, with another event
-#     EVENT2_NAME = 'valid_body_valid_pathParameters_additionalFields_body'
-#     EVENT2 = generate_inputs[EVENT2_NAME]
-#     EVENT2_PRODUCT_ID_EXPECTED = EVENT2['pathParameters']['product_id']
-#     _ = post_handler_product_comment.handler(EVENT, CONTEXT_DUMMY)
-#     _ = post_handler_product_comment.handler(EVENT2, CONTEXT_DUMMY)
-
-#     # GET and assert 200 and item count 2
-#     res_get_all = get_handler_product_comment.handler(EVENT_GET, CONTEXT_DUMMY)
-#     assert res_get_all['statusCode'] == 200
-#     assert len(json.loads(res_get_all['body'])) == 2
-
-#     # DELETE one product, assert 200 and product_id
-#     res_delete = delete_handler_product_comment.handler(EVENT, CONTEXT_DUMMY)
-#     assert res_delete['statusCode'] == 200
-#     assert json.loads(res_delete['body'])['product_id'] == EVENT_PRODUCT_ID_EXPECTED
-
-#     # GET and assert 200 and the other product_id left
-#     res_get_all = get_handler_product_comment.handler(EVENT_GET, CONTEXT_DUMMY)
-#     assert res_get_all['statusCode'] == 200
-#     assert len(json.loads(res_get_all['body'])) == 1
-#     assert json.loads(res_get_all['body'])[0]['product_id'] == EVENT2_PRODUCT_ID_EXPECTED
+    ###
+    # Assert DELETE on prod1 with invalid user_id -> 401
+    EVENT_NAME = 'valid_body_valid_pathParameter_prod1_review1'
+    EVENT = generate_inputs[EVENT_NAME]
+    EVENT['pathParameters']['user_id'] = "invalid_user_id"
+    res = delete_handler_product_comment.handler(EVENT, CONTEXT_DUMMY)
+    res_body = json.loads(res['body'])
+    assert res['statusCode'] == 401

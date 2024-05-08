@@ -121,7 +121,7 @@ def handler(event: dict, context) -> dict:
     try:
         response_get = dynamo_table.get_item(Key={'product_id': filter})
     except ClientError as e:
-        print(e.response['Error']['Message'])
+        return return_error(e.response['Error']['Message'], 400)
     else:
         item = response_get.get('Item')
         if item:

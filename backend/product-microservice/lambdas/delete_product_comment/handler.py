@@ -52,8 +52,13 @@ def handler(event, context) -> list[dict]:
         headers : Default to allow CORS, otherwise not used
         body : JSON serialized new product
 
-        400 if the handler can not complete
-        404 if there is no product with product_id
+    Returns error:
+        400 if the body cannot be parsed into a dict
+        400 if the dynamo tables are not found
+        400 if the pathParameter 'product_id' is not present in the event
+        401 if a user tries to delete a review that is not theirs, if user_id and review_id do not match
+        404 if the product_id is not found in the table
+        404 if the review_id is not found in the table
     """
 
     PATH_PARAMETER_FILTER = "product_id" # Must match the name in resources_to_create.json
@@ -87,13 +92,11 @@ def handler(event, context) -> list[dict]:
     print(f"This is the filter: {filter}")
 
 
-    
+    print(f"Assure pathParameter {PATH_PARAMETER_FILTER} is present in event")
+    if not PATH_PARAMETER_FILTER in event['pathParameters']:
+        return return_error(f"pathParameter {PATH_PARAMETER_FILTER} not found in event, abort")
 
-    print(f"Assure pathParameter product_id is present in event")
-    if not "product_id" in event['pathParameters']:
-        return return_error(f"pathParameter product_id not found in event, abort")
-
-    filter = event['pathParameters']["product_id"]
+    filter = event['pathParameters'][PATH_PARAMETER_FILTER]
     print(f"This is the filter: {filter}")
     
 
@@ -101,11 +104,12 @@ def handler(event, context) -> list[dict]:
     try:
         body = json.loads(event['body'], parse_float=Decimal)
         print("DEBUG: This is the body")
-        print(body)
+        pp.pprint(body)
     except json.decoder.JSONDecodeError as e:
         print("JSONDecodeError IN PARSING BODY")
-        raise e
+        return return_error("Error parsing body", 400)
     
+    # Given our data models, we can safely assume the following structure
     review_id = body['review_id']
     user_id = body['user_id']
 
@@ -113,7 +117,7 @@ def handler(event, context) -> list[dict]:
     try:
         response_get = dynamo_table.get_item(Key={'product_id': filter})
     except ClientError as e:
-        print(e.response['Error']['Message'])
+        return return_error(e.response['Error']['Message'], 400)
     else:
         item = response_get.get('Item')
         if item:
@@ -132,7 +136,7 @@ def handler(event, context) -> list[dict]:
                             Item = item
                         )
                     except Exception as e:
-                        return return_error(f"Error updating item: {str(e)}")
+                        return return_error(f"Error updating item in table afer removing found review: {str(e)}")
 
                     break
             if not review_found:  # Only return the error if the review was not found
@@ -146,7 +150,7 @@ def handler(event, context) -> list[dict]:
 
     print("Success, return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = 200
-    HTTP_RESPONSE_DICT['body'] = item
+    HTTP_RESPONSE_DICT['body'] = json.dumps(item)
     return HTTP_RESPONSE_DICT
 
 if __name__ == "__main__":
