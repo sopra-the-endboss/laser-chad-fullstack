@@ -52,10 +52,7 @@ def handler(event, context) -> dict:
         isBase64Encoded : False by default
         headers : Empty by default, dict otherwise
         body : JSON serialized List object with all the items found. Can be empty, but not None
-            Each item is a dict of the structure
-                product_id:str
-                reviews:array[str]
-    
+            
     Returns error:
         400 if the dynamo tables are not found
     """

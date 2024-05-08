@@ -52,6 +52,10 @@ def handler(event: dict, context) -> dict:
         isBase64Encoded : False by default
         headers : Empty by default, dict otherwise
         body : A JSON serialized string with an object containing one field, the product_id of the successfully inserted product
+
+    Returns error:
+        400 if the body cannot be parsed into a dict
+        400 if the dynamo tables are not found
     """
     
     print("post_lambda invoked")

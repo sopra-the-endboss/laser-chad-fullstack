@@ -49,6 +49,11 @@ def handler(event, context) -> list[dict]:
         isBase64Encoded : False by default
         headers : Empty by default, dict otherwise
         body : JSON serialized List object with all the items found. Each item is a dict. Can be empty
+            Each item is a dict of the structure
+                
+
+    Returns error:
+        400 if the dynamo tables are not found
     """
 
     PATH_PARAMETER_FILTER = "product_id" # Must match the name in resources_to_create.json in the path with {}
