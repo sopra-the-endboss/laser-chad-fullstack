@@ -1,11 +1,11 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import CognitoAccount from "../components/Account/CognitoAccount";
-import { addToCart, clearCart } from "../reducers/slices/cartSlice";
+import { clearCart } from "../reducers/slices/cartSlice";
 import { useAuthListener } from "./useAuthListener";
 import { useCartManagement } from "./useCartManagement";
 import { useCurrentUser } from "./useCurrentUser";
+import { getOrder } from "./useGetOrder";
 
 /**
  * A custom hook that manages the authentication state of the user using AWS Amplify's Hub for listening to authentication events.
@@ -34,6 +34,7 @@ const useAuth = () => {
 
     // Get the user data
     const { attributes } = await CognitoAccount();
+    console.log(attributes);
 
     // Catch missing userId
     currentUserId = attributes?.sub;
@@ -46,6 +47,7 @@ const useAuth = () => {
       // use userId to make HTTP request, fill cartItems with result (empty if error)
       const getCartItems = await getCart(currentUserId);
       fillCart(getCartItems);
+      getOrder(attributes.sub);
     }
   };
 

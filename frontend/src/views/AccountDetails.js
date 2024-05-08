@@ -6,8 +6,7 @@ import { useState } from "react";
 import { updateUserAttributes } from "aws-amplify/auth";
 import { useDispatch } from "react-redux";
 import { setUserLoggedIn } from "../reducers/slices/authSlice";
-import { GetOrder } from "../functions/GetOrder";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import {
   Button,
   Grid,
@@ -44,47 +43,18 @@ import {
 
 const AccountDetails = () => {
   const authState = useSelector((state) => state.auth.user);
-  const apigBaseUrl = useSelector((state) => state.apigBaseUrl);
+  //const apigBaseUrl = useSelector((state) => state.apigBaseUrl);
   const [isEditing, setIsEditing] = useState(false);
   const [editState, setEditState] = useState(authState);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const orderData = GetOrder(authState.userId, apigBaseUrl);
+  //const navigate = useNavigate();
 
-  const onCardInteract = (clickable, id) => {
-    if (clickable) {
-      navigate("/product/" + id);
-    }
-  };
+  // const onCardInteract = (clickable, id) => {
+  //   if (clickable) {
+  //     navigate("/product/" + id);
+  //   }
+  // };
 
-  // Add Mock Product for checkout process development
-
-  const addMockProduct = () => {
-    console.log(orderData);
-    const mock = [
-      {
-        brand: "Apple",
-        product_id: "1",
-        product: "iphone 13 pro max",
-        price: Number(799.9),
-        images:
-          "https://www.digitec.ch/im/productimages/5/6/4/4/7/4/1/9/1/3/5/2/5/4/9/4/6/2/caac20ef-b06f-41e9-a0bf-d88900ec25b3.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-      },
-      {
-        brand: "Apple",
-        product_id: "2",
-        product: "Apple MacBook Air",
-        price: Number(775.82),
-        image:
-          "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
-      },
-    ];
-
-    // console.log(mock);
-    // for (let i in mock) {
-    //   dispatch(addToCart(mock[i]));
-    // }
-  };
   const accountFields = [
     {
       name: "fullname",
@@ -282,8 +252,7 @@ const AccountDetails = () => {
           <IconButton onClick={handleEditToggle} size="large">
             <EditIcon />
           </IconButton>
-          {/* Add Mock Product for checkout process development */}
-          <button onClick={addMockProduct}>Add to Cart</button>
+
           <Divider />
           <Accordion>
             <AccordionSummary
@@ -296,6 +265,7 @@ const AccountDetails = () => {
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
+              {/* TODO Add Order History*/}
               {/* {cartItems.map((item) => (
                 <CartItem
                   key={item.product_id}
