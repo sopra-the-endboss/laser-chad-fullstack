@@ -5,7 +5,8 @@ import {
     PRODUCT_CATEGORY,
     PRODUCT_COMMENT_ENDPOINT,
     PRODUCT_DISTRIBUTOR,
-    PRODUCT_ENDPOINT
+    PRODUCT_ENDPOINT,
+    PRODUCT_SELLER_ENDPOINT
 } from "./constants";
 
 
@@ -194,6 +195,35 @@ export const useFetchProductDetails = (details, product_id, setProductDetails, s
             handleError({
                 error: error,
                 message: "Failed to load product!",
+            });
+        }
+    };
+}
+
+export const useFetchProductsSeller = (
+        seller_id
+    ) => {
+
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    return async () => {
+        const baseURL = getDomain(apigBaseUrl);
+        api.defaults.baseURL = baseURL;
+
+        try {
+            const response = await api.get(`/${PRODUCT_SELLER_ENDPOINT}/${seller_id}`)
+
+            console.log("DEBUG: useFetchProductsSeller response");
+            console.log(response);
+    
+            if (response) {
+                return response.data;
+            }
+
+        } catch (error) {
+            handleError({
+                error: error,
+                message: "Failed to load products of seller!",
             });
         }
     };

@@ -1,34 +1,54 @@
 import React, {useEffect, useState} from "react";
-import MyShopMock from '../data/MyShopMock.json'
 import {Box, Chip, Divider, List, ListItem, ListItemAvatar, ListItemText, Skeleton, Stack} from "@mui/material";
 import SellProduct from "../components/ProductManagement/SellProduct";
 import CustomModal from "../components/ui/CustomModal";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteConfirmation from "../components/ui/DeleteConfirmation";
-import {useDeleteProduct} from "../utils/apiCalls";
+import DeleteConfirmationMyShop from "../components/ui/DeleteConfirmationMyShop";
+import {useDeleteProduct, useFetchProductsSeller} from "../utils/apiCalls";
+import {useSelector} from "react-redux";
 
 const MyShop = () => {
+
+    // TODO: Upon product creation or deletion, the list should be updated
+
+    // Get the current seller_id
+    const auth = useSelector((state) => state.auth);
+    const seller_id = auth.user.userId;
 
     //verify that user is logged in has already been done by the routing guard
     const [shopData, setShopData] = useState([]);
 
     const [loading, setLoading] = useState(true);
-    const [itemToDelete, setItemToDelete] = useState(0);
-    const deleteProductHook = useDeleteProduct(itemToDelete, setLoading, shopData, setShopData);
+    const [productToDelete, setProductToDelete] = useState({});
 
-    useEffect(() => {
-        //myshop is similar to allProductDetailsMock without the technical details.
-        setShopData(MyShopMock);
-        setLoading(false);
-    }, []);
+    const deleteProductHook = useDeleteProduct(productToDelete.product_id, setLoading);
+    const fetchProductsSeller = useFetchProductsSeller(seller_id);
 
     const deleteProduct = async () => {
-        setLoading(true);
-        setShopData(shopData.filter(item => item.product_id !== itemToDelete))
         deleteProductHook();
+        setLoading(true);
     };
+
+    useEffect(() => {
+        fetchProductsSeller().then(
+            (data) => {
+                setShopData(data);
+                setLoading(false);
+            }
+        ).catch((error) => {})
+    }, []);
+
+    useEffect(() => {
+        if (Object.keys(productToDelete).length > 0) {
+            if (productToDelete.product_id !== undefined) {
+                console.log("productToDelete to be deleted:", productToDelete);
+                deleteProduct();
+            }
+        }
+    }, [productToDelete])
+
 
     return (
         <Stack spacing={2} sx={{width: "100%"}}>
@@ -119,8 +139,10 @@ const MyShop = () => {
                                             <SellProduct propData={product}/>
                                         </CustomModal>
                                         <CustomModal icon={<DeleteIcon/>}>
-                                            <DeleteConfirmation setItemToDelete={setItemToDelete} itemToDelete={product.product} idToDelete={product.product_id}
-                                                                deleteFunction={deleteProduct}/>
+                                            <DeleteConfirmationMyShop
+                                                setProductToDelete={setProductToDelete}
+                                                productToDelete={{...product}}
+                                            />
                                         </CustomModal>
                                     </Stack>
                                 }

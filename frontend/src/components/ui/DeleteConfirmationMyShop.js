@@ -3,20 +3,23 @@ import { Button, Stack } from "@mui/material";
 import ModalContext from "../../context/ModalContext";
 import {useParams} from "react-router-dom";
 
-const DeleteConfirmation = ({ setItemToDelete, itemToDelete }) => {
+const DeleteConfirmationMyShop = ({
+        setProductToDelete,
+        productToDelete
+    }) => {
     const { handleClose } = useContext(ModalContext);
     const setupDeleteFunction = () => {
         handleClose();
-        setItemToDelete(itemToDelete);
+        setProductToDelete(productToDelete);
     }
 
     return (    
         <Stack spacing={2}>
-            <span>Are you about to delete: "{itemToDelete.review}"</span>
+            <span>Are you about to delete: "{productToDelete.product}"</span>
             <Stack spacing={2} direction={"row"} >
                 <Button onClick={handleClose} variant={"outlined"} fullWidth>Cancel</Button>
                 <Button onClick={setupDeleteFunction} variant={"outlined"} fullWidth>Delete</Button>
             </Stack>
         </Stack>
     );
-}; export default DeleteConfirmation;
+}; export default DeleteConfirmationMyShop;
