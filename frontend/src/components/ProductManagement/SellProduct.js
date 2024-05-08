@@ -6,7 +6,7 @@ import ProductContent from "./ProductContent";
 import {Link} from "react-router-dom";
 import {usePostNewProduct} from "../../utils/apiCalls";
 
-const SellProduct = ({propData}) => {
+const SellProduct = ({propData, setLoadingMyShop}) => {
 
     const [activeStep, setActiveStep] = useState(0);
 
@@ -15,11 +15,18 @@ const SellProduct = ({propData}) => {
     const [collectedData, setCollectedData] = useState(propData || {});
     const [loading, setLoading] = useState(true);
     const [createdProductId, setCreatedProductId] = useState(10);
-    const postNewProduct = usePostNewProduct(collectedData, setLoading, setCreatedProductId);
+    const postNewProduct = usePostNewProduct(collectedData, setLoading, setCreatedProductId, setLoadingMyShop);
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        postNewProduct();
+        postNewProduct().then(
+            (data) => {
+                console.log("Product created");
+                setLoadingMyShop(true);
+            }, catchError => {
+                console.log("Error creating new product");
+            }
+        );
     };
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);

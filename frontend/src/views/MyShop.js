@@ -61,7 +61,9 @@ const MyShop = () => {
         <Stack spacing={2} sx={{width: "100%"}}>
             {/* move this to top right */}
             <CustomModal openModalText={"Add new Product"}>
-                <SellProduct/>
+                <SellProduct
+                    setLoadingMyShop={setLoading}
+                />
             </CustomModal>
             {/* add list with all shop items */}
             <List sx={{width: '100%'}}>
@@ -143,7 +145,10 @@ const MyShop = () => {
                                         <Chip label={product?.brand} color="success"/>
                                         <Chip label={product?.category} color="success"/>
                                         <CustomModal icon={<EditIcon/>}>
-                                            <SellProduct propData={product}/>
+                                            <SellProduct
+                                                propData={product}
+                                                setLoadingMyShop={setLoading}
+                                            />
                                         </CustomModal>
                                         <CustomModal icon={<DeleteIcon/>}>
                                             <DeleteConfirmationMyShop

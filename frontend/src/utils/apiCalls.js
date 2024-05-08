@@ -55,7 +55,12 @@ export const useFetchAllProducts = (setAllProductsName, setLoading) => {
     };
 }
 
-export const usePostNewProduct = (productToPost, setLoading, setCreatedProductId) => {
+export const usePostNewProduct = (
+        // collectedData, setLoading, setCreatedProductId, setLoadingMyShop
+        productToPost, // collectedData
+        setLoading,
+        setCreatedProductId
+    ) => {
     const authState = useSelector((state) => state.auth);
 
     const sellerId = authState.user.userId;
@@ -109,7 +114,7 @@ export const useFetchDistributor = (setAllDistributors) => {
 
         try {
             const response = await api.get(`/${PRODUCT_DISTRIBUTOR}`);
-            console.log(response);
+            console.log("DEBUG: useFetchDistributor this is the response", response);
             setAllDistributors(response.data);
         } catch (error) {
             handleError({
@@ -129,7 +134,7 @@ export const useFetchCategories = (setAllCategories) => {
 
         try {
             const response = await api.get(`/${PRODUCT_CATEGORY}`);
-            console.log(response);
+            console.log("DEBUG: useFetchCategories this is the response", response);
             setAllCategories(response.data);
         } catch (error) {
             handleError({
