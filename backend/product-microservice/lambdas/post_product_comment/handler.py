@@ -54,7 +54,9 @@ def handler(event: dict, context) -> dict:
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default
         headers : Empty by default, dict otherwise
-        body : Returns the review_id of the newly created review as a JSON string
+        body : Returns the full DB entry with the added review consisting of
+            product_id:str
+            reviews:array[str]
 
     Returns error:
         400 if the body cannot be parsed into a dict
@@ -151,7 +153,7 @@ def handler(event: dict, context) -> dict:
         )
 
     print("Return HTTP object")
-    HTTP_RESPONSE_DICT['statusCode'] = '200'
+    HTTP_RESPONSE_DICT['statusCode'] = 200
     HTTP_RESPONSE_DICT['body'] = json.dumps(item)
 
     print(f"DEBUG: This is the HTTP response we are sending back")

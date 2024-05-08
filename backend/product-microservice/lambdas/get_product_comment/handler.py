@@ -30,7 +30,7 @@ def return_error(msg:str, code:int = 400) -> dict:
     error_return_dict['body']=json.dumps(msg)
     return error_return_dict
 
-def handler(event, context) -> list[dict]:
+def handler(event, context) -> dict:
     """
     Arguments:
         event : a dict which contains all data from the request to the API
@@ -48,7 +48,7 @@ def handler(event, context) -> list[dict]:
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default
         headers : Empty by default, dict otherwise
-        body : JSON serialized List object with all the items found. Each item is a dict
+        body : JSON serialized List object with all the items found. Each item is a dict containing product_id:str and reviews:array[str]
     
     Returns error:
         400 if the dynamo tables are not found

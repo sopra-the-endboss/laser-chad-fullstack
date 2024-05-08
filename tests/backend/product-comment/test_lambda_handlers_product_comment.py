@@ -118,11 +118,26 @@ def generate_inputs() -> dict[str,dict]:
     prod_id_1 = "IPhone"
     prod_id_2 = "Gameboy"
 
-    # additional fields
-    brand_1 = "Apple"
-    brand_2 = "Nintendo"
-    image_1 = "url_to_image1"
-    title_1 = "title_one"
+    # valid reviews
+    review1 = {
+        "user":"User First Reviewer",
+        "user_id":"user_first_reviewer_id",
+        "rating":5,
+        "review":"This is a great product",
+        "title":"Great product",
+        "date":"2021-10-10",
+        "review_id":"review_id_1"
+    }
+    review2 = {
+        "user":"User Second Reviewer",
+        "user_id":"user_second_reviewer_id",
+        "rating":4,
+        "review":"Second review",
+        "title":"Second review",
+        "date":"2021-01-02",
+        "review_id":"review_id_2"
+    }
+
 
     ###
     # Create events
@@ -161,44 +176,28 @@ def generate_inputs() -> dict[str,dict]:
             "additionalPathParameter":"additionalPathParameter"
         }
     }
-    
-    # BODY VALID, EMPTY PATHPARAMETERS
 
-    inputs_to_return['valid_body_single'] = {
-        "body" : json.dumps({
-            "product_id":prod_id_1
-        }),
-        "pathParameters" : {}
+    # TODOD: BODY COMMENT INVALID
+    
+    # BODY COMMENT VALID, PATHPARAMETERS VALID
+    inputs_to_return['valid_body_valid_pathParameter_prod1_review1'] = {
+        "body" : json.dumps(review1),
+        "pathParameters" : {"product_id":prod_id_1}
     }
     
-    inputs_to_return['valid_body_additionalFields'] = {
-        "body" : json.dumps({
-            "product_id":prod_id_2,
-            "brand":brand_1,
-            "images":[image_1]
-        }),
-        "pathParameters" : {}
+    inputs_to_return['valid_body_valid_pathParameter_prod1_review2'] = {
+        "body" : json.dumps(review2),
+        "pathParameters" : {"product_id":prod_id_1}
     }
     
-    # BODY VALID, PATHPARAMETERS VALID
-    inputs_to_return['valid_body_valid_pathParameters_single'] = {
-        "body" : json.dumps({
-            "product_id":prod_id_1
-        }),
-        "pathParameters" : {
-            "product_id":prod_id_1
-        }
+    inputs_to_return['valid_body_valid_pathParameter_prod2_review1'] = {
+        "body" : json.dumps(review1),
+        "pathParameters" : {"product_id":prod_id_2}
     }
     
-    inputs_to_return['valid_body_valid_pathParameters_additionalFields_body'] = {
-        "body" : json.dumps({
-            "product_id":prod_id_2,
-            "brand":brand_1,
-            "images":[image_1]
-        }),
-        "pathParameters" : {
-            "product_id":prod_id_2
-        }
+    inputs_to_return['valid_body_valid_pathParameter_prod2_review2'] = {
+        "body" : json.dumps(review2),
+        "pathParameters" : {"product_id":prod_id_2}
     }
 
     return inputs_to_return
@@ -225,7 +224,7 @@ def test_db_comment_does_not_exist(set_env):
 
 ###
 # Test pathParameters
-def test_GET(dynamo_table_product, dynamo_table_product_comment, generate_inputs: dict[str,str]):
+def test_GET(dynamo_table_product_comment, generate_inputs: dict[str,str]):
     
     ###
     # Assert GET with empty or wrong pathParameters returns 200 -> Empty table
@@ -250,73 +249,88 @@ def test_GET(dynamo_table_product, dynamo_table_product_comment, generate_inputs
     assert res_valid_pathParameter['statusCode'] == 200
     assert res_valid_pathParameter['body'] == json.dumps([])
 
-def test_POST_emptyBody(dynamo_table_product, generate_inputs: dict[str,str]):
+def test_POST(dynamo_table_product_comment, generate_inputs: dict[str,str]):
     
     ###
-    # Assert POST with empty body leads to json error
-    with pytest.raises(json.JSONDecodeError):
-        res_empty_body = post_handler_product_comment.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
-
-# def test_POST_GET(dynamo_table_product, generate_inputs: dict[str,str]):
+    # Assert POST with empty pathParameter raises 400
+    res_empty_body = post_handler_product_comment.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
+    assert res_empty_body['statusCode'] == 400
     
-#     ###
-#     # Assert POST valid -> 200 and return the product_id
-#     EVENT_NAME = 'valid_body_single'
-#     EVENT = generate_inputs[EVENT_NAME]
-#     EVENT_PRODUCT_ID = json.loads(EVENT['body'])['product_id']
-#     res_valid_pathParameter = post_handler_product_comment.handler(EVENT, CONTEXT_DUMMY)
-#     assert res_valid_pathParameter['statusCode'] == 200
-#     assert json.loads(res_valid_pathParameter['body'])['product_id'] == EVENT_PRODUCT_ID
+    ###
+    # Assert POST with wrong pathParameters raises 400
+    res_empty_body = post_handler_product_comment.handler(generate_inputs['wrong_pathParameter'], CONTEXT_DUMMY)
+    assert res_empty_body['statusCode'] == 400
+    res_empty_body = post_handler_product_comment.handler(generate_inputs['wrong_pathParameter_array'], CONTEXT_DUMMY)
+    assert res_empty_body['statusCode'] == 400
+    
+    ###
+    # Assert POST with valid pathParameter empty Body raises 400
+    res_empty_body = post_handler_product_comment.handler(generate_inputs['valid_pathParameter_emptyBody'], CONTEXT_DUMMY)
+    assert res_empty_body['statusCode'] == 400
+    res_empty_body = post_handler_product_comment.handler(generate_inputs['valid_pathParameter_emptyBody_additionalPathParameter'], CONTEXT_DUMMY)
+    assert res_empty_body['statusCode'] == 400
+    
+def test_POST_GET(dynamo_table_product_comment, generate_inputs: dict[str,str]):
+    
+    ###
+    # Assert POST valid -> 200 and return the review_id
+    EVENT_NAME = 'valid_body_valid_pathParameter_prod1_review1'
+    EVENT = generate_inputs[EVENT_NAME]
+    EVENT_REVIEW = json.loads(EVENT['body'])
+    res_valid_pathParameter = post_handler_product_comment.handler(EVENT, CONTEXT_DUMMY)
+    assert res_valid_pathParameter['statusCode'] == 200
+    assert EVENT_REVIEW in json.loads(res_valid_pathParameter['body'])['reviews']
+    assert len(json.loads(res_valid_pathParameter['body'])['reviews']) == 1 # Only one review
 
-#     ###
-#     # Assert GET all -> 200 and return one item, containing our product_id
-#     res_get_all = get_handler_product_comment.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
-#     assert res_get_all['statusCode'] == 200
-#     assert len(json.loads(res_get_all['body'])) == 1
-#     assert EVENT_PRODUCT_ID in [prod['product_id'] for prod in json.loads(res_get_all['body'])]
+    ###
+    # Assert GET all -> 200 and return one item, containing our product_id
+    res_get_all = get_handler_product_comment.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
+    assert res_get_all['statusCode'] == 200
+    assert len(json.loads(res_get_all['body'])) == 1
+    assert EVENT_REVIEW_ID in [prod['product_id'] for prod in json.loads(res_get_all['body'])]
 
-#     ###
-#     # Assert POST valid with another prod_id additional fields -> 200 and return the product_id
-#     EVENT2_NAME = 'valid_body_additionalFields'
-#     EVENT2 = generate_inputs[EVENT2_NAME]
-#     EVENT2_BODY = json.loads(EVENT2['body'])
-#     EVENT2_PRODUCT_ID = EVENT2_BODY['product_id']
-#     res_valid_pathParameter = post_handler_product_comment.handler(EVENT2, CONTEXT_DUMMY)
-#     assert res_valid_pathParameter['statusCode'] == 200
-#     assert json.loads(res_valid_pathParameter['body'])['product_id'] == EVENT2_PRODUCT_ID
+    # ###
+    # # Assert POST valid with another prod_id additional fields -> 200 and return the product_id
+    # EVENT2_NAME = 'valid_body_additionalFields'
+    # EVENT2 = generate_inputs[EVENT2_NAME]
+    # EVENT2_BODY = json.loads(EVENT2['body'])
+    # EVENT2_PRODUCT_ID = EVENT2_BODY['product_id']
+    # res_valid_pathParameter = post_handler_product_comment.handler(EVENT2, CONTEXT_DUMMY)
+    # assert res_valid_pathParameter['statusCode'] == 200
+    # assert json.loads(res_valid_pathParameter['body'])['product_id'] == EVENT2_PRODUCT_ID
 
-#     ###
-#     # Assert GET all -> 200 and return two item, containing our two product_ids
-#     res_get_all = get_handler_product_comment.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
-#     assert res_get_all['statusCode'] == 200
-#     assert len(json.loads(res_get_all['body'])) == 2
-#     assert EVENT2_PRODUCT_ID in [prod['product_id'] for prod in json.loads(res_get_all['body'])]
-#     # Assert all fields from the product are there after POST and GET
-#     res_get_all_product = next((product for product in json.loads(res_get_all['body']) if product['product_id'] == EVENT2_PRODUCT_ID), None)
-#     assert EVENT2_BODY == res_get_all_product
+    # ###
+    # # Assert GET all -> 200 and return two item, containing our two product_ids
+    # res_get_all = get_handler_product_comment.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
+    # assert res_get_all['statusCode'] == 200
+    # assert len(json.loads(res_get_all['body'])) == 2
+    # assert EVENT2_PRODUCT_ID in [prod['product_id'] for prod in json.loads(res_get_all['body'])]
+    # # Assert all fields from the product are there after POST and GET
+    # res_get_all_product = next((product for product in json.loads(res_get_all['body']) if product['product_id'] == EVENT2_PRODUCT_ID), None)
+    # assert EVENT2_BODY == res_get_all_product
 
-#     ###
-#     # Assert POST valid again, overwrite the first product_id -> 200 and return the product_id
-#     EVENT_NAME = 'valid_body_single'
-#     EVENT_OVERWRITE = generate_inputs[EVENT_NAME].copy()
-#     EVENT_OVERWRITE_BODY = json.loads(EVENT_OVERWRITE['body'])
-#     # Add some additional fields, replace body in EVENT_OVERWRITE
-#     EVENT_OVERWRITE_BODY['additionalField'] = "additionalValue"
-#     EVENT_OVERWRITE['body'] = json.dumps(EVENT_OVERWRITE_BODY)
-#     EVENT_OVERWRITE_PRODUCT_ID = json.loads(EVENT_OVERWRITE['body'])['product_id']
-#     res_valid_pathParameter = post_handler_product_comment.handler(EVENT_OVERWRITE, CONTEXT_DUMMY)
-#     assert res_valid_pathParameter['statusCode'] == 200
-#     assert json.loads(res_valid_pathParameter['body'])['product_id'] == EVENT_OVERWRITE_PRODUCT_ID
+    # ###
+    # # Assert POST valid again, overwrite the first product_id -> 200 and return the product_id
+    # EVENT_NAME = 'valid_body_single'
+    # EVENT_OVERWRITE = generate_inputs[EVENT_NAME].copy()
+    # EVENT_OVERWRITE_BODY = json.loads(EVENT_OVERWRITE['body'])
+    # # Add some additional fields, replace body in EVENT_OVERWRITE
+    # EVENT_OVERWRITE_BODY['additionalField'] = "additionalValue"
+    # EVENT_OVERWRITE['body'] = json.dumps(EVENT_OVERWRITE_BODY)
+    # EVENT_OVERWRITE_PRODUCT_ID = json.loads(EVENT_OVERWRITE['body'])['product_id']
+    # res_valid_pathParameter = post_handler_product_comment.handler(EVENT_OVERWRITE, CONTEXT_DUMMY)
+    # assert res_valid_pathParameter['statusCode'] == 200
+    # assert json.loads(res_valid_pathParameter['body'])['product_id'] == EVENT_OVERWRITE_PRODUCT_ID
 
-#     ###
-#     # Assert GET all -> 200 and return two item, containing the updated first product
-#     res_get_all = get_handler_product_comment.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
-#     assert res_get_all['statusCode'] == 200
-#     assert len(json.loads(res_get_all['body'])) == 2
-#     assert EVENT_OVERWRITE_PRODUCT_ID in [prod['product_id'] for prod in json.loads(res_get_all['body'])]
-#     # Assert all fields from the product are there after POST and GET
-#     res_get_all_product = next((product for product in json.loads(res_get_all['body']) if product['product_id'] == EVENT_OVERWRITE_PRODUCT_ID), None)
-#     assert EVENT_OVERWRITE_BODY == res_get_all_product
+    # ###
+    # # Assert GET all -> 200 and return two item, containing the updated first product
+    # res_get_all = get_handler_product_comment.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
+    # assert res_get_all['statusCode'] == 200
+    # assert len(json.loads(res_get_all['body'])) == 2
+    # assert EVENT_OVERWRITE_PRODUCT_ID in [prod['product_id'] for prod in json.loads(res_get_all['body'])]
+    # # Assert all fields from the product are there after POST and GET
+    # res_get_all_product = next((product for product in json.loads(res_get_all['body']) if product['product_id'] == EVENT_OVERWRITE_PRODUCT_ID), None)
+    # assert EVENT_OVERWRITE_BODY == res_get_all_product
     
 # def test_DELETE_pathParameter(dynamo_table_product, dynamo_table_product_comment, generate_inputs: dict[str,str]):
 
