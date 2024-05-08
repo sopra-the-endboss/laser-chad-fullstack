@@ -20,7 +20,7 @@ import {ProductDetailRow} from "../components/ProductDetails/ProductRowDetails";
 import {useFetchAllComments, useFetchProductDetails} from "../utils/apiCalls";
 import {CommentaryComponent} from "../components/ProductDetails/CommentaryComponent";
 
-export const ProductDetail = ({details, previousStep, nextStep}) => {
+export const ProductDetail = ({details, previousStep, nextStep, hideComments=false}) => {
     const [productDetails, setProductDetails] = useState({technical_details: {}, product: "", ...details});
     const [productComments, setProductComments] = useState([]);
     const {product_id} = useParams();
@@ -169,16 +169,18 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
 
                     </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                    <CommentaryComponent
-                        productComments={productComments}
-                        setProductComments={setProductComments}
-                        loadingComments={loadingComments}
-                        setLoadingComments={setLoadingComments}
-                        productDetails={productDetails}
-                        loadingDetails={loadingDetails}
-                    />
-                </Grid>
+                {!hideComments && (
+                    <Grid item xs={12}>
+                        <CommentaryComponent
+                            productComments={productComments}
+                            setProductComments={setProductComments}
+                            loadingComments={loadingComments}
+                            setLoadingComments={setLoadingComments}
+                            productDetails={productDetails}
+                            loadingDetails={loadingDetails}
+                        />
+                    </Grid>
+                )}
             </Grid>
             <Grid item xs={12} sx={{borderTop: 1, borderColor: "divider", paddingBottom: "16px", paddingTop: "16px"}}>
                 <Grid item xs={12}>
