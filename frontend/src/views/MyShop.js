@@ -17,17 +17,24 @@ const MyShop = () => {
     const auth = useSelector((state) => state.auth);
     const seller_id = auth.user.userId;
 
-    //verify that user is logged in has already been done by the routing guard
+    // verify that user is logged in has already been done by the routing guard
     const [shopData, setShopData] = useState([]);
 
     const [loading, setLoading] = useState(true);
     const [productToDelete, setProductToDelete] = useState({});
 
-    const deleteProductHook = useDeleteProduct(productToDelete.product_id, setLoading);
+    const deleteProductHook = useDeleteProduct(productToDelete.product_id);
     const fetchProductsSeller = useFetchProductsSeller(seller_id);
 
     const deleteProduct = async () => {
-        deleteProductHook();
+        deleteProductHook().then(
+            (data) => {
+                console.log("Product deleted");
+                setLoading(true);
+            }, catchError => {
+                console.log("Error deleting product");
+            }
+        );
         setLoading(true);
     };
 
@@ -38,7 +45,7 @@ const MyShop = () => {
                 setLoading(false);
             }
         ).catch((error) => {})
-    }, []);
+    }, [loading]);
 
     useEffect(() => {
         if (Object.keys(productToDelete).length > 0) {

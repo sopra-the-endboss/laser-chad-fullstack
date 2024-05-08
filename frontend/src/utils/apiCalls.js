@@ -81,7 +81,7 @@ export const usePostNewProduct = (productToPost, setLoading, setCreatedProductId
     };
 }
 
-export const useDeleteProduct = (productId, setLoading) => {
+export const useDeleteProduct = (productId) => {
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
 
     return async () => {
@@ -90,8 +90,7 @@ export const useDeleteProduct = (productId, setLoading) => {
 
         try {
             const response = await api.delete(`/${PRODUCT_ENDPOINT}/${productId}`);
-            console.log(response);
-            setLoading(false);
+            console.log("DEBUG: useDeleteProduct this is the response", response);
         } catch (error) {
             handleError({
                 error: error,
