@@ -9,11 +9,11 @@ const CustomModal = ({openModalText, icon, children}) => {
 
     const [open, setOpen] = useState(false);
     const handleOpen = (e) => {
-        e.stopPropagation();
+        e?.stopPropagation();
         setOpen(true);
     }
     const handleClose = (e) => {
-        e.stopPropagation();
+        e?.stopPropagation();
         setOpen(false);
     }
 

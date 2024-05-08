@@ -6,7 +6,7 @@ import ProductContent from "./ProductContent";
 import {Link} from "react-router-dom";
 import {usePostNewProduct} from "../../utils/apiCalls";
 
-const SellProduct = ({propData, setLoadingMyShop}) => {
+const SellProduct = ({propData, setLoadingMyShop, setRefresh}) => {
 
     const [activeStep, setActiveStep] = useState(0);
 
@@ -22,6 +22,7 @@ const SellProduct = ({propData, setLoadingMyShop}) => {
         postNewProduct().then(
             (data) => {
                 console.log("Product created");
+                setRefresh((prevState) => !prevState);
                 setLoadingMyShop(true);
             }, catchError => {
                 console.log("Error creating new product");
@@ -47,9 +48,9 @@ const SellProduct = ({propData, setLoadingMyShop}) => {
                     // Render the preview of the entered data
                     // hideComments is set to true, do not allow to add a comment in the preview
                     // hideAddToCart is set to true, do not allow to add the product to the cart
-                    <ProductDetail 
+                    <ProductDetail
                         details={collectedData}
-                        previousStep={handleBack} 
+                        previousStep={handleBack}
                         nextStep={handleNext}
                         hideComments={true}
                         hideAddToCart={true}

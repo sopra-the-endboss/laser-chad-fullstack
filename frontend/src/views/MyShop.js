@@ -10,7 +10,7 @@ import {useDeleteProduct, useFetchProductsSeller} from "../utils/apiCalls";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 
-const MyShop = () => {
+const MyShop = ({setRefresh, refresh}) => {
 
     const navigate = useNavigate();
 
@@ -36,14 +36,15 @@ const MyShop = () => {
 
     const deleteProduct = async () => {
         deleteProductHook().then(
-            (data) => {
+            () => {
                 console.log("Product deleted");
                 setLoading(true);
-            }, catchError => {
+                setRefresh(prevState => !prevState);
+                // pop product from list
+            }).catch(() => {
                 console.log("Error deleting product");
-            }
-        );
-        setLoading(true);
+            }).finally(() => setLoading(false));
+
     };
 
     useEffect(() => {
@@ -53,7 +54,7 @@ const MyShop = () => {
                 setLoading(false);
             }
         ).catch((error) => {})
-    }, [loading]);
+    }, [loading, refresh]);
 
     useEffect(() => {
         if (Object.keys(productToDelete).length > 0) {
@@ -71,6 +72,7 @@ const MyShop = () => {
             <CustomModal openModalText={"Add new Product"}>
                 <SellProduct
                     setLoadingMyShop={setLoading}
+                    setRefresh={setRefresh}
                 />
             </CustomModal>
             {/* add list with all shop items */}
@@ -160,6 +162,7 @@ const MyShop = () => {
                                                 <SellProduct
                                                     propData={product}
                                                     setLoadingMyShop={setLoading}
+                                                    setRefresh={setRefresh}
                                                 />
                                             </CustomModal>
                                             <CustomModal icon={<DeleteIcon/>}>
