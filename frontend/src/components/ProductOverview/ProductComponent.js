@@ -9,7 +9,7 @@ import {useDispatch} from "react-redux";
 import {addToCart} from "../../reducers/slices/cartSlice";
 
 export default function ProductComponent({
-    
+
         // Those are the props from the product object, they are passed to the addToCart function
         product_id,
         brand,
@@ -19,11 +19,11 @@ export default function ProductComponent({
         formatted_text,
         price,
         category,
-        
+
         onCardInteract,
         loading
     }) {
-    
+
     const dispatch = useDispatch();
 
     return (<Card
@@ -46,7 +46,7 @@ export default function ProductComponent({
         ) : (
             <CardMedia
                 component="img"
-                image={images[0]}
+                image={images}
                 alt={product}
                 sx={{height: 160, cursor: "pointer"}}
                 onClick={() => onCardInteract(true, product_id)}

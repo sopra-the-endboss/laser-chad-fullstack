@@ -50,7 +50,7 @@ function CarouselComponent({carouselData, clickable = true, onCardInteract, load
                                 component="img"
                                 image={image}
                                 alt={"Product description"}
-                                sx={{height: 'auto', maxWidth: '100%'}} // Set height to auto
+                                sx={{maxHeight: '477px', maxWidth: '100%'}} // Set height to auto
                             />
                         )}
                         {clickable && <CardContent sx={{
