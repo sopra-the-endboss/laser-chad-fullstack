@@ -84,9 +84,15 @@ export const CommentaryComponent = ({
                                             </Typography>
                                             {   
 
-                                                // TODO: To delete a comment, the seller must be logged in and the seller_id must match the productss seller_id
-                                                isSeller && 'seller_id' in productDetails && productDetails.seller_id !== undefined && productDetails.seller_id === userId && (
-                                                    
+                                                // To delete a comment, therea are two options
+                                                // 1. The user must be a seller and and the seller_id must match the productss seller_id
+                                                // 2. The user must be the user that wrote the comment
+                                                (   
+                                                    // option 1
+                                                    (isSeller && 'seller_id' in productDetails && productDetails.seller_id !== undefined && productDetails.seller_id === userId) ||
+                                                    // option 2
+                                                    (isLoggedIn && 'user_id' in review && review.user_id === userId)
+                                                ) && (
                                                     <Typography variant="caption" sx={{ ml: 1 }}>
                                                         <CustomModal icon={<DeleteIcon style={{height: '18px'}}/>}>
                                                             <DeleteConfirmation
