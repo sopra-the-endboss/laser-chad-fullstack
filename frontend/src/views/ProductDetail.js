@@ -20,7 +20,13 @@ import {ProductDetailRow} from "../components/ProductDetails/ProductRowDetails";
 import {useFetchAllComments, useFetchProductDetails} from "../utils/apiCalls";
 import {CommentaryComponent} from "../components/ProductDetails/CommentaryComponent";
 
-export const ProductDetail = ({details, previousStep, nextStep, hideComments=false}) => {
+export const ProductDetail = ({
+        details,
+        previousStep,
+        nextStep,
+        hideComments=false,
+        hideAddToCart=false
+    }) => {
     const [productDetails, setProductDetails] = useState({technical_details: {}, product: "", ...details});
     const [productComments, setProductComments] = useState([]);
     const {product_id} = useParams();
@@ -145,8 +151,10 @@ export const ProductDetail = ({details, previousStep, nextStep, hideComments=fal
                     <Grid item xs={12}>
                         {(
                             // make sure productDetails is an object with product_id, which must be a nonempty string, AND we are not loading anymore
+                            // also disable if hideAddToCart is true
                             (productDetails && productDetails?.product_id && typeof productDetails.product_id === 'string' && productDetails.product_id.trim() !== '') &&
-                            !loadingDetails
+                            !loadingDetails &&
+                            !hideAddToCart
                         ) ? (
                             <Button
                                 variant="contained"
