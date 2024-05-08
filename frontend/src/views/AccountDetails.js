@@ -239,7 +239,7 @@ const AccountDetails = () => {
       </Typography>
       <Divider sx={{ my: 2 }} />
       {isEditing ? (
-        <React.Fragment>
+        <>
           <Grid container spacing={3}>
             {formFields.map((field) => (
               <Grid
@@ -271,14 +271,12 @@ const AccountDetails = () => {
               </Button>
             </Grid>
           </Grid>
-        </React.Fragment>
+        </>
       ) : (
-        <React.Fragment>
+        <>
           <h3 className="accountH3">Account Details</h3>
-          {accountFields.map((field, index) => (
-            <React.Fragment key={index}>
-              <p className="accountText">{field.value}</p>
-            </React.Fragment>
+          {accountFields.map((field) => (
+            <p className="accountText">{field.value}</p>
           ))}
 
           <IconButton onClick={handleEditToggle} size="large">
@@ -307,7 +305,7 @@ const AccountDetails = () => {
               ))} */}
             </AccordionDetails>
           </Accordion>
-        </React.Fragment>
+        </>
       )}
     </Box>
   );
