@@ -35,6 +35,9 @@ def handler(event, context) -> dict:
     Arguments:
         event : a dict which contains all data from the request to the API
         context : a LambdaContext object
+
+        The pathParameter can, but does not have to, contain a product_id which is used as a filter
+        If no product_id is given, all items are returned
     
     Returns:
         A valid HTTP Response dict which must contain the fields
@@ -48,7 +51,10 @@ def handler(event, context) -> dict:
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default
         headers : Empty by default, dict otherwise
-        body : JSON serialized List object with all the items found. Each item is a dict containing product_id:str and reviews:array[str]
+        body : JSON serialized List object with all the items found. Can be empty, but not None
+            Each item is a dict of the structure
+                product_id:str
+                reviews:array[str]
     
     Returns error:
         400 if the dynamo tables are not found

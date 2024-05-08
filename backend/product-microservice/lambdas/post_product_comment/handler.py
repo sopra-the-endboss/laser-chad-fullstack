@@ -101,11 +101,12 @@ def handler(event: dict, context) -> dict:
     try:
         new_item = json.loads(event['body'], parse_float=Decimal)
         print("DEBUG: This is the item")
-        print(new_item)
+        pp.pprint(new_item)
     except json.decoder.JSONDecodeError as e:
         print("JSONDecodeError IN PARSING BODY")
         return return_error("Error parsing body", 400)
     
+    # If the body is parsable, we can assume the following structure given the resource model
     new_review = {
         'user': new_item['user'],
         'user_id': new_item['user_id'],
