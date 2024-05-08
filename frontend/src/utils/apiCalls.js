@@ -117,6 +117,7 @@ export const useFetchDistributor = (setAllDistributors) => {
         }
     };
 }
+
 export const useFetchCategories = (setAllCategories) => {
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
 
@@ -136,7 +137,6 @@ export const useFetchCategories = (setAllCategories) => {
         }
     };
 }
-
 
 export const useFetchAllComments = (details, product_id, setLoadingComments) => {
 
@@ -199,8 +199,6 @@ export const useFetchProductDetails = (details, product_id, setProductDetails, s
     };
 }
 
-
-
 export const usePostComment = (setLoadingComments, setComments, comment, productComments, product_id) => {
 
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
@@ -215,6 +213,7 @@ export const usePostComment = (setLoadingComments, setComments, comment, product
 
             console.log("DEBUG: usePostComment productComments", productComments);
             
+            // Set the productComments to the new state after deleting the comment
             // If productComments is empty, we have to crate field product_id and reviews as empty array
             const copy = {...productComments};
             if (Object.keys(copy).length === 0) {
@@ -235,7 +234,7 @@ export const usePostComment = (setLoadingComments, setComments, comment, product
     };
 }
 
-export const useDeleteComment = (item_to_delete, setLoading, product_id) => {
+export const useDeleteComment = (item_to_delete, setLoadingComments, product_id, setProductComments) => {
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
 
     return async () => {
@@ -248,8 +247,15 @@ export const useDeleteComment = (item_to_delete, setLoading, product_id) => {
                 `/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`,
                 {data : item_to_delete}
             );
-            console.log(response);
-            setLoading(false);
+            console.log("useDeleteComment: This is the response after sending DELETE: ", response);
+
+            // Set the productComments to the new state after deleting the comment
+            const copy = {...response.data};
+            setProductComments(copy);
+
+            setLoadingComments(false);
+
+
         } catch (error) {
             handleError({
                 error: error,

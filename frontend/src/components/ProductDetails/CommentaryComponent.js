@@ -12,7 +12,7 @@ import {AddComment} from "../ui/AddComment";
 import {useDeleteComment} from "../../utils/apiCalls";
 
 
-export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails, productComments, setProductComments}) => {
+export const CommentaryComponent = ({setLoadingComments, loadingComments, loadingDetails, productComments, setProductComments}) => {
     const auth = useSelector((state) => state.auth);
     const user = auth.user;
     const isLoggedIn = auth.isLoggedIn;
@@ -20,11 +20,11 @@ export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails
     const {product_id} = useParams();
 
     const [itemToDelete, setItemToDelete] = useState({});
-    const deleteCommentHook = useDeleteComment(itemToDelete, setLoading, product_id);
+    const deleteCommentHook = useDeleteComment(itemToDelete, setLoadingComments, product_id, setProductComments);
 
     const deleteComment = async () => {
         deleteCommentHook();
-        setLoading(true);
+        setLoadingComments(true);
     };
 
     useEffect(() => {
@@ -50,7 +50,7 @@ export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails
                         {isLoggedIn && (
                             <CustomModal icon={<AddIcon />}>
                                 <AddComment
-                                    setLoading={setLoading}
+                                    setLoadingComments={setLoadingComments}
                                     user={user}
                                     setProductComments={setProductComments}
                                     productComments={productComments}
@@ -79,7 +79,6 @@ export const CommentaryComponent = ({setLoading, loadingComments, loadingDetails
                                                             <DeleteConfirmation
                                                                 setItemToDelete={setItemToDelete}
                                                                 itemToDelete={{...review}}
-
                                                             />
                                                         </CustomModal>
                                                     </Typography>

@@ -6,7 +6,7 @@ import {usePostComment} from "../../utils/apiCalls";
 import {useParams} from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 
-export const AddComment = ({user, setProductComments, setLoading, productComments}) => {
+export const AddComment = ({user, setProductComments, setLoadingComments, productComments}) => {
 
     const [rating, setRating] = useState(0);
     const [newReview, setNewReview] = useState('');
@@ -14,10 +14,10 @@ export const AddComment = ({user, setProductComments, setLoading, productComment
     const [submissionElement, setSubmissionElement] = useState({});
     const {handleClose} = useContext(ModalContext);
     const {product_id} = useParams();
-    const postComment = usePostComment(setLoading, setProductComments, submissionElement, productComments, product_id);
+    const postComment = usePostComment(setLoadingComments, setProductComments, submissionElement, productComments, product_id);
     const submitComment = () => {
-        // setLoading(true); // TODO: WHY THE EVERLOVING FUCK DOES THIS LINE PREVENT THE postComment() execution????!!!!
-        // if setLoading(true) is executed, the post of a new comment does not work
+        // setLoadingComments(true); // TODO: WHY THE EVERLOVING FUCK DOES THIS LINE PREVENT THE postComment() execution????!!!!
+        // if setLoadingComments(true) is executed, the post of a new comment does not work
 
         // Create unique uuid for review
         const review_id = uuidv4();

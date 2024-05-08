@@ -171,7 +171,7 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                 </Grid>
                 <Grid item xs={12}>
                     <CommentaryComponent
-                        setLoading={setLoadingComments}
+                        setLoadingComments={setLoadingComments}
                         loadingComments={loadingComments}
                         loadingDetails={loadingDetails}
                         productComments={productComments}
