@@ -79,7 +79,7 @@ def handler(event: dict, context) -> dict:
     available_tables = dynamo_client.list_tables()
     available_tables = available_tables['TableNames']
     if not TableName in available_tables:
-        return_error(f"Table {TableName} not found in the available tables, abort", 400)
+        return return_error(f"Table {TableName} not found in the available tables, abort", 400)
 
     print("Creating dynamo table object ...")
     dynamo_resource = boto3.resource("dynamodb")
@@ -112,7 +112,6 @@ def handler(event: dict, context) -> dict:
         'title' : new_item['title'],
         'date' : new_item['date'],
         'review_id': new_item['review_id']
-
     }
     
     # Try to get the item from the table

@@ -56,19 +56,29 @@ def handler(event, context) -> list[dict]:
         404 if there is no product with product_id
     """
 
-    PATH_PARAMETER_FILTER = "product_id" # Must match the name in resources_to_create.json in the path with {}
-    PRODUCT_DELETED = False
+    PATH_PARAMETER_FILTER = "product_id" # Must match the name in resources_to_create.json
 
     print("delete_product invoked")
 
     print("DEBUG: This is the event")
     pp.pprint(event)
-    
 
-        
+    TableName = "product-comment-table"
+
+    print(f"Using table {TableName}")
+
+    print("Check if table is available ...")
+    dynamo_client = boto3.client("dynamodb")
+    available_tables = dynamo_client.list_tables()
+    available_tables = available_tables['TableNames']
+    if not TableName in available_tables:
+        return return_error(f"Table {TableName} not found in the available tables, abort", 400)
+
+
     print("Creating dynamo table object ...")
     dynamo_resource = boto3.resource("dynamodb")
     dynamo_table = dynamo_resource.Table('product-comment-table')
+    
     print(f"Assure pathParameter {PATH_PARAMETER_FILTER} is present in event")
     if not PATH_PARAMETER_FILTER in event['pathParameters']:
         return return_error(f"pathParameter {PATH_PARAMETER_FILTER} not found in event, abort")
