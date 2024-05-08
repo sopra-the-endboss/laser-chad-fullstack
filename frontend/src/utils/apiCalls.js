@@ -66,6 +66,8 @@ export const usePostNewProduct = (productToPost, setLoading, setCreatedProductId
         const baseURL = getDomain(apigBaseUrl);
         api.defaults.baseURL = baseURL;
 
+        console.log("DEBUG : usePostNewProduct this is the productToPost", productToPost);
+
         try {
             const response = await api.post(`/${PRODUCT_ENDPOINT}`, productToPost);
             setCreatedProductId(response.data.product_id)

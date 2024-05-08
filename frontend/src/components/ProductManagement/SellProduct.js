@@ -29,7 +29,11 @@ const SellProduct = ({propData}) => {
         switch (stepIndex) {
             case 0:
                 return (
-                    <ProductContent collectedData={collectedData} setCollectedData={setCollectedData} setActiveStep={setActiveStep} />
+                    <ProductContent
+                        collectedData={collectedData}
+                        setCollectedData={setCollectedData}
+                        setActiveStep={setActiveStep}
+                    />
                 );
             case 1:
                 return (

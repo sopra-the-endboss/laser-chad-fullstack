@@ -15,7 +15,11 @@ import React, {useEffect, useState} from "react";
 //import AllCompaniesMock from "../../data/AllCompanyMock.json";
 import {useFetchCategories, useFetchDistributor} from "../../utils/apiCalls";
 
-const ProductContent = ({setActiveStep, setCollectedData, collectedData}) => {
+const ProductContent = ({
+        collectedData,
+        setCollectedData,
+        setActiveStep,
+    }) => {
 
     // This function transforms the technical details object into the array format
     const prepareInitialTechnicalData = (technicalDetails) => {
