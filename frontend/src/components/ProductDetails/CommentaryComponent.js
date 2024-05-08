@@ -12,9 +12,17 @@ import {AddComment} from "../ui/AddComment";
 import {useDeleteComment} from "../../utils/apiCalls";
 
 
-export const CommentaryComponent = ({setLoadingComments, loadingComments, loadingDetails, productComments, setProductComments}) => {
+export const CommentaryComponent = ({
+        productComments,
+        setProductComments,
+        loadingComments,
+        setLoadingComments,
+        productDetails, // TODO: Use this to check if the user is the seller of the product
+        loadingDetails,
+    }) => {
     const auth = useSelector((state) => state.auth);
     const user = auth.user;
+    const userId = auth.user.userId;
     const isLoggedIn = auth.isLoggedIn;
     const isSeller = user ? user?.role === "Seller" : false;
     const {product_id} = useParams();
@@ -47,7 +55,9 @@ export const CommentaryComponent = ({setLoadingComments, loadingComments, loadin
                 <Paper elevation={1} sx={{ p: 2, mb: 2 }}>
                     <Box display="flex" justifyContent="space-between" alignItems="center">
                         <Typography variant="h6">Reviews</Typography>
-                        {isLoggedIn && (
+                        {
+                        // Every logged in user can add a comment, not tied to sales history
+                        isLoggedIn && (
                             <CustomModal icon={<AddIcon />}>
                                 <AddComment
                                     setLoadingComments={setLoadingComments}
@@ -72,8 +82,11 @@ export const CommentaryComponent = ({setLoadingComments, loadingComments, loadin
                                             <Typography variant="caption" sx={{ ml: 1 }}>
                                                 {review?.date}
                                             </Typography>
-                                            {
-                                                isSeller && (
+                                            {   
+
+                                                // TODO: To delete a comment, the seller must be logged in and the seller_id must match the productss seller_id
+                                                isSeller && 'seller_id' in productDetails && productDetails.seller_id !== undefined && productDetails.seller_id === userId && (
+                                                    
                                                     <Typography variant="caption" sx={{ ml: 1 }}>
                                                         <CustomModal icon={<DeleteIcon style={{height: '18px'}}/>}>
                                                             <DeleteConfirmation

@@ -171,11 +171,12 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
                 </Grid>
                 <Grid item xs={12}>
                     <CommentaryComponent
-                        setLoadingComments={setLoadingComments}
-                        loadingComments={loadingComments}
-                        loadingDetails={loadingDetails}
                         productComments={productComments}
                         setProductComments={setProductComments}
+                        loadingComments={loadingComments}
+                        setLoadingComments={setLoadingComments}
+                        productDetails={productDetails}
+                        loadingDetails={loadingDetails}
                     />
                 </Grid>
             </Grid>
