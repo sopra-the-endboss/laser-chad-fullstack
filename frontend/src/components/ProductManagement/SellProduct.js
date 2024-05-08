@@ -46,11 +46,13 @@ const SellProduct = ({propData, setLoadingMyShop}) => {
                 return (
                     // Render the preview of the entered data
                     // hideComments is set to true, do not allow to add a comment in the preview
+                    // hideAddToCart is set to true, do not allow to add the product to the cart
                     <ProductDetail 
                         details={collectedData}
                         previousStep={handleBack} 
                         nextStep={handleNext}
                         hideComments={true}
+                        hideAddToCart={true}
                     />
                 );
             case 2:
