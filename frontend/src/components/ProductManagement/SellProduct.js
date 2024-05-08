@@ -6,7 +6,7 @@ import ProductContent from "./ProductContent";
 import {Link} from "react-router-dom";
 import {usePostNewProduct} from "../../utils/apiCalls";
 
-const SellProduct = ({propData}) => {
+const SellProduct = ({propData, setLoadingMyShop}) => {
 
     const [activeStep, setActiveStep] = useState(0);
 
@@ -15,11 +15,18 @@ const SellProduct = ({propData}) => {
     const [collectedData, setCollectedData] = useState(propData || {});
     const [loading, setLoading] = useState(true);
     const [createdProductId, setCreatedProductId] = useState(10);
-    const postNewProduct = usePostNewProduct(collectedData, setLoading, setCreatedProductId);
+    const postNewProduct = usePostNewProduct(collectedData, setLoading, setCreatedProductId, setLoadingMyShop);
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        postNewProduct();
+        postNewProduct().then(
+            (data) => {
+                console.log("Product created");
+                setLoadingMyShop(true);
+            }, catchError => {
+                console.log("Error creating new product");
+            }
+        );
     };
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -29,12 +36,22 @@ const SellProduct = ({propData}) => {
         switch (stepIndex) {
             case 0:
                 return (
-                    <ProductContent collectedData={collectedData} setCollectedData={setCollectedData} setActiveStep={setActiveStep} />
+                    <ProductContent
+                        collectedData={collectedData}
+                        setCollectedData={setCollectedData}
+                        setActiveStep={setActiveStep}
+                    />
                 );
             case 1:
                 return (
                     // Render the preview of the entered data
-                    <ProductDetail details={collectedData} nextStep={handleNext} previousStep={handleBack} />
+                    // hideComments is set to true, do not allow to add a comment in the preview
+                    <ProductDetail 
+                        details={collectedData}
+                        previousStep={handleBack} 
+                        nextStep={handleNext}
+                        hideComments={true}
+                    />
                 );
             case 2:
                 return (

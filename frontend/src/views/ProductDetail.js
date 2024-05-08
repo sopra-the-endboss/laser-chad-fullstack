@@ -20,7 +20,7 @@ import {ProductDetailRow} from "../components/ProductDetails/ProductRowDetails";
 import {useFetchAllComments, useFetchProductDetails} from "../utils/apiCalls";
 import {CommentaryComponent} from "../components/ProductDetails/CommentaryComponent";
 
-export const ProductDetail = ({details, previousStep, nextStep}) => {
+export const ProductDetail = ({details, previousStep, nextStep, hideComments=false}) => {
     const [productDetails, setProductDetails] = useState({technical_details: {}, product: "", ...details});
     const [productComments, setProductComments] = useState([]);
     const {product_id} = useParams();
@@ -29,18 +29,22 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
     const [loadingDetails, setLoadingDetails] = useState(true);
     const [loadingComments, setLoadingComments] = useState(true);
 
-    const fetchComments = useFetchAllComments(details, product_id, setProductComments, setLoadingComments);
+    const fetchComments = useFetchAllComments(details, product_id, setLoadingComments);
     const fetchDetails = useFetchProductDetails(details, product_id, setProductDetails, setLoadingDetails);
 
     useEffect(() => {
-        fetchComments();
+        fetchComments().then(
+            (data) => {
+                setProductComments(data);
+                setLoadingComments(false);
+            }
+        ).catch((error) => {})
     }, [apigBaseUrl, product_id, details]);
 
 
     useEffect(() => {
         fetchDetails();
     }, [apigBaseUrl, product_id, details]);
-
 
     return (
         <Grid container>
@@ -165,9 +169,18 @@ export const ProductDetail = ({details, previousStep, nextStep}) => {
 
                     </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                    <CommentaryComponent setLoading={setLoadingComments} loadingComments={loadingComments} loadingDetails={loadingDetails} productComments={productComments} setProductComments={setProductComments} />
-                </Grid>
+                {!hideComments && (
+                    <Grid item xs={12}>
+                        <CommentaryComponent
+                            productComments={productComments}
+                            setProductComments={setProductComments}
+                            loadingComments={loadingComments}
+                            setLoadingComments={setLoadingComments}
+                            productDetails={productDetails}
+                            loadingDetails={loadingDetails}
+                        />
+                    </Grid>
+                )}
             </Grid>
             <Grid item xs={12} sx={{borderTop: 1, borderColor: "divider", paddingBottom: "16px", paddingTop: "16px"}}>
                 <Grid item xs={12}>

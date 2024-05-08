@@ -23,6 +23,13 @@ HTTP_RESPONSE_DICT = {
     # Here comes to body, as a JSON string
 }
 
+def return_error(msg:str, code:int = 400) -> dict:
+    print(msg)
+    error_return_dict = HTTP_RESPONSE_DICT.copy()
+    error_return_dict['statusCode']=code
+    error_return_dict['body']=json.dumps(msg)
+    return error_return_dict
+
 def handler(event, context) -> list[dict]:
     """
     Arguments:
@@ -54,9 +61,6 @@ def handler(event, context) -> list[dict]:
     print("DEBUG: This is the event")
     pp.pprint(event)
     
-    print("DEBUG: This is the event raw")
-    print(event)
-
     TableName = "product-table"
 
     print(f"Using table {TableName}")
@@ -66,18 +70,14 @@ def handler(event, context) -> list[dict]:
     available_tables = dynamo_client.list_tables()
     available_tables = available_tables['TableNames']
     if not TableName in available_tables:
-        print(f"Table {TableName} not found in the available tables, abort")
-        HTTP_RESPONSE_DICT['statusCode'] = 400
-        HTTP_RESPONSE_DICT['body'] = json.dumps(f"Table {TableName} not found in the available tables, abort")
-        return HTTP_RESPONSE_DICT
-
+        return return_error(f"Table {TableName} not found in the available tables, abort")
+        
     print("Creating dynamo table object ...")
     dynamo_resource = boto3.resource("dynamodb")
     dynamo_table = dynamo_resource.Table(TableName)
 
     print("Scanning table, print result from scan, raw and PrettyPrinted")
     response_scan = dynamo_table.scan()
-    print(response_scan)
     pp.pprint(response_scan)
     print(type(response_scan))
 
@@ -87,7 +87,7 @@ def handler(event, context) -> list[dict]:
     # List of items, each item a dict
     found_items_list = response_scan['Items']
     print(f"Items found after scanning table:")
-    print(found_items_list)
+    pp.pprint(found_items_list)
 
     # Now check if we have a partParameter id which is used as a filter
     # If we have a non empty dict for event['pathParameters'] we want to apply a filter to all items found
@@ -102,7 +102,7 @@ def handler(event, context) -> list[dict]:
             print(found_items_list)
 
     print("Return HTTP object")
-    HTTP_RESPONSE_DICT['statusCode'] = '200'
+    HTTP_RESPONSE_DICT['statusCode'] = 200
     HTTP_RESPONSE_DICT['body'] = json.dumps(found_items_list)
 
     print(f"DEBUG: This is the HTTP response we are sending back")
