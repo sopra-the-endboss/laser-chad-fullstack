@@ -27,7 +27,8 @@ const MyShop = () => {
     const deleteProductHook = useDeleteProduct(productToDelete.product_id);
     const fetchProductsSeller = useFetchProductsSeller(seller_id);
 
-    const handleClickToProduct = (product_id) => {
+    const handleClickToProduct = (e, product_id) => {
+        e.stopPropagation();
         if (product_id) {
             navigate("/product/" + product_id);
         }
@@ -144,15 +145,17 @@ const MyShop = () => {
                             <Divider/>
                         </div>
                         ))
-                    ) : 
+                    ) :
                     (
                         shopData?.map(product => (
                             <div key={product.product}>
                                 <ListItem
+                                    className={"list-item-hover"}
+                                    onClick={(e) => handleClickToProduct(e, product.product_id)}
                                     secondaryAction={
                                         <Stack direction={"row"} sx={{alignItems: "center"}} spacing={2}>
-                                            <Chip label={product?.brand} color="success"/>
-                                            <Chip label={product?.category} color="success"/>
+                                            {product.brand && <Chip label={product.brand} color="success"/>}
+                                            {product.category && <Chip label={product.category} color="success"/>}
                                             <CustomModal icon={<EditIcon/>}>
                                                 <SellProduct
                                                     propData={product}
@@ -204,19 +207,6 @@ const MyShop = () => {
                                         </>
                                         }
                                     />
-                                    {/* TODO: Style this button, make it align left */}
-                                    <ListItemButton
-                                        onClick={() => handleClickToProduct(product.product_id)}
-                                    >
-                                        <Typography
-                                            sx={{display: 'inline'}}
-                                            component="span"
-                                            variant="body2"
-                                            color="text.primary"
-                                        >
-                                        {"To the Product"}
-                                        </Typography>
-                                    </ListItemButton>
                                 </ListItem>
                                 <Divider/>
                             </div>

@@ -70,3 +70,8 @@ body {
   justify-content: center;
   width: 100%;
 }
+
+.list-item-hover:hover {
+  background-color: lightgray;
+  cursor: pointer;
+}
