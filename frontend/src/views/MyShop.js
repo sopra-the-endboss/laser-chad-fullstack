@@ -148,7 +148,7 @@ const MyShop = () => {
                                 }
                             >
                                 <ListItemAvatar>
-                                    <img src={product?.images[0]} alt={"product"} width={"40px"} height={"40px"}/>
+                                    <img src={product?.images[0]} width={"40px"} height={"40px"}/>
                                 </ListItemAvatar>
                                 <ListItemText
                                     primary={
