@@ -1,5 +1,5 @@
 """
-Handle call which lists all template items or a single template item with a path variable {id}
+Handle call which lists all distributors
 The handler has the name of the table hardcoded, this is determined by the config file config/db_schema.json upon deployment
 """
 import os
@@ -23,6 +23,13 @@ HTTP_RESPONSE_DICT = {
     # Here comes to body, as a JSON string
 }
 
+def return_error(msg:str, code:int = 400) -> dict:
+    print(msg)
+    error_return_dict = HTTP_RESPONSE_DICT.copy()
+    error_return_dict['statusCode']=code
+    error_return_dict['body']=json.dumps(msg)
+    return error_return_dict
+
 def handler(event, context) -> list[dict]:
     """
     Arguments:
@@ -37,11 +44,21 @@ def handler(event, context) -> list[dict]:
         - body
         If headers are written, they must be a dict
         The body must be a JSON serializable string, handeled by json.dumps()
-
+    
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default
         headers : Empty by default, dict otherwise
-        body : JSON serialized List object with all the items found. Each item is a dict
+        body : JSON serialized List object with all the items found. Each item is a dict. Can be empty, but not None
+            A dict has the strcture
+                distributor_id:str
+                name:str
+                industry:str
+                headquarters:str
+                numberOfEmployees:int
+                foundationYear:2001
+    
+    Returns error:
+        400 if the dynamo tables are not found
     """
 
     PATH_PARAMETER_FILTER = "distributor_id" # Must match the name in resources_to_create.json in the path with {}
@@ -53,10 +70,7 @@ def handler(event, context) -> list[dict]:
 
     print("DEBUG: This is the event")
     pp.pprint(event)
-    
-    print("DEBUG: This is the event raw")
-    print(event)
-
+   
     TableName = "distributor-table"
 
     print(f"Using table {TableName}")
@@ -66,20 +80,15 @@ def handler(event, context) -> list[dict]:
     available_tables = dynamo_client.list_tables()
     available_tables = available_tables['TableNames']
     if not TableName in available_tables:
-        print(f"Table {TableName} not found in the available tables, abort")
-        HTTP_RESPONSE_DICT['statusCode'] = 400
-        HTTP_RESPONSE_DICT['body'] = json.dumps(f"Table {TableName} not found in the available tables, abort")
-        return HTTP_RESPONSE_DICT
-
+        return return_error(f"Table {TableName} not found in the available tables, abort", 400)
+        
     print("Creating dynamo table object ...")
     dynamo_resource = boto3.resource("dynamodb")
     dynamo_table = dynamo_resource.Table(TableName)
 
     print("Scanning table, print result from scan, raw and PrettyPrinted")
     response_scan = dynamo_table.scan()
-    print(response_scan)
     pp.pprint(response_scan)
-    print(type(response_scan))
 
     # Here, we have to make sure that the Items is actually something we can decode into a dict!
     
@@ -87,7 +96,7 @@ def handler(event, context) -> list[dict]:
     # List of items, each item a dict
     found_items_list = response_scan['Items']
     print(f"Items found after scanning table:")
-    print(found_items_list)
+    pp.pprint(found_items_list)
 
     # Now check if we have a partParameter id which is used as a filter
     # If we have a non empty dict for event['pathParameters'] we want to apply a filter to all items found
@@ -101,8 +110,10 @@ def handler(event, context) -> list[dict]:
             print(f"Items after filtering")
             print(found_items_list)
 
+    # No matter whether found_items_list is empty, has one element or multiple, we return the full list
+
     print("Return HTTP object")
-    HTTP_RESPONSE_DICT['statusCode'] = '200'
+    HTTP_RESPONSE_DICT['statusCode'] = 200
     HTTP_RESPONSE_DICT['body'] = json.dumps(found_items_list)
 
     print(f"DEBUG: This is the HTTP response we are sending back")

@@ -48,7 +48,7 @@ def handler(event, context) -> list[dict]:
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default
         headers : Empty by default, dict otherwise
-        body : JSON serialized List object with all the items found. Each item is a dict
+        body : JSON serialized List object with all the items found. Each item is a dict. Can be empty
     """
 
     PATH_PARAMETER_FILTER = "product_id" # Must match the name in resources_to_create.json in the path with {}
