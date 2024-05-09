@@ -91,15 +91,6 @@ def handler(event, context) -> list[dict]:
     filter = event['pathParameters'][PATH_PARAMETER_FILTER]
     print(f"This is the filter: {filter}")
 
-
-    print(f"Assure pathParameter {PATH_PARAMETER_FILTER} is present in event")
-    if not PATH_PARAMETER_FILTER in event['pathParameters']:
-        return return_error(f"pathParameter {PATH_PARAMETER_FILTER} not found in event, abort")
-
-    filter = event['pathParameters'][PATH_PARAMETER_FILTER]
-    print(f"This is the filter: {filter}")
-    
-
     print("Parse body")
     try:
         body = json.loads(event['body'], parse_float=Decimal)

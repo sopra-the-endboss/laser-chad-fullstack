@@ -429,11 +429,22 @@ def test_DELETE_401(dynamo_table_product_comment, generate_inputs: dict[str,str]
     # First POST prod1 review1
     post_handler_product_comment.handler(generate_inputs['valid_body_valid_pathParameter_prod1_review1'], CONTEXT_DUMMY)
 
+    # Create a new EVENT where the user_id is not a valid one to delete the posted comment
+    EVENT_WITH_INVALID_USER = {
+        "body" : json.dumps({
+            "user":"INVALID USER",
+            "user_id":"INVALID USER ID",
+            "rating":5,
+            "review":"This is a great product",
+            "title":"Great product",
+            "date":"2021-10-10",
+            "review_id":"review_id_1"
+            }),
+        "pathParameters" : {"product_id":generate_inputs['valid_body_valid_pathParameter_prod1_review1']['pathParameters']['product_id']}
+    }
+
     ###
     # Assert DELETE on prod1 with invalid user_id -> 401
-    EVENT_NAME = 'valid_body_valid_pathParameter_prod1_review1'
-    EVENT = generate_inputs[EVENT_NAME]
-    EVENT['pathParameters']['user_id'] = "invalid_user_id"
-    res = delete_handler_product_comment.handler(EVENT, CONTEXT_DUMMY)
+    res = delete_handler_product_comment.handler(EVENT_WITH_INVALID_USER, CONTEXT_DUMMY)
     res_body = json.loads(res['body'])
     assert res['statusCode'] == 401
