@@ -41,7 +41,6 @@ const authSlice = createSlice({
     setUserLoggedIn: (state, action) => {
       state.isLoggedIn = true;
       state.user = { ...state.user, ...action.payload }; // Update all properties in user object
-      console.log("User logged in:", state.user);
     },
     /**
      * Resets the authentication state, effectively logging the user out.

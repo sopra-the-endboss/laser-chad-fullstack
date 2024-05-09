@@ -19,13 +19,8 @@ export const useCartManagement = (apigBaseUrl) => {
       const data = await res.json();
 
       if (res.ok) {
-        console.log(`DEBUG getCart : res.ok`);
         return data.products;
       } else {
-        console.log(`DEBUG getCart : res.statusCode ${res.status}`);
-        console.log(
-          `DEBUG getCart : This is the data: ${JSON.stringify(data)}`
-        );
         return [];
       }
     } catch (error) {
@@ -36,11 +31,8 @@ export const useCartManagement = (apigBaseUrl) => {
 
   const fillCart = (cartToFill) => {
     // Given a fetched cart, fill the state
-    console.log(
-      `fillCart : This is the cartToFill to fill: ${JSON.stringify(cartToFill)}`
-    );
+
     if (cartToFill.length === 0) {
-      console.log("fillCart : cartToFill is empty, do nothing");
     } else {
       for (const item of cartToFill) {
         const item_to_add = { ...item };

@@ -1,8 +1,9 @@
-//import { useDispatch } from "react-redux";
-//import { addToHistory } from "../reducers/slices/orderSlice";
+import { useDispatch } from "react-redux";
+import { addOrders } from "../reducers/slices/orderSlice";
 
 export const useGetOrder = () => {
-  //const dispatch = useDispatch();
+  const dispatch = useDispatch();
+
   const getOrder = async (userId, baseUrl) => {
     try {
       const settings = {
@@ -17,14 +18,8 @@ export const useGetOrder = () => {
       const data = await res.json();
 
       if (res.ok) {
-        console.log(`DEBUG getOrder : res.ok`);
-        console.log(`Order Data: ${JSON.stringify(data)}`);
-        return data.products;
+        dispatch(addOrders(data[0].orders));
       } else {
-        console.log(`DEBUG getOrder : res.statusCode ${res.status}`);
-        console.log(
-          `DEBUG getOrder : This is the data: ${JSON.stringify(data)}`
-        );
         return [];
       }
     } catch (error) {

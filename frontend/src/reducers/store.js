@@ -26,7 +26,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authReducer,
   cart: cartReducer,
-  order: orderReducer,
+  orders: orderReducer,
   apigBaseUrl: apigBaseUrlReducer,
 });
 

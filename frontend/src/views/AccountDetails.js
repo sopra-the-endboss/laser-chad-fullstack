@@ -43,10 +43,11 @@ import {
 
 const AccountDetails = () => {
   const authState = useSelector((state) => state.auth.user);
-  //const apigBaseUrl = useSelector((state) => state.apigBaseUrl);
+  const apigBaseUrl = useSelector((state) => state.apigBaseUrl);
   const [isEditing, setIsEditing] = useState(false);
   const [editState, setEditState] = useState(authState);
   const dispatch = useDispatch();
+  const orderState = useSelector((state) => state.orders);
   //const navigate = useNavigate();
 
   // const onCardInteract = (clickable, id) => {
@@ -144,6 +145,7 @@ const AccountDetails = () => {
     if (isEditing) {
       setEditState(authState);
     }
+    console.log("Order State:", orderState);
   };
 
   const handleInputChange = (e) => {

@@ -49,11 +49,9 @@ const AmplifyLogin = () => {
   }, [authState]);
 
   const SaveCartData = async () => {
-    console.log("sending cart to backend via SendCart component ...");
     await SendCart(authState.user.userId, cartState, baseUrl);
 
     // After sending cart to backend, clear the cartItems
-    console.log("Clear the cartItems");
     dispatch(clearCart());
 
     signOut();
