@@ -50,7 +50,7 @@ def handler(event, context) -> list[dict]:
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default1
         headers : Default to allow CORS, otherwise not used
-        body : JSON serialized new product
+        body : JSON serialized new product_id with reviews
 
     Returns error:
         400 if the body cannot be parsed into a dict
