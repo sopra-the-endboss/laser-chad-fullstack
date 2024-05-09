@@ -39,6 +39,7 @@ const CheckoutPage = () => {
     await SendCart(authState.userId, cartItems, baseUrl);
     await SendOrder(authState.userId, baseUrl);
     dispatch(clearCart());
+    navigate('/account');
   };
 
   return (
@@ -96,7 +97,7 @@ const CheckoutPage = () => {
           </AccordionDetails>
         </Accordion>
         <div className="buttonRight" style={{ marginTop: "10px" }}>
-          <Button variant="contained" onClick={sendOrder} disabled={!buyOption}>
+          <Button variant="contained" onClick={sendOrder} disabled={(!buyOption)}>
             Buy Now
           </Button>
         </div>
