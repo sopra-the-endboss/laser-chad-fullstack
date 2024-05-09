@@ -6,7 +6,8 @@ import { useState } from "react";
 import { updateUserAttributes } from "aws-amplify/auth";
 import { useDispatch } from "react-redux";
 import { setUserLoggedIn } from "../reducers/slices/authSlice";
-//import { useNavigate } from "react-router-dom";
+import CartItem from "../components/Cart/CartItem";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Grid,
@@ -19,6 +20,7 @@ import {
   AccordionDetails,
   AccordionSummary,
 } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 /**
  * Displays and allows editing of the current user's account details.
@@ -48,13 +50,14 @@ const AccountDetails = () => {
   const [editState, setEditState] = useState(authState);
   const dispatch = useDispatch();
   const orderState = useSelector((state) => state.orders);
-  //const navigate = useNavigate();
+  const orderItems = useSelector((state) => state.orders.orders[0].products);
+  const navigate = useNavigate();
 
-  // const onCardInteract = (clickable, id) => {
-  //   if (clickable) {
-  //     navigate("/product/" + id);
-  //   }
-  // };
+  const onCardInteract = (clickable, id) => {
+    if (clickable) {
+      navigate("/product/" + id);
+    }
+  };
 
   const accountFields = [
     {
@@ -145,7 +148,7 @@ const AccountDetails = () => {
     if (isEditing) {
       setEditState(authState);
     }
-    console.log("Order State:", orderState);
+    console.log("Order State:", orderItems);
   };
 
   const handleInputChange = (e) => {
@@ -256,9 +259,10 @@ const AccountDetails = () => {
           </IconButton>
 
           <Divider />
+
           <Accordion>
             <AccordionSummary
-              expandIcon="X"
+              expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
@@ -268,13 +272,13 @@ const AccountDetails = () => {
             </AccordionSummary>
             <AccordionDetails>
               {/* TODO Add Order History*/}
-              {/* {cartItems.map((item) => (
+              {orderItems.map((item) => (
                 <CartItem
                   key={item.product_id}
                   item={item}
                   onCardInteract={onCardInteract}
                 />
-              ))} */}
+              ))}
             </AccordionDetails>
           </Accordion>
         </>
