@@ -37,6 +37,11 @@ def handler(event, context) -> list[dict]:
     Arguments:
         event : a dict which contains all data from the request to the API
         context : a LambdaContext object
+
+        The body must contain at least the fields
+            product_id : str
+            quantity : int
+        Any additional fields are written to the cart item as well
     
     Returns:
         A valid HTTP Response dict which must contain the fields
@@ -52,8 +57,12 @@ def handler(event, context) -> list[dict]:
         headers : Default to allow CORS, otherwise not used
         body : JSON serialized new cart
 
-        400 if the handler can not complete
+    Returns error:
+        400 if the table is not found
+        400 if the pathParameter is not found in the event
         404 if there is no cart with userId
+        500 if there are duplicates in the carts products found
+        500 if there are non-positive quantities in the carts products found
     """
 
     PATH_PARAMETER_FILTER = "userId" # Must match the name in resources_to_create.json in the path with {}
@@ -90,7 +99,7 @@ def handler(event, context) -> list[dict]:
     ###
     # Check the body item to update
     print("Check body, should be a dict or something serializable into a dict")
-    print(event['body'])
+    pp.pprint(event['body'])
 
     # serialize json string into dict
     body = json.loads(event['body'], parse_float=Decimal)
@@ -125,7 +134,7 @@ def handler(event, context) -> list[dict]:
     # OR if product_id_to_update not in cart, we add it with quantity 1
     print("this is the cart_found")
     print(type(cart_found))
-    print(cart_found)
+    pp.pprint(cart_found)
 
     # Cart could be empty, then products is still a list
     products_found = cart_found['products']
@@ -133,9 +142,9 @@ def handler(event, context) -> list[dict]:
     product_quantitys_found = [p['quantity'] for p in products_found]
 
     print("this is the products found, and the product_ids and the quantitys")
-    print(products_found)
-    print(product_ids_found)
-    print(product_quantitys_found)
+    pp.pprint(products_found)
+    pp.pprint(product_ids_found)
+    pp.pprint(product_quantitys_found)
 
     # Assert that there are no duplicated product_id in a cart
     if len(product_ids_found) != len(set(product_ids_found)):
@@ -166,19 +175,19 @@ def handler(event, context) -> list[dict]:
     product_updated = {**product_updated, **product_id_additional_fields_to_update}
 
     print("This is the product_updated after increasing")
-    print(product_updated)
+    pp.pprint(product_updated)
 
     print("this is the not yet updated product list")
-    print(products_found)
+    pp.pprint(products_found)
 
     print("this is the new product we will put")
-    print(product_updated)
+    pp.pprint(product_updated)
 
     # Add the new updated product to the products found list
     products_found.append(product_updated)
 
     print("this is the updated product list")
-    print(products_found)
+    pp.pprint(products_found)
 
     # Add the updated cart to the DB, overwrite with key filter
     _ = dynamo_table.put_item(

@@ -36,6 +36,8 @@ def handler(event, context) -> list[dict]:
     Arguments:
         event : a dict which contains all data from the request to the API
         context : a LambdaContext object
+
+    For the given user_id, a new cart is created with an empty list of products.
     
     Returns:
         A valid HTTP Response dict which must contain the fields
@@ -51,8 +53,11 @@ def handler(event, context) -> list[dict]:
         headers : Default to allow CORS, otherwise not used
         body : The object written
     
-        400 if the handler can not complete
+    Returns error:
+        400 if table not found
+        400 if pathParameter not found or invalid
         409 if there is already a cart with userId
+        400 if the put operation failed
     """
 
     PATH_PARAMETER_FILTER = "userId" # Must match the name in resources_to_create.json in the path with {}
@@ -86,7 +91,7 @@ def handler(event, context) -> list[dict]:
     print(f"This is the filter: {filter}")
 
     print("Check body, should be empty")
-    print(event['body'])
+    pp.pprint(event['body'])
 
     # POST creates an empty array for the userId
     item_to_put = {

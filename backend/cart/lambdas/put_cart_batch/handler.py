@@ -54,8 +54,10 @@ def handler(event, context) -> list[dict]:
         headers : Default to allow CORS, otherwise not used
         body : JSON serialized new cart entry
 
-        400 if the handler can not complete
+    Returns error:
+        400 if the table does not exist or the pathParameter is not present in the event or invalid
         404 if there is no cart with userId
+
     """
 
     PATH_PARAMETER_FILTER = "userId" # Must match the name in resources_to_create.json in the path with {}
@@ -92,7 +94,7 @@ def handler(event, context) -> list[dict]:
     ###
     # Check the body item to update
     print("Check body, should be a list of json serializable objects")
-    print(event['body'])
+    pp.pprint(event['body'])
 
     # serialize json string into dict
     body = json.loads(event['body'], parse_float=Decimal)
@@ -102,7 +104,7 @@ def handler(event, context) -> list[dict]:
     # Due to the check on the request, we can safely assume the key 'products' is in the body
     products_to_update = body['products']
     print("This is the new cart which will be placed if user exists")
-    print(products_to_update)
+    pp.pprint(products_to_update)
 
     ###
     # Now we have to check if there is a cart for filter
@@ -121,7 +123,7 @@ def handler(event, context) -> list[dict]:
     cart_updated = cart_found.copy()
     products_to_replace = cart_updated.pop('products')
     print(f"Found cart, this will be replaced")
-    print(products_to_replace)
+    pp.pprint(products_to_replace)
 
     # Then replace the entry with the new body
     cart_updated["products"] = products_to_update

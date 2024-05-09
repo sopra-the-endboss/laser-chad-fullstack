@@ -48,9 +48,18 @@ def handler(event, context) -> list[dict]:
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default
         headers : Default to allow CORS, otherwise not used
-        body : JSON serialized dict object with the carts found.
-
-        400 if the handler can not complete
+        body : JSON serialized dict object with the cart. Cannot be empty
+            A cart consists of the following fields:
+            - userId : str
+            - products : list[dict]
+                - product_id : str
+                - quantity : int
+                - img : str
+                - 
+                - price : float
+    
+    Returns error:
+        400 if no table is found
         404 if there is no cart with userId
     """
 
