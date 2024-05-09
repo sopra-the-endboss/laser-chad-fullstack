@@ -48,11 +48,12 @@ def handler(event, context) -> list[dict]:
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default
         headers : Empty by default, dict otherwise
-        body : JSON serialized List object with all the items found. Each item is a dict. Can be empty, but not None
-            A dict has the strcture
-                category_id:str
-                name:str
-                options:array[str]
+        body : JSON serialized List with all the items found. Each item is a dict. Can be empty, but not None
+            Each item in the list has at least the following fields
+                product_id:str
+                product:str
+                price:str
+                seller_id:str
                 
     Returns error:
         400 if the dynamo tables are not found

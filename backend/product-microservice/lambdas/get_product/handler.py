@@ -50,6 +50,11 @@ def handler(event, context) -> list[dict]:
         headers : Empty by default, dict otherwise
         body : JSON serialized List object with all the items found. Each item is a dict. Can be empty
             Each item is a dict of the structure
+                product_id:str
+                product:str
+                price:str
+                seller_id:str
+
                 
 
     Returns error:
