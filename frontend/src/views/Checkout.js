@@ -1,5 +1,5 @@
 import "../App.css";
-import React from "react";
+import React, {useState} from "react";
 import {
   Typography,
   Paper,
@@ -26,6 +26,8 @@ const CheckoutPage = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const authState = useSelector((state) => state.auth.user);
   const baseUrl = useSelector((state) => state.apigBaseUrl);
+
+  const [buyOption, setBuyOption] = useState(false);
 
   const onCardInteract = (clickable, id) => {
     if (clickable) {
@@ -90,11 +92,11 @@ const CheckoutPage = () => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Payment />
+            <Payment setBuyOption={setBuyOption} />
           </AccordionDetails>
         </Accordion>
         <div className="buttonRight" style={{ marginTop: "10px" }}>
-          <Button variant="contained" onClick={sendOrder}>
+          <Button variant="contained" onClick={sendOrder} disabled={!buyOption}>
             Buy Now
           </Button>
         </div>
