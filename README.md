@@ -10,7 +10,7 @@ See below for instructions on how to start the containers. After the proper star
 - Upon the first start of the frontend when trying to reach localhost:3000, it can happen that the backend is not yet ready and responds too slow to the startup call where all products are fetched. In this case, an error is displayed "The service cannot be reached. Failed to load products!". If this happens, a simple refresh of the page will solve the issue.
 
 
-## Deployment for Deliverable 3
+## Deployment for Final Submission
 In order to simplify deployment for the deliverable, we established a CI integraiton which automatically uploads the latest images to the docker hub. See section Continuous Integration. In order to use the latests images, simply run the following line from a terminal in the root directory:
 ```
 docker compose -f docker-compose_final_submission.yml up -d --build
