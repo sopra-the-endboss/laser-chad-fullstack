@@ -13,11 +13,11 @@ See below for instructions on how to start the containers. After the proper star
 ## Deployment for Deliverable 3
 In order to simplify deployment for the deliverable, we established a CI integraiton which automatically uploads the latest images to the docker hub. See section Continuous Integration. In order to use the latests images, simply run the following line from a terminal in the root directory:
 ```
-docker compose -f docker-compose_main_latest.yml up -d --build
+docker compose -f docker-compose_final_submission.yml up -d --build
 ```
 This should pull all pre-built images and start the containers. To shut it down run
 ```
-docker compose -f docker-compose_main_latest.yml down
+docker compose -f docker-compose_final_submission.yml down
 ```
 Should this fail, see the next [section](#general-deployment) for a general deployment where the images are built from the dockerfiles.
 
