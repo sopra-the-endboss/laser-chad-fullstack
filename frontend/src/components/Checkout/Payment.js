@@ -10,10 +10,6 @@ const options = {
     amount: 1099,
     currency: 'usd',
     locale: 'en',
-    // Fully customizable with appearance API.
-    appearance: {
-        /*...*/
-    },
 };
 
 
