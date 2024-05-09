@@ -34,7 +34,7 @@ function App() {
   const fetchAPIGURL = useFetchAPIGURL();
   const fetchAllProducts = useFetchAllProducts(setAllProductsName, setLoading);
   const [apiGURLFetched, setApiGURLFetched] = useState(false);
-
+  const [refreshProducts, setRefreshProducts] = useState(false);
   useAuth();
 
   useEffect(() => {
@@ -58,12 +58,12 @@ function App() {
     }
     // adding fetchAllProducts into the dependencies leads to infinite calls. we dont do that here
     // eslint-disable-next-line
-  }, [setAllProductsName, setLoading, apiGURLFetched]);
+  }, [setAllProductsName, setLoading, apiGURLFetched, refreshProducts]);
 
   return (
     <Provider store={store}>
       <div className="App">
-        <SnackbarProvider maxSnack={3} autoHideDuration={1000}>
+        <SnackbarProvider maxSnack={3}>
           <BrowserRouter>
             <Navigation
               setData={setData}
@@ -107,7 +107,10 @@ function App() {
                       path="/my-shop"
                       element={
                         <SellerGuard>
-                          <MyShop />
+                          <MyShop
+                            setRefresh={setRefreshProducts}
+                            refresh={refreshProducts}
+                          />
                         </SellerGuard>
                       }
                     />

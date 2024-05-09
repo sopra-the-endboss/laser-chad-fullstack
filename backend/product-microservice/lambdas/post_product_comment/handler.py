@@ -1,6 +1,5 @@
 """
-Handle call which writes an item to the template DB
-TODO: Error handling (either let handler function fail, or wrap?), duplicates?
+Handle call which writes a new product comment to the database
 The handler has the name of the table hardcoded, this is determined by the config file config/db_schema.json upon deployment
 """
 import os
@@ -55,8 +54,15 @@ def handler(event: dict, context) -> dict:
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default
         headers : Empty by default, dict otherwise
-        body : Empty, this function does not return anything except the statusCode
+        body : Returns the review_id of the newly created review as a JSON string
+
+    Returns error:
+        400 if the body cannot be parsed into a dict
+        400 if the dynamo tables are not found
+        400 if the pathParameter 'product_id' is not present in the event
     """
+
+    PATH_PARAMETER_FILTER = "product_id" # Must match the name in resources_to_create.json in the path with {}
     
     print("post_lambda invoked")
 
@@ -66,22 +72,29 @@ def handler(event: dict, context) -> dict:
     print("DEBUG: This is the event")
     pp.pprint(event)
     
-    print("DEBUG: This is the event raw")
-    print(event)
-    
     TableName = "product-comment-table"
+
+    print("Check if table is available ...")
+    dynamo_client = boto3.client("dynamodb")
+    available_tables = dynamo_client.list_tables()
+    available_tables = available_tables['TableNames']
+    if not TableName in available_tables:
+        return_error(f"Table {TableName} not found in the available tables, abort", 400)
 
     print("Creating dynamo table object ...")
     dynamo_resource = boto3.resource("dynamodb")
     dynamo_table = dynamo_resource.Table(TableName)
 
     print(f"Assure pathParameter product_id is present in event")
-    if not "product_id" in event['pathParameters']:
-        return return_error(f"pathParameter product_id not found in event, abort")
+    if not PATH_PARAMETER_FILTER in event['pathParameters']:
+        return return_error(f"pathParameter {PATH_PARAMETER_FILTER} not found in event, abort", 400)
 
-    filter = event['pathParameters']["product_id"]
+    filter = event['pathParameters'][PATH_PARAMETER_FILTER]
     print(f"This is the filter: {filter}")
 
+    # We can safely assume the filter to be a string, as it is part of the URL
+
+    # If we cannot parse the body, we throw a 400 error
     print("Parse body")
     try:
         new_item = json.loads(event['body'], parse_float=Decimal)
@@ -89,10 +102,8 @@ def handler(event: dict, context) -> dict:
         print(new_item)
     except json.decoder.JSONDecodeError as e:
         print("JSONDecodeError IN PARSING BODY")
-        raise e
+        return return_error("Error parsing body", 400)
     
-    generated_review_id = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
-
     new_review = {
         'user': new_item['user'],
         'user_id': new_item['user_id'],
@@ -100,11 +111,11 @@ def handler(event: dict, context) -> dict:
         'review': new_item['review'],
         'title' : new_item['title'],
         'date' : new_item['date'],
-        'review_id': generated_review_id,
+        'review_id': new_item['review_id']
 
     }
     
-   # Try to get the item from the table
+    # Try to get the item from the table
     try:
         response_get = dynamo_table.get_item(Key={'product_id': filter})
     except ClientError as e:
@@ -118,24 +129,31 @@ def handler(event: dict, context) -> dict:
             item['reviews'].append(new_review)
             print("DEBUG: This is the item after appending the new review")
             pp.pprint(item)
-            dynamo_table.put_item(Item=item)
-        else:
-            # If the item doesn't exist, create a new item
-            response_put = dynamo_table.put_item(
+            _ = dynamo_table.put_item(
                 TableName = TableName,
                 ReturnValues = "NONE",
-                Item = {
-                    'product_id': filter,
-                    'reviews': [new_review]
-                }
+                Item=item
+            )
+        else:
+            # If the item doesn't exist, create a new item
+            print("DEBUG: Item does not exist, create anew")
+            
+            item = {
+                'product_id': filter,
+                'reviews': [new_review]
+            }
+            print("DEBUG: This is the new item we will put")
+            pp.pprint(item)
+
+        _ = dynamo_table.put_item(
+            TableName = TableName,
+            ReturnValues = "NONE",
+            Item = item
         )
-
-    
-
 
     print("Return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = '200'
-    HTTP_RESPONSE_DICT['body'] = {"review_id": generated_review_id}
+    HTTP_RESPONSE_DICT['body'] = json.dumps(item)
 
     print(f"DEBUG: This is the HTTP response we are sending back")
     pp.pprint(HTTP_RESPONSE_DICT)

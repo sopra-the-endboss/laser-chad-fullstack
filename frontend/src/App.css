@@ -91,3 +91,8 @@ body {
 .accountBox {
   min-width: 600px;
 }
+
+.list-item-hover:hover {
+  background-color: lightgray;
+  cursor: pointer;
+}

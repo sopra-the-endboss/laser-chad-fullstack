@@ -5,7 +5,8 @@ import {
     PRODUCT_CATEGORY,
     PRODUCT_COMMENT_ENDPOINT,
     PRODUCT_DISTRIBUTOR,
-    PRODUCT_ENDPOINT
+    PRODUCT_ENDPOINT,
+    PRODUCT_SELLER_ENDPOINT
 } from "./constants";
 
 
@@ -54,7 +55,12 @@ export const useFetchAllProducts = (setAllProductsName, setLoading) => {
     };
 }
 
-export const usePostNewProduct = (productToPost, setLoading, setCreatedProductId) => {
+export const usePostNewProduct = (
+        // collectedData, setLoading, setCreatedProductId, setLoadingMyShop
+        productToPost, // collectedData
+        setLoading,
+        setCreatedProductId
+    ) => {
     const authState = useSelector((state) => state.auth);
 
     const sellerId = authState.user.userId;
@@ -64,6 +70,8 @@ export const usePostNewProduct = (productToPost, setLoading, setCreatedProductId
     return async () => {
         const baseURL = getDomain(apigBaseUrl);
         api.defaults.baseURL = baseURL;
+
+        console.log("DEBUG : usePostNewProduct this is the productToPost", productToPost);
 
         try {
             const response = await api.post(`/${PRODUCT_ENDPOINT}`, productToPost);
@@ -78,7 +86,7 @@ export const usePostNewProduct = (productToPost, setLoading, setCreatedProductId
     };
 }
 
-export const useDeleteProduct = (productId, setLoading) => {
+export const useDeleteProduct = (productId) => {
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
 
     return async () => {
@@ -87,8 +95,7 @@ export const useDeleteProduct = (productId, setLoading) => {
 
         try {
             const response = await api.delete(`/${PRODUCT_ENDPOINT}/${productId}`);
-            console.log(response);
-            setLoading(false);
+            console.log("DEBUG: useDeleteProduct this is the response", response);
         } catch (error) {
             handleError({
                 error: error,
@@ -107,7 +114,7 @@ export const useFetchDistributor = (setAllDistributors) => {
 
         try {
             const response = await api.get(`/${PRODUCT_DISTRIBUTOR}`);
-            console.log(response);
+            console.log("DEBUG: useFetchDistributor this is the response", response);
             setAllDistributors(response.data);
         } catch (error) {
             handleError({
@@ -117,6 +124,7 @@ export const useFetchDistributor = (setAllDistributors) => {
         }
     };
 }
+
 export const useFetchCategories = (setAllCategories) => {
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
 
@@ -126,7 +134,7 @@ export const useFetchCategories = (setAllCategories) => {
 
         try {
             const response = await api.get(`/${PRODUCT_CATEGORY}`);
-            console.log(response);
+            console.log("DEBUG: useFetchCategories this is the response", response);
             setAllCategories(response.data);
         } catch (error) {
             handleError({
@@ -137,8 +145,7 @@ export const useFetchCategories = (setAllCategories) => {
     };
 }
 
-
-export const useFetchAllComments = (details, product_id, setProductComments, setLoadingComments) => {
+export const useFetchAllComments = (details, product_id, setLoadingComments) => {
 
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
 
@@ -148,10 +155,16 @@ export const useFetchAllComments = (details, product_id, setProductComments, set
 
         try {
             if (!details) {
+
                 const response = await api.get(`/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`)
+
+                console.log("DEBUG: useFetchAllComments response");
                 console.log(response);
-                setProductComments(response.data[0]);
-                setLoadingComments(false);
+
+                if (response) {
+                    return response.data;
+                }
+
             } else if(details) {
                 setLoadingComments(false);
             }
@@ -175,7 +188,10 @@ export const useFetchProductDetails = (details, product_id, setProductDetails, s
         try {
             if (!details) {
                 const response = await api.get(`/${PRODUCT_ENDPOINT}/${product_id}`)
+
+                console.log("DEBUG: useFetchProductDetails response");
                 console.log(response);
+
                 setProductDetails(response.data[0]);
                 setLoadingDetails(false);
             } else if(details) {
@@ -190,7 +206,34 @@ export const useFetchProductDetails = (details, product_id, setProductDetails, s
     };
 }
 
+export const useFetchProductsSeller = (
+        seller_id
+    ) => {
 
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    return async () => {
+        const baseURL = getDomain(apigBaseUrl);
+        api.defaults.baseURL = baseURL;
+
+        try {
+            const response = await api.get(`/${PRODUCT_SELLER_ENDPOINT}/${seller_id}`)
+
+            console.log("DEBUG: useFetchProductsSeller response");
+            console.log(response);
+
+            if (response) {
+                return response.data;
+            }
+
+        } catch (error) {
+            handleError({
+                error: error,
+                message: "Failed to load products of seller!",
+            });
+        }
+    };
+}
 
 export const usePostComment = (setLoadingComments, setComments, comment, productComments, product_id) => {
 
@@ -203,7 +246,18 @@ export const usePostComment = (setLoadingComments, setComments, comment, product
         try {
             const response = await api.post(`/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`, comment);
             console.log(response);
-            const copy = {...productComments}
+
+            console.log("DEBUG: usePostComment productComments", productComments);
+
+            // Set the productComments to the new state after deleting the comment
+            // If productComments is empty, we have to crate field product_id and reviews as empty array
+            const copy = {...productComments};
+            if (Object.keys(copy).length === 0) {
+                console.log("empty productComments object found");
+                copy.product_id = product_id;
+                copy.reviews = [];
+            }
+
             copy.reviews.push(comment);
             setComments(copy);
             setLoadingComments(false);
@@ -212,11 +266,13 @@ export const usePostComment = (setLoadingComments, setComments, comment, product
                 error: error,
                 message: "Failed to post comment!",
             });
+            setLoadingComments(false);
         }
     };
 }
 
-export const useDeleteComment = (commentId, setLoading) => {
+
+export const useDeleteComment = (item_to_delete, setLoadingComments, product_id, setProductComments) => {
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
 
     return async () => {
@@ -224,9 +280,20 @@ export const useDeleteComment = (commentId, setLoading) => {
         api.defaults.baseURL = baseURL;
 
         try {
-            const response = await api.delete(`/${PRODUCT_COMMENT_ENDPOINT}/${commentId}`);
-            console.log(response);
-            setLoading(false);
+            // NOTE: Delete should not have body actually...
+            const response = await api.delete(
+                `/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`,
+                {data : item_to_delete}
+            );
+            console.log("useDeleteComment: This is the response after sending DELETE: ", response);
+
+            // Set the productComments to the new state after deleting the comment
+            const copy = {...response.data};
+            setProductComments(copy);
+
+            setLoadingComments(false);
+
+
         } catch (error) {
             handleError({
                 error: error,

@@ -27,7 +27,7 @@ function CarouselComponent({carouselData, clickable = true, onCardInteract, load
         const carouselContent = (item, image) => {
 
             return (<Card sx={{
-                    display: 'flex', flexDirection: 'column', height: '100%', // Ensure the card takes up the full height
+                    display: 'flex', flexDirection: 'column', height: '634px', // Ensure the card takes up the full height
                 }} onClick={() => {
                     clickable && onCardInteract(clickable, item?.product_id)
                 }}>
@@ -50,7 +50,7 @@ function CarouselComponent({carouselData, clickable = true, onCardInteract, load
                                 component="img"
                                 image={image}
                                 alt={"Product description"}
-                                sx={{height: 'auto', maxWidth: '100%'}} // Set height to auto
+                                sx={{maxHeight: '477px', maxWidth: '100%'}} // Set height to auto
                             />
                         )}
                         {clickable && <CardContent sx={{

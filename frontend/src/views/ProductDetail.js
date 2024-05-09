@@ -23,7 +23,13 @@ import { ProductDetailRow } from "../components/ProductDetails/ProductRowDetails
 import { useFetchAllComments, useFetchProductDetails } from "../utils/apiCalls";
 import { CommentaryComponent } from "../components/ProductDetails/CommentaryComponent";
 
-export const ProductDetail = ({ details, previousStep, nextStep }) => {
+export const ProductDetail = ({
+  details,
+  previousStep,
+  nextStep,
+  hideComments = false,
+  hideAddToCart = false,
+}) => {
   const [productDetails, setProductDetails] = useState({
     technical_details: {},
     product: "",
@@ -39,7 +45,6 @@ export const ProductDetail = ({ details, previousStep, nextStep }) => {
   const fetchComments = useFetchAllComments(
     details,
     product_id,
-    setProductComments,
     setLoadingComments
   );
   const fetchDetails = useFetchProductDetails(
@@ -50,12 +55,17 @@ export const ProductDetail = ({ details, previousStep, nextStep }) => {
   );
 
   useEffect(() => {
-    fetchComments();
-  }, [apigBaseUrl, product_id, details, fetchComments]);
+    fetchComments()
+      .then((data) => {
+        setProductComments(data);
+        setLoadingComments(false);
+      })
+      .catch((error) => {});
+  }, [apigBaseUrl, product_id, details]);
 
   useEffect(() => {
     fetchDetails();
-  }, [apigBaseUrl, product_id, details, fetchDetails]);
+  }, [apigBaseUrl, product_id, details]);
 
   return (
     <Grid container>
@@ -183,11 +193,13 @@ export const ProductDetail = ({ details, previousStep, nextStep }) => {
           </Grid>
           <Grid item xs={12}>
             {// make sure productDetails is an object with product_id, which must be a nonempty string, AND we are not loading anymore
+            // also disable if hideAddToCart is true
             productDetails &&
             productDetails?.product_id &&
             typeof productDetails.product_id === "string" &&
             productDetails.product_id.trim() !== "" &&
-            !loadingDetails ? (
+            !loadingDetails &&
+            !hideAddToCart ? (
               <Button
                 variant="contained"
                 color="primary"
@@ -212,15 +224,18 @@ export const ProductDetail = ({ details, previousStep, nextStep }) => {
             )}
           </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <CommentaryComponent
-            setLoading={setLoadingComments}
-            loadingComments={loadingComments}
-            loadingDetails={loadingDetails}
-            productComments={productComments}
-            setProductComments={setProductComments}
-          />
-        </Grid>
+        {!hideComments && (
+          <Grid item xs={12}>
+            <CommentaryComponent
+              productComments={productComments}
+              setProductComments={setProductComments}
+              loadingComments={loadingComments}
+              setLoadingComments={setLoadingComments}
+              productDetails={productDetails}
+              loadingDetails={loadingDetails}
+            />
+          </Grid>
+        )}
       </Grid>
       <Grid
         item
