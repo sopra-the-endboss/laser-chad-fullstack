@@ -61,10 +61,14 @@ export const ProductDetail = ({
         setLoadingComments(false);
       })
       .catch((error) => {});
+    // adding fetchAllProducts into the dependencies leads to infinite calls. we dont do that here
+    // eslint-disable-next-line
   }, [apigBaseUrl, product_id, details]);
 
   useEffect(() => {
     fetchDetails();
+    // adding fetchAllProducts into the dependencies leads to infinite calls. we dont do that here
+    // eslint-disable-next-line
   }, [apigBaseUrl, product_id, details]);
 
   return (
@@ -192,36 +196,38 @@ export const ProductDetail = ({
             )}
           </Grid>
           <Grid item xs={12}>
-            {// make sure productDetails is an object with product_id, which must be a nonempty string, AND we are not loading anymore
-            // also disable if hideAddToCart is true
-            productDetails &&
-            productDetails?.product_id &&
-            typeof productDetails.product_id === "string" &&
-            productDetails.product_id.trim() !== "" &&
-            !loadingDetails &&
-            !hideAddToCart ? (
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  dispatch(
-                    addToCart({
-                      ...productDetails,
-                      // try images, make sure it is an array, otherwise add empty array
-                      image:
-                        "images" in productDetails &&
-                        Array.isArray(productDetails.images)
-                          ? productDetails.images
-                          : [],
-                    })
-                  ) && console.log("Added to cart: ", productDetails);
-                }}
-              >
-                Add to Cart
-              </Button>
-            ) : (
-              <Button disabled={true}>Not addable to cart</Button>
-            )}
+            {
+              // make sure productDetails is an object with product_id, which must be a nonempty string, AND we are not loading anymore
+              // also disable if hideAddToCart is true
+              productDetails &&
+              productDetails?.product_id &&
+              typeof productDetails.product_id === "string" &&
+              productDetails.product_id.trim() !== "" &&
+              !loadingDetails &&
+              !hideAddToCart ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    dispatch(
+                      addToCart({
+                        ...productDetails,
+                        // try images, make sure it is an array, otherwise add empty array
+                        image:
+                          "images" in productDetails &&
+                          Array.isArray(productDetails.images)
+                            ? productDetails.images
+                            : [],
+                      })
+                    ) && console.log("Added to cart: ", productDetails);
+                  }}
+                >
+                  Add to Cart
+                </Button>
+              ) : (
+                <Button disabled={true}>Not addable to cart</Button>
+              )
+            }
           </Grid>
         </Grid>
         {!hideComments && (
