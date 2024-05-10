@@ -30,7 +30,7 @@ const postCart = async (userId, baseUrl) => {
       variant: "error",
       style: { width: "900px" },
       anchorOrigin: { vertical: "top", horizontal: "center" },
-      autoHideDuration: 3000 // show for 3 seconds
+      autoHideDuration: 3000, // show for 3 seconds
     });
     console.log("ERROR postCart : POST could not be completed");
     console.error(error);
@@ -73,20 +73,20 @@ const putCartBatch = async (userId, putBody, baseUrl) => {
       variant: "error",
       style: { width: "900px" },
       anchorOrigin: { vertical: "top", horizontal: "center" },
-      autoHideDuration: 3000 // show for 3 seconds
+      autoHideDuration: 3000, // show for 3 seconds
     });
-    console.log("ERROR putCartBatch : PUT could not be completed. Most likely there are undefined products in the cartItems");
+    console.log(
+      "ERROR putCartBatch : PUT could not be completed. Most likely there are undefined products in the cartItems"
+    );
     console.error(error);
   }
 };
 
 export const SendCart = async (userId, cartItems, baseUrl) => {
   console.log("SendCart : sending cart to backend...");
-  console.log("User: ", userId);
-  console.log("CartItems: ", cartItems);
 
   // Add the cartItems as "products" value to the body to send
-  const putBatchBody = {"products" : cartItems};
+  const putBatchBody = { products: cartItems };
   console.log("Cart Object ", putBatchBody);
 
   const postRes = await postCart(userId, baseUrl);

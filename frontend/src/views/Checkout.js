@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { SendOrder } from "../functions/SendOrder";
 import { clearCart } from "../reducers/slices/cartSlice";
 import { SendCart } from "../functions/SendCart";
+import { useGetOrder } from "../hooks/useGetOrder";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const CheckoutPage = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const authState = useSelector((state) => state.auth.user);
   const baseUrl = useSelector((state) => state.apigBaseUrl);
+  const { getOrder } = useGetOrder();
 
   const [buyOption, setBuyOption] = useState(false);
 
@@ -38,6 +40,7 @@ const CheckoutPage = () => {
   const sendOrder = async () => {
     await SendCart(authState.userId, cartItems, baseUrl);
     await SendOrder(authState.userId, baseUrl);
+    getOrder(authState.userId, baseUrl);
     dispatch(clearCart());
     navigate('/account');
   };

@@ -35,7 +35,6 @@ const useAuth = () => {
 
     // Get the user data
     const { attributes } = await CognitoAccount();
-    console.log(attributes);
 
     // Catch missing userId
     currentUserId = attributes?.sub;

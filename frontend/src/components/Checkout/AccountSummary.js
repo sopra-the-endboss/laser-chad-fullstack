@@ -106,15 +106,15 @@ const AccountSummary = () => {
         <React.Fragment>
           <div>
             <h3 className="accountH3">Delivery Information</h3>
-            <p className="accountText">
+            <p className="textLeftBound">
               {authState.givenname + " " + authState.familyname}
             </p>
-            <p className="accountText">{authState.address}</p>
-            <p className="accountText">
+            <p className="textLeftBound">{authState.address}</p>
+            <p className="textLeftBound">
               {authState.zip + " " + authState.city + " " + authState.county}
             </p>
             <h3 className="accountH3">Delivery method</h3>
-            <p className="accountText">Shipping</p>
+            <p className="textLeftBound">Shipping</p>
           </div>
           <div className="buttonRight">
             <Button onClick={handleEditToggle} variant="contained" size="small">

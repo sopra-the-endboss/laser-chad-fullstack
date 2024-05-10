@@ -6,7 +6,8 @@ import { useState } from "react";
 import { updateUserAttributes } from "aws-amplify/auth";
 import { useDispatch } from "react-redux";
 import { setUserLoggedIn } from "../reducers/slices/authSlice";
-//import { useNavigate } from "react-router-dom";
+import OrderItem from "../components/Account/OrderItem";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Grid,
@@ -19,6 +20,7 @@ import {
   AccordionDetails,
   AccordionSummary,
 } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 /**
  * Displays and allows editing of the current user's account details.
@@ -43,17 +45,19 @@ import {
 
 const AccountDetails = () => {
   const authState = useSelector((state) => state.auth.user);
-  //const apigBaseUrl = useSelector((state) => state.apigBaseUrl);
+  const apigBaseUrl = useSelector((state) => state.apigBaseUrl);
   const [isEditing, setIsEditing] = useState(false);
   const [editState, setEditState] = useState(authState);
   const dispatch = useDispatch();
-  //const navigate = useNavigate();
+  const orderState = useSelector((state) => state.orders);
+  const orderItems = useSelector((state) => state.orders.orders);
+  const navigate = useNavigate();
 
-  // const onCardInteract = (clickable, id) => {
-  //   if (clickable) {
-  //     navigate("/product/" + id);
-  //   }
-  // };
+  const onCardInteract = (clickable, id) => {
+    if (clickable) {
+      navigate("/product/" + id);
+    }
+  };
 
   const accountFields = [
     {
@@ -244,19 +248,22 @@ const AccountDetails = () => {
         </>
       ) : (
         <>
-          <h3 className="accountH3">Account Details</h3>
+          <h3 className="accountH3">
+            Account Details
+            <IconButton onClick={handleEditToggle} size="tiny">
+              <EditIcon />
+            </IconButton>
+          </h3>
+
           {accountFields.map((field) => (
-            <p className="accountText">{field.value}</p>
+            <p className="textLeftBound">{field.value}</p>
           ))}
 
-          <IconButton onClick={handleEditToggle} size="large">
-            <EditIcon />
-          </IconButton>
+          <Divider sx={{ marginBottom: "10px", marginTop: "10px" }} />
 
-          <Divider />
           <Accordion>
             <AccordionSummary
-              expandIcon="X"
+              expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
@@ -265,14 +272,31 @@ const AccountDetails = () => {
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              {/* TODO Add Order History*/}
-              {/* {cartItems.map((item) => (
-                <CartItem
-                  key={item.product_id}
-                  item={item}
-                  onCardInteract={onCardInteract}
-                />
-              ))} */}
+              {orderItems?.map((item) => (
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <div className="textLeftBound">
+                      <p>
+                        Order {item.order_id} from {item.date}
+                      </p>
+                      <p>Status: {item.status}</p>
+                    </div>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    {item.products?.map((product) => (
+                      <OrderItem
+                        key={product.product_id}
+                        item={product}
+                        onCardInteract={onCardInteract}
+                      />
+                    ))}
+                  </AccordionDetails>
+                </Accordion>
+              ))}
             </AccordionDetails>
           </Accordion>
         </>
