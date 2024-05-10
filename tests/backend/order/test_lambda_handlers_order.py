@@ -108,7 +108,55 @@ def generate_inputs() -> dict[str,dict]:
     
     inputs_to_return = {}
     
-    # TODO: Add data
+
+    ###
+    # Objects we will use in the events
+
+    # user_id
+    user_id_1 = "user_id_1"
+
+    # products
+    product_1 = {
+        "product_id":"product_id_1",
+        "quantity":1
+    }
+    product_2 = {
+        "product_id":"product_id_2",
+        "quantity":2
+    }
+
+    # cart
+    cart_1 = {
+        "user_id":user_id_1,
+        "products":[product_1,product_2]
+    }
+
+
+
+    ###
+    # Empty body, invalid pathParameters
+    inputs_to_return['pathParameter_empty'] = {
+        "body" : "",
+        "pathParameters" : {}
+    }
+    inputs_to_return['pathParameter_randomString'] = {
+        "body" : "",
+        "pathParameters" : {"wrongPathParameter":"wrongPathParameter"}
+    }
+    
+    ###
+    # Empty body, valid pathParameters
+    inputs_to_return['pathParameter_user_id_1'] = {
+        "body" : "",
+        "pathParameters" : {"user_id" : user_id_1}
+    }
+    inputs_to_return['pathParameter_user_id_unknown'] = {
+        "body" : "",
+        "pathParameters" : {"user_id" : "some_unknown_user_id"}
+    }
+    
+
+
 
     return inputs_to_return
 
@@ -117,69 +165,66 @@ def test_simple_count(dynamo_tables):
         item_count = t.item_count
         assert item_count == 0
 
-# @mock_aws
-# def test_db_comment_does_not_exist(set_env):
-#     # Pass in empty arguments, we only want to test 400 if table does not exist
-#     dummy_event = {}
-#     dummy_context = {}
+@mock_aws
+def test_db_does_not_exist(set_env):
+    # Pass in empty arguments, we only want to test 400 if table does not exist
+    dummy_event = {}
+    dummy_context = {}
 
-#     res = get_handler_product_comment.handler(dummy_event, dummy_context)
-#     assert res['statusCode'] == 400
+    res = get_handler_order.handler(dummy_event, dummy_context)
+    assert res['statusCode'] == 400
     
-#     res = post_handler_product_comment.handler(dummy_event, dummy_context)
-#     assert res['statusCode'] == 400
+    res = post_handler_order.handler(dummy_event, dummy_context)
+    assert res['statusCode'] == 400
     
-#     res = delete_handler_product_comment.handler(dummy_event, dummy_context)
-#     assert res['statusCode'] == 400
+    res = put_handler_order.handler(dummy_event, dummy_context)
+    assert res['statusCode'] == 400
 
 
-# ###
-# # Test pathParameters
-# def test_GET(dynamo_table_product_comment, generate_inputs: dict[str,str]):
+###
+# Test pathParameters
+def test_GET(dynamo_tables, generate_inputs: dict[str,str]):
+    """
+    GET should return 200 and an empty list, even if pathParameters are wrong
+    GET should return 200 if pathParameters are correct, but no items are found
+    """
     
-#     ###
-#     # Assert GET with empty or wrong pathParameters returns 200 -> Empty table
-#     res_empty_pathParameter = get_handler_product_comment.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
-#     assert res_empty_pathParameter['statusCode'] == 200
-#     assert res_empty_pathParameter['body'] == json.dumps([])
+    ###
+    # Assert GET with empty or wrong pathParameters returns 200 -> Empty table
+    res_empty_pathParameter = get_handler_order.handler(generate_inputs['pathParameter_empty'], CONTEXT_DUMMY)
+    assert res_empty_pathParameter['statusCode'] == 200
+    assert res_empty_pathParameter['body'] == json.dumps([])
     
-#     res_wrong_pathParameter = get_handler_product_comment.handler(generate_inputs['wrong_pathParameter'], CONTEXT_DUMMY)
-#     assert res_wrong_pathParameter['statusCode'] == 200
-#     assert res_wrong_pathParameter['body'] == json.dumps([])
+    res_wrong_pathParameter = get_handler_order.handler(generate_inputs['pathParameter_randomString'], CONTEXT_DUMMY)
+    assert res_wrong_pathParameter['statusCode'] == 200
+    assert res_wrong_pathParameter['body'] == json.dumps([])
 
-#     res_wrong_pathParameter = get_handler_product_comment.handler(generate_inputs['wrong_pathParameter_array'], CONTEXT_DUMMY)
-#     assert res_wrong_pathParameter['statusCode'] == 200
-#     assert res_wrong_pathParameter['body'] == json.dumps([])
+    res_wrong_pathParameter = get_handler_order.handler(generate_inputs['pathParameter_user_id_1'], CONTEXT_DUMMY)
+    assert res_wrong_pathParameter['statusCode'] == 200
+    assert res_wrong_pathParameter['body'] == json.dumps([])
+    
+    res_wrong_pathParameter = get_handler_order.handler(generate_inputs['pathParameter_user_id_unknown'], CONTEXT_DUMMY)
+    assert res_wrong_pathParameter['statusCode'] == 200
+    assert res_wrong_pathParameter['body'] == json.dumps([])
 
-#     res_invalid_pathParameter = get_handler_product_comment.handler(generate_inputs['invalid_pathParameter_emptyBody'], CONTEXT_DUMMY)
-#     assert res_invalid_pathParameter['statusCode'] == 200
-#     assert res_invalid_pathParameter['body'] == json.dumps([])
+def test_POST(dynamo_tables, generate_inputs: dict[str,str]):
     
-#     # Assert correct GET pathParameters also yield 200 and an empty result
-#     res_valid_pathParameter = get_handler_product_comment.handler(generate_inputs['valid_pathParameter_emptyBody'], CONTEXT_DUMMY)
-#     assert res_valid_pathParameter['statusCode'] == 200
-#     assert res_valid_pathParameter['body'] == json.dumps([])
+    ###
+    # Assert POST with empty pathParameter raises 400
+    res_empty_body = post_handler_order.handler(generate_inputs['pathParameter_empty'], CONTEXT_DUMMY)
+    assert res_empty_body['statusCode'] == 400
+    
+    ###
+    # Assert POST with wrong pathParameters raises 400
+    res_empty_body = post_handler_order.handler(generate_inputs['pathParameter_randomString'], CONTEXT_DUMMY)
+    assert res_empty_body['statusCode'] == 400
 
-# def test_POST(dynamo_table_product_comment, generate_inputs: dict[str,str]):
+    ###
+    # Assert POST 404 if cart is not found. pathParameters are correct
+    res_empty_body = post_handler_order.handler(generate_inputs['pathParameter_user_id_1'], CONTEXT_DUMMY)
+    assert res_empty_body['statusCode'] == 404
     
-#     ###
-#     # Assert POST with empty pathParameter raises 400
-#     res_empty_body = post_handler_product_comment.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
-#     assert res_empty_body['statusCode'] == 400
     
-#     ###
-#     # Assert POST with wrong pathParameters raises 400
-#     res_empty_body = post_handler_product_comment.handler(generate_inputs['wrong_pathParameter'], CONTEXT_DUMMY)
-#     assert res_empty_body['statusCode'] == 400
-#     res_empty_body = post_handler_product_comment.handler(generate_inputs['wrong_pathParameter_array'], CONTEXT_DUMMY)
-#     assert res_empty_body['statusCode'] == 400
-    
-#     ###
-#     # Assert POST with valid pathParameter empty Body raises 400
-#     res_empty_body = post_handler_product_comment.handler(generate_inputs['valid_pathParameter_emptyBody'], CONTEXT_DUMMY)
-#     assert res_empty_body['statusCode'] == 400
-#     res_empty_body = post_handler_product_comment.handler(generate_inputs['valid_pathParameter_emptyBody_additionalPathParameter'], CONTEXT_DUMMY)
-#     assert res_empty_body['statusCode'] == 400
     
 # def test_POST_GET(dynamo_table_product_comment, generate_inputs: dict[str,str]):
     
@@ -193,7 +238,7 @@ def test_simple_count(dynamo_tables):
 #     # Make copy of event wiht additonal review field
 #     EVENT_ADDITION = EVENT.copy()
 #     EVENT_ADDITION['body'] = json.dumps({**EVENT_REVIEW, "additionalField":"additionalValue"})
-#     res = post_handler_product_comment.handler(EVENT_ADDITION, CONTEXT_DUMMY)
+#     res = post_handler_order.handler(EVENT_ADDITION, CONTEXT_DUMMY)
 #     res_body = json.loads(res['body'])
 #     assert res['statusCode'] == 200
 #     assert EVENT_REVIEW in res_body['reviews']
@@ -201,7 +246,7 @@ def test_simple_count(dynamo_tables):
 
 #     ###
 #     # Assert GET all -> 200 and return one item, containing our product and review
-#     res_get_all = get_handler_product_comment.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
+#     res_get_all = get_handler_order.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
 #     res_get_all_body = json.loads(res_get_all['body'])
 #     assert res_get_all['statusCode'] == 200
 #     assert len(res_get_all_body) == 1
@@ -215,7 +260,7 @@ def test_simple_count(dynamo_tables):
 #     EVENT = generate_inputs[EVENT_NAME]
 #     EVENT_PRODUCUT_ID = EVENT['pathParameters']['product_id']
 #     EVENT_REVIEW = json.loads(EVENT['body'])
-#     res = post_handler_product_comment.handler(EVENT, CONTEXT_DUMMY)
+#     res = post_handler_order.handler(EVENT, CONTEXT_DUMMY)
 #     res_body = json.loads(res['body'])
 #     assert res['statusCode'] == 200
 #     assert EVENT_REVIEW in res_body['reviews']
@@ -223,7 +268,7 @@ def test_simple_count(dynamo_tables):
 
 #     ###
 #     # Assert GET all -> 200 and return one item, containing our product and two review
-#     res_get_all = get_handler_product_comment.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
+#     res_get_all = get_handler_order.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
 #     res_get_all_body = json.loads(res_get_all['body'])
 #     assert res_get_all['statusCode'] == 200
 #     assert len(res_get_all_body) == 1
@@ -233,7 +278,7 @@ def test_simple_count(dynamo_tables):
 
 #     ###
 #     # Assert GET prod1 -> 200 and return list with one item, containing our product and two reviews
-#     res_get = get_handler_product_comment.handler(generate_inputs['valid_body_valid_pathParameter_prod1_review1'], CONTEXT_DUMMY)
+#     res_get = get_handler_order.handler(generate_inputs['valid_body_valid_pathParameter_prod1_review1'], CONTEXT_DUMMY)
 #     res_get_body = json.loads(res_get['body'])
 #     assert res_get['statusCode'] == 200
 #     assert len(res_get_body) == 1
@@ -247,7 +292,7 @@ def test_simple_count(dynamo_tables):
 #     EVENT = generate_inputs[EVENT_NAME]
 #     EVENT_PRODUCUT_ID = EVENT['pathParameters']['product_id']
 #     EVENT_REVIEW = json.loads(EVENT['body'])
-#     res = post_handler_product_comment.handler(EVENT, CONTEXT_DUMMY)
+#     res = post_handler_order.handler(EVENT, CONTEXT_DUMMY)
 #     res_body = json.loads(res['body'])
 #     assert res['statusCode'] == 200
 #     assert EVENT_REVIEW in res_body['reviews']
@@ -260,13 +305,13 @@ def test_simple_count(dynamo_tables):
     
 #     ###
 #     # Assert DELETE with empty pathParameter raises 400
-#     res_empty_pathParameter = delete_handler_product_comment.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
+#     res_empty_pathParameter = put_handler_order.handler(generate_inputs['empty_pathParameter'], CONTEXT_DUMMY)
 #     assert res_empty_pathParameter['statusCode'] == 400
 
-#     res_wrong_pathParameter = delete_handler_product_comment.handler(generate_inputs['wrong_pathParameter'], CONTEXT_DUMMY)
+#     res_wrong_pathParameter = put_handler_order.handler(generate_inputs['wrong_pathParameter'], CONTEXT_DUMMY)
 #     assert res_wrong_pathParameter['statusCode'] == 400
 
-#     res_wrong_pathParameter = delete_handler_product_comment.handler(generate_inputs['wrong_pathParameter_array'], CONTEXT_DUMMY)
+#     res_wrong_pathParameter = put_handler_order.handler(generate_inputs['wrong_pathParameter_array'], CONTEXT_DUMMY)
 #     assert res_wrong_pathParameter['statusCode'] == 400
 
 # def test_DELETE_delete_all_reviews_for_product(dynamo_table_product_comment, generate_inputs: dict[str,str]):
@@ -280,7 +325,7 @@ def test_simple_count(dynamo_tables):
 #         'valid_body_valid_pathParameter_prod2_review2'
 #     ]
 #     for e in events_to_post:
-#         post_handler_product_comment.handler(generate_inputs[e], CONTEXT_DUMMY)
+#         post_handler_order.handler(generate_inputs[e], CONTEXT_DUMMY)
 
 #     ###
 #     # Assert DELETE prod1 review1 -> 200 and return the entries for prod1 without review1, but with review2
@@ -288,7 +333,7 @@ def test_simple_count(dynamo_tables):
 #     EVENT = generate_inputs[EVENT_NAME]
 #     EVENT_PRODUCUT_ID = EVENT['pathParameters']['product_id']
 #     EVENT_REVIEW = json.loads(EVENT['body'])
-#     res = delete_handler_product_comment.handler(EVENT, CONTEXT_DUMMY)
+#     res = put_handler_order.handler(EVENT, CONTEXT_DUMMY)
 #     res_body = json.loads(res['body'])
 #     assert res['statusCode'] == 200
 #     assert res_body['product_id'] == EVENT_PRODUCUT_ID
@@ -301,7 +346,7 @@ def test_simple_count(dynamo_tables):
 #     EVENT = generate_inputs[EVENT_NAME]
 #     EVENT_PRODUCUT_ID = EVENT['pathParameters']['product_id']
 #     EVENT_REVIEW = json.loads(EVENT['body'])
-#     res = delete_handler_product_comment.handler(EVENT, CONTEXT_DUMMY)
+#     res = put_handler_order.handler(EVENT, CONTEXT_DUMMY)
 #     res_body = json.loads(res['body'])
 #     assert res['statusCode'] == 200
 #     assert res_body['product_id'] == EVENT_PRODUCUT_ID
@@ -310,7 +355,7 @@ def test_simple_count(dynamo_tables):
 
 #     ###
 #     # Assert GET for prod1 does find it, with emtpy reviews list
-#     res_get = get_handler_product_comment.handler(generate_inputs['valid_body_valid_pathParameter_prod1_review1'], CONTEXT_DUMMY)
+#     res_get = get_handler_order.handler(generate_inputs['valid_body_valid_pathParameter_prod1_review1'], CONTEXT_DUMMY)
 #     res_get_body = json.loads(res_get['body'])
 #     assert res_get['statusCode'] == 200
 #     assert res_get_body[0]['product_id'] == EVENT_PRODUCUT_ID
@@ -322,25 +367,25 @@ def test_simple_count(dynamo_tables):
 #     # Assert DELETE on nonexistent product_id -> 404
 #     EVENT_NAME = 'valid_body_valid_pathParameter_prod1_review1'
 #     EVENT = generate_inputs[EVENT_NAME]
-#     res = delete_handler_product_comment.handler(EVENT, CONTEXT_DUMMY)
+#     res = put_handler_order.handler(EVENT, CONTEXT_DUMMY)
 #     res_body = json.loads(res['body'])
 #     assert res['statusCode'] == 404
 
 #     ###
 #     # Assert DELETE on nonexistent review_id -> 404
 #     # First POST prod1 review1
-#     post_handler_product_comment.handler(generate_inputs['valid_body_valid_pathParameter_prod1_review1'], CONTEXT_DUMMY)
+#     post_handler_order.handler(generate_inputs['valid_body_valid_pathParameter_prod1_review1'], CONTEXT_DUMMY)
 #     # then DELETE on review2
 #     EVENT_NAME = 'valid_body_valid_pathParameter_prod1_review2'
 #     EVENT = generate_inputs[EVENT_NAME]
-#     res = delete_handler_product_comment.handler(EVENT, CONTEXT_DUMMY)
+#     res = put_handler_order.handler(EVENT, CONTEXT_DUMMY)
 #     res_body = json.loads(res['body'])
 #     assert res['statusCode'] == 404
 
 # def test_DELETE_401(dynamo_table_product_comment, generate_inputs: dict[str,str]):
 
 #     # First POST prod1 review1
-#     post_handler_product_comment.handler(generate_inputs['valid_body_valid_pathParameter_prod1_review1'], CONTEXT_DUMMY)
+#     post_handler_order.handler(generate_inputs['valid_body_valid_pathParameter_prod1_review1'], CONTEXT_DUMMY)
 
 #     # Create a new EVENT where the user_id is not a valid one to delete the posted comment
 #     EVENT_WITH_INVALID_USER = {
@@ -358,6 +403,6 @@ def test_simple_count(dynamo_tables):
 
 #     ###
 #     # Assert DELETE on prod1 with invalid user_id -> 401
-#     res = delete_handler_product_comment.handler(EVENT_WITH_INVALID_USER, CONTEXT_DUMMY)
+#     res = put_handler_order.handler(EVENT_WITH_INVALID_USER, CONTEXT_DUMMY)
 #     res_body = json.loads(res['body'])
 #     assert res['statusCode'] == 401

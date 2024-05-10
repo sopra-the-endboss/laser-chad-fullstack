@@ -107,7 +107,7 @@ def handler(event: dict, context) -> dict:
 
     # If None we did not found anything, return 404
     if not cart_found:
-        return return_error(f"No cart with userId {filter} found", 404)
+        return return_error(f"No cart with {PATH_PARAMETER} {filter} found", 404)
 
     print("Cart found, this is the products list")
     pp.pprint(cart_found['products'])
