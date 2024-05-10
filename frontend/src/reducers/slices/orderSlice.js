@@ -19,8 +19,12 @@ const orderSlice = createSlice({
         }
       });
     },
+    clearOrderHistory: (state) => {
+      console.log("clearing History");
+      state.orders = [];
+    },
   },
 });
 
-export const { addOrders } = orderSlice.actions;
+export const { addOrders, clearOrderHistory } = orderSlice.actions;
 export default orderSlice.reducer;

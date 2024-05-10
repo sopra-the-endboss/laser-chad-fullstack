@@ -16,7 +16,6 @@ export const useGetOrder = () => {
 
       const res = await fetch(`${baseUrl}/order/${userId}`, settings);
       const data = await res.json();
-
       if (res.ok) {
         dispatch(addOrders(data[0].orders));
       } else {
@@ -30,5 +29,3 @@ export const useGetOrder = () => {
 
   return { getOrder };
 };
-
-// export const { getOrder } = useGetOrder;

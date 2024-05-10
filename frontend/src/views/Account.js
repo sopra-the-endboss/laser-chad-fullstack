@@ -10,6 +10,7 @@ import UpdateRole from "../components/Account/UpdateRole";
 import { useEffect, useState } from "react";
 import { clearCart } from "../reducers/slices/cartSlice";
 import { SendCart } from "../functions/SendCart";
+import { clearOrderHistory } from "../reducers/slices/orderSlice";
 
 /**
  * A component that uses AWS Amplify's Authenticator to manage user authentication.
@@ -53,7 +54,7 @@ const AmplifyLogin = () => {
 
     // After sending cart to backend, clear the cartItems
     dispatch(clearCart());
-
+    dispatch(clearOrderHistory());
     signOut();
   };
   return (

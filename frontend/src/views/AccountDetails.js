@@ -272,7 +272,7 @@ const AccountDetails = () => {
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              {orderItems.map((item) => (
+              {orderItems?.map((item) => (
                 <Accordion>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
@@ -287,7 +287,7 @@ const AccountDetails = () => {
                     </div>
                   </AccordionSummary>
                   <AccordionDetails>
-                    {item.products.map((product) => (
+                    {item.products?.map((product) => (
                       <OrderItem
                         key={product.product_id}
                         item={product}
