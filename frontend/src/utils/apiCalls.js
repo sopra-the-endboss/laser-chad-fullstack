@@ -161,8 +161,11 @@ export const useFetchAllComments = (details, product_id, setLoadingComments) => 
                 console.log("DEBUG: useFetchAllComments response");
                 console.log(response);
 
+                // NOTE: The response.data array should ALWAYS contain exactly one element, since
+                // the dynamo DB has product_id as key and the entry is therefore unique
+                
                 if (response) {
-                    return response.data;
+                    return response.data[0];
                 }
 
             } else if(details) {

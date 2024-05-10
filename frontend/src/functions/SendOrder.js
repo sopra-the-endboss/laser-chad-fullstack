@@ -18,6 +18,14 @@ export const SendOrder = async (userId, baseUrl) => {
 
     if (res.ok || res.status === 409) {
       console.log(`DEBUG postCart : res.ok or duplicated, also fine`);
+      enqueueSnackbar({
+        message: `Your order is confirmed!`,
+        variant: "success",
+        style: { width: "900px" },
+        anchorOrigin: { vertical: "top", horizontal: "center" },
+        autoHideDuration: 3000,
+      });
+      return data;
     } else {
       console.log(
         `ERROR Post cart for userId ${userId}, returned ${res.status}`

@@ -83,7 +83,7 @@ def generate_inputs() -> dict[str,dict]:
     
     inputs_to_return = {}
     
-    # userId
+    # user_id
     user1 = 1
 
     # prdoduct_id
@@ -104,12 +104,12 @@ def generate_inputs() -> dict[str,dict]:
     
     inputs_to_return['valid_user1_prod1'] = {
         "body" : json.dumps({"product_id":prod1}),
-        "pathParameters" : {"userId":user1}
+        "pathParameters" : {"user_id":user1}
     }
     
     inputs_to_return['valid_user1_prod2'] = {
         "body" : json.dumps({"product_id":prod2}),
-        "pathParameters" : {"userId":user1}
+        "pathParameters" : {"user_id":user1}
     }
 
     return inputs_to_return

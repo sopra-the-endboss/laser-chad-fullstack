@@ -1,6 +1,6 @@
 """
 post_cart
-Handle call to get a post cart with a given userId
+Handle call to get a post cart with a given user_id
 """
 
 import boto3
@@ -36,6 +36,8 @@ def handler(event, context) -> list[dict]:
     Arguments:
         event : a dict which contains all data from the request to the API
         context : a LambdaContext object
+
+    For the given user_id, a new cart is created with an empty list of products.
     
     Returns:
         A valid HTTP Response dict which must contain the fields
@@ -51,11 +53,14 @@ def handler(event, context) -> list[dict]:
         headers : Default to allow CORS, otherwise not used
         body : The object written
     
-        400 if the handler can not complete
-        409 if there is already a cart with userId
+    Returns error:
+        400 if table not found
+        400 if pathParameter not found or invalid
+        409 if there is already a cart with user_id
+        400 if the put operation failed
     """
 
-    PATH_PARAMETER_FILTER = "userId" # Must match the name in resources_to_create.json in the path with {}
+    PATH_PARAMETER_FILTER = "user_id" # Must match the name in resources_to_create.json in the path with {}
     
     print("post_cart invoked")
 
@@ -86,16 +91,16 @@ def handler(event, context) -> list[dict]:
     print(f"This is the filter: {filter}")
 
     print("Check body, should be empty")
-    print(event['body'])
+    pp.pprint(event['body'])
 
-    # POST creates an empty array for the userId
+    # POST creates an empty array for the user_id
     item_to_put = {
-        "userId" : filter,
+        "user_id" : filter,
         "products" : []
     }
 
     # Try to put the item, but only if it not exists
-    condition = "attribute_not_exists(userId)"
+    condition = "attribute_not_exists(user_id)"
     try:
         response_put_item = dynamo_table.put_item(
             Item = item_to_put,
@@ -104,7 +109,7 @@ def handler(event, context) -> list[dict]:
         )
     except botocore.exceptions.ClientError as client_error:
         if client_error.response['Error']['Code'] == "ConditionalCheckFailedException":
-            return return_error(f"There is already an existing cart with userId {filter}, return 409", 409)
+            return return_error(f"There is already an existing cart with user_id {filter}, return 409", 409)
         else:
             return return_error("Error occured during put_item operation that is not conflict")
     

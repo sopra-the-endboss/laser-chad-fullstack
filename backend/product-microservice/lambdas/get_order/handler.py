@@ -1,5 +1,5 @@
 """
-Handle call which lists all template items or a single template item with a path variable {id}
+Handle call which lists all all orders for a given user
 The handler has the name of the table hardcoded, this is determined by the config file config/db_schema.json upon deployment
 """
 import os
@@ -23,6 +23,13 @@ HTTP_RESPONSE_DICT = {
     # Here comes to body, as a JSON string
 }
 
+def return_error(msg:str, code:int = 400) -> dict:
+    print(msg)
+    error_return_dict = HTTP_RESPONSE_DICT.copy()
+    error_return_dict['statusCode']=code
+    error_return_dict['body']=json.dumps(msg)
+    return error_return_dict
+
 def handler(event, context) -> list[dict]:
     """
     Arguments:
@@ -41,7 +48,18 @@ def handler(event, context) -> list[dict]:
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default
         headers : Empty by default, dict otherwise
-        body : JSON serialized List object with all the items found. Each item is a dict
+        body : Iterable containing all orders for a given user. Can be empty
+            An item in the order table dict with the following required keys:
+                - user_id:str
+                - orders:array[order]
+                An order is a dict with the following required keys:
+                    - order_id:str
+                    - status:str
+                    - products:array[str]
+                    The products array can be empty
+
+    Raises:
+        400 if table not found
     """
 
     PATH_PARAMETER_FILTER = "user_id" # Must match the name in resources_to_create.json in the path with {}
@@ -54,9 +72,6 @@ def handler(event, context) -> list[dict]:
     print("DEBUG: This is the event")
     pp.pprint(event)
     
-    print("DEBUG: This is the event raw")
-    print(event)
-
     TableName = "order-table"
 
     print(f"Using table {TableName}")
@@ -75,9 +90,8 @@ def handler(event, context) -> list[dict]:
     dynamo_resource = boto3.resource("dynamodb")
     dynamo_table = dynamo_resource.Table(TableName)
 
-    print("Scanning table, print result from scan, raw and PrettyPrinted")
+    print("Scanning table, print result from scan")
     response_scan = dynamo_table.scan()
-    print(response_scan)
     pp.pprint(response_scan)
     print(type(response_scan))
 
@@ -87,7 +101,7 @@ def handler(event, context) -> list[dict]:
     # List of items, each item a dict
     found_items_list = response_scan['Items']
     print(f"Items found after scanning table:")
-    print(found_items_list)
+    pp.pprint(found_items_list)
 
     # Now check if we have a partParameter id which is used as a filter
     # If we have a non empty dict for event['pathParameters'] we want to apply a filter to all items found
@@ -99,10 +113,10 @@ def handler(event, context) -> list[dict]:
             found_items_filtered = [item for item in found_items_list if item[PATH_PARAMETER_FILTER] == path_parameter_to_match]
             found_items_list = found_items_filtered
             print(f"Items after filtering")
-            print(found_items_list)
+            pp.pprint(found_items_list)
 
     print("Return HTTP object")
-    HTTP_RESPONSE_DICT['statusCode'] = '200'
+    HTTP_RESPONSE_DICT['statusCode'] = 200
     HTTP_RESPONSE_DICT['body'] = json.dumps(found_items_list)
 
     print(f"DEBUG: This is the HTTP response we are sending back")

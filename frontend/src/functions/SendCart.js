@@ -17,7 +17,7 @@ const postCart = async (userId, baseUrl) => {
       console.log(`DEBUG postCart : res.ok or duplicated, also fine`);
     } else {
       console.log(
-        `ERROR Post cart for userId ${userId}, returned ${res.status}`
+        `ERROR Post cart for user_id ${userId}, returned ${res.status}`
       );
       console.log(`ERROR Post cart with data ${data}`);
     }
@@ -57,7 +57,7 @@ const putCartBatch = async (userId, putBody, baseUrl) => {
       console.log("DEBUG putCartBatch : res.ok");
     } else {
       console.log(
-        "ERROR putCartBatch : for userId",
+        "ERROR putCartBatch : for user_id",
         userId,
         " returned ",
         res.status

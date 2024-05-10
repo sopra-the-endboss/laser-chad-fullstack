@@ -54,7 +54,9 @@ def handler(event: dict, context) -> dict:
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default
         headers : Empty by default, dict otherwise
-        body : Returns the review_id of the newly created review as a JSON string
+        body : Returns the full DB entry with the added review consisting of
+            product_id:str
+            reviews:array[str]
 
     Returns error:
         400 if the body cannot be parsed into a dict
@@ -79,7 +81,7 @@ def handler(event: dict, context) -> dict:
     available_tables = dynamo_client.list_tables()
     available_tables = available_tables['TableNames']
     if not TableName in available_tables:
-        return_error(f"Table {TableName} not found in the available tables, abort", 400)
+        return return_error(f"Table {TableName} not found in the available tables, abort", 400)
 
     print("Creating dynamo table object ...")
     dynamo_resource = boto3.resource("dynamodb")
@@ -99,11 +101,12 @@ def handler(event: dict, context) -> dict:
     try:
         new_item = json.loads(event['body'], parse_float=Decimal)
         print("DEBUG: This is the item")
-        print(new_item)
+        pp.pprint(new_item)
     except json.decoder.JSONDecodeError as e:
         print("JSONDecodeError IN PARSING BODY")
         return return_error("Error parsing body", 400)
     
+    # If the body is parsable, we can assume the following structure given the resource model
     new_review = {
         'user': new_item['user'],
         'user_id': new_item['user_id'],
@@ -112,14 +115,13 @@ def handler(event: dict, context) -> dict:
         'title' : new_item['title'],
         'date' : new_item['date'],
         'review_id': new_item['review_id']
-
     }
     
     # Try to get the item from the table
     try:
         response_get = dynamo_table.get_item(Key={'product_id': filter})
     except ClientError as e:
-        print(e.response['Error']['Message'])
+        return return_error(e.response['Error']['Message'], 400)
     else:
         item = response_get.get('Item')
         if item:
@@ -152,7 +154,7 @@ def handler(event: dict, context) -> dict:
         )
 
     print("Return HTTP object")
-    HTTP_RESPONSE_DICT['statusCode'] = '200'
+    HTTP_RESPONSE_DICT['statusCode'] = 200
     HTTP_RESPONSE_DICT['body'] = json.dumps(item)
 
     print(f"DEBUG: This is the HTTP response we are sending back")

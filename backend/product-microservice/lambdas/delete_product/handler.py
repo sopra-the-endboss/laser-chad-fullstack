@@ -49,9 +49,11 @@ def handler(event, context) -> list[dict]:
         isBase64Encoded : False by default1
         headers : Default to allow CORS, otherwise not used
         body :  A JSON serialized string with an object containing one field, the product_id of the to delete product
-          - NOTE: If product_id is not found, 200 is returned with the product_id which was not found
+            If product_id is not found, 200 is returned with the product_id which was not found. Nothing is deleted
 
-        400 if the handler can not complete
+    Returns error:
+        400 if table not found
+        400 if product_id not in pathParameters
     """
 
     PATH_PARAMETER_FILTER = "product_id" # Must match the name in resources_to_create.json in the path with {}
@@ -72,7 +74,7 @@ def handler(event, context) -> list[dict]:
     available_tables = available_tables['TableNames']
     for t in (TableName_product, TableName_productcomment):
         if not t in available_tables:
-            return return_error(f"Table {t} not found in the available tables, abort")
+            return return_error(f"Table {t} not found in the available tables, abort", 400)
         
     print("Creating dynamo table object ...")
     dynamo_resource = boto3.resource("dynamodb")
@@ -81,7 +83,7 @@ def handler(event, context) -> list[dict]:
     
     print(f"Assure pathParameter {PATH_PARAMETER_FILTER} is present in event")
     if not PATH_PARAMETER_FILTER in event['pathParameters']:
-        return return_error(f"pathParameter {PATH_PARAMETER_FILTER} not found in event, abort")
+        return return_error(f"pathParameter {PATH_PARAMETER_FILTER} not found in event, abort", 400)
         
     filter = event['pathParameters'][PATH_PARAMETER_FILTER]
     print(f"This is the filter: {filter}")

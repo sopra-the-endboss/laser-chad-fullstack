@@ -50,7 +50,7 @@ except FileNotFoundError:
 ###
 # Parameters
 CONTEXT_DUMMY = None
-PATHPARAMETER_NAME = "userId" # corresponds to config, should match the resource definiton
+PATHPARAMETER_NAME = "user_id" # corresponds to config, should match the resource definiton
 
 ###
 # Fixtures
@@ -96,7 +96,7 @@ def generate_inputs() -> dict[str,dict]:
     
     inputs_to_return = {}
     
-    # userId
+    # user_id
     user1_str = "user_one"
     user2_str = "user_two"
     user1_int = 1
@@ -126,7 +126,7 @@ def generate_inputs() -> dict[str,dict]:
     
     inputs_to_return['valid_user1_prod1'] = {
         "body" : json.dumps({"product_id":prod1}),
-        "pathParameters" : {"userId":user1_str}
+        "pathParameters" : {"user_id":user1_str}
     }
     
     inputs_to_return['valid_user1_prod1_addfield1'] = {
@@ -135,7 +135,7 @@ def generate_inputs() -> dict[str,dict]:
             "brand":brand1,
             "images":[image1,image2]}
             ),
-        "pathParameters" : {"userId":user1_str}
+        "pathParameters" : {"user_id":user1_str}
     }
     
     inputs_to_return['valid_user1_prod1_addfield2'] = {
@@ -144,7 +144,7 @@ def generate_inputs() -> dict[str,dict]:
             "brand":brand2,
             "title":title1}
             ),
-        "pathParameters" : {"userId":user1_str}
+        "pathParameters" : {"user_id":user1_str}
     }
     
     inputs_to_return['valid_user1_prod1_addfield_quantity'] = {
@@ -153,34 +153,34 @@ def generate_inputs() -> dict[str,dict]:
             "brand":brand1,
             "quantity":99}
             ),
-        "pathParameters" : {"userId":user1_str}
+        "pathParameters" : {"user_id":user1_str}
     }
     
     inputs_to_return['valid_user1_prod2'] = {
         "body" : json.dumps({"product_id":prod2}),
-        "pathParameters" : {"userId":user1_str}
+        "pathParameters" : {"user_id":user1_str}
     }
     
     inputs_to_return['valid_user2_prod1'] = {
         "body" : json.dumps({"product_id":prod1}),
-        "pathParameters" : {"userId":user2_str}
+        "pathParameters" : {"user_id":user2_str}
     }
     
     inputs_to_return['valid_user2_prod2'] = {
         "body" : json.dumps({"product_id":prod2}),
-        "pathParameters" : {"userId":user2_str}
+        "pathParameters" : {"user_id":user2_str}
     }
     
 
 
     inputs_to_return['valid_user1_int_prod1'] = {
         "body" : json.dumps({"product_id":prod1}),
-        "pathParameters" : {"userId":user1_int}
+        "pathParameters" : {"user_id":user1_int}
     }
 
     inputs_to_return['valid_user1_prod1_additional_field'] = {
         "body" : json.dumps({"product_id":prod1, "additionalField":"additionalValue"}),
-        "pathParameters" : {"userId":user1_str}
+        "pathParameters" : {"user_id":user1_str}
     }
 
     return inputs_to_return
@@ -243,11 +243,11 @@ def test_DELETE_pathParameters(dynamo_table, generate_inputs: dict[str,str]):
 def test_POST_create(dynamo_table, generate_inputs: dict[str,str]):
     
     ###
-    # Assert POST works with a string userId
+    # Assert POST works with a string user_id
     assert post_handler.handler(generate_inputs['valid_user1_prod1'], CONTEXT_DUMMY)['statusCode'] == 200
     
     ###
-    # Assert POST does not work with an integer userId
+    # Assert POST does not work with an integer user_id
     assert post_handler.handler(generate_inputs['valid_user1_int_prod1'], CONTEXT_DUMMY)['statusCode'] == 400
 
 def test_POST_duplication_error(dynamo_table, generate_inputs: dict[str,str]):
@@ -256,7 +256,7 @@ def test_POST_duplication_error(dynamo_table, generate_inputs: dict[str,str]):
     # Put one valid entry
     assert post_handler.handler(generate_inputs['valid_user1_prod1'], CONTEXT_DUMMY)['statusCode'] == 200
     
-    # Try to put the same userId -> 409
+    # Try to put the same user_id -> 409
     assert post_handler.handler(generate_inputs['valid_user1_prod1'], CONTEXT_DUMMY)['statusCode'] == 409
 
 def test_POST_body_not_empty(dynamo_table, generate_inputs: dict[str,str]):
@@ -277,10 +277,10 @@ def test_GET_empty(dynamo_table, generate_inputs: dict[str,str]):
     EVENT = generate_inputs[EVENT_NAME]
     
     ###
-    # Assert GET on empty table returns 404, userId not found
+    # Assert GET on empty table returns 404, user_id not found
     assert get_handler.handler(EVENT, CONTEXT_DUMMY)['statusCode'] == 404
 
-    # POST valid, this creates for userId a cart entry
+    # POST valid, this creates for user_id a cart entry
     post_handler.handler(EVENT, CONTEXT_DUMMY)
 
     # Assert GET -> 200
@@ -289,7 +289,7 @@ def test_GET_empty(dynamo_table, generate_inputs: dict[str,str]):
 
     # Assert that the answer of the GET is exactly what we expect
     BODY_EXPECT = {
-        "userId" : EVENT['pathParameters']['userId'],
+        "user_id" : EVENT['pathParameters']['user_id'],
         "products" : []
     }
     assert json.loads(res_get['body']) == BODY_EXPECT
@@ -301,15 +301,15 @@ def test_GET_empty(dynamo_table, generate_inputs: dict[str,str]):
 def test_PUT_once(dynamo_table, generate_inputs: dict[str,str]):
 
     ###
-    # Assert 404 if userId does not have a cart
+    # Assert 404 if user_id does not have a cart
     EVENT_NAME = 'valid_user1_prod1'
     EVENT = generate_inputs[EVENT_NAME]
     
     ###
-    # Assert PUT on empty table returns 404, userId not found
+    # Assert PUT on empty table returns 404, user_id not found
     assert put_handler.handler(EVENT, CONTEXT_DUMMY)['statusCode'] == 404
 
-    # POST valid, this creates for userId a cart entry
+    # POST valid, this creates for user_id a cart entry
     post_handler.handler(EVENT, CONTEXT_DUMMY)
 
     # PUT valid, this creates an entry for the product_id
@@ -320,7 +320,7 @@ def test_PUT_once(dynamo_table, generate_inputs: dict[str,str]):
     
     # Assert that the quantity is 1 in the returned object
     BODY_EXPECT = {
-        "userId" : EVENT['pathParameters']['userId'],
+        "user_id" : EVENT['pathParameters']['user_id'],
         "products" : [{"product_id" : json.loads(EVENT['body'])['product_id'], "quantity":1}]
     }
     assert res_body == BODY_EXPECT
@@ -333,11 +333,11 @@ def test_PUT_once(dynamo_table, generate_inputs: dict[str,str]):
 def test_PUT_multi_same_prod(dynamo_table, generate_inputs: dict[str,str]):
 
     ###
-    # Assert 404 if userId does not have a cart
+    # Assert 404 if user_id does not have a cart
     EVENT_NAME = 'valid_user1_prod1'
     EVENT = generate_inputs[EVENT_NAME]
     
-    # POST valid, this creates for userId a cart entry
+    # POST valid, this creates for user_id a cart entry
     post_handler.handler(EVENT, CONTEXT_DUMMY)
 
     # PUT valid, this creates an entry for the product_id with quantity 1
@@ -347,12 +347,12 @@ def test_PUT_multi_same_prod(dynamo_table, generate_inputs: dict[str,str]):
     
     # Assert that the quantity is 1 in the returned object
     BODY_EXPECT = {
-        "userId" : EVENT['pathParameters']['userId'],
+        "user_id" : EVENT['pathParameters']['user_id'],
         "products" : [{"product_id" : json.loads(EVENT['body'])['product_id'], "quantity":1}]
     }
     assert res_body == BODY_EXPECT
 
-    # Also assert that the result has exactly one product for the userId
+    # Also assert that the result has exactly one product for the user_id
     assert len(res_body['products']) == 1
 
     # PUT valid the same item, should increase quantity to 2
@@ -362,7 +362,7 @@ def test_PUT_multi_same_prod(dynamo_table, generate_inputs: dict[str,str]):
     
     # Assert that the quantity is 1 in the returned object
     BODY_EXPECT = {
-        "userId" : EVENT['pathParameters']['userId'],
+        "user_id" : EVENT['pathParameters']['user_id'],
         "products" : [{"product_id" : json.loads(EVENT['body'])['product_id'], "quantity":2}]
     }
     assert res_body == BODY_EXPECT
@@ -380,7 +380,7 @@ def test_PUT_multi_prod(dynamo_table, generate_inputs: dict[str,str]):
     EVENT_1 = generate_inputs[EVENT_NAME_1]
     EVENT_2 = generate_inputs[EVENT_NAME_2]
     
-    # POST valid, this creates for userId a cart entry for two users
+    # POST valid, this creates for user_id a cart entry for two users
     post_handler.handler(EVENT_1, CONTEXT_DUMMY)
 
     # PUT valid, this creates an entry for user1 for the product_id prod1 with quantity 1
@@ -400,7 +400,7 @@ def test_PUT_multi_prod(dynamo_table, generate_inputs: dict[str,str]):
 
     # Assert that user1 has two products, prod1 with quantity 2 and prod2 with quantity 1
     BODY_EXPECT = {
-        "userId" : EVENT_1['pathParameters']['userId'],
+        "user_id" : EVENT_1['pathParameters']['user_id'],
         "products" : [
             {"product_id" : json.loads(EVENT_1['body'])['product_id'], "quantity":2},
             {"product_id" : json.loads(EVENT_2['body'])['product_id'], "quantity":1}
@@ -416,15 +416,15 @@ def test_PUT_multi_prod(dynamo_table, generate_inputs: dict[str,str]):
 def test_DELETE_once(dynamo_table, generate_inputs: dict[str,str]):
 
     ###
-    # Assert 404 if userId does not have a cart
+    # Assert 404 if user_id does not have a cart
     EVENT_NAME = 'valid_user1_prod1_addfield1'
     EVENT = generate_inputs[EVENT_NAME]
     
     ###
-    # Assert DELETE on empty table returns 404, userId not found
+    # Assert DELETE on empty table returns 404, user_id not found
     assert delete_handler.handler(EVENT, CONTEXT_DUMMY)['statusCode'] == 404
 
-    # POST valid, this creates for userId a cart entry
+    # POST valid, this creates for user_id a cart entry
     post_handler.handler(EVENT, CONTEXT_DUMMY)
 
     # PUT valid, this creates an entry for the product_id
@@ -435,7 +435,7 @@ def test_DELETE_once(dynamo_table, generate_inputs: dict[str,str]):
 
     # DELETE valid, this should remove the entry and leave an empty products list
     BODY_EXPECT = {
-        "userId" : EVENT['pathParameters']['userId'],
+        "user_id" : EVENT['pathParameters']['user_id'],
         "products" : []
     }
     assert res_body == BODY_EXPECT
@@ -454,10 +454,10 @@ def test_DELETE_empty(dynamo_table, generate_inputs: dict[str,str]):
     EVENT = generate_inputs[EVENT_NAME]
     
     ###
-    # Assert DELETE on empty table returns 404, userId not found
+    # Assert DELETE on empty table returns 404, user_id not found
     assert delete_handler.handler(EVENT, CONTEXT_DUMMY)['statusCode'] == 404
 
-    # POST valid, this creates for userId a cart entry
+    # POST valid, this creates for user_id a cart entry
     post_handler.handler(EVENT, CONTEXT_DUMMY)
 
     res_delete = delete_handler.handler(EVENT, CONTEXT_DUMMY)
@@ -466,7 +466,7 @@ def test_DELETE_empty(dynamo_table, generate_inputs: dict[str,str]):
 
     # DELETE valid, this should just return an empty list
     BODY_EXPECT = {
-        "userId" : EVENT['pathParameters']['userId'],
+        "user_id" : EVENT['pathParameters']['user_id'],
         "products" : []
     }
     assert res_body == BODY_EXPECT
@@ -486,7 +486,7 @@ def test_DELETE_multi(dynamo_table, generate_inputs: dict[str,str]):
     EVENT_2 = generate_inputs[EVENT_NAME_2]
     EVENT_3 = generate_inputs[EVENT_NAME_3]
     
-    # POST valid, this creates for userId a cart entry, multiple userId
+    # POST valid, this creates for user_id a cart entry, multiple user_id
     post_handler.handler(EVENT_1, CONTEXT_DUMMY)
     post_handler.handler(EVENT_3, CONTEXT_DUMMY)
 
@@ -509,7 +509,7 @@ def test_DELETE_multi(dynamo_table, generate_inputs: dict[str,str]):
     delete_handler.handler(EVENT_3, CONTEXT_DUMMY)
 
     USER1_EXPECT = {
-        "userId" : EVENT_1['pathParameters']['userId'],
+        "user_id" : EVENT_1['pathParameters']['user_id'],
         "products" : [
             {
                 "product_id" : "product_one",
@@ -521,7 +521,7 @@ def test_DELETE_multi(dynamo_table, generate_inputs: dict[str,str]):
     }
     
     USER2_EXPECT = {
-        "userId" : EVENT_3['pathParameters']['userId'],
+        "user_id" : EVENT_3['pathParameters']['user_id'],
         "products" : [
             {
                 "product_id" : "product_one",
@@ -553,7 +553,7 @@ def test_PUT_addfield(dynamo_table, generate_inputs: dict[str,str]):
     EVENT_ADDFIELD1 = generate_inputs['valid_user1_prod1_addfield1']
     EVENT_ADDFIELD2 = generate_inputs['valid_user1_prod1_addfield2']
 
-    # POST valid, this creates for userId a cart entry
+    # POST valid, this creates for user_id a cart entry
     post_handler.handler(EVENT_BASIS, CONTEXT_DUMMY)
 
     # FIRST
@@ -563,7 +563,7 @@ def test_PUT_addfield(dynamo_table, generate_inputs: dict[str,str]):
     res_body = json.loads(res_put['body'])
     # Assert that the quantity is 1 in the returned object
     BODY_EXPECT = {
-        "userId" : EVENT_BASIS['pathParameters']['userId'],
+        "user_id" : EVENT_BASIS['pathParameters']['user_id'],
         "products" : [{"product_id" : json.loads(EVENT_BASIS['body'])['product_id'], "quantity":1}]
     }
     assert res_body == BODY_EXPECT
@@ -581,7 +581,7 @@ def test_PUT_addfield(dynamo_table, generate_inputs: dict[str,str]):
     res_body = json.loads(res_put['body'])
     # Assert that the quantity is 2 in the returned object
     BODY_EXPECT = {
-        "userId" : EVENT_BASIS['pathParameters']['userId'],
+        "user_id" : EVENT_BASIS['pathParameters']['user_id'],
         "products" : [{
             "product_id" : json.loads(EVENT_BASIS['body'])['product_id'],
             "quantity":2,
@@ -604,7 +604,7 @@ def test_PUT_addfield(dynamo_table, generate_inputs: dict[str,str]):
     res_body = json.loads(res_put['body'])
     # Assert that the quantity is 3 in the returned object
     BODY_EXPECT = {
-        "userId" : EVENT_BASIS['pathParameters']['userId'],
+        "user_id" : EVENT_BASIS['pathParameters']['user_id'],
         "products" : [{
             "product_id" : json.loads(EVENT_BASIS['body'])['product_id'],
             "quantity":3,
@@ -629,7 +629,7 @@ def test_PUT_addfield_ignore_quantity(dynamo_table, generate_inputs: dict[str,st
     EVENT_ADDFIELD1 = generate_inputs['valid_user1_prod1_addfield1']
     EVENT_ADDFIELD_QUANTITY = generate_inputs['valid_user1_prod1_addfield_quantity']
 
-    # POST valid, this creates for userId a cart entry
+    # POST valid, this creates for user_id a cart entry
     post_handler.handler(EVENT_BASIS, CONTEXT_DUMMY)
 
     # FIRST
@@ -639,7 +639,7 @@ def test_PUT_addfield_ignore_quantity(dynamo_table, generate_inputs: dict[str,st
     res_body = json.loads(res_put['body'])
     # Assert that the quantity is 1 in the returned object
     BODY_EXPECT = {
-        "userId" : EVENT_BASIS['pathParameters']['userId'],
+        "user_id" : EVENT_BASIS['pathParameters']['user_id'],
         "products" : [{
             "product_id" : json.loads(EVENT_BASIS['body'])['product_id'],
             "quantity":1
@@ -660,7 +660,7 @@ def test_PUT_addfield_ignore_quantity(dynamo_table, generate_inputs: dict[str,st
     res_body = json.loads(res_put['body'])
     # Assert that the quantity is 2 in the returned object
     BODY_EXPECT = {
-        "userId" : EVENT_BASIS['pathParameters']['userId'],
+        "user_id" : EVENT_BASIS['pathParameters']['user_id'],
         "products" : [{
             "product_id" : json.loads(EVENT_BASIS['body'])['product_id'],
             "quantity":2,
@@ -683,7 +683,7 @@ def test_PUT_addfield_ignore_quantity(dynamo_table, generate_inputs: dict[str,st
     res_body = json.loads(res_put['body'])
     # Assert that the quantity is 3 in the returned object
     BODY_EXPECT = {
-        "userId" : EVENT_BASIS['pathParameters']['userId'],
+        "user_id" : EVENT_BASIS['pathParameters']['user_id'],
         "products" : [{
             "product_id" : json.loads(EVENT_BASIS['body'])['product_id'],
             "quantity":3,
@@ -704,7 +704,7 @@ def test_PUT_addfield_ignore_quantity(dynamo_table, generate_inputs: dict[str,st
 # Test PUT_BATCH
 def test_PUT_BATCH_empty(dynamo_table, generate_inputs: dict[str,str]):
     """
-    PUT BATCH on empty cart should return 404, no userId found
+    PUT BATCH on empty cart should return 404, no user_id found
     PUT BATCH with empty products array should be accepted and write empty
     PUT BATCH again with identical body should yield same entry
     """
@@ -719,21 +719,21 @@ def test_PUT_BATCH_empty(dynamo_table, generate_inputs: dict[str,str]):
     })
 
     ###
-    # Assert PUT on empty table returns 404, userId not found
+    # Assert PUT on empty table returns 404, user_id not found
     assert put_batch_handler.handler(EVENT, CONTEXT_DUMMY)['statusCode'] == 404
 
     # FIRST
-    # POST valid, this creates for userId a cart entry
+    # POST valid, this creates for user_id a cart entry
     post_handler.handler(EVENT, CONTEXT_DUMMY)
 
-    # PUT BATCH valid, this creates an entry for the userId
+    # PUT BATCH valid, this creates an entry for the user_id
     res_put = put_batch_handler.handler(EVENT, CONTEXT_DUMMY)
     assert res_put['statusCode'] == 200
     res_body = json.loads(res_put['body'])
     
     # Assert that the upadted entry is exactly the body
     BODY_EXPECT = {
-        "userId" : EVENT['pathParameters']['userId'],
+        "user_id" : EVENT['pathParameters']['user_id'],
         "products" : []
     }
     assert res_body == BODY_EXPECT
@@ -757,7 +757,7 @@ def test_PUT_BATCH_empty(dynamo_table, generate_inputs: dict[str,str]):
 
 def test_PUT_BATCH_once(dynamo_table, generate_inputs: dict[str,str]):
     """
-    PUT BATCH on empty cart should return 404, no userId found
+    PUT BATCH on empty cart should return 404, no user_id found
     PUT BATCH once should update the database
     PUT BATCH again with identical body should yield same entry
     """
@@ -772,21 +772,21 @@ def test_PUT_BATCH_once(dynamo_table, generate_inputs: dict[str,str]):
     })
 
     ###
-    # Assert PUT on empty table returns 404, userId not found
+    # Assert PUT on empty table returns 404, user_id not found
     assert put_batch_handler.handler(EVENT, CONTEXT_DUMMY)['statusCode'] == 404
 
     # FIRST
-    # POST valid, this creates for userId a cart entry
+    # POST valid, this creates for user_id a cart entry
     post_handler.handler(EVENT, CONTEXT_DUMMY)
 
-    # PUT BATCH valid, this creates an entry for the userId
+    # PUT BATCH valid, this creates an entry for the user_id
     res_put = put_batch_handler.handler(EVENT, CONTEXT_DUMMY)
     assert res_put['statusCode'] == 200
     res_body = json.loads(res_put['body'])
     
     # Assert that the upadted entry is exactly the body
     BODY_EXPECT = {
-        "userId" : EVENT['pathParameters']['userId'],
+        "user_id" : EVENT['pathParameters']['user_id'],
         "products" : json.loads(EVENT['body'])['products']
     }
     assert res_body == BODY_EXPECT
@@ -831,18 +831,18 @@ def test_PUT_BATCH_multi(dynamo_table, generate_inputs: dict[str,str]):
         "products":[{"newfield1":"newvalue1", "newfield2":2222}]
     })
     
-    # POST valid, this creates for userId a cart entry
+    # POST valid, this creates for user_id a cart entry
     post_handler.handler(EVENT1, CONTEXT_DUMMY)
 
     # FIRST
-    # PUT BATCH valid, this creates an entry for the userId
+    # PUT BATCH valid, this creates an entry for the user_id
     res_put = put_batch_handler.handler(EVENT1, CONTEXT_DUMMY)
     assert res_put['statusCode'] == 200
     res_body = json.loads(res_put['body'])
     
     # Assert that the quantity is 1 in the returned object
     BODY_EXPECT = {
-        "userId" : EVENT1['pathParameters']['userId'],
+        "user_id" : EVENT1['pathParameters']['user_id'],
         "products" : json.loads(EVENT1['body'])['products']
     }
     assert res_body == BODY_EXPECT
@@ -853,14 +853,14 @@ def test_PUT_BATCH_multi(dynamo_table, generate_inputs: dict[str,str]):
     assert res_get_body == BODY_EXPECT
 
     # SECOND
-    # PUT BATCH valid, this creates an new entry for the userId
+    # PUT BATCH valid, this creates an new entry for the user_id
     res_put = put_batch_handler.handler(EVENT2, CONTEXT_DUMMY)
     assert res_put['statusCode'] == 200
     res_body = json.loads(res_put['body'])
     
     # Assert that the quantity is 1 in the returned object
     BODY_EXPECT = {
-        "userId" : EVENT2['pathParameters']['userId'],
+        "user_id" : EVENT2['pathParameters']['user_id'],
         "products" : json.loads(EVENT2['body'])['products']
     }
     assert res_body == BODY_EXPECT
@@ -889,18 +889,18 @@ def test_PUT_BATCH_addfield(dynamo_table, generate_inputs: dict[str,str]):
         "additionalList" : ["a",2,{"foo":42}]
     })
     
-    # POST valid, this creates for userId a cart entry
+    # POST valid, this creates for user_id a cart entry
     post_handler.handler(EVENT, CONTEXT_DUMMY)
 
     # FIRST
-    # PUT BATCH valid, this creates an entry for the userId
+    # PUT BATCH valid, this creates an entry for the user_id
     res_put = put_batch_handler.handler(EVENT, CONTEXT_DUMMY)
     assert res_put['statusCode'] == 200
     res_body = json.loads(res_put['body'])
     
     # Assert that the quantity is 1 in the returned object
     BODY_EXPECT = {
-        "userId" : EVENT['pathParameters']['userId'],
+        "user_id" : EVENT['pathParameters']['user_id'],
         "products" : json.loads(EVENT['body'])['products']
     }
     assert res_body == BODY_EXPECT
