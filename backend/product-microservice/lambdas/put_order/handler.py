@@ -68,7 +68,7 @@ def handler(event, context) -> list[dict]:
         400 if pathParameter user_id not found
         400 if body cannot be parsed
         400 if error updating item
-        404 if no order with order_id if found order entry for user_id
+        404 if no order item for user_id is found
     """
 
     PATH_PARAMETER_FILTER = "user_id" # Must match the name in resources_to_create.json in the path with {}
