@@ -83,7 +83,7 @@ const AccountDetails = () => {
       name: "fulladdress",
       label: "Fulladdress",
       autoComplete: "shipping address-level2",
-      value: authState.zip + " " + authState.city + " " + authState.county,
+      value: (authState.zip || "") + " " + (authState.city || "") + " " + (authState.county || ""),
       type: "address",
     },
   ];
