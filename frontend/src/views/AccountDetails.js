@@ -6,7 +6,7 @@ import { useState } from "react";
 import { updateUserAttributes } from "aws-amplify/auth";
 import { useDispatch } from "react-redux";
 import { setUserLoggedIn } from "../reducers/slices/authSlice";
-import CartItem from "../components/Cart/CartItem";
+import OrderItem from "../components/Account/OrderItem";
 import { useNavigate } from "react-router-dom";
 import {
   Button,
@@ -50,7 +50,7 @@ const AccountDetails = () => {
   const [editState, setEditState] = useState(authState);
   const dispatch = useDispatch();
   const orderState = useSelector((state) => state.orders);
-  const orderItems = useSelector((state) => state.orders.orders[0].products);
+  const orderItems = useSelector((state) => state.orders.orders);
   const navigate = useNavigate();
 
   const onCardInteract = (clickable, id) => {
@@ -148,7 +148,6 @@ const AccountDetails = () => {
     if (isEditing) {
       setEditState(authState);
     }
-    console.log("Order State:", orderItems);
   };
 
   const handleInputChange = (e) => {
@@ -249,16 +248,18 @@ const AccountDetails = () => {
         </>
       ) : (
         <>
-          <h3 className="accountH3">Account Details</h3>
+          <h3 className="accountH3">
+            Account Details
+            <IconButton onClick={handleEditToggle} size="tiny">
+              <EditIcon />
+            </IconButton>
+          </h3>
+
           {accountFields.map((field) => (
-            <p className="accountText">{field.value}</p>
+            <p className="textLeftBound">{field.value}</p>
           ))}
 
-          <IconButton onClick={handleEditToggle} size="large">
-            <EditIcon />
-          </IconButton>
-
-          <Divider />
+          <Divider sx={{ marginBottom: "10px", marginTop: "10px" }} />
 
           <Accordion>
             <AccordionSummary
@@ -271,13 +272,30 @@ const AccountDetails = () => {
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              {/* TODO Add Order History*/}
               {orderItems.map((item) => (
-                <CartItem
-                  key={item.product_id}
-                  item={item}
-                  onCardInteract={onCardInteract}
-                />
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <div className="textLeftBound">
+                      <p>
+                        Order {item.order_id} from {item.date}
+                      </p>
+                      <p>Status: {item.status}</p>
+                    </div>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    {item.products.map((product) => (
+                      <OrderItem
+                        key={product.product_id}
+                        item={product}
+                        onCardInteract={onCardInteract}
+                      />
+                    ))}
+                  </AccordionDetails>
+                </Accordion>
               ))}
             </AccordionDetails>
           </Accordion>
