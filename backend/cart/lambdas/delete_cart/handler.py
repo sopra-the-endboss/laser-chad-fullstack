@@ -1,6 +1,6 @@
 """
 delete_cart
-Handle call to decrease/delete a cart with a product_id and quantity for a given userId
+Handle call to decrease/delete a cart with a product_id and quantity for a given user_id
 """
 
 import boto3
@@ -51,11 +51,13 @@ def handler(event, context) -> list[dict]:
         headers : Default to allow CORS, otherwise not used
         body : JSON serialized new cart
 
-        400 if the handler can not complete
-        404 if there is no cart with userId
+    Returns error:
+        400 if table not found
+        400 if pathParameter not found or invalid
+        404 if there is no cart with user_id
     """
 
-    PATH_PARAMETER_FILTER = "userId" # Must match the name in resources_to_create.json in the path with {}
+    PATH_PARAMETER_FILTER = "user_id" # Must match the name in resources_to_create.json in the path with {}
     PRODUCT_DELETED = False
 
     print("delete_cart invoked")
@@ -90,7 +92,7 @@ def handler(event, context) -> list[dict]:
     ###
     # Check the body item to update
     print("Check body, should be a dict or something serializable into a dict")
-    print(event['body'])
+    pp.pprint(event['body'])
 
     # serialize json string into dict
     body = json.loads(event['body'], parse_float=Decimal)
@@ -99,7 +101,7 @@ def handler(event, context) -> list[dict]:
     product_id_to_delete = body['product_id']
 
     print("This is the value extracted from the products field in the body")
-    print(product_id_to_delete)
+    pp.pprint(product_id_to_delete)
     
 
     ###
@@ -112,7 +114,7 @@ def handler(event, context) -> list[dict]:
 
     # If None we did not found anything, return 404
     if not cart_found:
-        return return_error(f"No cart with userId {filter} found, return 404", 404)
+        return return_error(f"No cart with {PATH_PARAMETER_FILTER} {filter} found, return 404", 404)
 
     ###
     # Now either product_id_to_delete is in the cart, then we decrease quantity by 1
@@ -120,7 +122,7 @@ def handler(event, context) -> list[dict]:
     # OR if product_id_to_delete not in cart, we do nothing
     print("this is the cart_found")
     print(type(cart_found))
-    print(cart_found)
+    pp.pprint(cart_found)
 
     # Cart could be empty, then products is still a list
     products_found = cart_found['products']
@@ -128,9 +130,9 @@ def handler(event, context) -> list[dict]:
     product_quantitys_found = [p['quantity'] for p in products_found]
 
     print("this is the products found, and the product_ids and the quantitys")
-    print(products_found)
-    print(product_ids_found)
-    print(product_quantitys_found)
+    pp.pprint(products_found)
+    pp.pprint(product_ids_found)
+    pp.pprint(product_quantitys_found)
 
     # Assert that there are no duplicated product_id in a cart
     if len(product_ids_found) != len(set(product_ids_found)):

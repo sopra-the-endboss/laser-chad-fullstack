@@ -5,7 +5,7 @@
             "methods_for_that_path":[],
             "children_resources":[
                 {
-                    "path":"{userId}",
+                    "path":"{user_id}",
                     "methods_for_that_path":[
                         {"method":"GET","lambda_fct":"get_cart"},
                         {"method":"POST","lambda_fct":"post_cart"},

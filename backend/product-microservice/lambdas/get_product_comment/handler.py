@@ -30,11 +30,14 @@ def return_error(msg:str, code:int = 400) -> dict:
     error_return_dict['body']=json.dumps(msg)
     return error_return_dict
 
-def handler(event, context) -> list[dict]:
+def handler(event, context) -> dict:
     """
     Arguments:
         event : a dict which contains all data from the request to the API
         context : a LambdaContext object
+
+        The pathParameter can, but does not have to, contain a product_id which is used as a filter
+        If no product_id is given, all items are returned
     
     Returns:
         A valid HTTP Response dict which must contain the fields
@@ -48,7 +51,10 @@ def handler(event, context) -> list[dict]:
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default
         headers : Empty by default, dict otherwise
-        body : JSON serialized List object with all the items found. Each item is a dict
+        body : JSON serialized List object with all the items found. Can be empty, but not None
+            
+    Returns error:
+        400 if the dynamo tables are not found
     """
 
     PATH_PARAMETER_FILTER = "product_id" # Must match the name in resources_to_create.json in the path with {}
@@ -70,7 +76,7 @@ def handler(event, context) -> list[dict]:
     available_tables = dynamo_client.list_tables()
     available_tables = available_tables['TableNames']
     if not TableName in available_tables:
-        return_error(f"Table {TableName} not found in the available tables, abort", 400)
+        return return_error(f"Table {TableName} not found in the available tables, abort", 400)
         
     print("Creating dynamo table object ...")
     dynamo_resource = boto3.resource("dynamodb")
@@ -89,6 +95,8 @@ def handler(event, context) -> list[dict]:
     print(f"Items found after scanning table:")
     pp.pprint(found_items_list)
 
+    # found_items_list is a list of dicts, possibly empty
+
     # Now check if we have a partParameter id which is used as a filter
     # If we have a non empty dict for event['pathParameters'] we want to apply a filter to all items found
     print(f"Filtering items with {PATH_PARAMETER_FILTER}")
@@ -99,11 +107,13 @@ def handler(event, context) -> list[dict]:
             found_items_filtered = [item for item in found_items_list if item[PATH_PARAMETER_FILTER] == path_parameter_to_match]
             found_items_list = found_items_filtered
             print(f"Items after filtering")
-            print(found_items_list)
+            pp.pprint(found_items_list)
+
+    # No matter whether found_items_list is empty, has one element or multiple, we return the full list
 
     print("Return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = 200
-    HTTP_RESPONSE_DICT['body'] = json.dumps(found_items_list[0]) if len(found_items_list) == 1 else (json.dumps({}) if len(found_items_list) == 0 else json.dumps(found_items_list))
+    HTTP_RESPONSE_DICT['body'] = json.dumps(found_items_list)
 
     print(f"DEBUG: This is the HTTP response we are sending back")
     pp.pprint(HTTP_RESPONSE_DICT)
