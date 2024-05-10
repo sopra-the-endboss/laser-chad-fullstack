@@ -68,7 +68,7 @@ def handler(event, context) -> list[dict]:
         400 if pathParameter user_id not found
         400 if body cannot be parsed
         400 if error updating item
-        404 if no order if found for user_id
+        404 if no order with order_id if found order entry for user_id
     """
 
     PATH_PARAMETER_FILTER = "user_id" # Must match the name in resources_to_create.json in the path with {}
@@ -130,7 +130,7 @@ def handler(event, context) -> list[dict]:
 
     # If None we did not find anything, return 404
     if not order_object_found:
-        return return_error(f"No orders with user_id {filter} found, return 404", 404)
+        return return_error(f"No orders with {PATH_PARAMETER_FILTER} {filter} found, return 404", 404)
 
     for i, order in enumerate(order_object_found['orders']):
         if order['order_id'] == order_id:
