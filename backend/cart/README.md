@@ -1,7 +1,7 @@
 # cart
 
 This is the backendservice that implements the shopping cart logic.  
-A cart consists of a unique `userId` which identifies the "owner" of the cart and a set of products which are currently in the cart.  
+A cart consists of a unique `user_id` which identifies the "owner" of the cart and a set of products which are currently in the cart.  
 The products is an array of objects `product_id [str]` : `quantity [number]`
 
 ## API

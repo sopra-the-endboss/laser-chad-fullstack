@@ -1,6 +1,6 @@
 """
 delete_cart
-Handle call to decrease/delete a cart with a product_id and quantity for a given userId
+Handle call to decrease/delete a cart with a product_id and quantity for a given user_id
 """
 
 import boto3
@@ -54,10 +54,10 @@ def handler(event, context) -> list[dict]:
     Returns error:
         400 if table not found
         400 if pathParameter not found or invalid
-        404 if there is no cart with userId
+        404 if there is no cart with user_id
     """
 
-    PATH_PARAMETER_FILTER = "userId" # Must match the name in resources_to_create.json in the path with {}
+    PATH_PARAMETER_FILTER = "user_id" # Must match the name in resources_to_create.json in the path with {}
     PRODUCT_DELETED = False
 
     print("delete_cart invoked")
@@ -114,7 +114,7 @@ def handler(event, context) -> list[dict]:
 
     # If None we did not found anything, return 404
     if not cart_found:
-        return return_error(f"No cart with userId {filter} found, return 404", 404)
+        return return_error(f"No cart with {PATH_PARAMETER_FILTER} {filter} found, return 404", 404)
 
     ###
     # Now either product_id_to_delete is in the cart, then we decrease quantity by 1

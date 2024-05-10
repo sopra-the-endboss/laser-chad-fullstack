@@ -1,6 +1,6 @@
 """
 delete_product
-Handle call to decrease/delete a product with a product_id and quantity for a given userId
+Handle call to decrease/delete a product with a product_id and quantity for a given user_id
 """
 
 from decimal import Decimal

@@ -56,11 +56,11 @@ def handler(event, context) -> list[dict]:
 
     Returns error:
         400 if the table does not exist or the pathParameter is not present in the event or invalid
-        404 if there is no cart with userId
+        404 if there is no cart with user_id
 
     """
 
-    PATH_PARAMETER_FILTER = "userId" # Must match the name in resources_to_create.json in the path with {}
+    PATH_PARAMETER_FILTER = "user_id" # Must match the name in resources_to_create.json in the path with {}
     
     print("put_cart_batch invoked")
 
@@ -116,7 +116,7 @@ def handler(event, context) -> list[dict]:
 
     # If None we did not find anything, return 404
     if not cart_found:
-        return return_error(f"No cart with userId {filter} found, return 404", 404)
+        return return_error(f"No cart with {PATH_PARAMETER_FILTER} {filter} found, return 404", 404)
     
     # If we found an existing cart, fetch it to print it
     # pop returns the old products

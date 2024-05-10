@@ -1,6 +1,6 @@
 """
 get_cart
-Handle call to get a cart with a given userId
+Handle call to get a cart with a given user_id
 """
 
 import boto3
@@ -50,7 +50,7 @@ def handler(event, context) -> list[dict]:
         headers : Default to allow CORS, otherwise not used
         body : JSON serialized dict object with the cart. Cannot be empty
             A cart consists of the following fields:
-            - userId : str
+            - user_id : str
             - products : list[dict]
                 - product_id : str
                 - quantity : int
@@ -60,10 +60,10 @@ def handler(event, context) -> list[dict]:
     
     Returns error:
         400 if no table is found
-        404 if there is no cart with userId
+        404 if there is no cart with user_id
     """
 
-    PATH_PARAMETER_FILTER = "userId" # Must match the name in resources_to_create.json in the path with {}
+    PATH_PARAMETER_FILTER = "user_id" # Must match the name in resources_to_create.json in the path with {}
     
     print("get_cart invoked")
 
@@ -101,7 +101,7 @@ def handler(event, context) -> list[dict]:
 
     # If None we did not found anything, return 404
     if not cart_found:
-        return return_error(f"No cart with userId {filter} found", 404)
+        return return_error(f"No cart with user_id {filter} found", 404)
 
     print("Success, return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = 200

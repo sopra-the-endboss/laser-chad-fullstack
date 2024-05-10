@@ -1,6 +1,6 @@
 """
 put_cart
-Handle call to update a cart with a product_id and quantity for a given userId
+Handle call to update a cart with a product_id and quantity for a given user_id
 TODO: Allow for arbitrary additional fields with product_id
 """
 
@@ -60,12 +60,12 @@ def handler(event, context) -> list[dict]:
     Returns error:
         400 if the table is not found
         400 if the pathParameter is not found in the event
-        404 if there is no cart with userId
+        404 if there is no cart with user_id
         500 if there are duplicates in the carts products found
         500 if there are non-positive quantities in the carts products found
     """
 
-    PATH_PARAMETER_FILTER = "userId" # Must match the name in resources_to_create.json in the path with {}
+    PATH_PARAMETER_FILTER = "user_id" # Must match the name in resources_to_create.json in the path with {}
     
     print("put_cart invoked")
 
@@ -127,7 +127,7 @@ def handler(event, context) -> list[dict]:
 
     # If None we did not find anything, return 404
     if not cart_found:
-        return return_error(f"No cart with userId {filter} found, return 404", 404)
+        return return_error(f"No cart with user_id {filter} found, return 404", 404)
 
     ###
     # Now either product_id_to_update is in the cart, then we increase quantity by 1
