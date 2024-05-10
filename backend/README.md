@@ -21,9 +21,6 @@ Those two scripts take care of the deployment of the specified resources (Dynamo
 ## Default Lambda handler for OPTIONS methods
 During deployment we ran into CORS errors which blocked calls from the frontend to the backend. To enable CORS with API Gateway, each route must implement an OPTIONS method which sends the appropirate headers in a prefetch. (https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors.html). To reduce code duplication, the service [options_lambda_function](./options_lambda_function/) deploys a lambda handler which simply returns a 200 message and the appropirate CORS headers. This function is deployed once and used by all other microservices for each integrated route.
 
-## Datamodel (open for adjustment)
-![Datamodel](./microservices_components.svg?raw=true "Datamodel")
-
 ## Tests
 The backend tests are run in a CI pipeline with Github Actions. See the [github actions folder](../.github/workflows/code_quality.yml) for the concrete command and workflow.  
 If you want to run the test manually and generate an inline coverage report, run this from a terminal in the root directory:
