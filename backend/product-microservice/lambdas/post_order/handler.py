@@ -1,6 +1,5 @@
 """
-Handle call which writes an item to the template DB
-TODO: Error handling (either let handler function fail, or wrap?), duplicates?
+Handle call which creates an order in the database and deletes the cart
 The handler has the name of the table hardcoded, this is determined by the config file config/db_schema.json upon deployment
 """
 import os
@@ -8,8 +7,6 @@ import boto3
 import simplejson as json
 from decimal import Decimal
 from botocore.exceptions import ClientError
-
-# TODO: Remove later
 from pprint import PrettyPrinter
 import random
 import string
@@ -42,6 +39,9 @@ def handler(event: dict, context) -> dict:
     Arguments:
         event : a dict which contains all data from the request to the API
         context : a LambdaContext object
+
+        The body of the event is empty
+
     
     Returns:
         A valid HTTP Response dict which must contain the fields
@@ -55,21 +55,27 @@ def handler(event: dict, context) -> dict:
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default
         headers : Empty by default, dict otherwise
-        body : Empty, this function does not return anything except the statusCode
+        body : A JSON serializable object containing
+            - order_id:str, a UUID
+            - status:str
+            - products:array[str]
+                The products array corresponds to the products array of the cart-table
+
+    Raises:
+        400 if table not found
+        400 if pathParameter user_id not found
+        404 if no cart is found for the user_id
     """
 
+    PATH_PARAMETER = "user_id"
     
-    
-    print("post_lambda invoked")
+    print("post_order invoked")
 
     print("DEBUG: This is the context")
     pp.pprint(context)
 
     print("DEBUG: This is the event")
     pp.pprint(event)
-    
-    print("DEBUG: This is the event raw")
-    print(event)
     
     TableNameCart = "cart-table"
 
@@ -86,15 +92,15 @@ def handler(event: dict, context) -> dict:
     dynamo_resource = boto3.resource("dynamodb")
     dynamo_table_cart = dynamo_resource.Table(TableNameCart)
 
-    print(f"Assure pathParameter user_id is present in event")
-    if not "user_id" in event['pathParameters']:
-        return return_error(f"pathParameter user_id not found in event, abort")
+    print(f"Assure pathParameter {PATH_PARAMETER} is present in event")
+    if not PATH_PARAMETER in event['pathParameters']:
+        return return_error(f"pathParameter {PATH_PARAMETER} not found in event, abort")
 
-    filter = event['pathParameters']["user_id"]
+    filter = event['pathParameters'][PATH_PARAMETER]
     print(f"This is the filter: {filter}")
     
     # There can only be one item because there is only one HASH key in the DB, the result is either a dict or not present at all
-    response_get_item = dynamo_table_cart.get_item(Key = {'userId':filter})
+    response_get_item = dynamo_table_cart.get_item(Key = {PATH_PARAMETER:filter})
     
     # Check if we found a result, otherwise retrieve empty list
     cart_found = response_get_item.get("Item", None)
@@ -114,6 +120,13 @@ def handler(event: dict, context) -> dict:
 
     print(f"Using table {TableNameOrder}")
 
+    print("Check if table is available ...")
+    dynamo_client = boto3.client("dynamodb")
+    available_tables = dynamo_client.list_tables()
+    available_tables = available_tables['TableNames']
+    if not TableNameOrder in available_tables:
+        return return_error(f"Table {TableNameOrder} not found in the available tables, abort")
+
     print("Creating dynamo table object ...")
 
     dynamo_table_order = dynamo_resource.Table(TableNameOrder)
@@ -129,7 +142,7 @@ def handler(event: dict, context) -> dict:
 
     # Try to get the item from the table
     try:
-        response_get = dynamo_table_order.get_item(Key={'user_id': filter})
+        response_get = dynamo_table_order.get_item(Key={PATH_PARAMETER: filter})
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
@@ -152,9 +165,9 @@ def handler(event: dict, context) -> dict:
     print("Delete the cart")
 
     # Delete the products from dynamo_table_cart
-    response_get_item = dynamo_table_cart.get_item(Key = {'userId':filter})
+    response_get_item = dynamo_table_cart.get_item(Key = {PATH_PARAMETER:filter})
     cart_found = response_get_item.get("Item", None)
-    print("DEBUG: This is the cart found")
+    print("DEBUG: This is the cart found we want to delete")
     pp.pprint(cart_found)
     cart_found['products'] = []
     _ = dynamo_table_cart.put_item(
@@ -163,8 +176,8 @@ def handler(event: dict, context) -> dict:
     )
 
     print("Return HTTP object")
-    HTTP_RESPONSE_DICT['statusCode'] = '200'
-    HTTP_RESPONSE_DICT['body'] =  new_order
+    HTTP_RESPONSE_DICT['statusCode'] = 200
+    HTTP_RESPONSE_DICT['body'] =  json.dumps(new_order)
 
     print(f"DEBUG: This is the HTTP response we are sending back")
     pp.pprint(HTTP_RESPONSE_DICT)

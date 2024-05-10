@@ -1,5 +1,4 @@
 """
-put_order
 Handle call to update a order with a status given a oder_id and status
 """
 
@@ -36,6 +35,12 @@ def handler(event, context) -> list[dict]:
     Arguments:
         event : a dict which contains all data from the request to the API
         context : a LambdaContext object
+
+        The body of the event is an object which must contain:
+            - order_id:str
+            - status:str
+
+        NOTE: If the order_id is not found in the orders array, the function will return 200, and no status is updated
     
     Returns:
         A valid HTTP Response dict which must contain the fields
@@ -49,9 +54,21 @@ def handler(event, context) -> list[dict]:
         statusCode : 200 if success, 4XX otherwise
         isBase64Encoded : False by default
         headers : Default to allow CORS, otherwise not used
+        body : JSON serialized string, object containing
+            - user_id:str
+            - orders:array[order]
+                An order is a dict with the following required keys:
+                    - order_id:str
+                    - status:str
+                    - products:array[str]
+                    The products array can be empty
 
-        400 if the handler can not complete
-        404 if there is no orders with userId
+    Raises:
+        400 if table not found
+        400 if pathParameter user_id not found
+        400 if body cannot be parsed
+        400 if error updating item
+        404 if no order if found for user_id
     """
 
     PATH_PARAMETER_FILTER = "user_id" # Must match the name in resources_to_create.json in the path with {}
@@ -88,15 +105,22 @@ def handler(event, context) -> list[dict]:
     ###
     # Check the body item to update
     print("Check body, should be a dict or something serializable into a dict")
-    print(event['body'])
+    pp.pprint(event['body'])
 
-    # serialize json string into dict
-    body = json.loads(event['body'], parse_float=Decimal)
+    # If we cannot parse the body, we throw a 400 error
+    print("Parse body")
+    try:
+        body = json.loads(event['body'], parse_float=Decimal)
+        print("DEBUG: This is the body")
+        pp.pprint(body)
+    except json.decoder.JSONDecodeError as e:
+        print("JSONDecodeError IN PARSING BODY")
+        return return_error("Error parsing body", 400)
 
+    # Given the request model we can safely assume that those two fields are present
     order_id = body['order_id']
     new_status = body['status']
     
-
     # Now we have to check if there is a order object for filter
     # There can only be one item because there is only one HASH key in the DB, the result is either a dict or not present at all
     response_get_item = dynamo_table.get_item(Key = {PATH_PARAMETER_FILTER:filter})
@@ -119,7 +143,7 @@ def handler(event, context) -> list[dict]:
             Item = order_object_found
         )
     except Exception as e:
-        return return_error(f"Error updating item: {str(e)}")
+        return return_error(f"Error updating item: {str(e)}", 400)
 
     print("Success, return HTTP object")
     HTTP_RESPONSE_DICT['statusCode'] = 200
