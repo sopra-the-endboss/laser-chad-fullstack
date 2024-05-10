@@ -1,60 +1,64 @@
 import "./App.css";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Provider } from "react-redux";
+
+// Views
 import ProductOverview from "./views/ProductOverview";
+import { ProductDetail } from "./views/ProductDetail";
+import Account from "./views/Account";
+import { Categories } from "./views/Categories";
+import MyShop from "./views/MyShop";
+import { Playground } from "./views/Playground";
+import Checkout from "./views/Checkout";
+
+// Components
 import Navigation from "./components/Navigation";
-import {Provider} from "react-redux";
+import SellerGuard from "./components/Guards/SellerGuard";
+
+// Utils
 import store from "./reducers/store";
 import useAuth from "./hooks/useAuth";
-import Account from "./views/Account";
-import {useEffect, useState} from "react";
-import {ProductDetail} from "./views/ProductDetail";
-import {Container, Grid} from "@mui/material";
-import {Categories} from "./views/Categories";
-import MyShop from "./views/MyShop";
-import SellerGuard from "./components/Guards/SellerGuard";
-import {Playground} from "./views/Playground";
-import {SnackbarProvider} from "notistack";
-import {useFetchAllProducts, useFetchAPIGURL} from "./utils/apiCalls";
+import { Container, Grid } from "@mui/material";
+import { SnackbarProvider } from "notistack";
+import { useFetchAllProducts, useFetchAPIGURL } from "./utils/apiCalls";
 
 function App() {
-    const [data, setData] = useState([]);
-    const [isSearchQuerySubmitted, searchQuerySubmitted] = useState(false);
-    const [categoryFilter, setCategoryFilter] = useState("");
-    const [AllProductsName, setAllProductsName] = useState([]);
-    const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [isSearchQuerySubmitted, searchQuerySubmitted] = useState(false);
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [AllProductsName, setAllProductsName] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    // fetching functions modularized
-    const fetchAPIGURL = useFetchAPIGURL();
-    const fetchAllProducts = useFetchAllProducts(setAllProductsName, setLoading);
-    const [apiGURLFetched, setApiGURLFetched] = useState(false);
+  // fetching functions modularized
+  const fetchAPIGURL = useFetchAPIGURL();
+  const fetchAllProducts = useFetchAllProducts(setAllProductsName, setLoading);
+  const [apiGURLFetched, setApiGURLFetched] = useState(false);
+  const [refreshProducts, setRefreshProducts] = useState(false);
+  useAuth();
 
-    useAuth();
+  useEffect(() => {
+    // filter data for category
+    if (categoryFilter)
+      setData(
+        AllProductsName.filter((element) => element.category === categoryFilter)
+      );
+    else setData(AllProductsName);
+  }, [categoryFilter, AllProductsName]);
 
-    useEffect(() => {
-        // filter data for category
-        if (categoryFilter)
-            setData(
-                AllProductsName.filter(
-                    (element) => element.category === categoryFilter
-                )
-            );
-        else
-            setData(AllProductsName);
-    }, [categoryFilter, AllProductsName]);
+  useEffect(() => {
+    fetchAPIGURL().then(() => {
+      setApiGURLFetched(true);
+    });
+  }, [fetchAPIGURL]);
 
-    useEffect(() => {
-        fetchAPIGURL().then(() => {
-            setApiGURLFetched(true);
-        });
-    }, [fetchAPIGURL]);
-
-    useEffect(() => {
-        if (apiGURLFetched) {
-            fetchAllProducts();
-        }
-        // adding fetchAllProducts into the dependencies leads to infinite calls. we dont do that here
-        // eslint-disable-next-line
-    }, [setAllProductsName, setLoading, apiGURLFetched]);
+  useEffect(() => {
+    if (apiGURLFetched) {
+      fetchAllProducts();
+    }
+    // adding fetchAllProducts into the dependencies leads to infinite calls. we dont do that here
+    // eslint-disable-next-line
+  }, [setAllProductsName, setLoading, apiGURLFetched, refreshProducts]);
 
   return (
     <Provider store={store}>
@@ -103,10 +107,14 @@ function App() {
                       path="/my-shop"
                       element={
                         <SellerGuard>
-                          <MyShop />
+                          <MyShop
+                            setRefresh={setRefreshProducts}
+                            refresh={refreshProducts}
+                          />
                         </SellerGuard>
                       }
                     />
+                    <Route path="/checkout" element={<Checkout />} />
                   </Routes>
                 </Grid>
               </Container>

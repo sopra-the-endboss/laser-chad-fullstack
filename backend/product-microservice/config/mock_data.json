@@ -1,852 +1,408 @@
 {
     "product-table": [
-        {
-            "product_id": "1",
-            "product": "Apple iPhone 15 Pro",
-            "highlighted": true,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 57.46,
-            "formatted_text": "Sale male",
-            "category": "Smartphone",
-            "brand": "Apple",
-            "seller_id": "76e9f91e-09c9-49f8-8e21-d463261ec770"
-        },
-        {
-            "product_id": "2",
-            "product": "Apple MacBook Air",
-            "highlighted": true,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 775.82,
-            "formatted_text": "Sale",
-            "category": "Laptop",
-            "brand": "Apple",
-            "seller_id": "fTTlzlcwce"
-        },
+
         {
             "product_id": "3",
-            "product": "Samsung Galaxy S9",
-            "highlighted": true,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 482.89,
-            "formatted_text": "",
-            "category": "Smartphone",
-            "brand": "Samsung",
-            "seller_id": "ULsONtVOFj"
-        },
-        {
-            "product_id": "4",
-            "product": "Lenovo Thinkpad",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 245.99,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Lenovo",
-            "seller_id": "pyNaydpwLF"
-        },
-        {
-            "product_id": "5",
-            "product": "Dell XPS 15",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 17.32,
-            "formatted_text": "Sale",
-            "category": "Laptop",
-            "brand": "Dell",
-            "seller_id": "pmvXLvhfcd"
-        },
-        {
-            "product_id": "6",
-            "product": "Microsoft Surface Pro 7",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 15.89,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Microsoft",
-            "seller_id": "RWrAyWLxEH"
-        },
-        {
-            "product_id": "7",
-            "product": "Google Pixelbook Go",
-            "highlighted": true,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 364.66,
-            "formatted_text": "",
-            "category": "Smartphone",
-            "brand": "Google",
-            "seller_id": "HGRmjRRKnu"
-        },
-        {
-            "product_id": "8",
-            "product": "Sony WH-1000XM4 Headphones",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 155.12,
-            "formatted_text": "",
-            "category": "Accessories",
-            "brand": "Sony",
-            "seller_id": "EuvkWKCslq"
-        },
-        {
-            "product_id": "9",
-            "product": "Bose QuietComfort 35 II",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 307.63,
-            "formatted_text": "",
-            "category": "Audio",
-            "brand": "Bose",
-            "seller_id": "ceeWiUHTAL"
-        },
-        {
-            "product_id": "10",
-            "product": "Nvidia GeForce RTX 3080",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 790.1,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Nvidia",
-            "seller_id": "lMvRBXFnag"
-        },
-        {
-            "product_id": "11",
-            "product": "AMD Ryzen 9 5900X",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 138.88,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "AMD",
-            "seller_id": "XoaUBQtIMg"
-        },
-        {
-            "product_id": "12",
-            "product": "Canon EOS R5 Camera",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 297.81,
-            "formatted_text": "",
-            "category": "Photo",
-            "brand": "Canon",
-            "seller_id": "fiEwjXYsNM"
-        },
-        {
-            "product_id": "13",
-            "product": "GoPro HERO9 Black",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 175.1,
-            "formatted_text": "",
-            "category": "Photo",
-            "brand": "GoPro",
-            "seller_id": "rQVoNeEzKy"
-        },
-        {
-            "product_id": "14",
-            "product": "DJI Mavic Air 2 Drone",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 594.87,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "DJI",
-            "seller_id": "tQEmygMOMJ"
-        },
-        {
-            "product_id": "15",
-            "product": "Apple iPad Pro",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 203.83,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Apple",
-            "seller_id": "FYOeXMtoEv"
-        },
-        {
-            "product_id": "16",
-            "product": "Samsung Galaxy Tab S7",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 420.56,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Samsung",
-            "seller_id": "biCAlSapuD"
-        },
-        {
-            "product_id": "17",
-            "product": "Amazon Kindle Paperwhite",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 507.26,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Amazon",
-            "seller_id": "hqAzMBWehV"
-        },
-        {
-            "product_id": "18",
-            "product": "Fitbit Charge 4",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 725.48,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Fitbit",
-            "seller_id": "wlywDbpqry"
-        },
-        {
-            "product_id": "19",
-            "product": "Garmin Forerunner 945",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 426.79,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Garmin",
-            "seller_id": "OmqoNxFrcs"
-        },
-        {
-            "product_id": "20",
-            "product": "Philips Hue Smart Bulbs",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 792.7,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Philips",
-            "seller_id": "AxyrvSmmdD"
-        },
-        {
-            "product_id": "21",
-            "product": "Sonos One Speaker",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 521.98,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Sonos",
-            "seller_id": "OUOIKOqrJi"
-        },
-        {
-            "product_id": "22",
-            "product": "Google Nest Hub Max",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 925.82,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Google",
-            "seller_id": "LTQUUVcxgA"
-        },
-        {
-            "product_id": "23",
-            "product": "Ring Video Doorbell 3",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 361.24,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Ring",
-            "seller_id": "PgKMMLVXaU"
-        },
-        {
-            "product_id": "24",
-            "product": "Apple Watch Series 6",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 844.69,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Apple",
-            "seller_id": "FwvJXuEtpP"
-        },
-        {
-            "product_id": "25",
-            "product": "Oculus Quest 2 VR Headset",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 973.19,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Oculus",
-            "seller_id": "gxyhwqlwKY"
-        },
-        {
-            "product_id": "26",
-            "product": "Xiaomi Mi 11 Ultra",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 653.27,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Xiaomi",
-            "seller_id": "wfncAIBCSr"
-        },
-        {
-            "product_id": "27",
-            "product": "Logitech MX Master 3 Mouse",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 684.14,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Logitech",
-            "seller_id": "fDvfCVcWoU"
-        },
-        {
-            "product_id": "28",
-            "product": "Razer Blade 15 Gaming Laptop",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 477.35,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Razer",
-            "seller_id": "AbHemwFHth"
-        },
-        {
-            "product_id": "29",
-            "product": "Anker PowerCore 10000 Portable Charger",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 23.81,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Anker",
-            "seller_id": "XPlwWFfwBK"
-        },
-        {
-            "product_id": "30",
-            "product": "Apple AirPods Pro",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 463.38,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Apple",
-            "seller_id": "FiLVGWfLuw"
-        },
-        {
-            "product_id": "31",
-            "product": "Samsung QLED 4K Smart TV",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 342.0,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Samsung",
-            "seller_id": "kKDUmOAAyl"
-        },
-        {
-            "product_id": "32",
-            "product": "LG OLED CX TV",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 475.47,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "LG",
-            "seller_id": "XHXQLFMcBv"
-        },
-        {
-            "product_id": "33",
-            "product": "Asus ROG Strix GeForce RTX 3090",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 681.01,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Asus",
-            "seller_id": "czOkLFXjxH"
-        },
-        {
-            "product_id": "34",
-            "product": "HyperX Cloud II Gaming Headset",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 201.77,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "HyperX",
-            "seller_id": "xYxaMKTWcV"
-        },
-        {
-            "product_id": "35",
-            "product": "Yamaha P-45 Digital Piano",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 163.76,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Yamaha",
-            "seller_id": "veGFFkKXRz"
-        },
-        {
-            "product_id": "36",
-            "product": "Wacom Intuos Graphic Drawing Tablet",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 746.75,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Wacom",
-            "seller_id": "BDtfUxjACB"
-        },
-        {
-            "product_id": "37",
-            "product": "Blue Yeti USB Microphone",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 762.13,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Blue",
-            "seller_id": "GUBTMcGpsg"
-        },
-        {
-            "product_id": "38",
-            "product": "Elgato Stream Deck",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 37.94,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Elgato",
-            "seller_id": "OcAiaDwUED"
-        },
-        {
-            "product_id": "39",
-            "product": "Netgear Nighthawk AX12 Router",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 843.69,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Netgear",
-            "seller_id": "QQWVGcLzkm"
-        },
-        {
-            "product_id": "40",
-            "product": "TP-Link Deco Mesh WiFi System",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 218.02,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "TP-Link",
-            "seller_id": "FIjTuxxEvJ"
-        },
-        {
-            "product_id": "41",
-            "product": "Eero 6 Mesh WiFi System",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 543.35,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Eero",
-            "seller_id": "FWXRobZoLj"
-        },
-        {
-            "product_id": "42",
             "product": "Corsair K95 RGB Mechanical Keyboard",
             "highlighted": false,
             "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+                "https://www.digitec.ch/im/productimages/5/3/1/5/3/6/2/7/6/9/6/2/3/8/5/0/4/7/7d47bcbb-abc8-414e-af2d-7192b9b3aa54.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/4/1/8/1/6/1/8/6/9/9/6/7/2/8/2/5/6/4/2/80f93d2e-5eb1-4247-a7ad-069c180ec686.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/7/9/1/9/9/3/7/0/9/6/4/9/9/5/5/0/6/8/2/496712c5-3fae-44de-aa06-646b2d04d1e2.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"            
             ],
             "price": 888.71,
             "formatted_text": "",
-            "category": "Tech",
+            "category": "Accessories",
             "brand": "Corsair",
-            "seller_id": "uOzShkWmVY"
+            "seller_id": "uOzShkWmVY",
+            "warranty": "1 year",
+            "availability": "In stock",
+            "color": "Midnight Green",
+            "Subheader": "Cherry MX Speed, RGB, USB passthrough",
+            "technical_details": {
+                "Switches": "Cherry MX Speed",
+                "Backlight": "RGB",
+                "Connectivity": "Wired",
+                "Features": "USB passthrough",
+                "Weight": "1.32kg"
+            }
         },
         {
-            "product_id": "43",
+            "product_id": "4",
             "product": "SteelSeries Arctis Pro Wireless Headset",
             "highlighted": false,
             "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
+                "https://www.digitec.ch/im/productimages/8/9/3/3/5/7/8/9/3/8/6/3/8/5/9/2/3/9/4/310b2ae3-6e3b-4701-8deb-4f472bbfdd24_cropped.jpg?impolicy=ProductTileImage&resizeWidth=920&resizeHeight=1984&cropWidth=920&cropHeight=1984&quality=high",
+                "https://www.digitec.ch/im/productimages/6/6/4/1/6/8/3/2/2/6/9/2/1/1/8/1/7/8/3/e2138e65-ae8b-449c-81de-489b0c3e9103_cropped.jpg?impolicy=ProductTileImage&resizeWidth=992&resizeHeight=827&cropWidth=992&cropHeight=827&quality=high",
+                "https://www.digitec.ch/im/productimages/2/2/5/5/7/9/9/6/5/3/0/0/2/3/2/5/9/7/5ac8969e-8e30-4176-8b36-97a55585f05d_cropped.jpg?impolicy=ProductTileImage&resizeWidth=599&resizeHeight=700&cropWidth=599&cropHeight=700&quality=high"
+                        ],
             "price": 289.13,
             "formatted_text": "",
-            "category": "Tech",
+            "category": "Accessories",
             "brand": "SteelSeries",
-            "seller_id": "ytPiDifzlc"
+            "seller_id": "ytPiDifzlc",
+            "warranty": "1 year",
+            "availability": "In stock",
+            "color": "Midnight Green",
+            "Subheader": "Wireless, DTS Headphone:X v2.0, 40ft range",
+            "technical_details": {
+                "Connectivity": "Wireless",
+                "Surround_sound": "DTS Headphone:X v2.0",
+                "Range": "40ft",
+                "Battery": "10 hours",
+                "Weight": "357g"
+            }
         },
         {
-            "product_id": "44",
-            "product": "Roku Streaming Stick+",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 220.65,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Roku",
-            "seller_id": "BoiflmrcHG"
-        },
-        {
-            "product_id": "45",
-            "product": "Amazon Echo Dot (4th Gen)",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 599.84,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Amazon",
-            "seller_id": "YrcvBiIFeb"
-        },
-        {
-            "product_id": "46",
-            "product": "Microsoft Xbox Series X",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 748.31,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Microsoft",
-            "seller_id": "lbWdQTXOyG"
-        },
-        {
-            "product_id": "47",
-            "product": "Sony PlayStation 5",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 936.88,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Sony",
-            "seller_id": "BeMoUYWLqV"
-        },
-        {
-            "product_id": "48",
+            "product_id": "5",
             "product": "Nintendo Switch",
             "highlighted": false,
             "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+                "https://www.digitec.ch/im/productimages/8/0/8/2/3/5/7/6/5/5/3/3/0/4/2/2/0/2/6/16027572-24f0-4c06-b59e-e7a6bb3c0a09_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/2/4/2/9/6/9/9/2/3/9/6/0/7/8/6/3/2/3/1/81fc176d-c7e0-4480-aea8-2b2aaa91ff63_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/1/5/5/4/2/8/5/3/2/4/3/1/6/0/3/1/1/5/3/417fc4f0-d11f-407e-990a-ea5761c80620_cropped.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"            
             ],
             "price": 942.78,
             "formatted_text": "",
-            "category": "Tech",
+            "category": "Switch",
             "brand": "Nintendo",
-            "seller_id": "sxIcdAnPfA"
+            "seller_id": "sxIcdAnPfA",
+            "warranty": "2 years",
+            "availability": "In stock",
+            "color": "Midnight Green",
+            "Subheader": "32GB, Neon Blue/Red, 6.2-inch touchscreen",
+            "technical_details": {
+                "Storage": "32GB",
+                "Color": "Neon Blue/Red",
+                "Screen": "6.2-inch touchscreen",
+                "Battery": "4310mAh",
+                "Weight": "297g"
+            }
         },
         {
-            "product_id": "49",
-            "product": "Apple Mac Mini M1",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 27.28,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Apple",
-            "seller_id": "KwAIUpGoQE"
-        },
-        {
-            "product_id": "50",
+            "product_id": "6",
             "product": "Samsung T5 Portable SSD",
             "highlighted": false,
             "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+                "https://www.digitec.ch/im/productimages/1/7/8/8/4/0/5/6/5/2/5/9/0/6/4/5/7/5/5/52eba15d-7158-4be5-9f4a-c5a6cb250ff9.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/6/8/9/3/6/7/0/7/0/1/5/1/5/7/6/5/3/3/8/bafe7db3-e831-4dbd-9aab-59974555a7eb.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/3/8/2/0/2/0/3/7/1/5/7/3/6/2/1/1/4/1/8/e86efd12-3d3e-4503-b649-08e9eecc1b56.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"            
             ],
             "price": 715.93,
             "formatted_text": "",
             "category": "Tech",
             "brand": "Samsung",
-            "seller_id": "FGrAJJjANh"
+            "seller_id": "FGrAJJjANh",
+            "warrabty": "2 years",
+            "availability": "In stock",
+            "warranty": "1 year",
+            "color": "Midnight Green",
+            "Subheader": "1TB, USB 3.1, 540MB/s read, 515MB/s write",
+            "technical_details": {
+                "Capacity": "1TB",
+                "Interface": "USB 3.1",
+                "Read_speed": "540MB/s",
+                "Write_speed": "515MB/s",
+                "Encryption": "AES 256-bit",
+                "Weight": "51g"
+            }
         },
         {
-            "product_id": "51",
+            "product_id": "7",
             "product": "Seagate Backup Plus External Hard Drive",
             "highlighted": false,
             "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+                "https://www.digitec.ch/im/productimages/3/2/6/4/3/3/6/9/6/8/2/3/5/0/0/9/6/2/5/75b194d1-3414-4b0f-b134-331ad73b49aa.jpg",
+                "https://www.digitec.ch/im/productimages/7/7/7/3/1/7/7/9/7/6/4/5/1/8/4/1/7/2/9/64e0135f-b87b-4d32-bf4e-1bd0e8b2c582.jpg",
+                "https://www.digitec.ch/im/productimages/3/9/8/3/0/2/2/1/9/7/2/3/4/3/1/8/9/6/b1c230b6-4ecd-4c85-8844-f61c0c8b18cf.jpg"            
             ],
             "price": 293.35,
             "formatted_text": "Some other text",
             "category": "Tech",
             "brand": "Seagate",
-            "seller_id": "SiUAlcxScM"
+            "seller_id": "SiUAlcxScM",
+            "warranty": "1 year",
+            "availability": "In stock",
+            "color": "Midnight Green",
+            "Subheader": "4TB, USB 3.0, 2.5-inch",
+            "technical_details": {
+                "Capacity": "4TB",
+                "Interface": "USB 3.0",
+                "Form_factor": "2.5-inch",
+                "Weight": "224g"
+            }
         },
         {
-            "product_id": "52",
-            "product": "Canon PIXMA All-in-One Printer",
-            "highlighted": false,
+            "product_id": "1",
+            "product": "Apple iPhone 15 Pro",
+            "highlighted": true,
             "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+                "https://www.digitec.ch/im/productimages/8/8/3/1/9/1/9/4/5/3/1/6/1/5/8/9/1/7/4/3e165d0d-566f-4164-92eb-038185e9bc68.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/8/8/6/9/9/0/9/1/0/4/5/6/0/1/4/8/9/4/4/692d4489-fe01-4c4a-8e3a-83fc29c535f1.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/5/2/0/3/5/1/1/5/9/9/7/3/4/4/2/4/5/2/9/590d863b-6628-4080-9351-44c23fa8d4a8.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
             ],
-            "price": 842.59,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Canon",
-            "seller_id": "lYANwGfUfh"
+            "price": 57.46,
+            "formatted_text": "Get it now",
+            "category": "Smartphone",
+            "brand": "Apple",
+            "seller_id": "76e9f91e-09c9-49f8-8e21-d463261ec770",
+            "warrabty": "2 years",
+            "availability": "In stock",
+            "warranty": "1 year",
+            "color": "Lavender Violet",
+            "Subheader": "6.1\", 128GB, 12MP, 5G, iOS 15",
+            "technical_details": {
+                "Processor": "Apple A15 Bionic",
+                "RAM": "6GB",
+                "Storage": "128GB",
+                "Screen": "6.1-inch Super Retina XDR",
+                "Battery": "3095mAh",
+                "operating_system": "iOS 15",
+                "Camera": "12MP + 12MP",
+                "ports": {
+                    "Lightning": 1,
+                    "eSIM": 1
+                },
+                "Weight": "194g"
+            }
         },
         {
-            "product_id": "53",
-            "product": "Dyson V11 Torque Drive Cordless Vacuum",
-            "highlighted": false,
+            "product_id": "2",
+            "product": "Samsung Galaxy S9",
+            "highlighted": true,
             "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 808.36,
+                "https://www.digitec.ch/im/productimages/3/2/3/4/5/8/7/2/9/8/3/0/6/2/6/8/8/9/8/818148ec-90ea-4b14-b065-701592217cae_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/5/7/8/1/4/3/4/8/7/4/2/9/5/7/4/4/9/0/8/856d96a6-ffc3-4425-b7cf-0969bd26ca5a_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/5/8/4/0/4/3/6/3/1/2/4/1/6/2/1/9/4/6/5/f08572cd-0772-4612-9842-da67bca37374_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
+                        ],
+            "price": 482.89,
             "formatted_text": "",
-            "category": "Tech",
-            "brand": "Dyson",
-            "seller_id": "BZqFUwbRdj"
+            "category": "Smartphone",
+            "brand": "Samsung",
+            "seller_id": "ULsONtVOFj",
+            "warrabty": "2 years",
+            "availability": "In stock",
+            "warranty": "1 year",
+            "color": "Midnight Green",
+            "Subheader": "6.2\", 128GB, 12MP, 4G, Android 10",
+            "technical_details": {
+                "Processor": "Exynos 9810",
+                "RAM": "6GB",
+                "Storage": "128GB",
+                "Screen": "6.2-inch Super AMOLED",
+                "Battery": "3500mAh",
+                "operating_system": "Android 10",
+                "Camera": "12MP + 12MP",
+                "ports": {
+                    "USB_C": 1,
+                    "Headphone_jack": 1
+                },
+                "Weight": "189g"
+            }
         },
         {
-            "product_id": "54",
-            "product": "iRobot Roomba s9+ Robot Vacuum",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 509.61,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "iRobot",
-            "seller_id": "bToiUMVoRa"
-        },
-        {
-            "product_id": "55",
+            "product_id": "8",
             "product": "Philips Norelco Electric Shaver",
             "highlighted": false,
             "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+                "https://www.digitec.ch/im/productimages/8/2/3/9/0/8/5/0/4/6/0/7/1/1/4/7/8/2/0/bdc5be37-6f46-475c-9127-2a9952cc208e_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/3/5/4/6/4/6/0/9/2/1/9/1/3/2/6/8/5/2/0/5957c876-fe6c-41e3-b7e1-697553c507cd.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/2/8/6/7/0/2/9/5/1/1/1/2/7/7/3/6/1/6/8/b50c3e1d-3a2f-4993-b602-0f82da123dc4_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"            
             ],
             "price": 184.53,
             "formatted_text": "",
-            "category": "Tech",
+            "category": "Anime",
             "brand": "Philips",
-            "seller_id": "oVgIKfeitE"
+            "seller_id": "oVgIKfeitE",
+            "warranty": "1 year",
+            "availability": "In stock",
+            "color": "Midnight Green",
+            "Subheader": "Wet & Dry, 60 minutes cordless shaving",
+            "technical_details": {
+                "Usage": "Wet & Dry",
+                "Battery": "60 minutes",
+                "Weight": "200g"
+            }
         },
         {
-            "product_id": "56",
+            "product_id": "9",
             "product": "Braun Series 9 Electric Razor",
             "highlighted": false,
             "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+                "https://www.digitec.ch/im/productimages/8/6/5/3/8/0/0/5/0/1/4/3/7/4/9/8/9/9/560ebc03-8bfb-491b-a4b1-2f782a1f88ec_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/2/4/3/6/2/0/6/4/2/6/6/0/6/4/7/0/5/7/4/13561f02-8277-4f90-b4e1-4e6dd404eaa0_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/4/1/4/0/2/1/1/9/4/6/6/5/4/9/0/1/2/8/1/4e34682e-3f25-409c-8457-0d397af26e69_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"            
             ],
             "price": 744.53,
             "formatted_text": "",
-            "category": "Tech",
+            "category": "Anime",
             "brand": "Braun",
-            "seller_id": "llmbOKlRYa"
+            "seller_id": "llmbOKlRYa",
+            "warrabty": "2 years",
+            "availability": "In stock",
+            "warranty": "2 years",
+            "color": "Midnight Green",
+            "Subheader": "Wet & Dry, 50 minutes cordless shaving",
+            "technical_details": {
+                "Usage": "Wet & Dry",
+                "Battery": "50 minutes",
+                "Weight": "220g"
+            }
         },
         {
-            "product_id": "57",
-            "product": "KitchenAid Artisan Stand Mixer",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 774.82,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "KitchenAid",
-            "seller_id": "IHbgFNMUhd"
-        },
-        {
-            "product_id": "58",
-            "product": "Instant Pot Duo 7-in-1 Electric Pressure Cooker",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 922.99,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Instant",
-            "seller_id": "IIfqcrLzJC"
-        },
-        {
-            "product_id": "59",
-            "product": "Nespresso Vertuo Coffee and Espresso Machine",
-            "highlighted": false,
-            "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
-            ],
-            "price": 258.23,
-            "formatted_text": "",
-            "category": "Tech",
-            "brand": "Nespresso",
-            "seller_id": "beMXIZqHoW"
-        },
-        {
-            "product_id": "60",
+            "product_id": "10",
             "product": "Sony A7 III Mirrorless Camera",
             "highlighted": false,
             "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+                "https://www.digitec.ch/im/productimages/4/1/6/0/3/6/0/8/7/0/7/0/0/2/9/3/1/7/3/f79f5cca-c586-4695-ae2c-007612d4bf0b_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/1/8/0/9/9/3/5/9/2/3/8/4/4/6/3/2/2/6/1/42760663-07f1-4733-9426-62dc8caf6ab6_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/1/8/0/9/9/3/5/9/2/3/8/4/4/6/3/2/2/6/1/42760663-07f1-4733-9426-62dc8caf6ab6_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"            
             ],
             "price": 535.3,
             "formatted_text": "",
-            "category": "Tech",
+            "category": "Photo",
             "brand": "Sony",
-            "seller_id": "ZIxarhQlyc"
+            "seller_id": "ZIxarhQlyc",
+            "warranty": "2 years",
+            "availability": "In stock",
+            "color": "Midnight Green",
+            "Subheader": "24.2MP, 4K video, 5-axis stabilization",
+            "technical_details": {
+                "Resolution": "24.2MP",
+                "Video": "4K",
+                "Stabilization": "5-axis",
+                "Weight": "650g"
+            }
         },
         {
-            "product_id": "61",
+            "product_id": "11",
             "product": "Fujifilm X-T4 Mirrorless Camera",
             "highlighted": false,
             "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+                "https://www.digitec.ch/im/productimages/9/6/8/1/2/7/9/0/4/7/0/1/3/3/1/5/2/0/d1668cfa-7238-4649-b1b5-6022b50fc66e_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/4/1/3/1/0/8/2/3/3/6/4/1/4/3/3/7/1/0/3/7d1b8ee0-ef22-450d-98bd-86c7511648a1_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/7/7/6/5/6/4/1/2/7/2/1/0/3/9/7/9/7/6/4e6a0daf-2d17-4a48-9d4a-16ad4eae8da8_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"            
             ],
             "price": 55.1,
             "formatted_text": "",
-            "category": "Tech",
+            "category": "Photo",
             "brand": "Fujifilm",
-            "seller_id": "dPBkigZqvz"
+            "seller_id": "dPBkigZqvz",
+            "warranty": "1 year",
+            "availability": "In stock",
+            "color": "Midnight Green",
+            "Subheader": "26.1MP, 4K video, 6.5-stop stabilization",
+            "technical_details": {
+                "Resolution": "26.1MP",
+                "Video": "4K",
+                "Stabilization": "6.5-stop",
+                "Weight": "607g"
+            }
         },
         {
-            "product_id": "62",
+            "product_id": "12",
             "product": "GoPro MAX Action Camera",
             "highlighted": false,
             "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+                "https://www.digitec.ch/im/productimages/4/3/8/5/9/6/6/6/7/3/9/9/5/0/8/7/5/7/1/301bb7c2-7bee-400d-9e20-b1250bef8561_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/5/3/4/7/2/9/2/7/8/9/1/9/3/9/2/8/7/3/6/18430961-3a9a-4c8e-a81c-1521ac6877e5_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/8/1/3/4/5/6/5/2/7/0/1/6/5/6/8/0/2/3/be8f8798-e511-413c-8628-78513176595f_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"            
             ],
             "price": 140.48,
             "formatted_text": "",
-            "category": "Tech",
+            "category": "Photo",
             "brand": "GoPro",
-            "seller_id": "zgcUiBgIvp"
+            "seller_id": "zgcUiBgIvp",
+            "warrabty": "2 years",
+            "availability": "In stock",
+            "warranty": "1 year",
+            "color": "Midnight Green",
+            "Subheader": "360-degree video, 16.6MP, 5.6K video",
+            "technical_details": {
+                "Video": "5.6K",
+                "Resolution": "16.6MP",
+                "Weight": "154g"
+            }
         },
         {
-            "product_id": "63",
+            "product_id": "13",
             "product": "Dell UltraSharp 27 4K Monitor",
             "highlighted": false,
             "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+                "https://www.digitec.ch/im/productimages/8/5/5/5/8/1/3/2/2/1/3/0/6/7/9/6/5/0/1/4bf459cb-2323-4e97-aafa-f99b16a31b79_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/1/1/3/5/2/1/0/5/9/0/2/0/5/1/0/0/0/4/6/5b8f79d4-568c-4cd4-8ea3-5478ac1b1412_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/8/1/1/3/6/5/2/7/0/3/4/5/0/1/5/3/2/0/6/82bc383b-7b5d-4360-ac77-ebc1a5686acc_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"            
             ],
             "price": 40.94,
             "formatted_text": "",
-            "category": "Tech",
+            "category": "Gamin",
             "brand": "Dell",
-            "seller_id": "vwxKwSYgOp"
+            "seller_id": "vwxKwSYgOp",
+            "warranty": "2 years",
+            "availability": "In stock",
+            "color": "Lavender Violet",
+            "Subheader": "27-inch, 4K UHD, 60Hz, IPS",
+            "technical_details": {
+                "Size": "27-inch",
+                "Resolution": "4K UHD",
+                "Refresh_rate": "60Hz",
+                "Panel": "IPS",
+                "Weight": "5.5kg"
+            }
         },
         {
-            "product_id": "64",
+            "product_id": "14",
             "product": "Apple Magic Keyboard",
             "highlighted": false,
             "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+                "https://www.digitec.ch/im/Files/6/3/2/6/3/3/3/9/MMMR3SM.jpeg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/Files/6/3/2/6/3/3/4/0/MMMR3SM_AV1.jpeg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/Files/6/3/2/6/3/3/4/2/MMMR3SM_AV3.jpeg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"            
             ],
             "price": 81.98,
             "formatted_text": "",
-            "category": "Tech",
+            "category": "Accessories",
             "brand": "Apple",
-            "seller_id": "qAMDcrEVUy"
+            "seller_id": "qAMDcrEVUy",
+            "warrabty": "2 years",
+            "availability": "In stock",
+            "warranty": "1 year",
+            "color": "Lavender Violet",
+            "Subheader": "Wireless, scissor mechanism, numeric keypad",
+            "technical_details": {
+                "Connectivity": "Wireless",
+                "Switches": "Scissor mechanism",
+                "Features": "Numeric keypad",
+                "Weight": "231g"
+            }
         },
         {
-            "product_id": "65",
+            "product_id": "15",
             "product": "Logitech G Pro Wireless Gaming Mouse",
             "highlighted": false,
             "images": [
-                "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60"
+                "https://www.digitec.ch/im/productimages/3/6/1/6/8/4/0/8/6/2/4/3/3/3/3/7/4/9/5/1bd281d2-60c9-4077-92c7-c1d513c66d32.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/4/0/4/1/0/0/4/7/6/5/1/7/7/0/3/2/3/2/3/a2004e61-25c2-4be2-bb48-77c316b30587.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
+                "https://www.digitec.ch/im/productimages/6/5/4/5/7/3/6/8/1/1/2/5/7/5/6/0/1/6/4/40dd2a0e-94d3-4982-8ac1-92c7ea889fbe_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"            
             ],
             "price": 20.7,
             "formatted_text": "",
-            "category": "Tech",
+            "category": "Gaming",
             "brand": "Logitech",
-            "seller_id": "qpeolbUKYJ"
+            "seller_id": "qpeolbUKYJ",
+            "warranty": "1 year",
+            "availability": "In stock",
+            "color": "Midnight Green",
+            "Subheader": "Wireless, HERO sensor, 16000 DPI",
+            "technical_details": {
+                "Connectivity": "Wireless",
+                "Sensor": "HERO",
+                "DPI": "16000",
+                "Weight": "80g"
+            }
         },
         {
-            "product_id": "66",
+            "product_id": "16",
             "product": "Dell XPS 15",
             "highlighted": false,
             "images": [
@@ -858,7 +414,7 @@
             ],
             "price": 17.32,
             "formatted_text": "",
-            "category": "Tech",
+            "category": "Laptop",
             "brand": "Dell",
             "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
             "technical_details": {
@@ -868,7 +424,7 @@
                 "screen": "15.6-inch 4K UHD",
                 "battery": "86Wh",
                 "operating_system": "Windows 10 Home",
-                "graphics": "NVproduct_idIA GeForce GTX 1650 Ti",
+                "graphics": "NVIDIA GeForce GTX 1650 Ti",
                 "ports": {
                     "usb_c": 2,
                     "hdmi": 1,
@@ -877,14 +433,15 @@
                 },
                 "weight": "1.83kg"
             },
-            "warranty": "1 year",
-            "color": "Silver",
+            "warranty": "2 years",
+            "color": "Midnight Green",
             "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
             "availability": "In stock",
-            "seller_id": "SHTHRhqKZB"
+            "seller_id": "SHTHRhqKZB",
+            "warrabty": "2 years"
         },
         {
-            "product_id": "67",
+            "product_id": "17",
             "product": "Asus ROG Zephyrus G14",
             "highlighted": true,
             "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
@@ -896,7 +453,7 @@
             ],
             "price": 24.99,
             "formatted_text": "The ultimate gaming laptop.",
-            "category": "Tech",
+            "category": "Laptop",
             "brand": "Asus",
             "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
             "technical_details": {
@@ -906,7 +463,7 @@
                 "screen": "14-inch Full HD",
                 "battery": "75Wh",
                 "operating_system": "Windows 10 Home",
-                "graphics": "NVproduct_idIA GeForce RTX 2060",
+                "graphics": "NVIDIA GeForce RTX 2060",
                 "ports": {
                     "usb_c": 2,
                     "usb_a": 2,
@@ -916,12 +473,12 @@
                 "weight": "1.6kg"
             },
             "warranty": "2 years",
-            "color": "Eclipse Gray",
+            "color": "Midnight Green",
             "availability": "In stock",
             "seller_id": "xnGijXrGVv"
         },
         {
-            "product_id": "68",
+            "product_id": "18",
             "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
             "product": "Apple MacBook Pro 16",
             "highlighted": false,
@@ -940,7 +497,7 @@
             ],
             "price": 39.99,
             "formatted_text": "",
-            "category": "Tech",
+            "category": "Laptop",
             "brand": "Apple",
             "technical_details": {
                 "processor": "Apple M1 Pro",
@@ -959,12 +516,12 @@
                 "weight": "2.1kg"
             },
             "warranty": "1 year",
-            "color": "Space Gray",
+            "color": "Midnight Green",
             "availability": "In stock",
             "seller_id": "rerBDRmiDX"
         },
         {
-            "product_id": "69",
+            "product_id": "19",
             "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
             "product": "HP Spectre x360",
             "highlighted": false,
@@ -975,7 +532,7 @@
             ],
             "price": 20.99,
             "formatted_text": "Versatility meets performance.",
-            "category": "Tech",
+            "category": "Laptop",
             "brand": "HP",
             "technical_details": {
                 "processor": "Intel Core i7",
@@ -993,23 +550,22 @@
                 "weight": "1.3kg"
             },
             "warranty": "1 year",
-            "color": "Nightfall Black",
+            "color": "Midnight Green",
             "availability": "In stock",
             "seller_id": "CZGhMnbvAJ"
         },
         {
-            "product_id": "70",
+            "product_id": "20",
             "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
             "product": "Lenovo ThinkPad X1 Carbon",
             "highlighted": true,
             "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
             "images": [
-                "https://www.digitec.ch/im/productimages/5/5/2/0/3/0/5/5/4/7/2/4/3/2/0/3/8/0/3/390a1a62-552f-4a83-a567-4bad5724f058_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-                "https://www.digitec.ch/im/productimages/6/7/9/9/7/8/3/8/7/5/3/5/6/9/3/2/3/0/9/a50edc45-19f4-43ee-8fd4-5f2a1ced4d81_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
+                "https://www.digitec.ch/im/productimages/5/5/2/0/3/0/5/5/4/7/2/4/3/2/0/3/8/0/3/390a1a62-552f-4a83-a567-4bad5724f058_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
             ],
             "price": 18.5,
             "formatted_text": "Built for business.",
-            "category": "Tech",
+            "category": "Laptop",
             "brand": "Lenovo",
             "technical_details": {
                 "processor": "Intel Core i7",
@@ -1027,15 +583,15 @@
                 },
                 "weight": "1.09kg"
             },
-            "warranty": "3 years",
-            "color": "Black",
-            "availability": "Pre-order",
+            "warranty": "1 year",
+            "color": "Midnight Green",
+            "availability": "In stock",
             "seller_id": "bopddZeeUk"
         },
         {
-            "product_id": "71",
+            "product_id": "21",
+            "product": "Microsoft Surface Pro 12",
             "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
-            "product": "Microsoft Surface Laptop 4",
             "highlighted": false,
             "images": [
                 "https://www.digitec.ch/im/productimages/5/1/1/3/1/3/2/2/7/3/1/5/5/9/6/6/5/6/9/4ab41e8c-eb72-4582-9535-f246fb2e7f23_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
@@ -1044,9 +600,8 @@
             ],
             "price": 2299,
             "formatted_text": "Sleek design, powerful performance.",
-            "category": "Tech",
+            "category": "Laptop",
             "brand": "Microsoft",
-            "subheader": "13.50\", Intel Core i5-1145G7, 8 GB, 256 GB, DE",
             "technical_details": {
                 "processor": "AMD Ryzen 5",
                 "ram": "8GB",
@@ -1063,150 +618,65 @@
                 },
                 "weight": "1.54kg"
             },
-            "warranty": "1 year",
-            "color": "Platinum",
+            "warranty": "2 years",
+            "color": "Midnight Green",
             "availability": "In stock",
-            "seller_id": "cYKARSKcwB"
+            "seller_id": "JGymIlGwxh",
+            "warrabty": "2 years"
         },
         {
-            "product_id": "72",
-            "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
-            "product": "Microsoft Surface Laptop 4",
+            "product_id": "22",
+            "description": "A sleek and powerful smartphone with advanced features and a stunning display. Perfect for capturing high-quality photos and videos, and for staying connected on the go.",
+            "product": "Samsung Galaxy S21",
             "highlighted": false,
+            "subheader": "6.2\", 128GB, Phantom Gray",
             "images": [
-                "https://www.digitec.ch/im/productimages/5/1/1/3/1/3/2/2/7/3/1/5/5/9/6/6/5/6/9/4ab41e8c-eb72-4582-9535-f246fb2e7f23_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-                "https://www.digitec.ch/im/productimages/6/3/5/5/5/4/3/7/8/2/5/7/9/8/3/7/2/4/2/8266c589-1e0f-4117-8a34-95853844aa1e.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-                "https://www.digitec.ch/im/productimages/5/8/0/9/3/0/1/0/5/7/3/5/4/2/2/6/5/8/2/2ad04b34-4d9e-4e3e-8602-2357d31ea391_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
+                "https://www.digitec.ch/im/productimages/3/0/1/1/1/6/0/7/8/1/5/8/5/9/0/0/2/1/2/f1db3598-c554-41b4-8cac-11f19ba5dd31.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
             ],
-            "price": 2299,
-            "formatted_text": "Sleek design, powerful performance.",
-            "category": "Tech",
-            "brand": "Microsoft",
+            "price": 799,
+            "formatted_text": "Capture the world in stunning detail.",
+            "category": "Sale",
+            "brand": "Samsung",
             "technical_details": {
-                "processor": "AMD Ryzen 5",
-                "ram": "8GB",
-                "storage": "256GB SSD",
-                "screen": "13.5-inch PixelSense",
-                "battery": "47.4Wh",
-                "operating_system": "Windows 10 Home",
-                "graphics": "AMD Radeon Graphics",
-                "ports": {
-                    "usb_c": 1,
-                    "usb_a": 1,
-                    "headphone_jack": 1,
-                    "surface_connect": 1
-                },
-                "weight": "1.54kg"
+            "processor": "Qualcomm Snapdragon 888",
+            "ram": "8GB",
+            "storage": "128GB",
+            "screen": "6.2-inch Dynamic AMOLED",
+            "battery": "4000mAh",
+            "operating_system": "Android 11",
+            "camera": "Triple rear camera (64MP+12MP+12MP)",
+            "weight": "169g"
             },
             "warranty": "1 year",
-            "color": "Platinum",
+            "color": "Phantom Gray",
             "availability": "In stock",
-            "seller_id": "iAyTPOtkTG"
+            "seller_id": "samsung123"
         },
         {
-            "product_id": "73",
-            "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
-            "product": "Microsoft Surface Laptop 4",
-            "highlighted": false,
+            "product_id": "23",
+            "description": "A compact and lightweight smart speaker with powerful sound and built-in voice assistant. Enjoy your favorite music, control your smart home devices, and get answers to your questions with ease.",
+            "product": "Amazon Echo Dot",
+            "highlighted": true,
+            "subheader": "Smart Speaker with Alexa, Charcoal",
             "images": [
-                "https://www.digitec.ch/im/productimages/5/1/1/3/1/3/2/2/7/3/1/5/5/9/6/6/5/6/9/4ab41e8c-eb72-4582-9535-f246fb2e7f23_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-                "https://www.digitec.ch/im/productimages/6/3/5/5/5/4/3/7/8/2/5/7/9/8/3/7/2/4/2/8266c589-1e0f-4117-8a34-95853844aa1e.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-                "https://www.digitec.ch/im/productimages/5/8/0/9/3/0/1/0/5/7/3/5/4/2/2/6/5/8/2/2ad04b34-4d9e-4e3e-8602-2357d31ea391_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
+                "https://www.digitec.ch/im/productimages/8/5/7/5/5/2/3/9/3/9/6/1/3/8/4/4/8/7/5/0400154f-0316-4573-9328-dc3c7b4bd81a_cropped.jpg?impolicy=ProductTileImage&resizeWidth=1183&resizeHeight=1199&cropWidth=1183&cropHeight=1199&quality=high",
+                "https://www.digitec.ch/im/productimages/7/7/8/6/1/5/3/6/3/7/5/2/8/7/8/4/4/4/1/26734ba7-eef9-41eb-8cad-6dc9fade8046_cropped.jpg?impolicy=ProductTileImage&resizeWidth=992&resizeHeight=714&cropWidth=992&cropHeight=714&quality=high"
             ],
-            "price": 2299,
-            "formatted_text": "Sleek design, powerful performance.",
-            "category": "Tech",
-            "brand": "Microsoft",
+            "price": 49.99,
+            "formatted_text": "Hands-free voice control for your music and more.",
+            "category": "Sale",
+            "brand": "Amazon",
             "technical_details": {
-                "processor": "AMD Ryzen 5",
-                "ram": "8GB",
-                "storage": "256GB SSD",
-                "screen": "13.5-inch PixelSense",
-                "battery": "47.4Wh",
-                "operating_system": "Windows 10 Home",
-                "graphics": "AMD Radeon Graphics",
-                "ports": {
-                    "usb_c": 1,
-                    "usb_a": 1,
-                    "headphone_jack": 1,
-                    "surface_connect": 1
-                },
-                "weight": "1.54kg"
+            "speaker": "1.6-inch speaker",
+            "microphones": "4",
+            "connectivity": "Wi-Fi, Bluetooth",
+            "voice_assistant": "Alexa",
+            "weight": "300g"
             },
             "warranty": "1 year",
-            "color": "Platinum",
+            "color": "Charcoal",
             "availability": "In stock",
-            "seller_id": "BuaSXbdrKp"
-        },
-        {
-            "product_id": "74",
-            "product": "Microsoft Surface Laptop 4",
-            "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
-            "highlighted": false,
-            "images": [
-                "https://www.digitec.ch/im/productimages/5/1/1/3/1/3/2/2/7/3/1/5/5/9/6/6/5/6/9/4ab41e8c-eb72-4582-9535-f246fb2e7f23_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-                "https://www.digitec.ch/im/productimages/6/3/5/5/5/4/3/7/8/2/5/7/9/8/3/7/2/4/2/8266c589-1e0f-4117-8a34-95853844aa1e.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-                "https://www.digitec.ch/im/productimages/5/8/0/9/3/0/1/0/5/7/3/5/4/2/2/6/5/8/2/2ad04b34-4d9e-4e3e-8602-2357d31ea391_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
-            ],
-            "price": 2299,
-            "formatted_text": "Sleek design, powerful performance.",
-            "category": "Tech",
-            "brand": "Microsoft",
-            "technical_details": {
-                "processor": "AMD Ryzen 5",
-                "ram": "8GB",
-                "storage": "256GB SSD",
-                "screen": "13.5-inch PixelSense",
-                "battery": "47.4Wh",
-                "operating_system": "Windows 10 Home",
-                "graphics": "AMD Radeon Graphics",
-                "ports": {
-                    "usb_c": 1,
-                    "usb_a": 1,
-                    "headphone_jack": 1,
-                    "surface_connect": 1
-                },
-                "weight": "1.54kg"
-            },
-            "warranty": "1 year",
-            "color": "Platinum",
-            "availability": "In stock",
-            "seller_id": "jLxtrFRIBE"
-        },
-        {
-            "product_id": "75",
-            "product": "Microsoft Surface Laptop 4",
-            "description": "A powerful and versatile laptop designed for performance and portability. Featuring a stunning 4K UHD display and a robust technical specification list, the Dell XPS 15 is ideal for both professional and personal use.",
-            "highlighted": false,
-            "images": [
-                "https://www.digitec.ch/im/productimages/5/1/1/3/1/3/2/2/7/3/1/5/5/9/6/6/5/6/9/4ab41e8c-eb72-4582-9535-f246fb2e7f23_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-                "https://www.digitec.ch/im/productimages/6/3/5/5/5/4/3/7/8/2/5/7/9/8/3/7/2/4/2/8266c589-1e0f-4117-8a34-95853844aa1e.png?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high",
-                "https://www.digitec.ch/im/productimages/5/8/0/9/3/0/1/0/5/7/3/5/4/2/2/6/5/8/2/2ad04b34-4d9e-4e3e-8602-2357d31ea391_cropped.jpg?impolicy=ProductTileImage&resizeWidth=500&resizeHeight=375&cropWidth=500&cropHeight=375&resizeType=downsize&quality=high"
-            ],
-            "price": 2299,
-            "formatted_text": "Sleek design, powerful performance.",
-            "category": "Tech",
-            "brand": "Microsoft",
-            "technical_details": {
-                "processor": "AMD Ryzen 5",
-                "ram": "8GB",
-                "storage": "256GB SSD",
-                "screen": "13.5-inch PixelSense",
-                "battery": "47.4Wh",
-                "operating_system": "Windows 10 Home",
-                "graphics": "AMD Radeon Graphics",
-                "ports": {
-                    "usb_c": 1,
-                    "usb_a": 1,
-                    "headphone_jack": 1,
-                    "surface_connect": 1
-                },
-                "weight": "1.54kg"
-            },
-            "warranty": "1 year",
-            "color": "Platinum",
-            "availability": "In stock",
-            "seller_id": "JGymIlGwxh"
+            "seller_id": "amazon456"
         }
     ],
     "product-comment-table": [
@@ -1300,6 +770,253 @@
                     "review": "It's perfect for my college classes and the touch screen is a nice bonus.",
                     "date": "2024-03-18",
                     "review_id": "19a8c5a9e1"
+                }
+            ]
+        },
+        {
+            "product_id": "7",
+            "reviews": [
+                {
+                    "user": "TechGuru7",
+                    "user_id": "TechGuru7",
+                    "rating": 4.5,
+                    "title": "Impressive Specs, Great Value",
+                    "review": "This device offers a lot of power for its price. It's great for multitasking and runs smoothly even with multiple apps open.",
+                    "date": "2024-03-21",
+                    "review_id": "review7a"
+                },
+                {
+                    "user": "DigitalNomad7",
+                    "user_id": "DigitalNomad7",
+                    "rating": 4.2,
+                    "title": "Portable and Efficient",
+                    "review": "I love the portability of this device. It's lightweight and has a long battery life, perfect for working on the go.",
+                    "date": "2024-03-22",
+                    "review_id": "review7b"
+                }
+            ]
+        },
+        {
+            "product_id": "8",
+            "reviews": [
+                {
+                    "user": "TechEnthusiast",
+                    "user_id": "TechEnthusiast",
+                    "rating": 4.7,
+                    "title": "Sleek Design, Solid Performance",
+                    "review": "The laptop looks great and performs well. The display is vibrant and the keyboard is comfortable to type on.",
+                    "date": "2024-03-25",
+                    "review_id": "review8a"
+                }
+            ]
+        },
+        {
+            "product_id": "9",
+            "reviews": [
+                {
+                    "user": "AutoFanatic",
+                    "user_id": "AutoFanatic",
+                    "rating": 4.5,
+                    "title": "Powerful and Stylish",
+                    "review": "The laptop is fast and handles demanding tasks with ease. The design is sleek and modern.",
+                    "date": "2024-03-28",
+                    "review_id": "review9a"
+                }
+            ]
+        },
+        {
+            "product_id": "10",
+            "reviews": [
+                {
+                    "user": "EcoWarrior",
+                    "user_id": "EcoWarrior",
+                    "rating": 4.8,
+                    "title": "Eco-Friendly and Efficient",
+                    "review": "I love that this laptop is environmentally friendly. It's also powerful and great for work.",
+                    "date": "2024-03-30",
+                    "review_id": "review10a"
+                }
+            ]
+        },
+        {
+            "product_id": "11",
+            "reviews": [
+                {
+                    "user": "ArtLover",
+                    "user_id": "ArtLover",
+                    "rating": 4.3,
+                    "title": "Great for Creatives",
+                    "review": "The laptop is perfect for digital art and design work. The touch screen is responsive and the pen is accurate.",
+                    "date": "2024-04-02",
+                    "review_id": "review11a"
+                }
+            ]
+        },
+        {
+            "product_id": "12",
+            "reviews": [
+                {
+                    "user": "PhotoPro",
+                    "user_id": "PhotoPro",
+                    "rating": 4.7,
+                    "title": "Excellent Display for Photo Editing",
+                    "review": "The laptop has a high-resolution display that's perfect for editing photos. The colors are accurate and vibrant.",
+                    "date": "2024-04-05",
+                    "review_id": "review12a"
+                }
+            ]
+        },
+        {
+            "product_id": "13",
+            "reviews": [
+                {
+                    "user": "MusicMaker",
+                    "user_id": "MusicMaker",
+                    "rating": 4.5,
+                    "title": "Great Sound Quality",
+                    "review": "The laptop has impressive audio quality, making it perfect for music production and listening.",
+                    "date": "2024-04-08",
+                    "review_id": "review13a"
+                }
+            ]
+        },
+        {
+            "product_id": "14",
+            "reviews": [
+                {
+                    "user": "GadgetGeek",
+                    "user_id": "GadgetGeek",
+                    "rating": 4.8,
+                    "title": "Feature-Packed and Reliable",
+                    "review": "The laptop has all the features I need for work and entertainment. It's fast, reliable, and has a great display.",
+                    "date": "2024-04-10",
+                    "review_id": "review14a"
+                }
+            ]
+        },
+        {
+            "product_id": "15",
+            "reviews": [
+                {
+                    "user": "GamingPro",
+                    "user_id": "GamingPro",
+                    "rating": 4.7,
+                    "title": "Great for Gaming",
+                    "review": "The mouse is comfortable to use and the wireless connection is reliable. The sensor is accurate and responsive.",
+                    "date": "2024-04-12",
+                    "review_id": "review15a"
+                }
+            ]
+        },
+        {
+            "product_id": "16",
+            "reviews": [
+                {
+                    "user": "BusinessPro",
+                    "user_id": "BusinessPro",
+                    "rating": 4.5,
+                    "title": "Professional and Powerful",
+                    "review": "The laptop is fast and reliable, perfect for business use. The display is crisp and the performance is top-notch.",
+                    "date": "2024-04-15",
+                    "review_id": "review16a"
+                }
+            ]
+        },
+        {
+            "product_id": "17",
+            "reviews": [
+                {
+                    "user": "GamingEnthusiast",
+                    "user_id": "GamingEnthusiast",
+                    "rating": 4.8,
+                    "title": "Ultimate Gaming Experience",
+                    "review": "The laptop is a beast when it comes to gaming. The performance is outstanding and the graphics are top-notch.",
+                    "date": "2024-04-18",
+                    "review_id": "review17a"
+                }
+            ]
+        },
+        {
+            "product_id": "18",
+            "reviews": [
+                {
+                    "user": "AppleFan",
+                    "user_id": "AppleFan",
+                    "rating": 4.7,
+                    "title": "Sleek and Powerful",
+                    "review": "The laptop is beautifully designed and performs like a champ. The display is stunning and the battery life is impressive.",
+                    "date": "2024-04-20",
+                    "review_id": "review18a"
+                }
+            ]
+        },
+        {
+            "product_id": "19",
+            "reviews": [
+                {
+                    "user": "HPFanatic",
+                    "user_id": "HPFanatic",
+                    "rating": 4.5,
+                    "title": "Versatile and Reliable",
+                    "review": "The laptop is versatile and reliable, perfect for work and entertainment. The touch screen is responsive and the performance is great.",
+                    "date": "2024-04-22",
+                    "review_id": "review19a"
+                }
+            ]
+        },
+        {
+            "product_id": "20",
+            "reviews": [
+                {
+                    "user": "LenovoLover",
+                    "user_id": "LenovoLover",
+                    "rating": 4.8,
+                    "title": "Great for Business",
+                    "review": "The laptop is perfect for business use. It's fast, reliable, and has all the features I need for work.",
+                    "date": "2024-04-25",
+                    "review_id": "review20a"
+                }
+            ]
+        },
+        {
+            "product_id": "21",
+            "reviews": [
+                {
+                    "user": "MicrosoftFan",
+                    "user_id": "MicrosoftFan",
+                    "rating": 4.3,
+                    "title": "Sleek Design, Powerful Performance",
+                    "review": "The laptop has a sleek design and powerful performance. The display is vibrant and the battery life is impressive.",
+                    "date": "2024-04-28",
+                    "review_id": "review21a"
+                }
+            ]
+        },
+        {
+            "product_id": "22",
+            "reviews": [
+                {
+                    "user": "SamsungFan",
+                    "user_id": "SamsungFan",
+                    "rating": 4.7,
+                    "title": "Great Camera, Fast Performance",
+                    "review": "The smartphone has a great camera and fast performance. The display is vibrant and the battery life is impressive.",
+                    "date": "2024-05-01",
+                    "review_id": "review22a"
+                }
+            ]
+        },
+        {
+            "product_id": "23",
+            "reviews": [
+                {
+                    "user": "AmazonFan",
+                    "user_id": "AmazonFan",
+                    "rating": 4.5,
+                    "title": "Great Sound Quality, Easy to Use",
+                    "review": "The smart speaker has great sound quality and is easy to use. The voice assistant is responsive and the design is sleek.",
+                    "date": "2024-05-05",
+                    "review_id": "review23a"
                 }
             ]
         }

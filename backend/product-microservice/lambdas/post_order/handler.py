@@ -2,6 +2,7 @@
 Handle call which creates an order in the database and deletes the cart
 The handler has the name of the table hardcoded, this is determined by the config file config/db_schema.json upon deployment
 """
+import datetime
 import os
 import boto3
 import simplejson as json
@@ -136,6 +137,7 @@ def handler(event: dict, context) -> dict:
     # Generate a new order
     new_order = {
         'order_id': ''.join(random.choices(string.ascii_letters + string.digits, k=10)),
+        'date': datetime.datetime.now().strftime("%d.%m.%Y"),
         'status': 'pending',
         'products': cart_found['products']
     }

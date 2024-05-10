@@ -157,7 +157,7 @@ export const useFetchAllComments = (details, product_id, setLoadingComments) => 
             if (!details) {
 
                 const response = await api.get(`/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`)
-                
+
                 console.log("DEBUG: useFetchAllComments response");
                 console.log(response);
 
@@ -224,7 +224,7 @@ export const useFetchProductsSeller = (
 
             console.log("DEBUG: useFetchProductsSeller response");
             console.log(response);
-    
+
             if (response) {
                 return response.data;
             }
@@ -251,7 +251,7 @@ export const usePostComment = (setLoadingComments, setComments, comment, product
             console.log(response);
 
             console.log("DEBUG: usePostComment productComments", productComments);
-            
+
             // Set the productComments to the new state after deleting the comment
             // If productComments is empty, we have to crate field product_id and reviews as empty array
             const copy = {...productComments};
@@ -269,9 +269,11 @@ export const usePostComment = (setLoadingComments, setComments, comment, product
                 error: error,
                 message: "Failed to post comment!",
             });
+            setLoadingComments(false);
         }
     };
 }
+
 
 export const useDeleteComment = (item_to_delete, setLoadingComments, product_id, setProductComments) => {
     const apigBaseUrl = useSelector(state => state.apigBaseUrl);
@@ -281,7 +283,7 @@ export const useDeleteComment = (item_to_delete, setLoadingComments, product_id,
         api.defaults.baseURL = baseURL;
 
         try {
-            // NOTE: Delete should not have body actually... 
+            // NOTE: Delete should not have body actually...
             const response = await api.delete(
                 `/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`,
                 {data : item_to_delete}

@@ -62,7 +62,7 @@ const AmplifyLogin = () => {
     <div className="authenticator">
       <Authenticator>
         {() => (
-          <div>
+          <div className="accountBox">
             <AccountDetails />
             {/** TODO: Change to Material UI Button*/}
             <button

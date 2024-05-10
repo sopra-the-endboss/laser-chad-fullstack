@@ -8,17 +8,23 @@ const CustomModal = ({openModalText, icon, children}) => {
 
 
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleOpen = (e) => {
+        e?.stopPropagation();
+        setOpen(true);
+    }
+    const handleClose = (e) => {
+        e?.stopPropagation();
+        setOpen(false);
+    }
 
     return (
         <>
             {icon ? (
-                <IconButton onClick={handleOpen} variant={"outlined"}>
+                <IconButton onClick={e => handleOpen(e)} variant={"outlined"}>
                     {icon}
                 </IconButton>
             ) : (
-                <Button onClick={handleOpen} variant={"outlined"}>{openModalText}</Button>
+                <Button onClick={e => handleOpen(e)} variant={"outlined"}>{openModalText}</Button>
             )}
             <Modal
                 open={open}

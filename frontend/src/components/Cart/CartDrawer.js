@@ -34,6 +34,11 @@ const CartDrawer = ({ isOpen, toggleCart }) => {
       toggleCart(false)();
     }
   };
+
+  const checkOut = () => {
+    navigate("/checkout");
+    toggleCart(false)();
+  };
   return (
     <Drawer
       open={isOpen}
@@ -105,7 +110,7 @@ const CartDrawer = ({ isOpen, toggleCart }) => {
             variant="contained"
             color="primary"
             disabled={cartItems.length === 0}
-            onClick={() => navigate("/checkout")}
+            onClick={checkOut}
           >
             Proceed to Checkout
           </Button>

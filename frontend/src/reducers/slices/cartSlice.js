@@ -87,7 +87,7 @@ const cartSlice = createSlice({
      * @param {Object} state - The current state of the cart.
      * @param {Object} action - An action object which is empty/not used
      */
-    clearCart : (state, action) => {
+    clearCart: (state, action) => {
       state.cartItems = [];
     },
   },

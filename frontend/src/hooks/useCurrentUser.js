@@ -20,6 +20,7 @@ export const useCurrentUser = () => {
             address: attributes.address,
             county: attributes["custom:county"],
             zip: attributes["custom:zip"],
+            city: attributes["custom:city"],
           },
         };
 
