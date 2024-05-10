@@ -9,7 +9,7 @@ RUN npm install -g @aws-amplify/cli
 
 # copy package.json
 COPY package.json ./
-# COPY package-lock.json ./
+COPY package-lock.json ./
 RUN npm install --silent
 
 # Copy the rest of your source code to the container
