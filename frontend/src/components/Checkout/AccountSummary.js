@@ -63,6 +63,7 @@ const AccountSummary = () => {
       autoComplete: "shipping address-line1",
     },
     { name: "city", label: "City", autoComplete: "shipping address-level2" },
+    { name: "county", label: "County", autoComplete: "county" },
     {
       name: "zip",
       label: "Zip / Postal code",
@@ -111,7 +112,7 @@ const AccountSummary = () => {
             </p>
             <p className="textLeftBound">{authState.address}</p>
             <p className="textLeftBound">
-              {authState.zip + " " + authState.city + " " + authState.county}
+              {authState.zip || ""} {authState.city || ""} {authState.county || ""}
             </p>
             <h3 className="accountH3">Delivery method</h3>
             <p className="textLeftBound">Shipping</p>
