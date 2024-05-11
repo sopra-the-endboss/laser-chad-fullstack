@@ -170,13 +170,13 @@ export const ProductDetail = ({
                 />
               </Box>
             ) : (
-              <>
+              <Stack gap={1} direction={"row"} sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                 <Chip label={productDetails?.availability} color="success" />
                 <Chip
                   label={"Warranty: " + productDetails?.warranty}
                   color="primary"
                 />
-              </>
+              </Stack>
             )}
           </Grid>
           <Grid item xs={12}>
@@ -231,7 +231,7 @@ export const ProductDetail = ({
           </Grid>
         </Grid>
         {!hideComments && (
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{marginTop: "40px"}}>
             <CommentaryComponent
               productComments={productComments}
               setProductComments={setProductComments}

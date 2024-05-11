@@ -129,7 +129,7 @@ const ProductContent = ({
         return transformedData;
     }
 
-    const isNonEmptyString = (str) => (typeof str === 'string' || typeof str === 'number') && str.trim() !== '';
+    const isNonEmptyString = (str) => (typeof str === 'string' || typeof str === 'number') && str !== '';
     const [categoryError, setCategoryError] = useState(false);
     const [companyError, setCompanyError] = useState(false);
     const [priceError, setPriceError] = useState(false);
