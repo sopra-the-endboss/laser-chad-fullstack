@@ -14,6 +14,7 @@ import React, {useEffect, useState} from "react";
 //import CategoryMock from "../../data/CategoryMock.json";
 //import AllCompaniesMock from "../../data/AllCompanyMock.json";
 import {useFetchCategories, useFetchDistributor} from "../../utils/apiCalls";
+import {enqueueSnackbar} from "notistack";
 
 const ProductContent = ({
         collectedData,
@@ -128,10 +129,50 @@ const ProductContent = ({
         return transformedData;
     }
 
+    const isNonEmptyString = (str) => (typeof str === 'string' || typeof str === 'number') && str.trim() !== '';
+    const [categoryError, setCategoryError] = useState(false);
+    const [companyError, setCompanyError] = useState(false);
+    const [priceError, setPriceError] = useState(false);
+    const [nameError, setNameError] = useState(false);
+    const [warrantyError, setWarrantyError] = useState(false);
+    const [availabilityError, setAvailabilityError] = useState(false);
+
     const handleStep = () => {
-        const transformedData = transformDataForProductDetail();
-        setCollectedData(transformedData);
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        // check if all entries are valid
+        // then do:
+
+        setNameError(!isNonEmptyString(name));
+        setPriceError(!isNonEmptyString(price));
+        setCategoryError(!isNonEmptyString(selectedCategory));
+        setCompanyError(!isNonEmptyString(selectedCompany));
+        setWarrantyError(!isNonEmptyString(warranty));
+        setAvailabilityError(!isNonEmptyString(availability));
+
+        const correctValidation = [!isNonEmptyString(name), !isNonEmptyString(price), !isNonEmptyString(selectedCategory), !isNonEmptyString(selectedCompany), !isNonEmptyString(warranty), !isNonEmptyString(availability)].every(x => !x);
+
+        if(correctValidation){
+            const transformedData = transformDataForProductDetail();
+            setCollectedData(transformedData);
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        } else {
+            // queue notification that shows you're supposed to fill in all fields
+            const missing = (!isNonEmptyString(name) ? 'name, ' : '')
+            + (!isNonEmptyString(price) ? 'price, ' : '')
+            + (!isNonEmptyString(selectedCategory) ? 'category, ' : '')
+            + (!isNonEmptyString(selectedCompany) ? 'company, ' : '')
+            + (!isNonEmptyString(warranty) ? 'warranty, ' : '')
+            + (!isNonEmptyString(availability) ? 'availability ' : '')
+
+            enqueueSnackbar(
+                {
+                    message: "Fill in all the mandatory fields. Currently missing: " + missing,
+                    variant: 'error',
+                    style: { width: '900px' },
+                    anchorOrigin: {vertical: 'top', horizontal: 'center'},
+                    autoHideDuration: 3000
+                }
+            );
+        }
     }
 
     return (
@@ -145,6 +186,7 @@ const ProductContent = ({
                 placeholder={"Product Name"}
                 onChange={e => setName(e.target.value)}
                 fullWidth
+                error={nameError}
             />
 
             <TextField
@@ -153,6 +195,7 @@ const ProductContent = ({
                 placeholder={"Price"}
                 onChange={e => setPrice(e.target.value)}
                 fullWidth
+                error={priceError}
             />
 
             <Autocomplete
@@ -164,6 +207,7 @@ const ProductContent = ({
                 onChange={(event, newValue) => {
                     setSelectedCompany(newValue);
                 }}
+
                 renderInput={(params) => (
                     <TextField
                         {...params}
@@ -173,6 +217,8 @@ const ProductContent = ({
                         }}
                         fullWidth
                         placeholder={"Producer"}
+
+                        error={companyError}
                     />
                 )}
             />
@@ -193,9 +239,10 @@ const ProductContent = ({
                     value={selectedCategory}
                     label="Category"
                     onChange={(e) => setSelectedCategory(e.target.value)}
+                    error={categoryError}
                 >
                     {category?.map((cat, index) => <MenuItem key={index}
-                                                             value={cat.name}>{cat.name}</MenuItem>)}
+                                                             value={cat.name} >{cat.name}</MenuItem>)}
                 </Select>
             </FormControl>
             <Typography variant="body1" component="div" marginTop={2}>
@@ -263,6 +310,7 @@ const ProductContent = ({
                 minRows={3}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
+
             />
 
             <Autocomplete
@@ -274,6 +322,7 @@ const ProductContent = ({
                 onChange={(event, newValue) => {
                     setWarranty(newValue);
                 }}
+
                 renderInput={(params) => (
                     <TextField
                         {...params}
@@ -283,6 +332,7 @@ const ProductContent = ({
                         }}
                         fullWidth
                         placeholder={"Warranty for this product"}
+                        error={warrantyError}
                     />
                 )}
             />
@@ -296,6 +346,7 @@ const ProductContent = ({
                 onChange={(event, newValue) => {
                     setAvailability(newValue);
                 }}
+
                 renderInput={(params) => (
                     <TextField
                         {...params}
@@ -305,6 +356,7 @@ const ProductContent = ({
                         }}
                         fullWidth
                         placeholder={"Availability"}
+                        error={availabilityError}
                     />
                 )}
             />
