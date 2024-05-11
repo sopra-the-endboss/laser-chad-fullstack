@@ -1,4 +1,5 @@
-This is the main project repository. It consists of a React frontend with multiple composable serverless microservices and a backend with serveral AWS components.
+This is the main project repository. It consists of a React frontend with multiple composable serverless microservices and a backend with serveral AWS components.  
+For the Wiki, see [the Wiki repository](https://github.com/sopra-the-endboss/laser-chad-fullstack-wiki)
 
 # Deployment
 See below for instructions on how to start the containers. After the proper startup including some minutes to let the containers set up all the services, the project can be reached via `localhost:3000`.
