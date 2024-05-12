@@ -1,3 +1,20 @@
+# Choice of React for Frontend Development
+
+<b>Familiarity</b>: Our team is proficient with React, which streamlines the development process and reduces the learning curve. This existing expertise allows us to leverage React's full capabilities efficiently.
+
+<b>Wide Support and Community</b>: React is maintained by Facebook and has a vast and active community. This extensive support network provides a wealth of libraries, tools, and frameworks that enhance development speed and solve common and complex challenges effectively.
+
+<b>Modular Structure</b>: In our project, React's component-based architecture plays a critical role. We structure our application into distinct elements such as components, views, hooks, utility functions, and guards. This organization:
+
+- Components: Reusable and isolated UI parts that manage their state and design.
+- Views: Compositions of components that form entire pages or significant sections of a page.
+- Hooks: Custom hooks are used to abstract component logic and share behaviors in a functional way, which keeps the component code clean and focused on rendering.
+- Utility Functions: Helpers and utilities to manage common tasks across components without duplicating code.
+- Guards: Components or hooks that control access to certain parts of the application, ensuring that business and authorization rules are adhered to.
+This structured approach not only ensures a clear separation of concerns but also enhances maintainability and scalability. React's declarative nature simplifies the creation of interactive UIs, and its efficient update mechanism (via the virtual DOM) ensures high performance across both desktop and mobile platforms. The combination of these factors made React the optimal choice for our frontend development.
+
+The whole documentation can be found in the docs folder in `frontend/docs/index.html`. 
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
