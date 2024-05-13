@@ -15,6 +15,9 @@ This structured approach not only ensures a clear separation of concerns but als
 
 The whole documentation can be found in the docs folder in `frontend/docs/index.html`. 
 
+# Choice of authentication
+For authentication, we chose the prebuilt AWS Cognito and Amplify services, driven by the project's tight timeline and their suitability for our needs. Authentication is a vital component, especially for projects with user-specific features like e-commerce platforms. Given that LocalStack was a project requirement, Cognito proved to be an excellent match, significantly reducing our initial development time and allowing us to make rapid progress from the start.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
