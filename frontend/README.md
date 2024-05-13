@@ -10,6 +10,8 @@
 - Views: Compositions of components that form entire pages or significant sections of a page.
 - Hooks: Custom hooks are used to abstract component logic and share behaviors in a functional way, which keeps the component code clean and focused on rendering.
 - Utility Functions: Helpers and utilities to manage common tasks across components without duplicating code.
+- Context: We use the context for sharing data that can be considered “global” for a tree of React components, such as current UI preferences or search values.
+- Reducers: We use of reducers to help us handling complex state logic that involves multiple sub-values or when the next state depends on the previous one. 
 - Guards: Components or hooks that control access to certain parts of the application, ensuring that business and authorization rules are adhered to.
 This structured approach not only ensures a clear separation of concerns but also enhances maintainability and scalability. React's declarative nature simplifies the creation of interactive UIs, and its efficient update mechanism (via the virtual DOM) ensures high performance across both desktop and mobile platforms. The combination of these factors made React the optimal choice for our frontend development.
 
@@ -17,6 +19,14 @@ The whole documentation can be found in the docs folder in `frontend/docs/index.
 
 # Choice of authentication
 For authentication, we chose the prebuilt AWS Cognito and Amplify services, driven by the project's tight timeline and their suitability for our needs. Authentication is a vital component, especially for projects with user-specific features like e-commerce platforms. Given that LocalStack was a project requirement, Cognito proved to be an excellent match, significantly reducing our initial development time and allowing us to make rapid progress from the start.
+
+# Testing with Jest
+In the development of our frontend, we have implemented several test cases using Jest. The framework has been instrumental in helping us ensure that our logic and component behaviors function as expected.
+
+However, during our testing phase, we recognized certain limitations with Jest, particularly concerning UI testing. Jest does not inherently test visual elements' positioning or their exact rendering on the screen. To fully verify these aspects, additional tools or frameworks geared towards visual or UI testing would be necessary.
+
+Furthermore, our evaluation revealed that the time required to write comprehensive test cases for UI specifics significantly surpassed the time it took to develop the components themselves. Given this discrepancy, we decided against further pursuing in-depth UI test cases with Jest. This decision was made to optimize our resources and focus on other critical areas of development, ensuring efficiency and efficacy in our project timeline and deliverables. This approach allowed us to maintain a balance between quality assurance and development velocity, adhering to our project goals and deadlines.
+
 
 # Getting Started with Create React App
 
