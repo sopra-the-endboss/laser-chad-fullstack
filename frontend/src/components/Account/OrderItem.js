@@ -9,26 +9,32 @@ import {
 } from "@mui/material";
 
 /**
- * Represents an individual item in the shopping cart.
+ * Represents a single cart item in a list of shopping cart items.
+ * This component displays the cart item's image, name, brand, and price.
+ * It also handles interactions, allowing the user to click on the image to navigate to the product detail page.
  *
- * This component displays the item's image, brand, product, quantity, and price. It allows the user to
- * increase or decrease the quantity of an item, or remove the item entirely from the cart.
- * Actions such as increasing the quantity, decreasing the quantity, or removing the item
- * are dispatched to the Redux store.
+ * @param {Object} props - The properties passed to the component.
+ * @param {Object} props.item - The cart item data to be displayed.
+ * @param {string} props.item.product_id - The unique identifier for the product.
+ * @param {string[]} props.item.images - Array containing URLs of images associated with the product.
+ * @param {string} props.item.product - The name of the product.
+ * @param {string} props.item.brand - The brand of the product.
+ * @param {number} props.item.price - The price of the product.
+ * @param {function(boolean, string):void} props.onCardInteract - A function to handle interactions with the card,
+ *          specifically designed to navigate to the product detail upon clicking the product image.
+ *          The function takes a boolean to signify interaction ability and the product's ID.
  *
- * @component
  * @example
- * const item = {
- *   product_id: 1,
- *   images: ["url_to_image"],
- *   product: "Product",
- *   brand: "Product Brand",
- *   price: 9.99,
- *   quantity: 1,
- * }
- * const onCardInteract = (clickable, id) => console.log(`Interacted with product ID: ${id}`)
- * return <CartItem item={item} onCardInteract={onCardInteract} />
- *
+ * <CartItem
+ *   item={{
+ *     product_id: "1",
+ *     images: ["http://example.com/image.jpg"],
+ *     product: "Example Product",
+ *     brand: "Example Brand",
+ *     price: 19.99
+ *   }}
+ *   onCardInteract={(clickable, id) => navigateToProductPage(id)}
+ * />
  */
 
 const CartItem = ({ item, onCardInteract }) => {

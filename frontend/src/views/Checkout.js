@@ -1,5 +1,5 @@
 import "../App.css";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   Typography,
   Paper,
@@ -21,6 +21,20 @@ import { clearCart } from "../reducers/slices/cartSlice";
 import { SendCart } from "../functions/SendCart";
 import { useGetOrder } from "../hooks/useGetOrder";
 
+/**
+ * CheckoutPage Component
+ * This component renders the checkout process, including delivery options, order overview,
+ * and payment information. It uses Material-UI components to structure the layout and
+ * Redux for state management to handle actions such as sending an order, clearing the cart,
+ * and navigating through the app.
+ *
+ * @component
+ * @example
+ * return (
+ *   <CheckoutPage />
+ * )
+ */
+
 const CheckoutPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -28,21 +42,31 @@ const CheckoutPage = () => {
   const authState = useSelector((state) => state.auth.user);
   const baseUrl = useSelector((state) => state.apigBaseUrl);
   const { getOrder } = useGetOrder();
-
   const [buyOption, setBuyOption] = useState(false);
 
+  /**
+   * Handles navigation to individual product details.
+   *
+   * @param {boolean} clickable - Determines if the item is clickable.
+   * @param {string} id - Product ID for navigation.
+   */
   const onCardInteract = (clickable, id) => {
     if (clickable) {
       navigate("/product/" + id);
     }
   };
 
+  /**
+   * Sends the user's cart and order information to the server, fetches the order,
+   * clears the cart, and navigates to the account page. It handles the full transaction
+   * process for a user's order during checkout.
+   */
   const sendOrder = async () => {
     await SendCart(authState.userId, cartItems, baseUrl);
     await SendOrder(authState.userId, baseUrl);
     getOrder(authState.userId, baseUrl);
     dispatch(clearCart());
-    navigate('/account');
+    navigate("/account");
   };
 
   return (
@@ -100,7 +124,7 @@ const CheckoutPage = () => {
           </AccordionDetails>
         </Accordion>
         <div className="buttonRight" style={{ marginTop: "10px" }}>
-          <Button variant="contained" onClick={sendOrder} disabled={(!buyOption)}>
+          <Button variant="contained" onClick={sendOrder} disabled={!buyOption}>
             Buy Now
           </Button>
         </div>

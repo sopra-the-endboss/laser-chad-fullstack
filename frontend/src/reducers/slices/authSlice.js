@@ -31,11 +31,14 @@ const authSlice = createSlice({
      * @param {Object} action - An action object containing the user information.
      * @param {string} action.payload.userId - The user's unique identifier.
      * @param {string} action.payload.email - The user's email address.
-     * @param {Array<string>} action.payload.groups - Groups the user belongs to.
      * @param {string} action.payload.birthdate - The user's birth date.
      * @param {string} action.payload.givenname - The user's given name.
      * @param {string} action.payload.familyname - The user's family name.
      * @param {string} action.payload.role - The user's role (Buyer or Seller).
+     * @param {string} action.payload.address - The user's address.
+     * @param {string} action.payload.county - The user's county.
+     * @param {string} action.payload.zip - The user's zip code.
+     * @param {string} action.payload.city - The user's city.
      */
 
     setUserLoggedIn: (state, action) => {
@@ -62,6 +65,15 @@ const authSlice = createSlice({
         city: null,
       };
     },
+    /**
+     * Updates a specific detail of the user's profile.
+     * This reducer is used to update single attributes of the user's information based on the payload.
+     *
+     * @param {Object} state - The current state of the auth slice.
+     * @param {Object} action - Contains the attribute to update and its new value.
+     * @param {string} action.payload.attribute - The attribute of the user object to update.
+     * @param {any} action.payload.value - The new value for the specified attribute.
+     */
     updateUserDetail: (state, action) => {
       const { attribute, value } = action.payload;
       if (state.user.hasOwnProperty(attribute)) {

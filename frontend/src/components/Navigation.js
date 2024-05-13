@@ -53,9 +53,6 @@ const Navbar = ({ setData, searchQuerySubmitted, AllProductsName }) => {
   const navigate = useNavigate();
 
   const searchWithinProducts = (event) => {
-    //TODO: insert search items in backend.
-    // returned products will be set and content will be generated accordingly
-    // currently filtering is extremely strict, use levenstein distance or fuse.js to also account for misspells.
     const filtered = AllProductsName.filter((product) =>
       product["product"]
         .toLowerCase()
@@ -73,7 +70,7 @@ const Navbar = ({ setData, searchQuerySubmitted, AllProductsName }) => {
   };
 
   const authState = useSelector((state) => state.auth.user);
-  let isSeller = authState ? authState?.role === "Seller" : false ;
+  let isSeller = authState ? authState?.role === "Seller" : false;
 
   const inactive =
     "text-gray-600 hover:bg-gray-200 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium";
@@ -92,7 +89,6 @@ const Navbar = ({ setData, searchQuerySubmitted, AllProductsName }) => {
       route: "/account",
       location: "Account",
     },
-    // Still needed with Seller Guard?
     ...(isSeller
       ? [
           {
@@ -126,7 +122,7 @@ const Navbar = ({ setData, searchQuerySubmitted, AllProductsName }) => {
                     {route.location}
                   </Link>
                 ))}
-                {/* TODO: style the same as the rest of the navbar */}
+
                 <div>
                   <Button onClick={toggleCart(true)}>
                     <Badge badgeContent={badgeCount}>

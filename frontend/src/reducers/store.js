@@ -21,7 +21,7 @@ const persistConfig = {
 };
 
 /**
- * The auth, cart, and API base URL slices are combined here.
+ * The auth, cart, order and API base URL slices are combined here.
  */
 const rootReducer = combineReducers({
   auth: authReducer,
