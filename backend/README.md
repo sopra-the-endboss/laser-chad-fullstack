@@ -4,7 +4,20 @@ The backend consists of small isolated microservices. To keep code duplication t
 - Templates and functions for deployment
 - Default Lambda handler for OPTIONS methods
 
-## Infrastructure for all microservices
+# Choice and motivation for backend infracstructure
+Since the primary goal of the project was to develop the application with a microservice oriented infrastructure suitable for the AWS cloud, the choice of using localstack for local cloud development is a given. For the single microservices, we followed the basic microservice structure proposed by AWS and localstack which include:
+- An API Gateway to route HTTP requests coming from the frontend to the appropriate lambda handlers
+- Lambda functions which contain the logic. They are triggered by the API Gateway, receive requests and return appropriate answers after manipulating data in the backend
+- Dynamo DB as the primary data storage technology as a fast performing and scalable Key-Value store
+
+We tried to keep the architecture simple and only use those services that were necessary to implement our features. This is why we relied on the lambda functions heavily to process and return all data from the backend to the frontend.
+
+## Database and storage
+At first, we also considered to use a traditional relational database like PostgreSQL or MySQL for the backend. After some discussion we settled for a more flexible DynamoDB approach, because the simple Key-Value store allowed us to develop the different microservices in parallel, using separate tables for all microservices. This decision obliged us however to communicate well about the common data structure so that there was consistency in the data model across services.
+Another feature we initially planned, but did not (yet) implement is the usage of a S3 storage for static content. While this service could definitely be of use in the future, the current development up until the final submission did not necessitate it, hence this service was planned but in the end not actually used.
+
+
+# Common infrastructure for all microservices
 
 #### API Gateway
 The API Gateway serves as the connection between the backend services and the frontend. The frontend must be able to make call to a URL to receive HTTP responses from the backend. The backend services must be able to register their functions on a given URL path. This is provided by the API Gateway. The service [apig-main](./apig-main/) creates an API Gateway, see the README for more information.
@@ -32,7 +45,7 @@ If you want to run the test manually and generate an inline coverage report, run
 The current moto3 mocking framework for AWS does not support our API Gateway integration (AWS_PROXY), hence a proper intergation test with a mocked API Gateway with localstack is currently not possible. For more information see http://docs.getmoto.org/en/latest/docs/services/apigateway.html.
 
 
-## Microservice structure
+# Microservice structure
 A microservice uses the templates and utils from the `template-microservice` folder as much as possible to standardize deployment and reduce duplication.  
 Each microservice contains a `config` folder where the following files are located. The `deploy.py` script then refers to those configurations to deploy the desired microservice.
 
