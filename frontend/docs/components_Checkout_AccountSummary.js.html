@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Checkout/AccountSummary.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Checkout/AccountSummary.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import "../../App.css";
+import React, { useState } from "react";
+
+import { Button, TextField, Grid } from "@mui/material";
+import { updateUserAttributes } from "aws-amplify/auth";
+import { useDispatch } from "react-redux";
+import { setUserLoggedIn } from "../../reducers/slices/authSlice";
+import { useSelector } from "react-redux";
+
+/**
+ * AccountSummary Component
+ * Provides a UI for viewing and editing user account details such as name, email,
+ * and address information in the checkout view. Users can toggle between view and edit modes. In edit mode,
+ * changes can be submitted to update the user's attributes in AWS Amplify and the Redux store.
+ *
+ * The component toggles between displaying user information and an edit form with validation.
+ * Upon submitting the form, it attempts to update the user's details using AWS Amplify,
+ * and if successful, updates the user information in the Redux state.
+ *
+ * @component
+ * @example
+ * return (
+ *   &lt;AccountSummary />
+ * )
+ */
+
+const AccountSummary = () => {
+  const authState = useSelector((state) => state.auth.user);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editState, setEditState] = useState(authState);
+  const dispatch = useDispatch();
+
+  /**
+   * Handles input changes in form fields by updating the editState.
+   *
+   */
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+  /**
+   * Toggles the edit mode state and resets form values to initial user data if exiting edit mode.
+   */
+  const handleEditToggle = () => {
+    setIsEditing(!isEditing);
+    if (isEditing) {
+      setEditState(authState);
+    }
+  };
+  /**
+   * Submits the updated user details to AWS Amplify and updates the Redux state upon success.
+   * This function captures the form state and sends it to the backend to update the user's attributes.
+   * It handles the update asynchronously and manages state based on the outcome of the update.
+   */
+  const handleUpdate = async () => {
+    const { givenname, familyname, email, address, county, zip, city } =
+      editState;
+
+    let userAttributes = {
+      given_name: givenname,
+      family_name: familyname,
+      email: email,
+      address: address,
+      "custom:county": county,
+      "custom:zip": zip,
+      "custom:city": city,
+    };
+
+    try {
+      updateUserAttributes({
+        userAttributes: userAttributes,
+      });
+      dispatch(setUserLoggedIn(editState));
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error updating user attributes", error);
+    }
+  };
+
+  const formFields = [
+    { name: "givenname", label: "Givenname", autoComplete: "givenname" },
+    { name: "familyname", label: "Familyname", autoComplete: "familyname" },
+    { name: "email", label: "Email", autoComplete: "email" },
+    {
+      name: "address",
+      label: "Address",
+      autoComplete: "shipping address-line1",
+    },
+    { name: "city", label: "City", autoComplete: "shipping address-level2" },
+    { name: "county", label: "County", autoComplete: "county" },
+    {
+      name: "zip",
+      label: "Zip / Postal code",
+      autoComplete: "shipping postal-code",
+    },
+  ];
+
+  return (
+    &lt;React.Fragment>
+      {isEditing ? (
+        &lt;React.Fragment>
+          &lt;Grid container spacing={3}>
+            {formFields.map((field) => (
+              &lt;Grid item xs={12} sm={12} key={field.name}>
+                &lt;TextField
+                  required
+                  name={field.name}
+                  label={field.label}
+                  fullWidth
+                  autoComplete={field.autoComplete}
+                  variant="outlined"
+                  value={editState[field.name]}
+                  onChange={handleInputChange}
+                />
+              &lt;/Grid>
+            ))}
+            &lt;Grid item xs={12}>
+              &lt;Button
+                onClick={handleUpdate}
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+              >
+                Submit
+              &lt;/Button>
+            &lt;/Grid>
+          &lt;/Grid>
+        &lt;/React.Fragment>
+      ) : (
+        &lt;React.Fragment>
+          &lt;div>
+            &lt;h3 className="accountH3">Delivery Information&lt;/h3>
+            &lt;p className="textLeftBound">
+              {authState.givenname + " " + authState.familyname}
+            &lt;/p>
+            &lt;p className="textLeftBound">{authState.address}&lt;/p>
+            &lt;p className="textLeftBound">
+              {authState.zip || ""} {authState.city || ""}{" "}
+              {authState.county || ""}
+            &lt;/p>
+            &lt;h3 className="accountH3">Delivery method&lt;/h3>
+            &lt;p className="textLeftBound">Shipping&lt;/p>
+          &lt;/div>
+          &lt;div className="buttonRight">
+            &lt;Button onClick={handleEditToggle} variant="contained" size="small">
+              Edit
+            &lt;/Button>
+          &lt;/div>
+        &lt;/React.Fragment>
+      )}
+    &lt;/React.Fragment>
+  );
+};
+
+export default AccountSummary;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#AccountDetails">AccountDetails</a></li><li><a href="global.html#AccountSummary">AccountSummary</a></li><li><a href="global.html#CartDrawer">CartDrawer</a></li><li><a href="global.html#CartItem">CartItem</a></li><li><a href="global.html#CheckoutForm">CheckoutForm</a></li><li><a href="global.html#CheckoutPage">CheckoutPage</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#Payment">Payment</a></li><li><a href="global.html#SellerGuard">SellerGuard</a></li><li><a href="global.html#UpdateRole">UpdateRole</a></li><li><a href="global.html#cartSlice">cartSlice</a></li><li><a href="global.html#getDomain">getDomain</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#orderSlice">orderSlice</a></li><li><a href="global.html#persistConfig">persistConfig</a></li><li><a href="global.html#persistedReducer">persistedReducer</a></li><li><a href="global.html#persistor">persistor</a></li><li><a href="global.html#rootReducer">rootReducer</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useFetchAllProducts">useFetchAllProducts</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon May 13 2024 09:54:24 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

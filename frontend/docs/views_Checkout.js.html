@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: views/Checkout.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: views/Checkout.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import "../App.css";
+import React, { useState } from "react";
+import {
+  Typography,
+  Paper,
+  Container,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Button,
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useSelector, useDispatch } from "react-redux";
+
+import AccountSummary from "../components/Checkout/AccountSummary";
+import CartItem from "../components/Cart/CartItem";
+import Payment from "../components/Checkout/Payment";
+import { useNavigate } from "react-router-dom";
+import { SendOrder } from "../functions/SendOrder";
+import { clearCart } from "../reducers/slices/cartSlice";
+import { SendCart } from "../functions/SendCart";
+import { useGetOrder } from "../hooks/useGetOrder";
+
+/**
+ * CheckoutPage Component
+ * This component renders the checkout process, including delivery options, order overview,
+ * and payment information. It uses Material-UI components to structure the layout and
+ * Redux for state management to handle actions such as sending an order, clearing the cart,
+ * and navigating through the app.
+ *
+ * @component
+ * @example
+ * return (
+ *   &lt;CheckoutPage />
+ * )
+ */
+
+const CheckoutPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const authState = useSelector((state) => state.auth.user);
+  const baseUrl = useSelector((state) => state.apigBaseUrl);
+  const { getOrder } = useGetOrder();
+  const [buyOption, setBuyOption] = useState(false);
+
+  /**
+   * Handles navigation to individual product details.
+   *
+   * @param {boolean} clickable - Determines if the item is clickable.
+   * @param {string} id - Product ID for navigation.
+   */
+  const onCardInteract = (clickable, id) => {
+    if (clickable) {
+      navigate("/product/" + id);
+    }
+  };
+
+  /**
+   * Sends the user's cart and order information to the server, fetches the order,
+   * clears the cart, and navigates to the account page. It handles the full transaction
+   * process for a user's order during checkout.
+   */
+  const sendOrder = async () => {
+    await SendCart(authState.userId, cartItems, baseUrl);
+    await SendOrder(authState.userId, baseUrl);
+    getOrder(authState.userId, baseUrl);
+    dispatch(clearCart());
+    navigate("/account");
+  };
+
+  return (
+    &lt;Container component="main" maxWidth="md">
+      &lt;Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
+        &lt;Typography variant="h6" gutterBottom>
+          Checkout
+        &lt;/Typography>
+        &lt;Accordion>
+          &lt;AccordionSummary
+            expandIcon={&lt;ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            &lt;Typography variant="h6" gutterBottom>
+              Delivery
+            &lt;/Typography>
+          &lt;/AccordionSummary>
+          &lt;AccordionDetails>
+            &lt;AccountSummary />
+          &lt;/AccordionDetails>
+        &lt;/Accordion>
+        &lt;Accordion>
+          &lt;AccordionSummary
+            expandIcon={&lt;ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            &lt;Typography variant="h6" gutterBottom>
+              Order Overview
+            &lt;/Typography>
+          &lt;/AccordionSummary>
+          &lt;AccordionDetails>
+            {cartItems.map((item) => (
+              &lt;CartItem
+                key={item.product_id}
+                item={item}
+                onCardInteract={onCardInteract}
+              />
+            ))}
+          &lt;/AccordionDetails>
+        &lt;/Accordion>
+        &lt;Accordion>
+          &lt;AccordionSummary
+            expandIcon={&lt;ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            &lt;Typography variant="h6" gutterBottom>
+              Payment Information
+            &lt;/Typography>
+          &lt;/AccordionSummary>
+          &lt;AccordionDetails>
+            &lt;Payment setBuyOption={setBuyOption} />
+          &lt;/AccordionDetails>
+        &lt;/Accordion>
+        &lt;div className="buttonRight" style={{ marginTop: "10px" }}>
+          &lt;Button variant="contained" onClick={sendOrder} disabled={!buyOption}>
+            Buy Now
+          &lt;/Button>
+        &lt;/div>
+      &lt;/Paper>
+    &lt;/Container>
+  );
+};
+
+export default CheckoutPage;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#AccountDetails">AccountDetails</a></li><li><a href="global.html#AccountSummary">AccountSummary</a></li><li><a href="global.html#CartDrawer">CartDrawer</a></li><li><a href="global.html#CartItem">CartItem</a></li><li><a href="global.html#CheckoutForm">CheckoutForm</a></li><li><a href="global.html#CheckoutPage">CheckoutPage</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#Payment">Payment</a></li><li><a href="global.html#SellerGuard">SellerGuard</a></li><li><a href="global.html#UpdateRole">UpdateRole</a></li><li><a href="global.html#cartSlice">cartSlice</a></li><li><a href="global.html#getDomain">getDomain</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#orderSlice">orderSlice</a></li><li><a href="global.html#persistConfig">persistConfig</a></li><li><a href="global.html#persistedReducer">persistedReducer</a></li><li><a href="global.html#persistor">persistor</a></li><li><a href="global.html#rootReducer">rootReducer</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useFetchAllProducts">useFetchAllProducts</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon May 13 2024 09:54:24 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

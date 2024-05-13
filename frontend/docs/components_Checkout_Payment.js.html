@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: reducers/store.js</title>
+    <title>JSDoc: Source: components/Checkout/Payment.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: reducers/store.js</h1>
+    <h1 class="page-title">Source: components/Checkout/Payment.js</h1>
 
     
 
@@ -26,76 +26,46 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import authReducer from "./slices/authSlice";
-import cartReducer from "./slices/cartSlice";
-import orderReducer from "./slices/orderSlice";
-import storage from "redux-persist/lib/storage";
-import { persistReducer, persistStore } from "redux-persist";
-import apigBaseUrlReducer from "./apigBaseUrl";
+            <pre class="prettyprint source linenums"><code>import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import CheckoutForm from "./CheckoutForm";
 
-/**
- * Configuration for redux-persist to handle storage mechanisms.
- *
- * It determines how the state should be persisted in the local storage of the browser.
- * The key 'root' is used as the storage key prefix for the persisted state.
- *
- * @type {Object}
- */
+const stripePromise = loadStripe("pk_test_6pRNASCoBOKtIshFeQd4XMUh");
 
-const persistConfig = {
-  key: "root",
-  storage,
+const options = {
+  mode: "payment",
+  amount: 1099,
+  currency: "usd",
+  locale: "en",
 };
 
 /**
- * The auth, cart, order and API base URL slices are combined here.
+ * Payment Component
+ * This component sets up the Stripe payment environment using Stripe Elements.
+ * It loads and configures Stripe with the given public API key and passes additional options
+ * necessary for the payment process. The CheckoutForm component is nested inside to handle
+ * the actual payment form and submission logic.
+ *
+ * This setup is necessary to inject the Stripe.js configuration into the React context, which
+ * `CheckoutForm` can access to manage and submit payment information securely.
+ *
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {function(boolean):void} props.setBuyOption - A callback function to update the state in the parent component
+ *        indicating that the payment information has been successfully validated and can proceed with the transaction.
+ *
+ * @example
+ * return (
+ *   &lt;Payment setBuyOption={setBuyOptionCallback} />
+ * )
  */
-const rootReducer = combineReducers({
-  auth: authReducer,
-  cart: cartReducer,
-  orders: orderReducer,
-  apigBaseUrl: apigBaseUrlReducer,
-});
 
-/**
- * A persisted reducer for the slices.
- *
- * Using redux-persist, all states are persisted across browser sessions.
- * This allows for example the cart's state to be rehydrated on app restarts, maintaining the cart contents.
- *
- * @type {Reducer}
- */
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-/**
- * Configures and creates the Redux store.
- *
- * The store integrates different slices of the application state, applying middleware for side effects,
- * and sets up persistence.
- *
- * @returns {Store} A Redux store configured with reducers, middleware, and persistence capabilities.
- */
-const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
-});
-
-/**
- * The persistor for the Redux store.
- *
- * It is responsible for initiating the rehydration process of the persisted state
- * from the local storage into the Redux store upon application startup.
- *
- * @type {Persistor}
- */
-export const persistor = persistStore(store);
-
-export default store;
+const Payment = ({ setBuyOption }) => (
+  &lt;Elements stripe={stripePromise} options={options}>
+    &lt;CheckoutForm setBuyOption={setBuyOption} />
+  &lt;/Elements>
+);
+export default Payment;
 </code></pre>
         </article>
     </section>

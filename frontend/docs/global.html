@@ -160,6 +160,130 @@
 
         
             
+<h4 class="name" id="getDomain"><span class="type-signature">(constant) </span>getDomain<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    This helper function returns the current domain of the API.If the environment is production, the production App Engine URL will be returned.Otherwise, the link localhost:8080 will be returned (Spring server default port).
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_getDomain.js.html">utils/getDomain.js</a>, <a href="utils_getDomain.js.html#line9">line 9</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="initialState"><span class="type-signature">(constant) </span>initialState<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Redux reducer for managing the API Gateway base URL.This reducer updates the state with a new base URL when the corresponding action is dispatched.The state is a simple string representing the base URL of the API Gateway.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="reducers_apigBaseUrl.js.html">reducers/apigBaseUrl.js</a>, <a href="reducers_apigBaseUrl.js.html#line11">line 11</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
 <h4 class="name" id="initialState"><span class="type-signature">(constant) </span>initialState<span class="type-signature"> :Object</span></h4>
 
 
@@ -232,6 +356,130 @@
 
         
             
+<h4 class="name" id="initialState"><span class="type-signature">(constant) </span>initialState<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Initial state of the orders slice.It includes an array to store order objects.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="reducers_slices_orderSlice.js.html">reducers/slices/orderSlice.js</a>, <a href="reducers_slices_orderSlice.js.html#line7">line 7</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="orderSlice"><span class="type-signature">(constant) </span>orderSlice<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Redux slice for managing orders.This slice includes actions for adding new orders to the state and clearing the order history.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="reducers_slices_orderSlice.js.html">reducers/slices/orderSlice.js</a>, <a href="reducers_slices_orderSlice.js.html#line16">line 16</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
 <h4 class="name" id="persistConfig"><span class="type-signature">(constant) </span>persistConfig<span class="type-signature"> :Object</span></h4>
 
 
@@ -286,7 +534,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="reducers_store.js.html">reducers/store.js</a>, <a href="reducers_store.js.html#line17">line 17</a>
+        <a href="reducers_store.js.html">reducers/store.js</a>, <a href="reducers_store.js.html#line18">line 18</a>
     </li></ul></dd>
     
 
@@ -310,7 +558,7 @@
 
 
 <div class="description">
-    A persisted reducer for the cart slice.Using redux-persist, the cart slice's state is persisted across browser sessions.This allows the cart's state to be rehydrated on app restarts, maintaining the cart contents.
+    A persisted reducer for the slices.Using redux-persist, all states are persisted across browser sessions.This allows for example the cart's state to be rehydrated on app restarts, maintaining the cart contents.
 </div>
 
 
@@ -358,7 +606,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="reducers_store.js.html">reducers/store.js</a>, <a href="reducers_store.js.html#line30">line 30</a>
+        <a href="reducers_store.js.html">reducers/store.js</a>, <a href="reducers_store.js.html#line42">line 42</a>
     </li></ul></dd>
     
 
@@ -430,7 +678,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="reducers_store.js.html">reducers/store.js</a>, <a href="reducers_store.js.html#line62">line 62</a>
+        <a href="reducers_store.js.html">reducers/store.js</a>, <a href="reducers_store.js.html#line68">line 68</a>
     </li></ul></dd>
     
 
@@ -448,13 +696,13 @@
 
         
             
-<h4 class="name" id="store"><span class="type-signature">(constant) </span>store<span class="type-signature"></span></h4>
+<h4 class="name" id="rootReducer"><span class="type-signature">(constant) </span>rootReducer<span class="type-signature"></span></h4>
 
 
 
 
 <div class="description">
-    Configures and creates the Redux store.The store integrates different slices of the application state, applying middleware for side effects,and sets up persistence for the cart slice. The auth, cart, and API base URL slices are combined here.The middleware is customized to disable serializable checks, which is useful for certain types of middleware/actions.
+    The auth, cart, order and API base URL slices are combined here.
 </div>
 
 
@@ -492,7 +740,131 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="reducers_store.js.html">reducers/store.js</a>, <a href="reducers_store.js.html#line42">line 42</a>
+        <a href="reducers_store.js.html">reducers/store.js</a>, <a href="reducers_store.js.html#line26">line 26</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="store"><span class="type-signature">(constant) </span>store<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Configures and creates the Redux store.The store integrates different slices of the application state, applying middleware for side effects,and sets up persistence.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="reducers_store.js.html">reducers/store.js</a>, <a href="reducers_store.js.html#line52">line 52</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="useFetchAllProducts"><span class="type-signature">(constant) </span>useFetchAllProducts<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Fetch all products
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_apiCalls.js.html">utils/apiCalls.js</a>, <a href="utils_apiCalls.js.html#line38">line 38</a>
     </li></ul></dd>
     
 
@@ -572,7 +944,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="views_AccountDetails.js.html">views/AccountDetails.js</a>, <a href="views_AccountDetails.js.html#line40">line 40</a>
+        <a href="views_AccountDetails.js.html">views/AccountDetails.js</a>, <a href="views_AccountDetails.js.html#line46">line 46</a>
     </li></ul></dd>
     
 
@@ -615,6 +987,99 @@
     <h5>Example</h5>
     
     <pre class="prettyprint"><code>return &lt;AccountDetails />;</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="AccountSummary"><span class="type-signature"></span>AccountSummary<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    AccountSummary ComponentProvides a UI for viewing and editing user account details such as name, email,and address information in the checkout view. Users can toggle between view and edit modes. In edit mode,changes can be submitted to update the user's attributes in AWS Amplify and the Redux store.The component toggles between displaying user information and an edit form with validation.Upon submitting the form, it attempts to update the user's details using AWS Amplify,and if successful, updates the user information in the Redux state.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Checkout_AccountSummary.js.html">components/Checkout/AccountSummary.js</a>, <a href="components_Checkout_AccountSummary.js.html#line27">line 27</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>return (  &lt;AccountSummary />)</code></pre>
 
 
 
@@ -838,6 +1303,361 @@
     
 
     
+    <h4 class="name" id="CartItem"><span class="type-signature"></span>CartItem<span class="signature">(props)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Represents a single cart item in a list of shopping cart items.This component displays the cart item's image, name, brand, and price.It also handles interactions, allowing the user to click on the image to navigate to the product detail page.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>props</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The properties passed to the component.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>item</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The cart item data to be displayed.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>product_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The unique identifier for the product.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>images</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array:<a href="global.html"></a>.&lt;string:<a href="global.html"></a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array containing URLs of images associated with the product.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>product</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The name of the product.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>brand</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The brand of the product.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>price</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The price of the product.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>onCardInteract</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A function to handle interactions with the card,         specifically designed to navigate to the product detail upon clicking the product image.         The function takes a boolean to signify interaction ability and the product's ID.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Account_OrderItem.js.html">components/Account/OrderItem.js</a>, <a href="components_Account_OrderItem.js.html#line40">line 40</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>&lt;CartItem  item={{    product_id: "1",    images: ["http://example.com/image.jpg"],    product: "Example Product",    brand: "Example Brand",    price: 19.99  }}  onCardInteract={(clickable, id) => navigateToProductPage(id)}/></code></pre>
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="CartItem"><span class="type-signature"></span>CartItem<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
@@ -846,7 +1666,7 @@
 
 
 <div class="description">
-    Represents an individual item in the shopping cart.This component displays the item's image, brand, title, quantity, and price. It allows the user toincrease or decrease the quantity of an item, or remove the item entirely from the cart.Actions such as increasing the quantity, decreasing the quantity, or removing the itemare dispatched to the Redux store.
+    Represents an individual item in the shopping cart.This component displays the item's image, brand, product, quantity, and price. It allows the user toincrease or decrease the quantity of an item, or remove the item entirely from the cart.Actions such as increasing the quantity, decreasing the quantity, or removing the itemare dispatched to the Redux store.
 </div>
 
 
@@ -921,7 +1741,7 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>const item = {  product_id: 1,  img: "url_to_image",  title: "Product Title",  brand: "Product Brand",  price: 9.99,  quantity: 1,}const onCardInteract = (clickable, id) => console.log(`Interacted with product ID: ${id}`)return &lt;CartItem item={item} onCardInteract={onCardInteract} /></code></pre>
+    <pre class="prettyprint"><code>const item = {  product_id: 1,  images: ["url_to_image"],   product: "Product",  brand: "Product Brand",  price: 9.99,  quantity: 1,}const onCardInteract = (clickable, id) => console.log(`Interacted with product ID: ${id}`)return &lt;CartItem item={item} onCardInteract={onCardInteract} /></code></pre>
 
 
 
@@ -931,7 +1751,7 @@
     
 
     
-    <h4 class="name" id="CustomModal"><span class="type-signature"></span>CustomModal<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="CheckoutForm"><span class="type-signature"></span>CheckoutForm<span class="signature">(props)</span><span class="type-signature"></span></h4>
     
 
     
@@ -939,7 +1759,198 @@
 
 
 <div class="description">
-    TODO: merge from branch #20- endpoints url will get specific id, called in App js- playground consists of database calls- endpoints are defeind in teams / excel
+    CheckoutForm ComponentThis component handles the payment process using Stripe's PaymentElement.Users can submit their payment details through Stripe's UI components. It also managesvalidation and error handling during the payment submission process.The component allows setting a buy option flag through a callback prop upon successful validationof payment information, indicating that the payment info is confirmed and can proceed to final checkout.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>props</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The properties passed to the component.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>setBuyOption</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A callback function to set the buy option       indicating that the payment information is valid and ready to proceed.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Checkout_CheckoutForm.js.html">components/Checkout/CheckoutForm.js</a>, <a href="components_Checkout_CheckoutForm.js.html#line30">line 30</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>return (  &lt;CheckoutForm setBuyOption={setBuyOptionCallback} />)</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="CheckoutPage"><span class="type-signature"></span>CheckoutPage<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    CheckoutPage ComponentThis component renders the checkout process, including delivery options, order overview,and payment information. It uses Material-UI components to structure the layout andRedux for state management to handle actions such as sending an order, clearing the cart,and navigating through the app.
 </div>
 
 
@@ -983,7 +1994,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_ui_CustomModal.js.html">components/ui/CustomModal.js</a>, <a href="components_ui_CustomModal.js.html#line17">line 17</a>
+        <a href="views_Checkout.js.html">views/Checkout.js</a>, <a href="views_Checkout.js.html#line38">line 38</a>
     </li></ul></dd>
     
 
@@ -1010,6 +2021,11 @@
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>return (  &lt;CheckoutPage />)</code></pre>
 
 
 
@@ -1256,6 +2272,197 @@
     
 
     
+    <h4 class="name" id="Payment"><span class="type-signature"></span>Payment<span class="signature">(props)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Payment ComponentThis component sets up the Stripe payment environment using Stripe Elements.It loads and configures Stripe with the given public API key and passes additional optionsnecessary for the payment process. The CheckoutForm component is nested inside to handlethe actual payment form and submission logic.This setup is necessary to inject the Stripe.js configuration into the React context, which`CheckoutForm` can access to manage and submit payment information securely.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>props</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The properties passed to the component.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>setBuyOption</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A callback function to update the state in the parent component       indicating that the payment information has been successfully validated and can proceed with the transaction.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Checkout_Payment.js.html">components/Checkout/Payment.js</a>, <a href="components_Checkout_Payment.js.html#line35">line 35</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>return (  &lt;Payment setBuyOption={setBuyOptionCallback} />)</code></pre>
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="SellerGuard"><span class="type-signature"></span>SellerGuard<span class="signature">(props)</span><span class="type-signature"> &rarr; {React.ReactNode}</span></h4>
     
 
@@ -1469,6 +2676,220 @@
     
 
     
+    <h4 class="name" id="UpdateRole"><span class="type-signature"></span>UpdateRole<span class="signature">(props)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    A dialog component that allows users to select and update their role.This component interfaces with AWS Cognito to update user attributes and synchronizes the user's role in the Redux store.The component shows a modal dialog with options to select either "Buyer" or "Seller" as a user role.Upon selecting a role, it updates the role in both Cognito and the Redux store, then closes the dialog.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>props</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The properties passed to the UpdateRole component.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>open</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Controls the visibility of the dialog; true shows the dialog, false hides it.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>onClose</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Function to call when the dialog needs to be closed after updating the role or on cancellation.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Account_UpdateRole.js.html">components/Account/UpdateRole.js</a>, <a href="components_Account_UpdateRole.js.html#line34">line 34</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>&lt;UpdateRole  open={true}  onClose={() => console.log("Dialog closed")}/></code></pre>
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="useAuth"><span class="type-signature"></span>useAuth<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
@@ -1521,7 +2942,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="reducers_useAuth.js.html">reducers/useAuth.js</a>, <a href="reducers_useAuth.js.html#line23">line 23</a>
+        <a href="hooks_useAuth.js.html">hooks/useAuth.js</a>, <a href="hooks_useAuth.js.html#line26">line 26</a>
     </li></ul></dd>
     
 
@@ -1583,13 +3004,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#AccountDetails">AccountDetails</a></li><li><a href="global.html#CartDrawer">CartDrawer</a></li><li><a href="global.html#CartItem">CartItem</a></li><li><a href="global.html#CustomModal">CustomModal</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#SellerGuard">SellerGuard</a></li><li><a href="global.html#cartSlice">cartSlice</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#persistConfig">persistConfig</a></li><li><a href="global.html#persistedReducer">persistedReducer</a></li><li><a href="global.html#persistor">persistor</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#useAuth">useAuth</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#AccountDetails">AccountDetails</a></li><li><a href="global.html#AccountSummary">AccountSummary</a></li><li><a href="global.html#CartDrawer">CartDrawer</a></li><li><a href="global.html#CartItem">CartItem</a></li><li><a href="global.html#CheckoutForm">CheckoutForm</a></li><li><a href="global.html#CheckoutPage">CheckoutPage</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#Payment">Payment</a></li><li><a href="global.html#SellerGuard">SellerGuard</a></li><li><a href="global.html#UpdateRole">UpdateRole</a></li><li><a href="global.html#cartSlice">cartSlice</a></li><li><a href="global.html#getDomain">getDomain</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#orderSlice">orderSlice</a></li><li><a href="global.html#persistConfig">persistConfig</a></li><li><a href="global.html#persistedReducer">persistedReducer</a></li><li><a href="global.html#persistor">persistor</a></li><li><a href="global.html#rootReducer">rootReducer</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useFetchAllProducts">useFetchAllProducts</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Apr 11 2024 15:53:51 GMT+0200 (Central European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon May 13 2024 09:54:24 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

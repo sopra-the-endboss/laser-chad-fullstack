@@ -34,6 +34,8 @@ import { useState } from "react";
 import { updateUserAttributes } from "aws-amplify/auth";
 import { useDispatch } from "react-redux";
 import { setUserLoggedIn } from "../reducers/slices/authSlice";
+import OrderItem from "../components/Account/OrderItem";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Grid,
@@ -42,7 +44,11 @@ import {
   Box,
   IconButton,
   Divider,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
 } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 /**
  * Displays and allows editing of the current user's account details.
@@ -66,10 +72,104 @@ import {
  */
 
 const AccountDetails = () => {
-  const authState = useSelector((state) => state.auth);
+  const authState = useSelector((state) => state.auth.user);
+  const apigBaseUrl = useSelector((state) => state.apigBaseUrl);
   const [isEditing, setIsEditing] = useState(false);
   const [editState, setEditState] = useState(authState);
   const dispatch = useDispatch();
+  const orderState = useSelector((state) => state.orders);
+  const orderItems = useSelector((state) => state.orders.orders);
+  const navigate = useNavigate();
+
+  const onCardInteract = (clickable, id) => {
+    if (clickable) {
+      navigate("/product/" + id);
+    }
+  };
+
+  const accountFields = [
+    {
+      name: "fullname",
+      label: "Fullname",
+      autoComplete: "fullname",
+      value: authState.givenname + " " + authState.familyname,
+    },
+    {
+      name: "birthdate",
+      label: "Birthdate",
+      autoComplete: "birthdate",
+      value: authState.birthdate,
+      type: "date",
+    },
+    {
+      name: "email",
+      label: "Email",
+      autoComplete: "email",
+      value: authState.email,
+    },
+    {
+      name: "fulladdress",
+      label: "Fulladdress",
+      autoComplete: "shipping address-level2",
+      value: (authState.zip || "") + " " + (authState.city || "") + " " + (authState.county || ""),
+      type: "address",
+    },
+  ];
+  const formFields = [
+    {
+      name: "givenname",
+      label: "Givenname",
+      autoComplete: "givenname",
+      value: authState.givenname,
+    },
+    {
+      name: "familyname",
+      label: "Familyname",
+      autoComplete: "familyname",
+      value: authState.familyname,
+    },
+    {
+      name: "birthdate",
+      label: "Birthdate",
+      autoComplete: "birthdate",
+      value: authState.birthdate,
+      type: "date",
+    },
+    {
+      name: "email",
+      label: "Email",
+      autoComplete: "email",
+      value: authState.email,
+    },
+    {
+      name: "address",
+      label: "Address",
+      autoComplete: "shipping address-line1",
+      value: authState.address,
+      type: "address",
+    },
+    {
+      name: "city",
+      label: "City",
+      autoComplete: "shipping address-level2",
+      value: authState.city,
+      type: "address",
+    },
+    {
+      name: "zip",
+      label: "Zip / Postal code",
+      autoComplete: "shipping postal-code",
+      value: authState.zip,
+      type: "address",
+    },
+    {
+      name: "county",
+      label: "County",
+      autoComplete: "shipping address-level2",
+      value: authState.county,
+      type: "address",
+    },
+  ];
 
   const handleEditToggle = () => {
     setIsEditing(!isEditing);
@@ -87,16 +187,31 @@ const AccountDetails = () => {
   };
 
   const handleUpdate = async () => {
-    const { givenname, familyname, email, birthdate } = editState;
+    const {
+      givenname,
+      familyname,
+      email,
+      birthdate,
+      address,
+      county,
+      zip,
+      city,
+    } = editState;
 
+    let userAttributes = {
+      given_name: givenname,
+      family_name: familyname,
+      email: email,
+      birthdate: birthdate,
+    };
+
+    if (address) userAttributes["address"] = address;
+    if (county) userAttributes["custom:county"] = county;
+    if (zip) userAttributes["custom:zip"] = zip;
+    if (city) userAttributes["custom:city"] = city;
     try {
       updateUserAttributes({
-        userAttributes: {
-          given_name: givenname,
-          family_name: familyname,
-          email: email,
-          birthdate: birthdate,
-        },
+        userAttributes: userAttributes,
       });
       dispatch(setUserLoggedIn(editState));
       setIsEditing(false);
@@ -122,68 +237,31 @@ const AccountDetails = () => {
         User Account
       &lt;/Typography>
       &lt;Typography variant="body2" color="textSecondary">
-        Account Type: {authState.groups}
+        Account Type: {authState.role}
       &lt;/Typography>
       &lt;Divider sx={{ my: 2 }} />
-
       {isEditing ? (
-        &lt;React.Fragment>
-          &lt;Grid container spacing={2} alignItems="center">
-            &lt;Grid item xs={6}>
-              &lt;Typography>Givenname&lt;/Typography>
-            &lt;/Grid>
-            &lt;Grid item xs={6}>
-              &lt;TextField
-                fullWidth
-                name="givenname"
-                variant="outlined"
-                value={editState.givenname || ""}
-                onChange={handleInputChange}
-              />
-            &lt;/Grid>
-
-            &lt;Grid item xs={6}>
-              &lt;Typography>Familyname&lt;/Typography>
-            &lt;/Grid>
-            &lt;Grid item xs={6}>
-              &lt;TextField
-                fullWidth
-                name="familyname"
-                variant="outlined"
-                value={editState.familyname || ""}
-                onChange={handleInputChange}
-              />
-            &lt;/Grid>
-
-            &lt;Grid item xs={6}>
-              &lt;Typography>Birthdate&lt;/Typography>
-            &lt;/Grid>
-            &lt;Grid item xs={6}>
-              &lt;TextField
-                fullWidth
-                name="birthdate"
-                type="date"
-                variant="outlined"
-                value={editState.birthdate || ""}
-                onChange={handleInputChange}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            &lt;/Grid>
-
-            &lt;Grid item xs={6}>
-              &lt;Typography>Email&lt;/Typography>
-            &lt;/Grid>
-            &lt;Grid item xs={6}>
-              &lt;TextField
-                fullWidth
-                name="email"
-                variant="outlined"
-                value={editState.email || ""}
-                onChange={handleInputChange}
-              />
-            &lt;/Grid>
+        &lt;>
+          &lt;Grid container spacing={3}>
+            {formFields.map((field) => (
+              &lt;Grid
+                item
+                xs={12}
+                sm={field.type === "address" ? 6 : 12}
+                key={field.name}
+              >
+                &lt;TextField
+                  required
+                  name={field.name}
+                  label={field.label}
+                  fullWidth
+                  autoComplete={field.autoComplete}
+                  variant="outlined"
+                  value={editState[field.name] || ""}
+                  onChange={handleInputChange}
+                />
+              &lt;/Grid>
+            ))}
 
             &lt;Grid item xs={12}>
               &lt;Button
@@ -195,35 +273,61 @@ const AccountDetails = () => {
               &lt;/Button>
             &lt;/Grid>
           &lt;/Grid>
-        &lt;/React.Fragment>
+        &lt;/>
       ) : (
-        &lt;React.Fragment>
-          &lt;Grid container spacing={2}>
-            &lt;Grid item xs={6}>
-              &lt;Typography>Full name:&lt;/Typography>
-            &lt;/Grid>
-            &lt;Grid item xs={6}>
-              &lt;Typography>
-                {authState.givenname + " " + authState.familyname}{" "}
+        &lt;>
+          &lt;h3 className="accountH3">
+            Account Details
+            &lt;IconButton onClick={handleEditToggle} size="tiny">
+              &lt;EditIcon />
+            &lt;/IconButton>
+          &lt;/h3>
+
+          {accountFields.map((field) => (
+            &lt;p className="textLeftBound">{field.value}&lt;/p>
+          ))}
+
+          &lt;Divider sx={{ marginBottom: "10px", marginTop: "10px" }} />
+
+          &lt;Accordion>
+            &lt;AccordionSummary
+              expandIcon={&lt;ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              &lt;Typography variant="h6" gutterBottom>
+                Order History
               &lt;/Typography>
-            &lt;/Grid>
-            &lt;Grid item xs={6}>
-              &lt;Typography>Email address: &lt;/Typography>
-            &lt;/Grid>
-            &lt;Grid item xs={6}>
-              &lt;Typography>{authState.email}&lt;/Typography>
-            &lt;/Grid>
-            &lt;Grid item xs={6}>
-              &lt;Typography>Birthdate:&lt;/Typography>
-            &lt;/Grid>
-            &lt;Grid item xs={6}>
-              &lt;Typography>{authState.birthdate}&lt;/Typography>
-            &lt;/Grid>
-          &lt;/Grid>
-          &lt;IconButton onClick={handleEditToggle} size="large">
-            &lt;EditIcon />
-          &lt;/IconButton>
-        &lt;/React.Fragment>
+            &lt;/AccordionSummary>
+            &lt;AccordionDetails>
+              {orderItems?.map((item) => (
+                &lt;Accordion>
+                  &lt;AccordionSummary
+                    expandIcon={&lt;ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    &lt;div className="textLeftBound">
+                      &lt;p>
+                        Order {item.order_id} from {item.date}
+                      &lt;/p>
+                      &lt;p>Status: {item.status}&lt;/p>
+                    &lt;/div>
+                  &lt;/AccordionSummary>
+                  &lt;AccordionDetails>
+                    {item.products?.map((product) => (
+                      &lt;OrderItem
+                        key={product.product_id}
+                        item={product}
+                        onCardInteract={onCardInteract}
+                      />
+                    ))}
+                  &lt;/AccordionDetails>
+                &lt;/Accordion>
+              ))}
+            &lt;/AccordionDetails>
+          &lt;/Accordion>
+        &lt;/>
       )}
     &lt;/Box>
   );
@@ -240,13 +344,13 @@ export default AccountDetails;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#AccountDetails">AccountDetails</a></li><li><a href="global.html#CartDrawer">CartDrawer</a></li><li><a href="global.html#CartItem">CartItem</a></li><li><a href="global.html#CustomModal">CustomModal</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#SellerGuard">SellerGuard</a></li><li><a href="global.html#cartSlice">cartSlice</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#persistConfig">persistConfig</a></li><li><a href="global.html#persistedReducer">persistedReducer</a></li><li><a href="global.html#persistor">persistor</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#useAuth">useAuth</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#AccountDetails">AccountDetails</a></li><li><a href="global.html#AccountSummary">AccountSummary</a></li><li><a href="global.html#CartDrawer">CartDrawer</a></li><li><a href="global.html#CartItem">CartItem</a></li><li><a href="global.html#CheckoutForm">CheckoutForm</a></li><li><a href="global.html#CheckoutPage">CheckoutPage</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#Payment">Payment</a></li><li><a href="global.html#SellerGuard">SellerGuard</a></li><li><a href="global.html#UpdateRole">UpdateRole</a></li><li><a href="global.html#cartSlice">cartSlice</a></li><li><a href="global.html#getDomain">getDomain</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#orderSlice">orderSlice</a></li><li><a href="global.html#persistConfig">persistConfig</a></li><li><a href="global.html#persistedReducer">persistedReducer</a></li><li><a href="global.html#persistor">persistor</a></li><li><a href="global.html#rootReducer">rootReducer</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useFetchAllProducts">useFetchAllProducts</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Apr 11 2024 15:53:51 GMT+0200 (Central European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon May 13 2024 09:54:24 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

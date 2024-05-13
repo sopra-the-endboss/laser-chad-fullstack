@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: reducers/store.js</title>
+    <title>JSDoc: Source: reducers/apigBaseUrl.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: reducers/store.js</h1>
+    <h1 class="page-title">Source: reducers/apigBaseUrl.js</h1>
 
     
 
@@ -26,76 +26,33 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import authReducer from "./slices/authSlice";
-import cartReducer from "./slices/cartSlice";
-import orderReducer from "./slices/orderSlice";
-import storage from "redux-persist/lib/storage";
-import { persistReducer, persistStore } from "redux-persist";
-import apigBaseUrlReducer from "./apigBaseUrl";
-
-/**
- * Configuration for redux-persist to handle storage mechanisms.
+            <pre class="prettyprint source linenums"><code>/**
+ * Redux reducer for managing the API Gateway base URL.
+ * This reducer updates the state with a new base URL when the corresponding action is dispatched.
+ * The state is a simple string representing the base URL of the API Gateway.
  *
- * It determines how the state should be persisted in the local storage of the browser.
- * The key 'root' is used as the storage key prefix for the persisted state.
- *
- * @type {Object}
+ * @param {string} state - The current state of the API Gateway base URL.
+ * @param {Object} action - The action dispatched to update the state.
+ * @return {string} The new state after applying the action.
  */
 
-const persistConfig = {
-  key: "root",
-  storage,
-};
+const initialState = "";
 
-/**
- * The auth, cart, order and API base URL slices are combined here.
- */
-const rootReducer = combineReducers({
-  auth: authReducer,
-  cart: cartReducer,
-  orders: orderReducer,
-  apigBaseUrl: apigBaseUrlReducer,
-});
+function apigBaseUrlReducer(state = initialState, action) {
+  switch (action.type) {
+    case "SET_APIG_BASE_URL":
+      /**
+       * Handles setting the API Gateway base URL.
+       * The payload should contain the new base URL as a string.
+       */
+      return action.payload;
+    default:
+      // Returns the current state if no actions match.
+      return state;
+  }
+}
 
-/**
- * A persisted reducer for the slices.
- *
- * Using redux-persist, all states are persisted across browser sessions.
- * This allows for example the cart's state to be rehydrated on app restarts, maintaining the cart contents.
- *
- * @type {Reducer}
- */
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-/**
- * Configures and creates the Redux store.
- *
- * The store integrates different slices of the application state, applying middleware for side effects,
- * and sets up persistence.
- *
- * @returns {Store} A Redux store configured with reducers, middleware, and persistence capabilities.
- */
-const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
-});
-
-/**
- * The persistor for the Redux store.
- *
- * It is responsible for initiating the rehydration process of the persisted state
- * from the local storage into the Redux store upon application startup.
- *
- * @type {Persistor}
- */
-export const persistor = persistStore(store);
-
-export default store;
+export default apigBaseUrlReducer;
 </code></pre>
         </article>
     </section>

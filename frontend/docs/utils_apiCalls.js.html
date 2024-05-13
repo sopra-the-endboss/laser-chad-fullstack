@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: utils/apiCalls.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: utils/apiCalls.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {useDispatch, useSelector} from 'react-redux';
+import { api, handleError } from './api';
+import {getDomain} from "./getDomain";
+import {
+    PRODUCT_CATEGORY,
+    PRODUCT_COMMENT_ENDPOINT,
+    PRODUCT_DISTRIBUTOR,
+    PRODUCT_ENDPOINT,
+    PRODUCT_SELLER_ENDPOINT
+} from "./constants";
+
+
+export const useFetchAPIGURL = () => {
+    const dispatch = useDispatch();
+
+    return async () => {
+        fetch('http://localhost:5000/apig_base_url')
+            .then(response => response.text())
+            .then(data => {
+                dispatch({type: 'SET_APIG_BASE_URL', payload: data});
+            })
+            .catch(error => {
+                handleError({
+                    error: error,
+                    message: "Failed to reach docker endpoint!"
+                });
+            });
+    }
+}
+
+/**
+ * Fetch all products
+ * @param setAllProductsName
+ * @param setLoading
+ * @returns {Promise&lt;void>}
+ */
+
+export const useFetchAllProducts = (setAllProductsName, setLoading) => {
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    return async () => {
+        const baseURL = getDomain(apigBaseUrl);
+        api.defaults.baseURL = baseURL;
+
+        try {
+            const response = await api.get(`/${PRODUCT_ENDPOINT}`);
+            setAllProductsName(response.data);
+            setLoading(false);
+        } catch (error) {
+            handleError({
+                error: error,
+                message: "Failed to load products!"
+            });
+        }
+    };
+}
+
+export const usePostNewProduct = (
+        // collectedData, setLoading, setCreatedProductId, setLoadingMyShop
+        productToPost, // collectedData
+        setLoading,
+        setCreatedProductId
+    ) => {
+    const authState = useSelector((state) => state.auth);
+
+    const sellerId = authState.user.userId;
+    productToPost.seller_id = sellerId;
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    return async () => {
+        const baseURL = getDomain(apigBaseUrl);
+        api.defaults.baseURL = baseURL;
+
+        console.log("DEBUG : usePostNewProduct this is the productToPost", productToPost);
+
+        try {
+            const response = await api.post(`/${PRODUCT_ENDPOINT}`, productToPost);
+            setCreatedProductId(response.data.product_id)
+            setLoading(false);
+        } catch (error) {
+            handleError({
+                error: error,
+                message: "Failed to post product!"
+            });
+        }
+    };
+}
+
+export const useDeleteProduct = (productId) => {
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    return async () => {
+        const baseURL = getDomain(apigBaseUrl);
+        api.defaults.baseURL = baseURL;
+
+        try {
+            const response = await api.delete(`/${PRODUCT_ENDPOINT}/${productId}`);
+            console.log("DEBUG: useDeleteProduct this is the response", response);
+        } catch (error) {
+            handleError({
+                error: error,
+                message: "Failed to delete product!"
+            });
+        }
+    };
+}
+
+export const useFetchDistributor = (setAllDistributors) => {
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    return async () => {
+        const baseURL = getDomain(apigBaseUrl);
+        api.defaults.baseURL = baseURL;
+
+        try {
+            const response = await api.get(`/${PRODUCT_DISTRIBUTOR}`);
+            console.log("DEBUG: useFetchDistributor this is the response", response);
+            setAllDistributors(response.data);
+        } catch (error) {
+            handleError({
+                error: error,
+                message: "Failed to fetch all distributors!"
+            });
+        }
+    };
+}
+
+export const useFetchCategories = (setAllCategories) => {
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    return async () => {
+        const baseURL = getDomain(apigBaseUrl);
+        api.defaults.baseURL = baseURL;
+
+        try {
+            const response = await api.get(`/${PRODUCT_CATEGORY}`);
+            console.log("DEBUG: useFetchCategories this is the response", response);
+            setAllCategories(response.data);
+        } catch (error) {
+            handleError({
+                error: error,
+                message: "Failed to fetch all categories!"
+            });
+        }
+    };
+}
+
+export const useFetchAllComments = (details, product_id, setLoadingComments) => {
+
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    return async () => {
+        const baseURL = getDomain(apigBaseUrl);
+        api.defaults.baseURL = baseURL;
+
+        try {
+            if (!details) {
+
+                const response = await api.get(`/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`)
+
+                console.log("DEBUG: useFetchAllComments response");
+                console.log(response);
+
+                // NOTE: The response.data array should ALWAYS contain exactly one element, since
+                // the dynamo DB has product_id as key and the entry is therefore unique
+                
+                if (response) {
+                    return response.data[0];
+                }
+
+            } else if(details) {
+                setLoadingComments(false);
+            }
+        } catch (error) {
+            handleError({
+                error: error,
+                message: "Failed to load comments!",
+            });
+        }
+    };
+}
+
+export const useFetchProductDetails = (details, product_id, setProductDetails, setLoadingDetails) => {
+
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    return async () => {
+        const baseURL = getDomain(apigBaseUrl);
+        api.defaults.baseURL = baseURL;
+
+        try {
+            if (!details) {
+                const response = await api.get(`/${PRODUCT_ENDPOINT}/${product_id}`)
+
+                console.log("DEBUG: useFetchProductDetails response");
+                console.log(response);
+
+                setProductDetails(response.data[0]);
+                setLoadingDetails(false);
+            } else if(details) {
+                setLoadingDetails(false);
+            }
+        } catch (error) {
+            handleError({
+                error: error,
+                message: "Failed to load product!",
+            });
+        }
+    };
+}
+
+export const useFetchProductsSeller = (
+        seller_id
+    ) => {
+
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    return async () => {
+        const baseURL = getDomain(apigBaseUrl);
+        api.defaults.baseURL = baseURL;
+
+        try {
+            const response = await api.get(`/${PRODUCT_SELLER_ENDPOINT}/${seller_id}`)
+
+            console.log("DEBUG: useFetchProductsSeller response");
+            console.log(response);
+
+            if (response) {
+                return response.data;
+            }
+
+        } catch (error) {
+            handleError({
+                error: error,
+                message: "Failed to load products of seller!",
+            });
+        }
+    };
+}
+
+export const usePostComment = (setLoadingComments, setComments, comment, productComments, product_id) => {
+
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    return async () => {
+        const baseURL = getDomain(apigBaseUrl);
+        api.defaults.baseURL = baseURL;
+
+        try {
+            const response = await api.post(`/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`, comment);
+            console.log(response);
+
+            console.log("DEBUG: usePostComment productComments", productComments);
+
+            // Set the productComments to the new state after deleting the comment
+            // If productComments is empty, we have to crate field product_id and reviews as empty array
+            const copy = {...productComments};
+            if (Object.keys(copy).length === 0) {
+                console.log("empty productComments object found");
+                copy.product_id = product_id;
+                copy.reviews = [];
+            }
+
+            copy.reviews.push(comment);
+            setComments(copy);
+            setLoadingComments(false);
+        } catch (error) {
+            handleError({
+                error: error,
+                message: "Failed to post comment!",
+            });
+            setLoadingComments(false);
+        }
+    };
+}
+
+
+export const useDeleteComment = (item_to_delete, setLoadingComments, product_id, setProductComments) => {
+    const apigBaseUrl = useSelector(state => state.apigBaseUrl);
+
+    return async () => {
+        const baseURL = getDomain(apigBaseUrl);
+        api.defaults.baseURL = baseURL;
+
+        try {
+            // NOTE: Delete should not have body actually...
+            const response = await api.delete(
+                `/${PRODUCT_COMMENT_ENDPOINT}/${product_id}`,
+                {data : item_to_delete}
+            );
+            console.log("useDeleteComment: This is the response after sending DELETE: ", response);
+
+            // Set the productComments to the new state after deleting the comment
+            const copy = {...response.data};
+            setProductComments(copy);
+
+            setLoadingComments(false);
+
+
+        } catch (error) {
+            handleError({
+                error: error,
+                message: "Failed to delete product!"
+            });
+        }
+    };
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#AccountDetails">AccountDetails</a></li><li><a href="global.html#AccountSummary">AccountSummary</a></li><li><a href="global.html#CartDrawer">CartDrawer</a></li><li><a href="global.html#CartItem">CartItem</a></li><li><a href="global.html#CheckoutForm">CheckoutForm</a></li><li><a href="global.html#CheckoutPage">CheckoutPage</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#Payment">Payment</a></li><li><a href="global.html#SellerGuard">SellerGuard</a></li><li><a href="global.html#UpdateRole">UpdateRole</a></li><li><a href="global.html#cartSlice">cartSlice</a></li><li><a href="global.html#getDomain">getDomain</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#orderSlice">orderSlice</a></li><li><a href="global.html#persistConfig">persistConfig</a></li><li><a href="global.html#persistedReducer">persistedReducer</a></li><li><a href="global.html#persistor">persistor</a></li><li><a href="global.html#rootReducer">rootReducer</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useFetchAllProducts">useFetchAllProducts</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon May 13 2024 09:54:24 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

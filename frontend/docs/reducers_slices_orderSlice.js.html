@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: reducers/store.js</title>
+    <title>JSDoc: Source: reducers/slices/orderSlice.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: reducers/store.js</h1>
+    <h1 class="page-title">Source: reducers/slices/orderSlice.js</h1>
 
     
 
@@ -26,76 +26,59 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import authReducer from "./slices/authSlice";
-import cartReducer from "./slices/cartSlice";
-import orderReducer from "./slices/orderSlice";
-import storage from "redux-persist/lib/storage";
-import { persistReducer, persistStore } from "redux-persist";
-import apigBaseUrlReducer from "./apigBaseUrl";
+            <pre class="prettyprint source linenums"><code>import { createSlice } from "@reduxjs/toolkit";
 
 /**
- * Configuration for redux-persist to handle storage mechanisms.
- *
- * It determines how the state should be persisted in the local storage of the browser.
- * The key 'root' is used as the storage key prefix for the persisted state.
- *
- * @type {Object}
+ * Initial state of the orders slice.
+ * It includes an array to store order objects.
  */
-
-const persistConfig = {
-  key: "root",
-  storage,
+const initialState = {
+  orders: [],
 };
 
 /**
- * The auth, cart, order and API base URL slices are combined here.
+ * Redux slice for managing orders.
+ * This slice includes actions for adding new orders to the state and clearing the order history.
  */
-const rootReducer = combineReducers({
-  auth: authReducer,
-  cart: cartReducer,
-  orders: orderReducer,
-  apigBaseUrl: apigBaseUrlReducer,
+
+const orderSlice = createSlice({
+  name: "orders",
+  initialState,
+  reducers: {
+    /**
+     * Adds orders to the state if they don't already exist based on the `order_id`.
+     * New orders are added only if there isn't an existing order with the same `order_id` in the state.
+     *
+     * @param {Object} state - The current state of the orders slice.
+     * @param {Object} action - An action object containing the array of orders to potentially add.
+     */
+    addOrders: (state, action) => {
+      action.payload.forEach((order) => {
+        const existingOrder = state.orders.some(
+          (existing) => existing.order_id === order.order_id
+        );
+
+        if (!existingOrder) {
+          state.orders.push(order);
+        }
+      });
+    },
+
+    /**
+     * Clears all order history from the state.
+     * This action resets the `orders` array to an empty array.
+     *
+     * @param {Object} state - The current state of the orders slice.
+     */
+
+    clearOrderHistory: (state) => {
+      state.orders = [];
+    },
+  },
 });
 
-/**
- * A persisted reducer for the slices.
- *
- * Using redux-persist, all states are persisted across browser sessions.
- * This allows for example the cart's state to be rehydrated on app restarts, maintaining the cart contents.
- *
- * @type {Reducer}
- */
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-/**
- * Configures and creates the Redux store.
- *
- * The store integrates different slices of the application state, applying middleware for side effects,
- * and sets up persistence.
- *
- * @returns {Store} A Redux store configured with reducers, middleware, and persistence capabilities.
- */
-const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
-});
-
-/**
- * The persistor for the Redux store.
- *
- * It is responsible for initiating the rehydration process of the persisted state
- * from the local storage into the Redux store upon application startup.
- *
- * @type {Persistor}
- */
-export const persistor = persistStore(store);
-
-export default store;
+export const { addOrders, clearOrderHistory } = orderSlice.actions;
+export default orderSlice.reducer;
 </code></pre>
         </article>
     </section>

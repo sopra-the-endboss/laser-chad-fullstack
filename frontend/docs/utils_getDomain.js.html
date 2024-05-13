@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: reducers/store.js</title>
+    <title>JSDoc: Source: utils/getDomain.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: reducers/store.js</h1>
+    <h1 class="page-title">Source: utils/getDomain.js</h1>
 
     
 
@@ -26,76 +26,19 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import authReducer from "./slices/authSlice";
-import cartReducer from "./slices/cartSlice";
-import orderReducer from "./slices/orderSlice";
-import storage from "redux-persist/lib/storage";
-import { persistReducer, persistStore } from "redux-persist";
-import apigBaseUrlReducer from "./apigBaseUrl";
+            <pre class="prettyprint source linenums"><code>import { isProduction } from './isProduction'
 
 /**
- * Configuration for redux-persist to handle storage mechanisms.
- *
- * It determines how the state should be persisted in the local storage of the browser.
- * The key 'root' is used as the storage key prefix for the persisted state.
- *
- * @type {Object}
+ * This helper function returns the current domain of the API.
+ * If the environment is production, the production App Engine URL will be returned.
+ * Otherwise, the link localhost:8080 will be returned (Spring server default port).
+ * @returns {string}
  */
+export const getDomain = (apigBaseUrl) => {
+    // const devUrl = 'http://localhost:8080';
+    return isProduction() ? apigBaseUrl : apigBaseUrl; // replace with actual urls
+}
 
-const persistConfig = {
-  key: "root",
-  storage,
-};
-
-/**
- * The auth, cart, order and API base URL slices are combined here.
- */
-const rootReducer = combineReducers({
-  auth: authReducer,
-  cart: cartReducer,
-  orders: orderReducer,
-  apigBaseUrl: apigBaseUrlReducer,
-});
-
-/**
- * A persisted reducer for the slices.
- *
- * Using redux-persist, all states are persisted across browser sessions.
- * This allows for example the cart's state to be rehydrated on app restarts, maintaining the cart contents.
- *
- * @type {Reducer}
- */
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-/**
- * Configures and creates the Redux store.
- *
- * The store integrates different slices of the application state, applying middleware for side effects,
- * and sets up persistence.
- *
- * @returns {Store} A Redux store configured with reducers, middleware, and persistence capabilities.
- */
-const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
-});
-
-/**
- * The persistor for the Redux store.
- *
- * It is responsible for initiating the rehydration process of the persisted state
- * from the local storage into the Redux store upon application startup.
- *
- * @type {Persistor}
- */
-export const persistor = persistStore(store);
-
-export default store;
 </code></pre>
         </article>
     </section>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: components/Cart/CartItem.js</title>
+    <title>JSDoc: Source: components/Account/OrderItem.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: components/Cart/CartItem.js</h1>
+    <h1 class="page-title">Source: components/Account/OrderItem.js</h1>
 
     
 
@@ -27,49 +27,47 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React from "react";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
-import DeleteIcon from "@mui/icons-material/Delete";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import { useDispatch } from "react-redux";
+
 import {
-  addToCart,
-  reduceQuantity,
-  removeFromCart,
-} from "../../reducers/slices/cartSlice";
+  Typography,
+  CardContent,
+  CardMedia,
+  Divider,
+  List,
+} from "@mui/material";
 
 /**
- * Represents an individual item in the shopping cart.
- * 
- * This component displays the item's image, brand, product, quantity, and price. It allows the user to
- * increase or decrease the quantity of an item, or remove the item entirely from the cart.
- * Actions such as increasing the quantity, decreasing the quantity, or removing the item
- * are dispatched to the Redux store.
+ * Represents a single cart item in a list of shopping cart items.
+ * This component displays the cart item's image, name, brand, and price.
+ * It also handles interactions, allowing the user to click on the image to navigate to the product detail page.
  *
- * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {Object} props.item - The cart item data to be displayed.
+ * @param {string} props.item.product_id - The unique identifier for the product.
+ * @param {string[]} props.item.images - Array containing URLs of images associated with the product.
+ * @param {string} props.item.product - The name of the product.
+ * @param {string} props.item.brand - The brand of the product.
+ * @param {number} props.item.price - The price of the product.
+ * @param {function(boolean, string):void} props.onCardInteract - A function to handle interactions with the card,
+ *          specifically designed to navigate to the product detail upon clicking the product image.
+ *          The function takes a boolean to signify interaction ability and the product's ID.
+ *
  * @example
- * const item = {
- *   product_id: 1,
- *   images: ["url_to_image"], 
- *   product: "Product",
- *   brand: "Product Brand",
- *   price: 9.99,
- *   quantity: 1,
- * }
- * const onCardInteract = (clickable, id) => console.log(`Interacted with product ID: ${id}`)
- * return &lt;CartItem item={item} onCardInteract={onCardInteract} />
- *
+ * &lt;CartItem
+ *   item={{
+ *     product_id: "1",
+ *     images: ["http://example.com/image.jpg"],
+ *     product: "Example Product",
+ *     brand: "Example Brand",
+ *     price: 19.99
+ *   }}
+ *   onCardInteract={(clickable, id) => navigateToProductPage(id)}
+ * />
  */
 
 const CartItem = ({ item, onCardInteract }) => {
-  const dispatch = useDispatch();
   return (
-    &lt;Card sx={{ display: "flex", marginBottom: 2 }}>
+    &lt;List sx={{ display: "flex", marginBottom: 2 }}>
       &lt;CardMedia
         component="img"
         sx={{
@@ -82,6 +80,7 @@ const CartItem = ({ item, onCardInteract }) => {
         alt={item.product}
         onClick={() => onCardInteract(true, item.product_id)}
       />
+
       &lt;CardContent
         sx={{
           flex: "1 0 auto",
@@ -98,33 +97,13 @@ const CartItem = ({ item, onCardInteract }) => {
             {item.brand}
           &lt;/Typography>
         &lt;/div>
-        &lt;div>
-          &lt;ButtonGroup size="small" aria-label="small outlined button group">
-            &lt;IconButton
-              onClick={() => dispatch(reduceQuantity(item.product_id))}
-            >
-              &lt;RemoveIcon />
-            &lt;/IconButton>
-            &lt;Typography sx={{ padding: 1 }}>{item.quantity}&lt;/Typography>
-            &lt;IconButton onClick={() => dispatch(addToCart(item))}>
-              &lt;AddIcon />
-            &lt;/IconButton>
-          &lt;/ButtonGroup>
-          &lt;IconButton
-            aria-label="delete"
-            onClick={() => dispatch(removeFromCart(item.product_id))}
-          >
-            &lt;DeleteIcon />
-          &lt;/IconButton>
-        &lt;/div>
+
         &lt;Typography variant="body2">
           Price: ${Number(item.price)?.toFixed(2)}
         &lt;/Typography>
-        &lt;Typography variant="body2">
-          Total: ${(item?.quantity * item.price)?.toFixed(2)}
-        &lt;/Typography>
+        &lt;Divider />
       &lt;/CardContent>
-    &lt;/Card>
+    &lt;/List>
   );
 };
 

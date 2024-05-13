@@ -38,7 +38,18 @@ const authSlice = createSlice({
   name: "auth",
   initialState: {
     isLoggedIn: false,
-    user: null,
+    user: {
+      userId: null,
+      email: null,
+      birthdate: null,
+      givenname: null,
+      familyname: null,
+      role: null,
+      address: null,
+      county: null,
+      zip: null,
+      city: null,
+    },
   },
   reducers: {
     /**
@@ -48,20 +59,19 @@ const authSlice = createSlice({
      * @param {Object} action - An action object containing the user information.
      * @param {string} action.payload.userId - The user's unique identifier.
      * @param {string} action.payload.email - The user's email address.
-     * @param {Array&lt;string>} action.payload.groups - Groups the user belongs to.
      * @param {string} action.payload.birthdate - The user's birth date.
      * @param {string} action.payload.givenname - The user's given name.
      * @param {string} action.payload.familyname - The user's family name.
+     * @param {string} action.payload.role - The user's role (Buyer or Seller).
+     * @param {string} action.payload.address - The user's address.
+     * @param {string} action.payload.county - The user's county.
+     * @param {string} action.payload.zip - The user's zip code.
+     * @param {string} action.payload.city - The user's city.
      */
 
     setUserLoggedIn: (state, action) => {
       state.isLoggedIn = true;
-      state.user = action.payload.userId;
-      state.email = action.payload.email;
-      state.groups = action.payload.groups;
-      state.birthdate = action.payload.birthdate;
-      state.givenname = action.payload.givenname;
-      state.familyname = action.payload.familyname;
+      state.user = { ...state.user, ...action.payload }; // Update all properties in user object
     },
     /**
      * Resets the authentication state, effectively logging the user out.
@@ -70,15 +80,39 @@ const authSlice = createSlice({
      */
     setUserLoggedOut: (state) => {
       state.isLoggedIn = false;
-      state.user = null;
-      state.email = null;
-      state.groups = null;
-      state.birthdate = null;
+      state.user = {
+        userId: null,
+        email: null,
+        birthdate: null,
+        givenname: null,
+        familyname: null,
+        role: null,
+        address: null,
+        county: null,
+        zip: null,
+        city: null,
+      };
+    },
+    /**
+     * Updates a specific detail of the user's profile.
+     * This reducer is used to update single attributes of the user's information based on the payload.
+     *
+     * @param {Object} state - The current state of the auth slice.
+     * @param {Object} action - Contains the attribute to update and its new value.
+     * @param {string} action.payload.attribute - The attribute of the user object to update.
+     * @param {any} action.payload.value - The new value for the specified attribute.
+     */
+    updateUserDetail: (state, action) => {
+      const { attribute, value } = action.payload;
+      if (state.user.hasOwnProperty(attribute)) {
+        state.user[attribute] = value;
+      }
     },
   },
 });
 
-export const { setUserLoggedIn, setUserLoggedOut } = authSlice.actions;
+export const { setUserLoggedIn, setUserLoggedOut, updateUserDetail } =
+  authSlice.actions;
 export default authSlice.reducer;
 </code></pre>
         </article>
@@ -90,13 +124,13 @@ export default authSlice.reducer;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#AccountDetails">AccountDetails</a></li><li><a href="global.html#CartDrawer">CartDrawer</a></li><li><a href="global.html#CartItem">CartItem</a></li><li><a href="global.html#CustomModal">CustomModal</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#SellerGuard">SellerGuard</a></li><li><a href="global.html#cartSlice">cartSlice</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#persistConfig">persistConfig</a></li><li><a href="global.html#persistedReducer">persistedReducer</a></li><li><a href="global.html#persistor">persistor</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#useAuth">useAuth</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#AccountDetails">AccountDetails</a></li><li><a href="global.html#AccountSummary">AccountSummary</a></li><li><a href="global.html#CartDrawer">CartDrawer</a></li><li><a href="global.html#CartItem">CartItem</a></li><li><a href="global.html#CheckoutForm">CheckoutForm</a></li><li><a href="global.html#CheckoutPage">CheckoutPage</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#Payment">Payment</a></li><li><a href="global.html#SellerGuard">SellerGuard</a></li><li><a href="global.html#UpdateRole">UpdateRole</a></li><li><a href="global.html#cartSlice">cartSlice</a></li><li><a href="global.html#getDomain">getDomain</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#orderSlice">orderSlice</a></li><li><a href="global.html#persistConfig">persistConfig</a></li><li><a href="global.html#persistedReducer">persistedReducer</a></li><li><a href="global.html#persistor">persistor</a></li><li><a href="global.html#rootReducer">rootReducer</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useFetchAllProducts">useFetchAllProducts</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Apr 11 2024 15:53:51 GMT+0200 (Central European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon May 13 2024 09:54:24 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>
