@@ -13,6 +13,9 @@
 - Guards: Components or hooks that control access to certain parts of the application, ensuring that business and authorization rules are adhered to.
 This structured approach not only ensures a clear separation of concerns but also enhances maintainability and scalability. React's declarative nature simplifies the creation of interactive UIs, and its efficient update mechanism (via the virtual DOM) ensures high performance across both desktop and mobile platforms. The combination of these factors made React the optimal choice for our frontend development.
 
+# Choice of authentication
+For authentication, we chose the prebuilt AWS Cognito and Amplify services, driven by the project's tight timeline and their suitability for our needs. Authentication is a vital component, especially for projects with user-specific features like e-commerce platforms. Given that LocalStack was a project requirement, Cognito proved to be an excellent match, significantly reducing our initial development time and allowing us to make rapid progress from the start.
+
 The whole documentation can be found in the docs folder in `frontend/docs/index.html`. 
 
 # Getting Started with Create React App
