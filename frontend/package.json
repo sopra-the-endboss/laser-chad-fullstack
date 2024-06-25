@@ -13,7 +13,7 @@
     "@stripe/react-stripe-js": "^2.7.1",
     "@stripe/stripe-js": "^3.4.0",
     "amazon-cognito-identity-js": "^6.3.12",
-    "aws-amplify": "^6.0.27",
+    "aws-amplify": "^6.3.8",
     "axios": "^1.6.8",
     "notistack": "^3.0.1",
     "react": "^18.2.0",
